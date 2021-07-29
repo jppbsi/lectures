@@ -8,6 +8,7 @@
 \usepackage[portuguese]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{ragged2e}
 
 % DATA FOR FOOTER
 \date{2021}
@@ -75,46 +76,35 @@
 \SliT{Introdução}{
 \secx{Regressão Linear Univariada}
 
-wewewew
+\justifying Em aprendizado de máquina, existem diversos problemas para os quais conhecemos um conjunto de valores de entrada e desejamos \textbf{estimar} o valor de saída. Um exemplo bastante comum é a precificação de imóveis, cujo valor de entrada corresponde ao tamanho de uma casa e a saída desejada é o seu preço.
 
-\flushright\includegraphics[scale=0.1]{./figs/Regressao_Linear_Fig1.png} 
+\begin{center}
+\onslide<2->\includegraphics[scale=0.1]{./figs/Regressao_Linear_Fig1.png}
+\onslide<3->\includegraphics[scale=0.1]{./figs/Regressao_Linear_Fig2.png}
+\end{center}
 
-\secxx{Sub-Section}
+%\secxx{Sub-Section}
 
 % EXERCISE
-\exe{4}{Exercise}
+%\exe{4}{Exercise}
 % SUGGESTED READING BOX			
-\sug{References}
+%\sug{References}
 % CITATION						
-\cittex{Citation}
+%\cittex{Citation}
 
 }%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ###############################################################################
 % SLIDE NO TITLE
 \Sli{
-\secx{Section}
+\underline{Definição do problema:} seja um conjunto de dados ${\cal X}= \{(x_1,y_1),(x_2,y_2),\ldots,(x_m,y_m)\}$ tal que $x_i\in\mathbb{R}$ corresponde ao dado de entrada e $y_i\in\mathbb{R}$ denota o seu respectivo valor de saída. Temos, ainda, que ${\cal X}$ pode ser \textbf{particionado} da seguinte forma: ${\cal X} = {\cal X}^1\cup {\cal X}^2$, em que ${\cal X}^1$ e ${\cal X}^2$ denotam os conjuntos de dados de \textbf{treinamento} e \textbf{teste}, respectivamente. Nosso objetivo é, dado o conjunto de treinamento, aprender uma função $h:\mathbb{R}\rightarrow\mathbb{R}$ que consiga estimar o valor de uma casa dado o seu tamanho.
 
-project status \planned\~ 
+\begin{center}
+\includegraphics[scale=0.1]{./figs/Regressao_Linear_Fig3.png}
+\end{center}
 
-project status \started\~
+\Sli{
 
-project status \underway\~
- 
-project status \done\~    
-
-$\yel{\mbox{Colored box}}$ $\blu{\mbox{Colored box}}$ $\red{\mbox{Colored box}}$ $\gre{\mbox{Colored box}}$
- 
-\secxx{Itemization}
-
-\begin{itemize}
-      \iOn{First Level}
-   \begin{itemize}
-       \iTw {Second Level}
-      \begin{itemize}
-       \iTh{Third Level}
-       \end{itemize}
-    \end{itemize}
- \end{itemize}
+}
 
 }%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ###############################################################################
