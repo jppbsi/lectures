@@ -144,6 +144,34 @@ em que
 \label{e.cost_function}
 J(\boldsymbol{w}) = \frac{1}{2m}\sum_{i=1}^m(h_w(x_i)-y_i)^2. 
 \end{equation}
-No entanto, vamos simplificar um pouco o problema e assumir que $\boldsymbol{w} = [0\ w_1]$, ou seja, vamos assumir que $w_0 = 0$ (a reta passa na origem do sistema de coordenadas).
+No entanto, vamos simplificar um pouco mais o problema e assumir que $\boldsymbol{w} = [0\ w_1]$, ou seja, vamos assumir que $w_0 = 0$ (a reta passa na origem do sistema de coordenadas).
 }
+
+\Sli{
+Assim sendo, a Equação 1 pode ser escrita da seguinte forma:
+
+\begin{equation}
+	h_{\boldsymbol{w}}(x)  = w_0 +w_1x = w_1x.
+\end{equation}
+
+\begin{center}
+\includegraphics[scale=0.13]{./figs/Regressao_Linear_Fig7.png}\hspace{1cm}
+\end{center}
+}
+
+\Sli{
+Assumindo, então, que $w_0=0$, podemos escrever a Equação 3 da seguinte forma:
+
+\begin{equation}
+\label{e.min_linear_regression_simplified}
+	\boldsymbol{w}^\ast = \argmin_{w_1}\left\{J(w_1)\right\}.
+\end{equation}
+\justify O nosso problema passar a ser, agora, encontrar um valor apropriado para $w_1$ de tal forma que o valor de $J(w_1)$ seja o menor possível. Resumindo, o que temos definido até então para o problema:
+
+\begin{itemize}
+	\item Função hipótese: $h_{\boldsymbol{w}}(x)$
+	\item Função de custo: $J(\boldsymbol{w})\approx J(w_1)$
+\end{itemize}
+}	
+
 \end{document}
