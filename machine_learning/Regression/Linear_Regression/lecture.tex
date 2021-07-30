@@ -113,6 +113,7 @@
 	h_{\boldsymbol{w}}(x)=w_0+w_1x,
 \end{equation}
 em que $w_0$ e $w_1$ denotam os parâmetros do modelo (equação da reta), podendo ser representados como $\boldsymbol{w}=[w_0\ w_1]$.
+
 \begin{center}
 \includegraphics[scale=0.1]{./figs/Regressao_Linear_Fig4.png}\hspace{1cm}
 \includegraphics[scale=0.1]{./figs/Regressao_Linear_Fig5.png}\hspace{1cm}
@@ -128,7 +129,7 @@ em que $w_0$ e $w_1$ denotam os parâmetros do modelo (equação da reta), poden
 \label{e.min_linear_regression}
 	\boldsymbol{w}^\ast = \argmin_{\boldsymbol{w}}\left\{\frac{1}{2m}\sum_{i=1}^m(h_w(x_i)-y_i)^2\right\},
 \end{equation}
-em que $m$ denota o tamanho do conjunto de treinamento.
+em que $m$ denota o tamanho do conjunto de treinamento. Essa formulação corresponde ao conhecido \textbf{erro médio quadrático}, do inglês \emph{mean squared error} (MSE).
 }
 
 \Sli{
@@ -224,7 +225,11 @@ J(w_1) &= \frac{1}{2.3}[(0.5-1)^2+(1-2)^2+(1.5-3)^2]\\
 }
 
 \Sli{
-Qual o comportamento da função de custo caso tentemos diferentes valores para $w_1$?
+Qual o comportamento da função de custo caso tenhamos diferentes valores para $w_1$?
+
+\begin{center}
+\includegraphics[scale=0.17]{./figs/Regressao_Linear_Fig12.png}
+\end{center}
 }
 
 \end{document}
