@@ -10,9 +10,11 @@
 \usepackage[T1]{fontenc}
 \usepackage{ragged2e}
 
+\DeclareMathOperator*{\argmin}{arg\,min}
+
 % DATA FOR FOOTER
 \date{2021}
-\title{Regressão Linear}
+\title{- Regressão Linear}
 \author{João Paulo Papa}
 \institute{Advanced Institute for Artificial Intelligence (AI2)}
 
@@ -96,251 +98,52 @@
 % ###############################################################################
 % SLIDE NO TITLE
 \Sli{
-\underline{Definição do problema:} seja um conjunto de dados ${\cal X}= \{(x_1,y_1),(x_2,y_2),\ldots,(x_m,y_m)\}$ tal que $x_i\in\mathbb{R}$ corresponde ao dado de entrada e $y_i\in\mathbb{R}$ denota o seu respectivo valor de saída. Temos, ainda, que ${\cal X}$ pode ser \textbf{particionado} da seguinte forma: ${\cal X} = {\cal X}^1\cup {\cal X}^2$, em que ${\cal X}^1$ e ${\cal X}^2$ denotam os conjuntos de dados de \textbf{treinamento} e \textbf{teste}, respectivamente. Nosso objetivo é, dado o conjunto de treinamento, aprender uma função $h:\mathbb{R}\rightarrow\mathbb{R}$ que consiga estimar o valor de uma casa dado o seu tamanho.
+\justify \underline{Definição do problema:} seja um conjunto de dados ${\cal X}= \{(x_1,y_1),(x_2,y_2),\ldots,(x_z,y_z)\}$ tal que $x_i\in\mathbb{R}$ corresponde ao dado de entrada e $y_i\in\mathbb{R}$ denota o seu respectivo valor de saída. Temos, ainda, que ${\cal X}$ pode ser \textbf{particionado} da seguinte forma: ${\cal X} = {\cal X}^1\cup {\cal X}^2$, em que ${\cal X}^1$ e ${\cal X}^2$ denotam os conjuntos de dados de \textbf{treinamento} e \textbf{teste}, respectivamente. Nosso objetivo é, dado o conjunto de treinamento, aprender uma função $h:\mathbb{R}\rightarrow\mathbb{R}$ que consiga estimar o valor de uma casa dado o seu tamanho.
 
 \begin{center}
 \includegraphics[scale=0.1]{./figs/Regressao_Linear_Fig3.png}
 \end{center}
-
-\Sli{
-
 }
 
-}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ###############################################################################
-% SLIDE DOUBLE COLUMN WITH TITLE
-\SliDT{Title}{First Column}{Second Column
-
-}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ###############################################################################
-% SLIDE DOUBLE COLUMN NO TITLE
-\SliD{
-First Column}{
-    { \begin{center}
-    \includegraphics[scale=0.35]{AI2Logo.png}     
-    \end{center} }
-
-}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ###############################################################################
-% SLIDE ADVANCED  WITH TITLE
-\SliAdvT{Advanced Section}{ 
-Content
-
-\begin{itemize}
-      \iOn{First Level}
-   \begin{itemize}
-       \iTw {Second Level}
-      \begin{itemize}
-       \iTh{Third Level}
-       \end{itemize}
-    \end{itemize}
- \end{itemize}
-
-\refbotS{Reference at the Bottom} 
-}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ###############################################################################
-% SLIDE ADVANCED  NO TITLE
-\SliAdv{ 
-Content
-
-\begin{itemize}
-      \iOn{First Level}
-   \begin{itemize}
-       \iTw {Second Level}
-      \begin{itemize}
-       \iTh{Third Level}
-       \end{itemize}
-    \end{itemize}
- \end{itemize}
-
-}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ###############################################################################
-% SLIDE ADVANCED DOUBLE TITLE 		
-\SliAdvDT{Title}{First Column}{Second Column
-
-
-}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ###############################################################################
-% SLIDE ADVANCED DOUBLE NO TITLE 	
-\SliAdvD{First Column}{Second Column
-
-}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ###############################################################################
-% SLIDE BLACK
-\Black{
-
-}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ###############################################################################
-% SLIDE WHITE
-\White{
-
-}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ###############################################################################
-% BOXES & FRAMES
-\SliT{Boxes and Frames}{
-\[
-\yel{\alpha\beta\gamma\delta} + \red{\alpha\beta\gamma\delta} + \gre{\alpha\beta\gamma\delta} + \blu{\alpha\beta\gamma\delta}
-\]
-
-\[
-\fray{\alpha\beta\gamma\delta} + \frar{\alpha\beta\gamma\delta} + \frag{\alpha\beta\gamma\delta} + \frab{\alpha\beta\gamma\delta}
-\]
-
-\[
-\fra{\alpha + \beta + \gamma + \delta}
-\]
-
-}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\SliSubTit{Code Snippets}{Code Snippets Styles}
-% FIGURES 
-% SLIDE WITH CODE
-
-
-\begin{SliTC}{Ruby Code - Solarized Light Palette}
-  \begin{CodeL}{ruby}
-case node[:platform] # node info
-when "debian", "ubuntu"
-  package "git-core" # package is a resource
-else 
-  package "git"
-end
-  \end{CodeL}
-\end{SliTC}
-
-\begin{SliTC}{Shell Code - Solarized Dark Palette}
-  \begin{CodeD}{bash}
-#!/bin/bash
-echo "Printing text with newline"
-echo -n "Printing text without newline"
-echo -e "\nRemoving \t backslash \t characters\n"
-  \end{CodeD}
-\end{SliTC}
-
-\begin{SliTC}{Python Code - Monokai Palette}
-  \begin{CodeM}{python}
-# Python Program to calculate the square root
-# Note: change this value for a different result
-@Teste
-num = 8 
-# To take the input from the user
-num = float(input('Enter a number: '))
-
-num_sqrt = num ** 0.5
-print('The square root of %0.3f is %0.3f'%(num ,num_sqrt))
-  \end{CodeM}
-\end{SliTC}
-
-%%% Slide with black background and code
-
-\begin{BlackC}
-  \begin{CodeM}{python}
-# Python Program to calculate the square root
-# Note: change this value for a different result
-@Teste
-num = 8 
-# To take the input from the user
-num = float(input('Enter a number: '))
-
-num_sqrt = num ** 0.5
-print('The square root of %0.3f is %0.3f'%(num ,num_sqrt))
-  \end{CodeM}
-\end{BlackC}
-
-
-%\begin{BlackC}
-%    \begin{CodeD}{python}
-%# Python Program to calculate the square root
-%# Note: change this value for a different result
-%@Teste
-%num = 8 
-%# To take the input from the user
-%num = float(input('Enter a number: '))
-%
-%num_sqrt = num ** 0.5
-%print('The square root of %0.3f is %0.3f'%(num ,num_sqrt))
-%    \end{CodeD}
-%\end{BlackC}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5%
-
-% ###############################################################################
-\SliSubTit{Figures}{Positioning Figures in the Slide}
-% FIGURES 
-\Sli{\thispagestyle{empty}
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(0,0)$) {(0,0)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(0,1)$) {(0,1)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(0,2)$) {(0,2)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(0,3)$) {(0,3)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(0,4)$) {(0,4)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(0,5)$) {(0,5)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(0,-1)$) {(0,-1)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(0,-2)$) {(0,-2)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(0,-3)$) {(0,-3)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(0,-4)$) {(0,-4)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(0,-5)$) {(0,-5)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(1,0)$) {(1,0)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(2,0)$) {(2,0)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(3,0)$) {(3,0)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(4,0)$) {(4,0)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(5,0)$) {(5,0)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(6,0)$) {(6,0)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(7,0)$) {(7,0)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(8,0)$) {(8,0)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(-1,0)$) {(-1,0)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(-2,0)$) {(-2,0)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(-3,0)$) {(-3,0)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(-4,0)$) {(-4,0)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(-5,0)$) {(-5,0)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(-6,0)$) {(-6,0)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(-7,0)$) {(-7,0)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(-8,0)$) {(-8,0)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(1,1)$) {(1,1)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(2,2)$) {(2,2)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(3,3)$) {(3,3)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(4,4)$) {(4,4)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(-1,-1)$) {(-1,-1)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(-2,-2)$) {(-2,-2)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(-3,-3)$) {(-3,-3)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(-4,-4)$) {(-4,-4)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(-1,1)$) {(-1,1)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(-2,2)$) {(-2,2)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(-3,3)$) {(-3,3)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(-4,4)$) {(-4,4)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(1,-1)$) {(1,-1)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(2,-2)$) {(2,-2)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(3,-3)$) {(3,-3)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(4,-4)$) {(4,-4)};
-}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ###############################################################################
-\Sli{\thispagestyle{empty}
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(0,0)$) {Positions for 4 figures};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(-4,2.25)$) {$\bigotimes$};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(-4,1.5)$) {\footnotesize \bf (-4,2.25)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(4,2.25)$) {$\bigotimes$};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(4,1.5)$) {\footnotesize \bf (4,2.25)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(-4,-1.75)$){$\bigotimes$};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(-4,-2.5)$) {\footnotesize \bf (-4,-1.75)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(4,-1.75)$) {$\bigotimes$};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(4,-2.5)$) {\footnotesize \bf (4,-1.75)};
-}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ###############################################################################
 \Sli{
-\thispagestyle{empty}
-% 1 | 2 | 2 | 1 = 6 = 16/6 = 2.67 | 5.33 | 5.33 | 2.67
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(0,0)$) {Positions for 3/6 or 8/16 figures};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(0,2.25)$) {$\bigotimes$};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(0,1.5)$) {\footnotesize \bf (0,2.25)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(-5.33,2.25)$) {$\bigotimes$};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(-5.33,1.5)$) {\footnotesize \bf (-5.33,2.25)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(5.33,2.25)$) {$\bigotimes$};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(5.33,1.5)$) {\footnotesize \bf (5.33,2.25)};
-% 1|2|2|2|1 = 8 : 16/8 = 2 : 2 | 4 | 2 + 2 | 4 | 2 =    -6 -2 2 6
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(-6,-1.75)$){$\bigotimes$};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(-6,-2.5)$) {\footnotesize \bf (-6,-1.75)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(-2,-1.75)$){$\bigotimes$};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(-2,-2.5)$) {\footnotesize \bf (-2,-1.75)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(2,-1.75)$) {$\bigotimes$};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(2,-2.5)$) {\footnotesize \bf (2,-1.75)};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(6,-1.75)$) {$\bigotimes$};
-\tikz[remember picture, overlay] \node[anchor=center] at ($(current page.center)+(6,-2.5)$) {\footnotesize \bf (6,-1.75)};
+\justify A técnica chama-se \textbf{Regressão Linear Univariada} porque aprendemos uma \textbf{função linear} utilizando apenas \textbf{uma} variável de entrada. Desta forma, temos a seguinte formulação para essa função:
+
+\begin{equation}
+\label{e.hx}
+	h_{\boldsymbol{w}}(x)=w_0+w_1x,
+\end{equation}
+em que $w_0$ e $w_1$ denotam os parâmetros do modelo (equação da reta), podendo ser representados como $\boldsymbol{w}=[w_0\ w_1]$.
+\begin{center}
+\includegraphics[scale=0.1]{./figs/Regressao_Linear_Fig4.png}\hspace{1cm}
+\includegraphics[scale=0.1]{./figs/Regressao_Linear_Fig5.png}\hspace{1cm}
+\includegraphics[scale=0.1]{./figs/Regressao_Linear_Fig6.png}
+\end{center}
+
 }%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ###############################################################################
+
+\Sli{
+\justify Desta forma, como podemos observar, temos diferentes comportamentos para $h_{\boldsymbol{w}}(x)$, a qual é também chamada de \textbf{função hipótese}. A ideia principal da regressão linear é escolher o vetor de parâmetros $\boldsymbol{w}$ tal que $h_{\boldsymbol{w}}(x)$ seja a mais próxima possível das saídas das amostras de nosso conjunto de treinamento. Matematicamente falando, temos o seguinte problema de \textbf{minimização}:
+
+\begin{equation}
+\label{e.min_linear_regression}
+	\boldsymbol{w}^\ast = \argmin_{\boldsymbol{w}}\left\{\frac{1}{2m}\sum_{i=1}^m(h_w(x_i)-y_i)^2\right\},
+\end{equation}
+em que $m$ denota o tamanho do conjunto de treinamento.
+}
+
+\Sli{
+A Equação 2 é usualmente chamada de \textbf{função de custo}, também conhecida por \textbf{erro médio quadrático}. Podemos simplificar a notação escrevendo a Equação 2 da seguinte forma:
+
+\begin{equation}
+\label{e.min_linear_regression_simplified}
+	\boldsymbol{w}^\ast = \argmin_{\boldsymbol{w}}\{J(\boldsymbol{w})\},
+\end{equation}
+em que 
+
+\begin{equation}
+\label{e.cost_function}
+J(\boldsymbol{w}) = \frac{1}{2m}\sum_{i=1}^m(h_w(x_i)-y_i)^2. 
+\end{equation}
+No entanto, vamos simplificar um pouco o problema e assumir que $\boldsymbol{w} = [0\ w_1]$, ou seja, vamos assumir que $w_0 = 0$ (a reta passa na origem do sistema de coordenadas).
+}
 \end{document}
