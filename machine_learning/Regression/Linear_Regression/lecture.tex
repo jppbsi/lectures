@@ -169,9 +169,62 @@ Assumindo, então, que $w_0=0$, podemos escrever a Equação 3 da seguinte forma
 \justify O nosso problema passar a ser, agora, encontrar um valor apropriado para $w_1$ de tal forma que o valor de $J(w_1)$ seja o menor possível. Resumindo, o que temos definido até então para o problema:
 
 \begin{itemize}
-	\item Função hipótese: $h_{\boldsymbol{w}}(x)$
+	\item Função hipótese: $h_{\boldsymbol{w}}(x)\approx w_1x$
 	\item Função de custo: $J(\boldsymbol{w})\approx J(w_1)$
 \end{itemize}
+}
+
+\Sli{
+Vamos ilustrar algumas situações para entendermos o comportamento de ambas funções (hipótese e custo). Suponha o conjunto de treinamento ${\cal X}^1=\{(1,1),(2,2),(3,3)\}$. Neste caso, temos que $m=3$. Ademais, suponha que $h_{\boldsymbol{w}}(x) = x$, ou seja, $w_1=1$.
+
+\begin{minipage}{0.3\textwidth}
+\includegraphics[scale=0.13]{./figs/Regressao_Linear_Fig8.png}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.37\textwidth}
+\scriptsize
+\begin{equation}\nonumber
+\begin{split}
+J(w_1) &= \frac{1}{2m}\sum_{i=1}^3(h_{\boldsymbol{w}}(x_i)-y_i)^2\\
+&= \frac{1}{2m}\sum_{i=1}^3(w_1x_i-y_i)^2\\
+&= \frac{1}{2m}\sum_{i=1}^3(x_i-y_i)^2\\
+&= \frac{1}{2.3}[(1-1)^2+(2-2)^2+(3-3)^2]\\
+&= 0
+\end{split}
+\end{equation}
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+\begin{minipage}{0.3\textwidth}
+\includegraphics[scale=0.13]{./figs/Regressao_Linear_Fig9.png}
+\end{minipage}%%% to prevent a space
 }	
+
+\Sli{
+Agora, suponha que a nossa função hipótese é dada por $h_{\boldsymbol{w}}(x) = 0.5x$, ou seja, $w_1 = 0.5$.
+
+\begin{minipage}{0.3\textwidth}
+\includegraphics[scale=0.13]{./figs/Regressao_Linear_Fig10.png}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.37\textwidth}
+\scriptsize
+\begin{equation}\nonumber
+\begin{split}
+J(w_1) &= \frac{1}{2.3}[(0.5-1)^2+(1-2)^2+(1.5-3)^2]\\
+&= \frac{1}{2.3}(0.25+1+2.25)\\
+&= \frac{1}{6}(3.5)\\
+&\approx 0.58
+\end{split}
+\end{equation}
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+\begin{minipage}{0.3\textwidth}
+\includegraphics[scale=0.13]{./figs/Regressao_Linear_Fig11.png}
+\end{minipage}%%% to prevent a space
+}
+
+\Sli{
+Qual o comportamento da função de custo caso tentemos diferentes valores para $w_1$?
+}
 
 \end{document}
