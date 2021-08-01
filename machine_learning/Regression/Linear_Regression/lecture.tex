@@ -133,7 +133,7 @@ em que $m$ denota o tamanho do conjunto de treinamento. Essa formulação corres
 }
 
 \Sli{
-A Equação 2 é usualmente chamada de \textbf{função de custo}, também conhecida por \textbf{erro médio quadrático}. Podemos simplificar a notação escrevendo a Equação 2 da seguinte forma:
+A Equação 2 é usualmente chamada de \textbf{função de custo} ou \textbf{função de perda}, também conhecida por \textbf{erro médio quadrático}. Podemos simplificar a notação escrevendo a Equação 2 da seguinte forma:
 
 \begin{equation}
 \label{e.min_linear_regression_simplified}
@@ -235,8 +235,24 @@ Desta forma, temos que $\boldsymbol{w}^\ast = w_1 = 1$ é o valor \textbf{ótimo
 }
 
 \Sli{
-Uma alternativa ao uso do MSE é o chamado \textbf{erro médio absoluto}, do inglês \emph{mean absolute error} (MAE). Mas qual o intuito de utilizarmos MSE?
+\justify Uma alternativa ao uso do MSE é o chamado \textbf{erro médio absoluto}, do inglês \emph{mean absolute error} (MAE). Mas qual o intuito de utilizarmos MSE? Notem que o formato da função de custo nos remete à uma função quadrática!
 
-\onslide<2>{as}
+\justify A pergunta agora é: como podemos escolher bons valores para $\boldsymbol{w} = [w_0\ w_1]$? Podemos usar o método da \textbf{força bruta} testando um número suficientemente grande valores de aleatórios para $\boldsymbol{w}$. É uma boa abordagem?
+
 }
+
+\Sli{
+\justify Uma solução é o uso da técnica conhecida por \textbf{gradiente descendente}, que faz a busca pelos valores de $\boldsymbol{w}$ baseando-se na \textbf{derivada} da função de custo. Como ele funciona?
+
+\begin{enumerate}
+	\item Atribua valores aleatórios para $\boldsymbol{w} = [w_0\ w_1]$.
+	\item Avalie a função de custo $J(\boldsymbol{w})$.
+	\item  Caso o \textbf{critério de parada tenha sido atingido}, vá para o passo 5.
+	\item Atualize o vetor $\boldsymbol{w}$ e retorne ao Passo 2.
+	\item Fim do algoritmo.
+\end{enumerate}
+
+
+}
+
 \end{document}
