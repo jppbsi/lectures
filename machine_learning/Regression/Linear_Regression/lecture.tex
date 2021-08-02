@@ -343,4 +343,38 @@ w_1^{(t+1)} &= w_1^{(t)}-\alpha\frac{\partial J(\boldsymbol{w})}{\partial w_j}\\
 \end{minipage}
 }
 
+\Sli{
+À medida que aproximamos do ponto ótimo, o próprio gradiente descendente vai tomando passos menores, pois o termo derivativo $\frac{\partial J(\boldsymbol{w})}{\partial w_j}\rightarrow 0$.
+
+\begin{center}
+	\includegraphics[scale=0.2]{./figs/Regressao_Linear_Fig23.png}
+\end{center}
+}
+
+\Sli{
+Precisamos, agora, calcular as derivadas parciais para $\frac{\partial J(\boldsymbol{w})}{\partial w_j}$. Temos que:
+\begin{equation}
+	\frac{\partial J(\boldsymbol{w})}{\partial w_0} = \frac{1}{m}\sum_{i=1}^m(h_{\boldsymbol{w}}(x_i)-y_i)^2,
+\end{equation}
+e
+\begin{equation}
+	\frac{\partial J(\boldsymbol{w})}{\partial w_1} = \frac{1}{m}\sum_{i=1}^m[(h_{\boldsymbol{w}}(x_i)-y_i)^2x_i].
+\end{equation}
+}
+
+\Sli{
+Desta forma, o algoritmo do gradiente descendente pode ser sumarizado da seguinte forma:
+
+\begin{enumerate}
+	\item Atribua valores aleatórios para $\boldsymbol{w} = [w_0\ w_1]$.
+	\item Avalie a função de custo $J(\boldsymbol{w})$.
+	\item  Caso o \textbf{critério de parada tenha sido atingido}, vá para o passo 7.
+	\item $w_0^{(t+1)} = w_0^{(t)}-\alpha\frac{1}{m}\sum_{i=1}^m(h_{\boldsymbol{w}}(x_i)-y_i)^2$.
+	\item $w_1^{(t+1)} = w_1^{(t)}-\alpha\frac{1}{m}\sum_{i=1}^m[(h_{\boldsymbol{w}}(x_i)-y_i)^2x_i]$.
+	\item Retorne ao Passo 2.
+	\item Fim do algoritmo.
+\end{enumerate}
+Note que $w_0$ e $w_1$ precisam ser atualizados sumultaneamente!
+}
+
 \end{document}
