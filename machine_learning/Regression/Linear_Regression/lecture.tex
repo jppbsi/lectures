@@ -418,4 +418,18 @@ Nosso problema agora passa a ter os seguintes itens:
 O algoritmo do gradiente descendente é o mesmo do apresentado para a regressão linear univariada.
 }
 
+\Sli{
+Como podemos melhorar a convergência durante o aprendizado? Algumas opções:
+
+\begin{itemize}
+	\item Gradiente descendente em lotes (\emph{mini-batches}) ou \emph{online}.
+	\item Gradiente descendente estocástico:
+	\begin{itemize}
+		\item Bom para grandes conjuntos de dados.
+		\item Converge mais rápido do que o gradiente descendente (pode não avaliar todo o espaço de busca).
+		\item Parecido com o gradiente descendente \emph{online}, porém é aplicado sobre amostragens aleatórias do conjunto de treinamento.
+	\end{itemize}
+\end{itemize}
+}
+
 \end{document}
