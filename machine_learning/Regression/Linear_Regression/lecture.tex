@@ -251,8 +251,96 @@ Desta forma, temos que $\boldsymbol{w}^\ast = w_1 = 1$ é o valor \textbf{ótimo
 	\item Atualize o vetor $\boldsymbol{w}$ e retorne ao Passo 2.
 	\item Fim do algoritmo.
 \end{enumerate}
+}
 
+\Sli{
+\justify Qual o problema? As funções de custo geralmente não são \textbf{convexas}.
 
+\begin{center}
+\begin{tabular}{cc}
+\hspace{0.7cm}\includegraphics[scale=0.13]{./figs/Regressao_Linear_Fig13.png}\hspace{1cm} &
+\includegraphics[scale=0.13]{./figs/Regressao_Linear_Fig14.png}\hspace{1cm}\\
+Função convexa & Função não convexa
+\end{tabular}
+\end{center}
+}
+
+\Sli{
+\justify Gradiente descendente busca a ``melhor"\ solução a partir de um ponto inicial. Com base em informações dadas pela \textbf{derivada} da função, ele tende a encontrar um ótimo local ou global. Caso a função seja convexa, ele encontrará o ótimo global. Quais as informações que a derivada nos dá?
+
+\begin{center}
+\includegraphics[scale=0.157]{./figs/Regressao_Linear_Fig15.png}\hspace{1cm}
+\end{center}
+}
+
+\Sli{
+Matematicamente falando, podemos modelar a ideia por meio da \textbf{regra de atualização} dos parâmetros de $\boldsymbol{w}$:
+
+\begin{equation}
+	w_j^{(t+1)} = w_j^{(t)}-\alpha\frac{\partial J(\boldsymbol{w})}{\partial w_j},
+\end{equation}
+em que $j\in\{0,1\}$ e $\alpha$ corresponde à \textbf{taxa de aprendizado}. Já o termo $\frac{\partial J(\boldsymbol{w})}{\partial w_j}$ denota a \textbf{derivada parcial}, que deverá ser calculada para cada parâmetro de nossa equação da reta.
+}
+
+\Sli{
+\justify A questão principal que temos agora é: como calcular o termo derivativo, ou seja, as derivadas parciais? Para fins de simplicidade, suponha, novamente que $w_0 = 0$. Assim, nosso objetivo passa a ser o de minimizar $J(w_1)$ para algum valor $w_1\in\mathbb{R}$.
+
+\begin{center}
+\begin{minipage}{0.37\textwidth}
+\includegraphics[scale=0.157]{./figs/Regressao_Linear_Fig16.png}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.37\textwidth}
+A derivada em um ponto nos retorna duas principais informações: \textbf{direção} e \textbf{magnitude}. A primeira é dada pela inclinação (sinal) da reta tangente no ponto que desejamos calcular a derivada.
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+\end{center}
+
+Neste exemplo, a inclinação é positiva, ou seja, $\frac{\partial J(\boldsymbol{w})}{\partial w_j}>0$. Desta forma, estamos diminuindo o valor de $w_1$.
+}
+
+\Sli{
+Já no exemplo abaixo, temos que a inclinação da reta é negativa, ou seja, $\frac{\partial J(\boldsymbol{w})}{\partial w_j}<0$. Assim, estamos aumentando o valor de $w_1$.
+
+\begin{center}
+	\includegraphics[scale=0.17]{./figs/Regressao_Linear_Fig17.png}
+\end{center}
+
+A informação de magnitude é o próprio valor retornado pelo termo derivativo, desconsiderando o sinal.
+}
+
+\Sli{
+Qual a importância da taxa de aprendizado na Equação 7? Basicamente, baixos valores de $\alpha$ nos levam à uma convergência mais lenta, ao passo que valores maiores podem acelerar esse processo. No entanto, precisamos tomar cuidado com essa escolha.
+
+\begin{tabular}{ccc}
+	\includegraphics[scale=0.17]{./figs/Regressao_Linear_Fig18.png} &
+	\includegraphics[scale=0.17]{./figs/Regressao_Linear_Fig19.png} &
+	\includegraphics[scale=0.17]{./figs/Regressao_Linear_Fig20.png} \\
+	(a) $\alpha$ pequeno & (b) $\alpha$ adequado & (c) $\alpha$ grande
+\end{tabular}
+}
+
+\Sli{
+No entanto, o que acontece com o gradiente descendente se a inicialização ocorrer em um ótimo local? A inclinação é igual à 0!
+
+\begin{minipage}{0.37\textwidth}
+\includegraphics[scale=0.157]{./figs/Regressao_Linear_Fig21.png}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.27\textwidth}
+\includegraphics[scale=0.157]{./figs/Regressao_Linear_Fig22.png}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.37\textwidth}
+\scriptsize
+\begin{equation}\nonumber
+\begin{split}
+w_1^{(t+1)} &= w_1^{(t)}-\alpha\frac{\partial J(\boldsymbol{w})}{\partial w_j}\\
+&= w_1^{(t)}-\alpha.0\\
+&= w_1^{(t)}\\
+\end{split}
+\end{equation}
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
 }
 
 \end{document}
