@@ -377,4 +377,45 @@ Desta forma, o algoritmo do gradiente descendente pode ser sumarizado da seguint
 Note que $w_0$ e $w_1$ precisam ser atualizados sumultaneamente!
 }
 
+\Sli{
+Quais são bons critérios de parada? Podemos utilizar um número fixo de iterações ou verificar quando o valor função de custo não é mais atualizado (erro não diminui).
+
+\begin{center}
+	\includegraphics[scale=0.2]{./figs/Regressao_Linear_Fig24.png}
+\end{center}
+}
+
+\Sli{
+\secx{Regressão Linear Multivariada}\newline
+\justify Suponha, agora, que tenhamos mais variáveis para representar o problema, visto que utilizar apenas o tamanho da casa não é suficiente para estimarmos o seu valor (número de quartos, capacidade da garagem, piscina, etc).\newline
+
+\justify Neste caso, assuma que $n$ corresponde ao número dessas variáveis, ou seja, temos agora que $\boldsymbol{x}_i\in\mathbb{R}^n$. Assim sendo, nossa função hipótese possui a seguinte formulação:
+
+\begin{align}
+	h_{\boldsymbol{w}}(\boldsymbol{x})&=w_0+w_1x_1+w_2x_2+\ldots w_nx_n\\
+	&=w_0+\sum_{j=1}^nw_jx^j.
+\end{align}
+} 
+
+\Sli{
+Para fins de simplicidade, vamos assumir que $x^0=1$, ou seja, $\boldsymbol{x}=[x^0\ x^1\ x^2\ \ldots\ x^n]\in\mathbb{R}^{n+1}$. Assim sendo, a Equação 11 pode ser escrita da seguinte forma:
+
+\begin{align}
+	h_{\boldsymbol{w}}(\boldsymbol{x}) &= w_0x^0+\sum_{j=1}^nw_jx^j\\
+	&= \boldsymbol{w}^T\boldsymbol{x}.
+\end{align}
+A equação acima é, na verdade, a equação do hiperplano, ou seja, uma reta multimensional. Desta forma, a regressão linear multivariada generaliza a regressão linear univariada para um número maior de dimensões.
+}
+
+\Sli{
+Nosso problema agora passa a ter os seguintes itens:
+
+\begin{itemize}
+	\item Função hipótese: $h_{\boldsymbol{w}}(\boldsymbol{x})=\boldsymbol{w}^T\boldsymbol{x}$.
+	\item Função de custo: $J(\boldsymbol{w})=\frac{1}{2m}\sum_{i=1}^m(h_{\boldsymbol{w}}(\boldsymbol{x}_i)-y_1)^2$.
+	\item Derivada parcial: $\frac{\partial J(\boldsymbol{w})}{\partial w_j}= \frac{1}{m}\sum_{i=1}^m[(h_{\boldsymbol{w}}(x_i)-y_i)^2x^j]$.
+\end{itemize}
+O algoritmo do gradiente descendente é o mesmo do apresentado para a regressão linear univariada.
+}
+
 \end{document}
