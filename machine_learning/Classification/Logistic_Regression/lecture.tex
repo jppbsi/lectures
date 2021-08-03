@@ -121,7 +121,30 @@ Na prática, queremos que $h_{\boldsymbol{w}}(\boldsymbol{x})\geq 0.5$ quando $\
 }	
 
 \Sli{
-Suponha que tenhamos a seguinte situação.
-}
+\justify Suponha que tenhamos a seguinte situação, em que $h_{\boldsymbol{w}}(\boldsymbol{x})=g(\boldsymbol{w}^T\boldsymbol{x})$ e $\boldsymbol{w} = [-3\ 1\ 1]$. Queremos atribuir $y=1$ se $\boldsymbol{w}^T\boldsymbol{x}> 0$, ou seja, se $-3+x^1+x^2>0\Rightarrow x^1+x^2>3$. De maneira análoga, queremos atribuir $y=0$ se $\boldsymbol{w}^T\boldsymbol{x}< 0$, ou seja, se $-3+x^1+x^2<0\Rightarrow x^1+x^2<3$.
+
+\begin{center}
+\begin{minipage}{0.37\textwidth}
+\includegraphics[scale=0.117]{./figs/Regressao_Logistica_Fig3.png}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.37\textwidth}
+\includegraphics[scale=0.117]{./figs/Regressao_Logistica_Fig4.png}
+\end{minipage}%%% to prevent a space
+\end{center}
+}	
+
+\Sli{
+\justify Suponha agora outra situação, em que $h_{\boldsymbol{w}}(\boldsymbol{x})=g(w_0+w_1x^1+w_2x^2+w_3(x^1)^2+w_4(x^2)^2)$ e $\boldsymbol{w} = [-1\ 0\ 0\ 1\ 1]$. Queremos atribuir $y=1$ se $-1+(x^1)^2+(x^2)^2>0\Rightarrow (x^1)^2+(x^2)^2>1$. De maneira análoga, queremos atribuir $y=0$ se $1+(x^1)^2+(x^2)^2<0\Rightarrow (x^1)^2+(x^2)^2<1$.
+\vspace{-0.5cm}
+\begin{center}
+\begin{minipage}{0.37\textwidth}
+\includegraphics[scale=0.117]{./figs/Regressao_Logistica_Fig5.png}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.37\textwidth}
+\includegraphics[scale=0.117]{./figs/Regressao_Logistica_Fig6.png}
+\end{minipage}%%% to prevent a space
+\end{center}
+Desta forma, podemos notar que, dependendo da função base escolhida, diferentes superfícies de separação podem ser obtidas. Usualmente, quanto maior o grau do polinômio, mais complexa será a sua superfície.
+}	
 
 \end{document}
