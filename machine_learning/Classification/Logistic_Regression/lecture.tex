@@ -145,6 +145,80 @@ Na prática, queremos que $h_{\boldsymbol{w}}(\boldsymbol{x})\geq 0.5$ quando $\
 \end{minipage}%%% to prevent a space
 \end{center}
 Desta forma, podemos notar que, dependendo da função base escolhida, diferentes superfícies de separação podem ser obtidas. Usualmente, quanto maior o grau do polinômio, mais complexa será a sua superfície.
+}
+
+\Sli{
+Assim sendo, temos as seguintes informações até o momento:
+
+\begin{itemize}
+	\item Função hipótese: $h_{\boldsymbol{w}}(\boldsymbol{x}) = \frac{1}{1+e^{-\boldsymbol{w}^T\boldsymbol{x}}}$.
+	\item Função base: $f_{\boldsymbol{w}}(\boldsymbol{x})=\boldsymbol{w}^T\boldsymbol{x}$ (padrão).
+	\item Função de custo: ?
+\end{itemize}
+Por que não é interessante utilizar MSE como função de custo para o Regressor Logístico?
+}
+
+\Sli{
+Temos dois problemas principais com MSE quando usamos a técnica de Regressão Logística:
+
+\begin{enumerate}
+	\item Suponha que o rótulo verdadeiro de uma amostra $\boldsymbol{x}\in{\cal X}$ qualquer seja $y=1$, e nosso classificador tenha resultado como saída $h_{\boldsymbol{w}}(\boldsymbol{x}) = 0$. Neste caso (para $m=1$), temos que $J(\boldsymbol{w}) = \frac{1}{2}(1-0)^2 = 0.5$. Note que essa é uma penalização muito pequena para um \textbf{erro} de classificação. Assim sendo, MSE não penaliza muito fortemente erros de classificação e pode levar a um aprendizado insuficiente.\\
+	\item A função de custo MSE \textbf{não é convexa} para o Regressor Logístico (provado matematicamente).
+\end{enumerate}
+}
+
+\Sli{
+Vamos, então, definir uma nova função de custo que seja convexa. Nossa função será dividida, inicialmente, em duas partes:
+
+\begin{equation}
+	C(h_{\boldsymbol{w}}(\boldsymbol{x}), y) = \begin{cases}
+                        -\log (h_{\boldsymbol{w}}(\boldsymbol{x})) \text{ se $y=1$} \\
+                        -\log(1-h_{\boldsymbol{w}}(\boldsymbol{x})) \text{ se $y=0$}.
+                    \end{cases}
+\end{equation}
+
+Vamos, agora, analisar as duas situações separadamente. Como primeiro caso, temos a situação em que $y=1$.
+
+\begin{minipage}{0.49\textwidth}
+\includegraphics[scale=0.17]{./figs/Regressao_Logistica_Fig7.png}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.37\textwidth}
+Neste caso, quando temos um erro, ou seja, $h_{\boldsymbol{w}}(\boldsymbol{x}) = 0$, então $C(h_{\boldsymbol{w}}(\boldsymbol{x}), y) = -\log(0) = \infty$. No caso de um acerto, ou seja, $h_{\boldsymbol{w}}(\boldsymbol{x}) = 1$, temos que $C(h_{\boldsymbol{w}}(\boldsymbol{x}), y) = -\log(1) = 0$
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+A próxima situação ocorre quando $y=0$.
+
+\begin{minipage}{0.49\textwidth}
+\includegraphics[scale=0.17]{./figs/Regressao_Logistica_Fig8.png}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.37\textwidth}
+Neste caso, quando temos um erro, ou seja, $h_{\boldsymbol{w}}(\boldsymbol{x}) = 1$, então $C(h_{\boldsymbol{w}}(\boldsymbol{x}), y) = -\log(1-1) = -\log(0) = \infty$. No caso de um acerto, ou seja, $h_{\boldsymbol{w}}(\boldsymbol{x}) = 0$, temos que $C(h_{\boldsymbol{w}}(\boldsymbol{x}), y) = -\log(1-0) = -\log(1) = 0$.
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+Podemos escrever a Equação 3 agrupando as duas situações descritas anteriormente:
+
+\begin{equation}
+	C(h_{\boldsymbol{w}}(\boldsymbol{x}), y) = \textcolor{blue}{-y\log(h_{\boldsymbol{w}}(\boldsymbol{x}))}\textcolor{red}{-(1-y)log(1-h_{\boldsymbol{w}}(\boldsymbol{x}))}.
+\end{equation}
+\justify Quando \textcolor{blue}{$y=1$}, termo vermelho é zerado e a equação acima torna-se a Equação 3 para este caso. Por outro lado, quando \textcolor{red}{$y=0$}, termo azul é zerado e a equação acima torna-se a Equação 3 para este caso.
+}
+
+\Sli{
+A nossa função de custo final para o Regressor Logístico é dada por:
+
+\begin{align}\nonumber
+	J(\boldsymbol{w}) &= \frac{1}{m} \sum_{i=1}^m C(h_{\boldsymbol{w}}(\boldsymbol{x}_i), y_i)\\
+	&= \frac{1}{m} \sum_{i=1}^m[-y_i\log(h_{\boldsymbol{w}}(\boldsymbol{x_i}))-(1-y_i)\log(1-h_{\boldsymbol{w}}(\boldsymbol{x}_i))].
+\end{align}
+A função acima é também conhecida por \textbf{entropia cruzada binária}.
 }	
 
 \end{document}
