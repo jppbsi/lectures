@@ -89,5 +89,38 @@
 \justify \underline{Definição do problema:} seja um conjunto de dados ${\cal X}= \{(\boldsymbol{x}_1,y_1),(\boldsymbol{x}_2,y_2),\ldots,(\boldsymbol{x}_z,y_z)\}$ tal que $\boldsymbol{x}_i\in\mathbb{R}^{n+1}$ corresponde ao dado de entrada e $y_i\in[0,1]$ denota o seu respectivo valor de saída. Temos, ainda, que ${\cal X}$ pode ser \textbf{particionado} da seguinte forma: ${\cal X} = {\cal X}^1\cup {\cal X}^2$, em que ${\cal X}^1$ e ${\cal X}^2$ denotam os conjuntos de dados de \textbf{treinamento} e \textbf{teste}, respectivamente. Nosso objetivo é, dado o conjunto de treinamento, aprender uma função $h:\mathbb{R}\rightarrow[0,1]$ que consiga estimar a probabilidade de uma amostra pertencer à uma dada classe. Por que usar uma função logística (sigmoide)?
 }
 
+\Sli{
+A Função Logística possui algumas propriedades interessantes com a seguinte formulação:
+
+\begin{equation}
+	g(a)=\frac{1}{1+e^{-a}},
+\end{equation}
+tal que $g(a)\in[0,1]$.
+\begin{center}
+\includegraphics[scale=0.17]{./figs/Regressao_Logistica_Fig1.png}\hspace{1cm}
+\end{center}
+}
+
+\Sli{
+Como funciona o Regressor Logístico? Dado que queremos obter uma saída $h_{\boldsymbol{w}}(\boldsymbol{x})\in[0,1]$, basta modificarmos nossa entrada na Equação 1 como segue:
+
+\begin{align}\nonumber
+	h_{\boldsymbol{w}}(\boldsymbol{x}) &= g(\boldsymbol{w}^T\boldsymbol{x})\\
+	&= \frac{1}{1+e^{-\boldsymbol{w}^T\boldsymbol{x}}}.
+\end{align}
+
+\begin{minipage}{0.49\textwidth}
+\includegraphics[scale=0.17]{./figs/Regressao_Logistica_Fig2.png}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.37\textwidth}
+Na prática, queremos que $h_{\boldsymbol{w}}(\boldsymbol{x})\geq 0.5$ quando $\boldsymbol{w}^T\boldsymbol{x}\geq 0$. De maneira análoga, temos que $h_{\boldsymbol{w}}(\boldsymbol{x})< 0.5$ quando $\boldsymbol{w}^T\boldsymbol{x}< 0$.
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}	
+
+\Sli{
+Suponha que tenhamos a seguinte situação.
+}
 
 \end{document}
