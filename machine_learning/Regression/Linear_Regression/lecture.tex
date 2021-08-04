@@ -203,10 +203,10 @@ J(w_1) &= \frac{1}{2m}\sum_{i=1}^3(h_{\boldsymbol{w}}(x_i)-y_i)^2\\
 \Sli{
 Agora, suponha que a nossa função hipótese é dada por $h_{\boldsymbol{w}}(x) = 0.5x$, ou seja, $w_1 = 0.5$.
 
-\begin{minipage}{0.3\textwidth}
-\includegraphics[scale=0.13]{./figs/Regressao_Linear_Fig10.png}
+\begin{minipage}{0.27\textwidth}
+\includegraphics[scale=0.11]{./figs/Regressao_Linear_Fig10.png}
 \end{minipage}%%% to prevent a space
-\begin{minipage}{0.37\textwidth}
+\begin{minipage}{0.4\textwidth}
 \scriptsize
 \begin{equation}\nonumber
 \begin{split}
@@ -219,8 +219,8 @@ J(w_1) &= \frac{1}{2.3}[(0.5-1)^2+(1-2)^2+(1.5-3)^2]\\
 \null
 \par\xdef\tpd{\the\prevdepth}
 \end{minipage}
-\begin{minipage}{0.3\textwidth}
-\includegraphics[scale=0.13]{./figs/Regressao_Linear_Fig11.png}
+\begin{minipage}{0.27\textwidth}
+\includegraphics[scale=0.11]{./figs/Regressao_Linear_Fig11.png}
 \end{minipage}%%% to prevent a space
 }
 
@@ -354,11 +354,11 @@ w_1^{(t+1)} &= w_1^{(t)}-\alpha\frac{\partial J(\boldsymbol{w})}{\partial w_j}\\
 \Sli{
 Precisamos, agora, calcular as derivadas parciais para $\frac{\partial J(\boldsymbol{w})}{\partial w_j}$. Temos que:
 \begin{equation}
-	\frac{\partial J(\boldsymbol{w})}{\partial w_0} = \frac{1}{m}\sum_{i=1}^m(h_{\boldsymbol{w}}(x_i)-y_i)^2,
+	\frac{\partial J(\boldsymbol{w})}{\partial w_0} = \frac{1}{m}\sum_{i=1}^m(h_{\boldsymbol{w}}(x_i)-y_i),
 \end{equation}
 e
 \begin{equation}
-	\frac{\partial J(\boldsymbol{w})}{\partial w_1} = \frac{1}{m}\sum_{i=1}^m[(h_{\boldsymbol{w}}(x_i)-y_i)^2x_i].
+	\frac{\partial J(\boldsymbol{w})}{\partial w_1} = \frac{1}{m}\sum_{i=1}^m[(h_{\boldsymbol{w}}(x_i)-y_i)x_i].
 \end{equation}
 }
 
@@ -369,8 +369,8 @@ Desta forma, o algoritmo do gradiente descendente pode ser sumarizado da seguint
 	\item Atribua valores aleatórios para $\boldsymbol{w} = [w_0\ w_1]$.
 	\item Avalie a função de custo $J(\boldsymbol{w})$.
 	\item  Caso o \textbf{critério de parada tenha sido atingido}, vá para o passo 7.
-	\item $w_0^{(t+1)} = w_0^{(t)}-\alpha\frac{1}{m}\sum_{i=1}^m(h_{\boldsymbol{w}}(x_i)-y_i)^2$.
-	\item $w_1^{(t+1)} = w_1^{(t)}-\alpha\frac{1}{m}\sum_{i=1}^m[(h_{\boldsymbol{w}}(x_i)-y_i)^2x_i]$.
+	\item $w_0^{(t+1)} = w_0^{(t)}-\alpha\frac{1}{m}\sum_{i=1}^m(h_{\boldsymbol{w}}(x_i)-y_i)$.
+	\item $w_1^{(t+1)} = w_1^{(t)}-\alpha\frac{1}{m}\sum_{i=1}^m[(h_{\boldsymbol{w}}(x_i)-y_i)x_i]$.
 	\item Retorne ao Passo 2.
 	\item Fim do algoritmo.
 \end{enumerate}
@@ -413,7 +413,7 @@ Nosso problema agora passa a ter os seguintes itens:
 \begin{itemize}
 	\item Função hipótese: $h_{\boldsymbol{w}}(\boldsymbol{x})=\boldsymbol{w}^T\boldsymbol{x}$.
 	\item Função de custo: $J(\boldsymbol{w})=\frac{1}{2m}\sum_{i=1}^m(h_{\boldsymbol{w}}(\boldsymbol{x}_i)-y_1)^2$.
-	\item Derivada parcial: $\frac{\partial J(\boldsymbol{w})}{\partial w_j}= \frac{1}{m}\sum_{i=1}^m[(h_{\boldsymbol{w}}(x_i)-y_i)^2x^j]$.
+	\item Derivada parcial: $\frac{\partial J(\boldsymbol{w})}{\partial w_j}= \frac{1}{m}\sum_{i=1}^m[(h_{\boldsymbol{w}}(x_i)-y_i)x^j]$.
 \end{itemize}
 O algoritmo do gradiente descendente é o mesmo do apresentado para a regressão linear univariada.
 }
