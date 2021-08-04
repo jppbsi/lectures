@@ -219,6 +219,29 @@ A nossa função de custo final para o Regressor Logístico é dada por:
 	&= \frac{1}{m} \sum_{i=1}^m[-y_i\log(h_{\boldsymbol{w}}(\boldsymbol{x_i}))-(1-y_i)\log(1-h_{\boldsymbol{w}}(\boldsymbol{x}_i))].
 \end{align}
 A função acima é também conhecida por \textbf{entropia cruzada binária}.
+}
+
+\Sli{
+Basta, agora, aprendermos o conjunto de parâmetros $\boldsymbol{w}$ de maneira semelhante à Regressão Linear, ou seja, podemos fazer uso da técnica de gradiente descendente. A derivada da função de custo  apresentada na Equação 5 é dada como segue:
+
+\begin{equation}
+	\frac{\partial J(\boldsymbol{w})}{\partial w_j} = \frac{1}{m}\sum_{i=1}^m[(h_{\boldsymbol{w}}(\boldsymbol{x}_i)-y_i)x_i^j].
+\end{equation}
+Muito embora a formulação acima seja idêntica à Regressão Linear, devemos lembrar que a função hipótese $(h_{\boldsymbol{w}}(\boldsymbol{x})$ é diferente.
+}
+
+\Sli{
+Desta forma, o algoritmo do gradiente descendente pode ser sumarizado da seguinte forma:
+
+\begin{enumerate}
+	\item Atribua valores aleatórios para $\boldsymbol{w}$.
+	\item Avalie a função de custo $J(\boldsymbol{w})$.
+	\item  Caso o \textbf{critério de parada tenha sido atingido}, vá para o passo 6.
+	\item $w_j^{(t+1)} = w_j^{(t)}-\alpha\frac{1}{m}\sum_{i=1}^m[(h_{\boldsymbol{w}}(x_i)-y_i)^2x_i^j]$.
+	\item Retorne ao Passo 2.
+	\item Fim do algoritmo.
+\end{enumerate}
+Note que $w_0$ e $w_1$ precisam ser atualizados sumultaneamente!
 }	
 
 \end{document}
