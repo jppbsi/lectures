@@ -11,6 +11,7 @@
 \usepackage{ragged2e}
 
 \DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
 
 % DATA FOR FOOTER
 \date{2021}
@@ -242,6 +243,37 @@ Desta forma, o algoritmo do gradiente descendente pode ser sumarizado da seguint
 	\item Fim do algoritmo.
 \end{enumerate}
 Note que os pesos em $\boldsymbol{w}$ precisam ser atualizados sumultaneamente!
-}	
+}
+
+\Sli{
+\justify No entanto, note que o Regressor Logístico é, naturalmente, um \textbf{classificador binário}, isto é, $y_i\in\{0,1\}$, $\forall i=1,2,\ldots,z$. Desta forma, como podemos atuar em problemas que possuem \textbf{múltiplas classes}? 
+
+\justify Agora, nossos rótulos podem ser representados da seguinte forma: $y_i\in\{0,1,\ldots,c-1\}$, em que $c$ corresponde ao número de classes. Suponha a seguinte situação em que $c=3$.
+
+\begin{center}
+\includegraphics[scale=0.11]{./figs/Regressao_Logistica_Fig9.png}\hspace{1cm}
+\end{center}
+}
+
+\Sli{Existem algumas abordagens para tratar esse problema, tais como OVO (\emph{one-versus-one}) e OVA (\emph{one-versus-all}). Vamos considerar a abordagem OVA. Neste caso, para um problema de classificação com $c$ classes, temos que criar $c$ classificadores. Vejamos o exemplo abaixo em que $c=3$.
+
+\begin{center}
+\begin{tabular}{ccc}
+\includegraphics[scale=0.11]{./figs/Regressao_Logistica_Fig10.png} &
+\includegraphics[scale=0.11]{./figs/Regressao_Logistica_Fig11.png} &
+\includegraphics[scale=0.11]{./figs/Regressao_Logistica_Fig12.png} \\
+Azul versus todos & Rosa versus todos & Verde versus todos \\
+$h^1_{\boldsymbol{w}}(\boldsymbol{x})$ & $h^2_{\boldsymbol{w}}(\boldsymbol{x})$ & $h^3_{\boldsymbol{w}}(\boldsymbol{x})$
+\end{tabular}
+\end{center}
+}
+
+\Sli{
+Basta, então, treinarmos cada classificador $h^i_{\boldsymbol{w}}(\boldsymbol{x})$, $\forall i = 0,1,\ldots,c-1$ em ${\cal X}^1$. Dada uma amostra $\boldsymbol{x}\in{\cal X}^2$, seu rótulo $y$ será aquele que obedece à seguinte regra de decisão:
+
+\begin{equation}
+	y = \argmax_{i}\{h^i_{\boldsymbol{w}}(\boldsymbol{x})\}.
+\end{equation}
+}
 
 \end{document}
