@@ -8,7 +8,7 @@
 \usepackage[portuguese]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{ragged2e}
+\usepackage{ragged2e,gensymb}
 
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
@@ -134,5 +134,76 @@ Suponha $g(a) = 2\sigma(2a)-1$. Temos que $g^\prime(a) = 1-g^2(a)$. Muito embora
 \par\xdef\tpd{\the\prevdepth}
 \end{minipage}
 }
+
+\Sli{
+\secx{Perceptron}
+
+\justify O Perceptron foi formalmente proposto por McCulloch e Pitts na década de 40 com o intuito de modelar matematicamente o neurônio humano. Muito embora ele tenha sido a base para muitos algoritmos, seu poder discriminativo é limitado, pois consegue aprender apenas hiperplanos como função de decisão.
+
+\justify \underline{Definição do problema:} seja um conjunto de dados ${\cal X}= \{(\boldsymbol{x}_1,y_1),(\boldsymbol{x}_2,y_2),\ldots,(\boldsymbol{x}_z,y_z)\}$ tal que $\boldsymbol{x}_i\in\mathbb{R}^{n+1}$ corresponde ao dado de entrada e $y_i\in[0,1]$ denota o seu respectivo valor de saída. Temos, ainda, que ${\cal X}$ pode ser \textbf{particionado} da seguinte forma: ${\cal X} = {\cal X}^1\cup {\cal X}^2$, em que ${\cal X}^1$ e ${\cal X}^2$ denotam os conjuntos de dados de \textbf{treinamento} e \textbf{teste}, respectivamente. Nosso objetivo é, dado o conjunto de treinamento, aprender uma função $h:\mathbb{R}^{n+1}\rightarrow\{0,1\}$ que consiga atribuir a classe correta à uma determinada amostra.
+}
+
+\Sli{
+Vamos, agora, adaptar a função de ativação limiar para que possamos criar a nossa função hipótese:
+
+\begin{equation}
+	h_{\boldsymbol{w}}(\boldsymbol{x}) = 
+	\begin{cases}
+		1\text{ caso }\boldsymbol{w}^T\boldsymbol{x}\geq \theta\\
+		0\text{ caso contrário.}
+	\end{cases}
+\end{equation}
+
+Para simplificar a notação, é usual trazermos $\theta$ para o lado esquerdo da equação e atribuirmos $w_0=\theta$. Novamente, consideraremos $x^0=1$. Assim, temos a função hipótese atualizada como segue:
+
+\begin{equation}
+	h_{\boldsymbol{w}}(\boldsymbol{x}) = 
+	\begin{cases}
+		1\text{ caso }\boldsymbol{w}^T\boldsymbol{x}\geq 0\\
+		0\text{ caso contrário.}
+	\end{cases}
+\end{equation}
+}
+
+\Sli{
+Vamos, agora, revisitar alguns conceitos de Geometria Analítica. Suponha que tenhamos dois vetores $\boldsymbol{u} = [u_1\ u_2]$ e $\boldsymbol{v} = [v_1\ v_2]$. Geometricamente, podemos representá-los como segue:
+
+\begin{minipage}{0.49\textwidth}
+\includegraphics[scale=0.17]{./figs/Neural_Networks_Fig5.png}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.37\textwidth}
+Lembrando que $\norm{u} = \sqrt{u_1^2+u_2^2}$ denota o comprimento (magnitude) de $u$.
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+Temos, também, a definição de \textbf{projeção escalar} entre dois vetores, dada como segue:
+
+\begin{minipage}{0.49\textwidth}
+\includegraphics[scale=0.17]{./figs/Neural_Networks_Fig6.png}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.37\textwidth}
+Podemos, então, representar o produto escalar entre dois vetores da seguinte forma: $\boldsymbol{w}^T\boldsymbol{x} = \norm{\boldsymbol{w}}.\cos\phi$. Lembrando que temos as seguintes situações:
+
+	\begin{itemize}
+		\item $\cos\phi > 0$ quando $\phi < 90\degree$.
+		\item $\cos\phi < 0$ quando $\phi > 90\degree$.
+		\item $\cos\phi = 0$ quando $\phi = 90\degree$ 
+	\end{itemize}
+	
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+Voltando ao nosso problema inicial, temos que a equação $\boldsymbol{w}^T\boldsymbol{x}=0$ define um hiperplano normal ao vetor de pesos $\boldsymbol{w}$ deslocado de $-\theta$ (assumindo que $w_0=-\theta$ e $x_0 = 1$). Vamos supor 	que $\theta = 0$, ou seja, o hiperplano passa pela origem.
+}
+
+\begin{center}
+	\includegraphics[scale=0.17]{./figs/Neural_Networks_Fig7.png}
+\end{center}
 
 \end{document}
