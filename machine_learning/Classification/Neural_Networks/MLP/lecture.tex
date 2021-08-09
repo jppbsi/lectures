@@ -140,7 +140,7 @@ Suponha $g(a) = 2\sigma(2a)-1$. Temos que $g^\prime(a) = 1-g^2(a)$. Muito embora
 
 \justify O Perceptron foi formalmente proposto por McCulloch e Pitts na década de 40 com o intuito de modelar matematicamente o neurônio humano. Muito embora ele tenha sido a base para muitos algoritmos, seu poder discriminativo é limitado, pois consegue aprender apenas hiperplanos como função de decisão.
 
-\justify \underline{Definição do problema:} seja um conjunto de dados ${\cal X}= \{(\boldsymbol{x}_1,y_1),(\boldsymbol{x}_2,y_2),\ldots,(\boldsymbol{x}_z,y_z)\}$ tal que $\boldsymbol{x}_i\in\mathbb{R}^{n+1}$ corresponde ao dado de entrada e $y_i\in[0,1]$ denota o seu respectivo valor de saída. Temos, ainda, que ${\cal X}$ pode ser \textbf{particionado} da seguinte forma: ${\cal X} = {\cal X}^1\cup {\cal X}^2$, em que ${\cal X}^1$ e ${\cal X}^2$ denotam os conjuntos de dados de \textbf{treinamento} e \textbf{teste}, respectivamente. Nosso objetivo é, dado o conjunto de treinamento, aprender uma função $h:\mathbb{R}^{n+1}\rightarrow\{0,1\}$ que consiga atribuir a classe correta à uma determinada amostra.
+\justify \underline{Definição do problema:} seja um conjunto de dados ${\cal X}= \{(\boldsymbol{x}_1,y_1),(\boldsymbol{x}_2,y_2),\ldots,(\boldsymbol{x}_z,y_z)\}$ tal que $\boldsymbol{x}_i\in\mathbb{R}^{n+1}$ corresponde ao dado de entrada e $y_i\in[-1,+1]$ denota o seu respectivo valor de saída. Temos, ainda, que ${\cal X}$ pode ser \textbf{particionado} da seguinte forma: ${\cal X} = {\cal X}^1\cup {\cal X}^2$, em que ${\cal X}^1$ e ${\cal X}^2$ denotam os conjuntos de dados de \textbf{treinamento} e \textbf{teste}, respectivamente. Nosso objetivo é, dado o conjunto de treinamento, aprender uma função $h:\mathbb{R}^{n+1}\rightarrow\{-1,+1\}$ que consiga atribuir a classe correta à uma determinada amostra.
 }
 
 \Sli{
@@ -185,7 +185,7 @@ Temos, também, a definição de \textbf{projeção escalar} entre dois vetores,
 \includegraphics[scale=0.17]{./figs/Neural_Networks_Fig6.png}
 \end{minipage}%%% to prevent a space
 \begin{minipage}{0.37\textwidth}
-Podemos, então, representar o produto escalar entre dois vetores da seguinte forma: $\boldsymbol{w}^T\boldsymbol{x} = \norm{\boldsymbol{w}}.\cos\phi$. Lembrando que temos as seguintes situações:
+Podemos, então, representar a projeção escalar entre dois vetores da seguinte forma: $\boldsymbol{w}^T\boldsymbol{x} = \norm{\boldsymbol{w}}.\cos\phi$. Lembrando que temos as seguintes situações:
 
 	\begin{itemize}
 		\item $\cos\phi > 0$ quando $\phi < 90\degree$.
@@ -204,6 +204,69 @@ Voltando ao nosso problema inicial, temos que a equação $\boldsymbol{w}^T\bold
 \begin{center}
 	\includegraphics[scale=0.17]{./figs/Neural_Networks_Fig7.png}
 \end{center}
+}
+
+\Sli{
+Como aprender o conjunto de pesos $\boldsymbol{w}$? A ideia intuitiva é \textbf{mover} o vetor de pesos de tal forma que as amostras fiquem posicionadas corretamente no espaço de características. No exemplo abaixo, temos um conjunto de dados ${\cal X}^1=\{(\boldsymbol{x}_1,+1),(\boldsymbol{x}_2,+1),(\boldsymbol{x}_3,-1),(\boldsymbol{x}_4,-1)\}$, de tal forma que o hiperplano $\boldsymbol{w}^T\boldsymbol{x}=0$ já se encontra posicionado corretamente.
+
+\begin{minipage}{0.49\textwidth}
+\includegraphics[scale=0.17]{./figs/Neural_Networks_Fig8.png}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.5\textwidth}
+A regra de atualização dos pesos é dada pela seguinte fórmula:
+
+\begin{equation}
+	\boldsymbol{w}^{(t+1)} = \boldsymbol{w}^{(t)}+\alpha(y_i-h_{\boldsymbol{w}^{(t)}}(\boldsymbol{x}_i))\boldsymbol{x}_i,
+\end{equation}
+tal que $\forall i = 1,2,\ldots,m$. 
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+
+}
+
+\Sli{
+Mas como ele funciona na prática? Suponha uma amostra $\boldsymbol{x}\in{\cal X}$ tal que $y = +1$ e $h_{\boldsymbol{w}}(\boldsymbol{x})=-1$. Para um valor de $\alpha = 0.5$, tempos que:
+
+\begin{align}\nonumber
+	\boldsymbol{w}^{(t+1)} &= \boldsymbol{w}^{(t)}+\alpha(1-(-1))\boldsymbol{x}\\
+	&=\boldsymbol{w}^{(t)}+0.5(2)\boldsymbol{x} = \boldsymbol{w}^{(t)}+\boldsymbol{x}.
+\end{align}
+Desta forma, o vetor de pesos $\boldsymbol{w}$ será rotacionado de modo que $\boldsymbol{x}$ seja positivo.
+\vspace{-0.5cm}
+\begin{center}
+\begin{tabular}{ccc}
+	\includegraphics[scale=0.127]{./figs/Neural_Networks_Fig9.png} &
+	\includegraphics[scale=0.127]{./figs/Neural_Networks_Fig10.png} &
+	\includegraphics[scale=0.127]{./figs/Neural_Networks_Fig11.png} \\
+	Predição & Atualização & Hiperplano aprendido
+\end{tabular}
+\end{center}
+}
+
+\Sli{
+De maneira análoga, caso o rótulo de $\boldsymbol{x}$ seja negativo, ou seja, $y=-1$, temos que:
+
+\begin{align}\nonumber
+	\boldsymbol{w}^{(t+1)} &= \boldsymbol{w}^{(t)}+\alpha(-1-(+1))\boldsymbol{x}\\
+	&=\boldsymbol{w}^{(t)}+0.5(-2)\boldsymbol{x} = \boldsymbol{w}^{(t)}-\boldsymbol{x}.
+\end{align}
+\justify Assim, o vetor de pesos será rotacionado (por meio das projeções) para o outro lado. Para um conjunto de dados que seja \textbf{linearmente separável}, foi provado matematicamente que o algoritmo do Perceptron tem sua \textbf{convergência garantida}.
+}
+
+\Sli{
+Como funciona o seu algoritmo? Vamos lá:
+
+\begin{enumerate}
+	\item Atribua pesos aleatórios para $\boldsymbol{w}$.
+	\item Inicialize $\alpha$.
+	\item $t\leftarrow 0$.
+	\item Para cada amostra $\boldsymbol{x}_i\in{\cal X}^1$, faça:
+	\begin{enumerate} 
+	\item $\boldsymbol{w}^{(t+1)} = \boldsymbol{w}^{(t)}+\alpha(y_i-h_{\boldsymbol{w}^{(t)}}(\boldsymbol{x}_i))\boldsymbol{x}_i$
+	\end{enumerate}
+	\item Repita o passo 4 até algum critério de convergência for estabelecido.	
+\end{enumerate}
 }
 
 \end{document}
