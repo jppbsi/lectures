@@ -15,7 +15,7 @@
 
 % DATA FOR FOOTER
 \date{2021}
-\title{- Redes Neurais com Percepton Multicamadas}
+\title{- Redes Neurais com Perceptron Multicamadas}
 \author{João Paulo Papa}
 \institute{Advanced Institute for Artificial Intelligence (AI2)}
 
@@ -65,7 +65,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ###############################################################################
 % FIRST SLIDE
-\SliTit{{\LARGE Redes Neurais com Percepton Multicamadas}}{Advanced Institute for Artificial Intelligence -- AI2}{https://advancedinstitute.ai}
+\SliTit{{\LARGE Redes Neurais com Perceptron Multicamadas}}{Advanced Institute for Artificial Intelligence -- AI2}{https://advancedinstitute.ai}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ###############################################################################
 % SLIDE SUB-TITLE
@@ -149,8 +149,8 @@ Vamos, agora, adaptar a função de ativação limiar para que possamos criar a 
 \begin{equation}
 	h_{\boldsymbol{w}}(\boldsymbol{x}) = 
 	\begin{cases}
-		1\text{ caso }\boldsymbol{w}^T\boldsymbol{x}\geq \theta\\
-		0\text{ caso contrário.}
+		+1\text{ caso }\boldsymbol{w}^T\boldsymbol{x}\geq \theta\\
+		-1\text{ caso contrário.}
 	\end{cases}
 \end{equation}
 
@@ -159,8 +159,8 @@ Para simplificar a notação, é usual trazermos $\theta$ para o lado esquerdo d
 \begin{equation}
 	h_{\boldsymbol{w}}(\boldsymbol{x}) = 
 	\begin{cases}
-		1\text{ caso }\boldsymbol{w}^T\boldsymbol{x}\geq 0\\
-		0\text{ caso contrário.}
+		+1\text{ caso }\boldsymbol{w}^T\boldsymbol{x}\geq 0\\
+		-1\text{ caso contrário.}
 	\end{cases}
 \end{equation}
 }
@@ -199,7 +199,7 @@ Podemos, então, representar a projeção escalar entre dois vetores da seguinte
 }
 
 \Sli{
-Voltando ao nosso problema inicial, temos que a equação $\boldsymbol{w}^T\boldsymbol{x}=0$ define um hiperplano normal ao vetor de pesos $\boldsymbol{w}$ deslocado de $-\theta$ (assumindo que $w_0=-\theta$ e $x_0 = 1$). Vamos supor 	que $\theta = 0$, ou seja, o hiperplano passa pela origem.
+Voltando ao nosso problema inicial, temos que a equação $\boldsymbol{w}^T\boldsymbol{x}=0$ define um hiperplano ortogonal ao vetor de pesos $\boldsymbol{w}$ deslocado de $-\theta$ (assumindo que $w_0=-\theta$ e $x_0 = 1$). Vamos supor 	que $\theta = 0$, ou seja, o hiperplano passa pela origem.
 
 \begin{center}
 	\includegraphics[scale=0.17]{./figs/Neural_Networks_Fig7.png}
@@ -267,6 +267,16 @@ Como funciona o seu algoritmo? Vamos lá:
 	\end{enumerate}
 	\item Repita o passo 4 até algum critério de convergência for estabelecido.	
 \end{enumerate}
+}
+
+\Sli{
+O que seria então uma Rede Neural do tipo Perceptron Multicamadas (\emph{Multilayer Perceptron} - MLP)? Basicamente, é um grupo de neurônios que, combinados, permitem o aprendizado de um número maior de funções de decisão.
+
+\begin{center}
+	\includegraphics[scale=0.15]{./figs/Neural_Networks_Fig12.png}
+\end{center}
+
+Na ilustração acima, temos que $a^{(j)}_i$ denota o neurônio $i$ da camada $j$, e $\boldsymbol{W}^{(k)}$ é a matriz de pesos que conecta as camadas $k$ e $k+1$.
 }
 
 \end{document}
