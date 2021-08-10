@@ -270,10 +270,64 @@ Como funciona o seu algoritmo? Vamos lá:
 }
 
 \Sli{
+Vejamos alguns exemplos de funcionamento do Perceptron. Considere o problema de resolver a seguinte equação lógica: $y = x^1$ AND $x^2$. Para duas características, temos $2^2$ possibilidades de amostras, isto é, o nosso conjunto de dados é composto pelos seguintes elementos: ${\cal X}=\{([0\ 0],0),([0\ 1],0),([1\ 0],0),([1\ 1],1)\}$. Conseguimos encontrar o hiperplano separador?
+
+\begin{minipage}{0.32\textwidth}
+\includegraphics[scale=0.15]{./figs/Neural_Networks_Fig12.png}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.32\textwidth}
+\includegraphics[scale=0.15]{./figs/Neural_Networks_Fig13.png}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.32\textwidth}
+\scriptsize
+Nossa função hipótese é dada por $h_{\boldsymbol{w}}(\boldsymbol{x})=g(-30+20x^1+20x^2)$. Utilizando $g$ como uma função logística, temos que:
+\begin{table}[]
+\begin{tabular}{lll}
+\rowcolor[HTML]{EFEFEF} 
+$x^1$ & $x^2$ & $h_{\boldsymbol{w}}(\boldsymbol{x})$                      \\
+0  & 0  & $g(-30)\approx 0$ \\
+0  & 1  & $g(-10)\approx 0$ \\
+1  & 0  & $g(-10)\approx 0$ \\
+1  & 1  & $g(10)\approx 1$ \\
+\end{tabular}
+\end{table}
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+Considere, agora, o problema de resolver a seguinte equação lógica: $y = x^1$ OR $x^2$. Para duas características, temos $2^2$ possibilidades de amostras, isto é, o nosso conjunto de dados é composto pelos seguintes elementos: ${\cal X}=\{([0\ 0],0),([0\ 1],1),([1\ 0],1),([1\ 1],1)\}$. Conseguimos encontrar o hiperplano separador?
+
+\begin{minipage}{0.32\textwidth}
+\includegraphics[scale=0.15]{./figs/Neural_Networks_Fig14.png}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.32\textwidth}
+\includegraphics[scale=0.15]{./figs/Neural_Networks_Fig15.png}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.32\textwidth}
+\scriptsize
+Nossa função hipótese é dada por $h_{\boldsymbol{w}}(\boldsymbol{x})=g(-10+20x^1+20x^2)$. Utilizando $g$ como uma função logística, temos que:
+\begin{table}[]
+\begin{tabular}{lll}
+\rowcolor[HTML]{EFEFEF} 
+$x^1$ & $x^2$ & $h_{\boldsymbol{w}}(\boldsymbol{x})$                      \\
+0  & 0  & $g(-10)\approx 0$ \\
+0  & 1  & $g(10)\approx 1$ \\
+1  & 0  & $g(10)\approx 1$ \\
+1  & 1  & $g(10)\approx 1$ \\
+\end{tabular}
+\end{table}
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
 O que seria então uma Rede Neural do tipo Perceptron Multicamadas (\emph{Multilayer Perceptron} - MLP)? Basicamente, é um grupo de neurônios que, combinados, permitem o aprendizado de um número maior de funções de decisão.
 
 \begin{center}
-	\includegraphics[scale=0.15]{./figs/Neural_Networks_Fig12.png}
+	\includegraphics[scale=0.15]{./figs/Neural_Networks_Fig16.png}
 \end{center}
 
 Na ilustração acima, temos que $a^{(j)}_i$ denota o neurônio $i$ da camada $j$, e $\boldsymbol{W}^{(k)}$ é a matriz de pesos que conecta as camadas $k$ e $k+1$.
