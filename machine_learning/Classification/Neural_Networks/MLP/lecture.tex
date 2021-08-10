@@ -115,7 +115,7 @@ Alguns exemplos de funções de ativação:
 É desejável que uma função de ativação seja \textbf{derivável}. Como escolhê-la? Depende de sua aplicação.
 
 \begin{minipage}{0.49\textwidth}
-\includegraphics[scale=0.17]{./figs/Neural_Networks_Fig3.png}
+\includegraphics[scale=0.15]{./figs/Neural_Networks_Fig3.png}
 \end{minipage}%%% to prevent a space
 \begin{minipage}{0.37\textwidth}
 Suponha $g(a) = \frac{1}{1+e^{-a}}$. Temos que $g^\prime(a) = g(a)(1-g(a))$. Note que $g^\prime(a)$ satura quando $a>5$ ou $a<-5$. Ademais, $g^\prime(a) <1$, $\forall a$. Isso significa que, para redes com muitas camadas, o gradiente tende a \textbf{desaparecer} durante o treinamento. 
@@ -144,7 +144,7 @@ Suponha $g(a) = 2\sigma(2a)-1$. Temos que $g^\prime(a) = 1-g^2(a)$. Muito embora
 }
 
 \Sli{
-Vamos, agora, adaptar a função de ativação limiar para que possamos criar a nossa função hipótese:
+\justify Vamos, agora, adaptar a função de ativação limiar para que possamos criar a nossa função hipótese:
 
 \begin{equation}
 	h_{\boldsymbol{w}}(\boldsymbol{x}) = 
@@ -154,7 +154,7 @@ Vamos, agora, adaptar a função de ativação limiar para que possamos criar a 
 	\end{cases}
 \end{equation}
 
-Para simplificar a notação, é usual trazermos $\theta$ para o lado esquerdo da equação e atribuirmos $w_0=\theta$. Novamente, consideraremos $x^0=1$. Assim, temos a função hipótese atualizada como segue:
+\justify Para simplificar a notação, é usual trazermos $\theta$ para o lado esquerdo da equação e atribuirmos $w_0=\theta$. Novamente, consideraremos $x^0=1$. Assim, temos a função hipótese atualizada como segue:
 
 \begin{equation}
 	h_{\boldsymbol{w}}(\boldsymbol{x}) = 
@@ -166,7 +166,7 @@ Para simplificar a notação, é usual trazermos $\theta$ para o lado esquerdo d
 }
 
 \Sli{
-Vamos, agora, revisitar alguns conceitos de Geometria Analítica. Suponha que tenhamos dois vetores $\boldsymbol{u} = [u_1\ u_2]$ e $\boldsymbol{v} = [v_1\ v_2]$. Geometricamente, podemos representá-los como segue:
+\justify Vamos, agora, revisitar alguns conceitos de Geometria Analítica. Suponha que tenhamos dois vetores $\boldsymbol{u} = [u_1\ u_2]$ e $\boldsymbol{v} = [v_1\ v_2]$. Geometricamente, podemos representá-los como segue:
 
 \begin{minipage}{0.49\textwidth}
 \includegraphics[scale=0.17]{./figs/Neural_Networks_Fig5.png}
@@ -199,7 +199,7 @@ Podemos, então, representar a projeção escalar entre dois vetores da seguinte
 }
 
 \Sli{
-Voltando ao nosso problema inicial, temos que a equação $\boldsymbol{w}^T\boldsymbol{x}=0$ define um hiperplano ortogonal ao vetor de pesos $\boldsymbol{w}$ deslocado de $-\theta$ (assumindo que $w_0=-\theta$ e $x_0 = 1$). Vamos supor 	que $\theta = 0$, ou seja, o hiperplano passa pela origem.
+\justify Voltando ao nosso problema inicial, temos que a equação $\boldsymbol{w}^T\boldsymbol{x}=0$ define um hiperplano ortogonal ao vetor de pesos $\boldsymbol{w}$ deslocado de $-\theta$ (assumindo que $w_0=-\theta$ e $x_0 = 1$). Vamos supor 	que $\theta = 0$, ou seja, o hiperplano passa pela origem.
 
 \begin{center}
 	\includegraphics[scale=0.17]{./figs/Neural_Networks_Fig7.png}
@@ -207,7 +207,7 @@ Voltando ao nosso problema inicial, temos que a equação $\boldsymbol{w}^T\bold
 }
 
 \Sli{
-Como aprender o conjunto de pesos $\boldsymbol{w}$? A ideia intuitiva é \textbf{mover} o vetor de pesos de tal forma que as amostras fiquem posicionadas corretamente no espaço de características. No exemplo abaixo, temos um conjunto de dados ${\cal X}^1=\{(\boldsymbol{x}_1,+1),(\boldsymbol{x}_2,+1),(\boldsymbol{x}_3,-1),(\boldsymbol{x}_4,-1)\}$, de tal forma que o hiperplano $\boldsymbol{w}^T\boldsymbol{x}=0$ já se encontra posicionado corretamente.
+\justify Como aprender o conjunto de pesos $\boldsymbol{w}$? A ideia intuitiva é \textbf{mover} o vetor de pesos de tal forma que as amostras fiquem posicionadas corretamente no espaço de características. No exemplo abaixo, temos um conjunto de dados ${\cal X}^1=\{(\boldsymbol{x}_1,+1),(\boldsymbol{x}_2,+1),(\boldsymbol{x}_3,-1),(\boldsymbol{x}_4,-1)\}$, de tal forma que o hiperplano $\boldsymbol{w}^T\boldsymbol{x}=0$ já se encontra posicionado corretamente.
 
 \begin{minipage}{0.49\textwidth}
 \includegraphics[scale=0.17]{./figs/Neural_Networks_Fig8.png}
@@ -226,7 +226,7 @@ tal que $\forall i = 1,2,\ldots,m$.
 }
 
 \Sli{
-Mas como ele funciona na prática? Suponha uma amostra $\boldsymbol{x}\in{\cal X}$ tal que $y = +1$ e $h_{\boldsymbol{w}}(\boldsymbol{x})=-1$. Para um valor de $\alpha = 0.5$, tempos que:
+\justify Mas como ele funciona na prática? Suponha uma amostra $\boldsymbol{x}\in{\cal X}$ tal que $y = +1$ e $h_{\boldsymbol{w}}(\boldsymbol{x})=-1$. Para um valor de $\alpha = 0.5$, tempos que:
 
 \begin{align}\nonumber
 	\boldsymbol{w}^{(t+1)} &= \boldsymbol{w}^{(t)}+\alpha(1-(-1))\boldsymbol{x}\\
@@ -245,7 +245,7 @@ Desta forma, o vetor de pesos $\boldsymbol{w}$ será rotacionado de modo que $\b
 }
 
 \Sli{
-De maneira análoga, caso o rótulo de $\boldsymbol{x}$ seja negativo, ou seja, $y=-1$, temos que:
+\justify De maneira análoga, caso o rótulo de $\boldsymbol{x}$ seja negativo, ou seja, $y=-1$, temos que:
 
 \begin{align}\nonumber
 	\boldsymbol{w}^{(t+1)} &= \boldsymbol{w}^{(t)}+\alpha(-1-(+1))\boldsymbol{x}\\
@@ -270,7 +270,7 @@ Como funciona o seu algoritmo? Vamos lá:
 }
 
 \Sli{
-Vejamos alguns exemplos de funcionamento do Perceptron. Considere o problema de resolver a seguinte equação lógica: $y = x^1$ AND $x^2$. Para duas características, temos $2^2$ possibilidades de amostras, isto é, o nosso conjunto de dados é composto pelos seguintes elementos: ${\cal X}=\{([0\ 0],0),([0\ 1],0),([1\ 0],0),([1\ 1],1)\}$. Conseguimos encontrar o hiperplano separador?
+\justify Vejamos alguns exemplos de funcionamento do Perceptron. Considere o problema de resolver a seguinte equação lógica: $y = x^1$ AND $x^2$. Para duas entradas, temos $2^2$ possibilidades de amostras, isto é, o nosso conjunto de dados é composto pelos seguintes elementos: ${\cal X}=\{([0\ 0],0),([0\ 1],0),([1\ 0],0),([1\ 1],1)\}$. Conseguimos encontrar o hiperplano separador?
 
 \begin{minipage}{0.32\textwidth}
 \includegraphics[scale=0.15]{./figs/Neural_Networks_Fig12.png}
@@ -297,7 +297,7 @@ $x^1$ & $x^2$ & $h_{\boldsymbol{w}}(\boldsymbol{x})$                      \\
 }
 
 \Sli{
-Considere, agora, o problema de resolver a seguinte equação lógica: $y = x^1$ OR $x^2$. Para duas características, temos $2^2$ possibilidades de amostras, isto é, o nosso conjunto de dados é composto pelos seguintes elementos: ${\cal X}=\{([0\ 0],0),([0\ 1],1),([1\ 0],1),([1\ 1],1)\}$. Conseguimos encontrar o hiperplano separador?
+\justify Considere, agora, o problema de resolver a seguinte equação lógica: $y = x^1$ OR $x^2$. Para duas entradas, temos $2^2$ possibilidades de amostras, isto é, o nosso conjunto de dados é composto pelos seguintes elementos: ${\cal X}=\{([0\ 0],0),([0\ 1],1),([1\ 0],1),([1\ 1],1)\}$. Conseguimos encontrar o hiperplano separador?
 
 \begin{minipage}{0.32\textwidth}
 \includegraphics[scale=0.15]{./figs/Neural_Networks_Fig14.png}
@@ -324,13 +324,56 @@ $x^1$ & $x^2$ & $h_{\boldsymbol{w}}(\boldsymbol{x})$                      \\
 }
 
 \Sli{
-O que seria então uma Rede Neural do tipo Perceptron Multicamadas (\emph{Multilayer Perceptron} - MLP)? Basicamente, é um grupo de neurônios que, combinados, permitem o aprendizado de um número maior de funções de decisão.
+\justify Considere, agora, o problema de resolver a seguinte equação lógica: $y = $ NOT $x^1$. Agora temos apenas uma entrada, ou seja, $x^1$. Assim, o nosso conjunto de dados é composto pelos seguintes elementos: ${\cal X}=\{(0,1),(1,0)\}$. Conseguimos encontrar o hiperplano separador?
 
 \begin{center}
-	\includegraphics[scale=0.15]{./figs/Neural_Networks_Fig16.png}
+\begin{minipage}{0.4\textwidth}
+\includegraphics[scale=0.15]{./figs/Neural_Networks_Fig16.png}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.32\textwidth}
+\scriptsize
+Nossa função hipótese é dada por $h_{\boldsymbol{w}}(\boldsymbol{x})=g(10+20x^1)$. Utilizando $g$ como uma função logística, temos que:
+\begin{table}[]
+\begin{tabular}{ll}
+\rowcolor[HTML]{EFEFEF} 
+$x^1$ & $h_{\boldsymbol{w}}(\boldsymbol{x})$                      \\
+0  & $g(10)\approx 1$ \\
+1  & $g(-10)\approx 0$ \\
+\end{tabular}
+\end{table}
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+\end{center}
+}
+
+\Sli{
+\justify O que seria então uma Rede Neural do tipo Perceptron Multicamadas (\emph{Multilayer Perceptron} - MLP)? Basicamente, é um grupo de neurônios que, combinados, permitem o aprendizado de um número maior de funções de decisão.
+
+\begin{center}
+	\includegraphics[scale=0.15]{./figs/Neural_Networks_Fig17.png}
 \end{center}
 
 Na ilustração acima, temos que $a^{(j)}_i$ denota o neurônio $i$ da camada $j$, e $\boldsymbol{W}^{(k)}$ é a matriz de pesos que conecta as camadas $k$ e $k+1$.
+}
+
+\Sli{
+Considerando a rede neural anterior, vamos analisar uma situação mais específica.
+
+\begin{center}
+\begin{minipage}{0.33\textwidth}
+\includegraphics[scale=0.13]{./figs/Neural_Networks_Fig18.png}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.47\textwidth}
+\scriptsize
+\begin{align}\nonumber
+a^{(2)}_1 &= g(\underbrace{w^{(1)}_{01}x^0+w^{(1)}_{11}x^1+w^{(1)}_{02}x^2+\ldots+w^{(1)}_{0n}x^n}_{\displaystyle \sum_{i=0}^n w^{(1)}_{i1}x^i=b^{(2)}_1})
+\end{align}
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+\end{center}
+
 }
 
 \end{document}
