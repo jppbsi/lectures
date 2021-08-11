@@ -351,10 +351,10 @@ $x^1$ & $h_{\boldsymbol{w}}(\boldsymbol{x})$                      \\
 \justify O que seria então uma Rede Neural do tipo Perceptron Multicamadas (\emph{Multilayer Perceptron} - MLP)? Basicamente, é um grupo de neurônios que, combinados, permitem o aprendizado de um número maior de funções de decisão.
 
 \begin{center}
-	\includegraphics[scale=0.15]{./figs/Neural_Networks_Fig17.png}
+	\includegraphics[scale=0.13]{./figs/Neural_Networks_Fig17.png}
 \end{center}
 
-Na ilustração acima, temos que $a^{(j)}_i$ denota o neurônio $i$ da camada $j$, e $\boldsymbol{W}^{(k)}$ é a matriz de pesos que conecta as camadas $k$ e $k+1$.
+Na ilustração acima, temos que $a^{(j)}_i$ denota o neurônio $i$ da camada $j$, e $\boldsymbol{W}^{(l)}$ é a matriz de pesos que conecta as camadas $l$ e $l+1$. Essa arquitetura é geralmente representada por $n$:$3$:$1$.
 }
 
 \Sli{
@@ -373,7 +373,117 @@ a^{(2)}_1 &= g(\underbrace{w^{(1)}_{01}x^0+w^{(1)}_{11}x^1+w^{(1)}_{02}x^2+\ldot
 \par\xdef\tpd{\the\prevdepth}
 \end{minipage}
 \end{center}
+A função de decisão final da rede neural é dada pela seguinte formulação:
 
+\begin{equation}
+	h_{\boldsymbol{w}}(\boldsymbol{w}) = a^{(3)}_1 = g\left(w^{(2)}_{01}a^{(2)}_0+w^{(2)}_{11}a^{(2)}_1+w^{(2)}_{21}a^{(2)}_2\right).
+\end{equation}
+}
+
+\Sli{
+\justify E no caso de problemas com múltiplas classes? Neste caso, para um problema com $c$ classes, nossa camada de saída necessita de $c$ neurônios.
+
+\begin{center}
+\begin{minipage}{0.33\textwidth}
+\includegraphics[scale=0.17]{./figs/Neural_Networks_Fig19.png}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.47\textwidth}
+Podemos utilizar a metodologia de codificação \emph{one-hot} para representar cada neurônio de saída, em que $\boldsymbol{h}_{\boldsymbol{w}}(\boldsymbol{x})\in\mathbb{R}^3$:\\\\
+\begin{tabular}{ccc}
+$h^1_{\boldsymbol{w}}(\boldsymbol{x}) \approx 
+\begin{bmatrix}
+1 \\
+0 \\
+0
+\end{bmatrix}
+$ &
+$h^2_{\boldsymbol{w}}(\boldsymbol{x}) \approx 
+\begin{bmatrix}
+0 \\
+1 \\
+0
+\end{bmatrix}
+$ &
+$h^3_{\boldsymbol{w}}(\boldsymbol{x}) \approx 
+\begin{bmatrix}
+0 \\
+0 \\
+1
+\end{bmatrix}
+$\\
+Classe 1 & Classe 2 & Classe 3	
+\end{tabular}
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+\end{center}
+O mesmo acontece com o rótulo $y$ de cada amostra, que passa a ser agora um vetor $\boldsymbol{y}\in\mathbb{R}^3$.
+}
+
+\Sli{
+\justify Existem diversos algoritmos de treinamento para Redes Neurais MLP, em que o mais conhecido é chamado de \textbf{retropropagação}, do inglês \emph{backpropagation}. Ele possui dois passos: (i) propagação para frente (\emph{forward propagation}) e (ii) propagação para trás (\emph{backpropagation}). Antes de estudarmos o seu funcionamento, vamos dar uma olhada na função de custo:
+
+\begin{equation}
+	J(\boldsymbol{w}) = \frac{1}{m}\left[\sum_{i=1}^m\sum_{k=1}^c-y_i^k\log(h^c_{\boldsymbol{w}}(\boldsymbol{x}_i))-(1-y_i^k)\log(1-h^c_{\boldsymbol{w}}(\boldsymbol{x}_i))\right].
+\end{equation}
+Fazendo uma analogia, a formulação acima contempla uma rede neural com $c$ regressores logísticos caso tenhamos uma função de ativação logística na camada de saída.
+}
+
+\Sli{
+\justify Podemos utilizar, novamente, o gradiente descendente para otimizar a função de custo $J(\boldsymbol{w})$. No entanto, note que o problema passa a ser mais complexo, pois precisamos calcular as derivadas parciais com relação à todos os pesos da rede, ou seja:
+
+\begin{equation}
+\frac{\partial J(\boldsymbol{w})}{\partial w^{(l)}_{ij}},
+\end{equation}
+em que $l=1,2,\ldots,L-1$ tal que $L$ denota a quantidade de camadas da rede neural.
+}
+
+\Sli{
+\justify Seja uma rede do tipo $3$:$4$:$4$:$2$ ilustrada abaixo. Suponha que tenhamos apenas uma amostra no conjunto de treinamento. Neste caso, o passo \emph{forward} é dado pelas seguintes etapas:
+
+\begin{minipage}{0.57\textwidth}
+\includegraphics[scale=0.2]{./figs/Neural_Networks_Fig20.png}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.47\textwidth}
+\begin{enumerate}
+	\item $\boldsymbol{a}^{(1)}\leftarrow\boldsymbol{x}$
+	\item $\boldsymbol{b}^{(2)}\leftarrow\left(\boldsymbol{W}^{(1)}\right)^T\boldsymbol{a}^{(1)}$
+	\item $\boldsymbol{a}^{(2)}\leftarrow g\left(\boldsymbol{b}^{(2)}\right)$
+	\item $\boldsymbol{b}^{(3)}\leftarrow\left(\boldsymbol{W}^{(2)}\right)^T\boldsymbol{a}^{(2)}$
+	\item $\boldsymbol{a}^{(3)}\leftarrow g\left(\boldsymbol{b}^{(3)}\right)$
+	\item $\boldsymbol{b}^{(4)}\leftarrow\left(\boldsymbol{W}^{(3)}\right)^T\boldsymbol{a}^{(3)}$
+	\item $h_{\boldsymbol{w}}(\boldsymbol{x}) = \boldsymbol{a}^{(4)}\leftarrow g\left(\boldsymbol{a}^{(3)}\right)$
+\end{enumerate}
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+\justify Para o passo de \emph{backpropagation}, temos a definição de uma nova variável $\delta^{(l)}_{j}$ que denota um erro parcial acumulado no neurônio $j$ da camada $l$. Este erro deve ser calculado de forma diferente para os neurônios de saída e das camada escondidas, como segue:
+
+\begin{itemize}
+	\item Camada de saída ($l=4$):
+	\begin{align}\nonumber
+	\delta^{(4)}_j &= a^{(4)}_j-y^j\\ &=h^j_{\boldsymbol{w}}(\boldsymbol{x})-y^j
+	\end{align}
+	Em notação vetorial, temos que $\boldsymbol{\delta}^{(4)} = \boldsymbol{a}^{(4)}-\boldsymbol{y} = \boldsymbol{h}_{\boldsymbol{w}}(\boldsymbol{x})-\boldsymbol{y}$.
+\end{itemize}
+}
+
+\Sli{
+\begin{itemize}
+	\item Camadas escondidas $l=\{2,3\}$:
+	\begin{itemize}
+	\item $\boldsymbol{\delta}^{(3)} = \left(\boldsymbol{W}^{(3)}\right)^T\boldsymbol{\delta}^{(4)}.*g^\prime\left(\boldsymbol{b}^{(3)}\right)$
+	\item $\boldsymbol{\delta}^{(2)} = \left(\boldsymbol{W}^{(2)}\right)^T\boldsymbol{\delta}^{(3)}.*g^\prime\left(\boldsymbol{b}^{(2)}\right)$
+	\end{itemize}
+Na prática, temos a seguinte formulação para propagação dos erros nas camadas intermediárias:
+\end{itemize}
+
+\begin{equation}
+	\boldsymbol{\delta}^{(l)} = \left(\boldsymbol{W}^{(l)}\right)^T\boldsymbol{\delta}^{(l+1)}.*g^\prime\left(\boldsymbol{b}^{(l)}\right).
+\end{equation}		
 }
 
 \end{document}
