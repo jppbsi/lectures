@@ -260,7 +260,7 @@ Como funciona o seu algoritmo? Vamos lá:
 \begin{enumerate}
 	\item Atribua pesos aleatórios para $\boldsymbol{w}$.
 	\item Inicialize $\alpha$.
-	\item $t\leftarrow 0$.
+	\item $t=0$.
 	\item Para cada amostra $\boldsymbol{x}_i\in{\cal X}^1$, faça:
 	\begin{enumerate} 
 	\item $\boldsymbol{w}^{(t+1)} = \boldsymbol{w}^{(t)}+\alpha(y_i-h_{\boldsymbol{w}^{(t)}}(\boldsymbol{x}_i))\boldsymbol{x}_i$
@@ -484,6 +484,39 @@ Na prática, temos a seguinte formulação para propagação dos erros nas camad
 \begin{equation}
 	\boldsymbol{\delta}^{(l)} = \left(\boldsymbol{W}^{(l)}\right)^T\boldsymbol{\delta}^{(l+1)}.*g^\prime\left(\boldsymbol{b}^{(l)}\right).
 \end{equation}		
+}
+
+\Sli{
+O nome \textbf{retropropagação} deve-se ao fato de o algoritmo ``propagar para trás"\ o erro estimado em cada camada. As derivadas parciais podem ser calculadas como segue:
+
+\begin{equation}
+	\frac{\partial J(\boldsymbol{w})}{\partial w^{(l)}_{ij}} = a^{(l)}_i\delta^{(l+1)}_j.
+\end{equation}
+Note, então, que as derivadas parciais são calculadas com relação à todos os pesos da rede neural.
+}
+
+\Sli{
+Segue algoritmo de retropropagação para treinamento de uma rede neural MLP.
+
+\begin{enumerate}
+	\item Atribua pesos aleatórios para $w^{(l)}_{ij}$\ \ $\forall l,i,j$
+	\item Execute os passos abaixo ate o critério de parada ter sido estabelecido: \textcolor{gray}{\ \ Laço das épocas}
+	\begin{enumerate}
+		\item $\Delta^{(l)}_{ij} = 0$\ \ $\forall l,i,j$ \textcolor{gray}{\ \ \ Variável utilizada para armazenar $\frac{\partial J(\boldsymbol{w})}{\partial w^{(l)}_{ij}}$}
+		\item Para cada amostra $\boldsymbol{x}_i\in{\cal X}^1$, faça:
+		\begin{enumerate}
+		\item Execute o passo de \emph{forward propagation} para calcular $\boldsymbol{a}^{l}$,\ \ $l = 2,3,\ldots,L$
+		\item Execute o passo de \emph{backward propagation} para calcular:
+			\begin{itemize}
+				\item $\boldsymbol{\delta}^{l}$,\ \ $l = L,L-1,\ldots,2$\textcolor{gray}{\ \ \ Erro em cada neurônio}
+				\item $\Delta^{(l)}_{ij} = \Delta^{(l)}_{ij}+a^{(l)}_i\delta^{(l+1)}_j$\textcolor{gray}{\ \ \ Derivadas parciais são acumuladas}
+			\end{itemize}
+		\end{enumerate}
+		\item $D^{(l)}_{ij} = \frac{1}{m}\Delta^{(l)}_{ij}$\ \ $\forall l,i,j$ \textcolor{gray}{\ \ \ Calcula o gradiente médio}
+		\item $w^{(l)}_{ij} = w^{(l)}_{ij}-\alpha D^{(l)}_{ij}$\ \ $\forall l,i,j$ \textcolor{gray}{\ \ \ Atualiza pesos com gradiente descendente}
+		\item Avalie a função de custo $J(\boldsymbol{w})$
+	\end{enumerate}
+\end{enumerate}
 }
 
 \end{document}
