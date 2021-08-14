@@ -432,4 +432,73 @@ Como podemos melhorar a convergência durante o aprendizado? Algumas opções:
 \end{itemize}
 }
 
+\SliT{Regularização}{
+Com o intuito de evitar com que nossos modelos tornem-se muito ``especializados", podemos fazer uso de técnicas de \textbf{regularização}. Vamos visualizar algumas as três situações que podem ocorrer quando estamos trabalhando com regressão de dados.
+
+\begin{tabular}{ccc}
+	\includegraphics[scale=0.157]{./figs/Regressao_Linear_Fig25.png} &
+	\includegraphics[scale=0.157]{./figs/Regressao_Linear_Fig26.png} &
+	\includegraphics[scale=0.157]{./figs/Regressao_Linear_Fig27.png}\\
+	Subtreinamento & Bom treinamento & Sobretreinamento\\
+\end{tabular}
+}
+
+\Sli{
+Vamos observar dois exemplos. A tendência é que polinômios com graus maiores sejam mais propensos ao sobretreinamento, dado que conseguem aprender funções mais complexas.
+
+\begin{center}
+\begin{tabular}{cc}
+	\includegraphics[scale=0.197]{./figs/Regressao_Linear_Fig28.png} &\hspace{1.5cm}
+	\includegraphics[scale=0.197]{./figs/Regressao_Linear_Fig29.png} \\
+ $h_{\boldsymbol{w}}(x) = w_0+w_1x+w_2x^2$ & \hspace{1.5cm}$h_{\boldsymbol{w}}(x) = w_0+w_1x+w_2x^2+w_3x^3+w_4x^4$\\
+\end{tabular}
+\end{center}
+}
+
+\Sli{
+\justify Como podemos minimizar o efeito dos pesos associados aos graus maiores? Uma solução para penalizá-los seria multiplicá-los por valores altos. Vamos modificar a Equação 2, que corresponde ao erro médio quadrático:
+
+\begin{equation}
+	\boldsymbol{w}^\ast = \argmin_{\boldsymbol{w}}\left\{\frac{1}{2m}\sum_{i=1}^m(h_w(x_i)-y_i)^2+\overbrace{500w_3}^{w_3\approx 0}+\underbrace{500w_4}_{w_4\approx 0}\right\}.
+\end{equation}
+
+\justify Como o objetivo é minimizar a função de custo, a tendência é que o gradiente descendente atribua valores muito pequenos para $w_3$ e $w_4$ no intuito de diminuir a sua influência no valor final. Assim, a regularização visa, de maneira geral, atribuir valores pequenos para os elementos em $\boldsymbol{w}$ de tal forma a termos funções ``mais simples".
+}
+
+\Sli{
+Desta forma, temos uma nova função de custo por erro médio quadrático, que agora adiciona um termo de regularização à Equação 4:
+
+\begin{equation}
+\label{e.Regularized_cost_function}
+J(\boldsymbol{w}) = \frac{1}{2m}\left[\sum_{i=1}^m(h_w(x_i)-y_i)^2+\lambda\sum_{j=1}^nw^2_j\right],
+\end{equation}
+em que $\lambda$ corresponde ao parâmetro de regularização, o qual controla a relação custo-benefício entre não regularização e sobretreinamento. \textbf{Lembrando que a regularização não se aplica à $w_0$}.
+}
+
+\Sli{
+Vejamos qual é o significado prático da taxa de regularização.
+
+\begin{center}
+\begin{tabular}{ccc}
+	\includegraphics[scale=0.197]{./figs/Regressao_Linear_Fig30.png} &
+	\includegraphics[scale=0.197]{./figs/Regressao_Linear_Fig31.png} &
+	\includegraphics[scale=0.197]{./figs/Regressao_Linear_Fig32.png} \\
+	$\lambda = 0$ & $0<\lambda<\infty$ & $\lambda \rightarrow \infty$\\
+	Sem regularização & Algum valor apropriado & $h_{\boldsymbol{w}}(x) = w_0$
+\end{tabular}
+\end{center}
+}
+
+\Sli{
+As derivadas parciais para $\frac{\partial J(\boldsymbol{w})}{\partial w_j}$ dadas pelas Equações 8 e 9 agora podem ser formuladas da seguinte maneira:
+\begin{equation}
+	\frac{\partial J(\boldsymbol{w})}{\partial w_0} = \frac{1}{m}\sum_{i=1}^m(h_{\boldsymbol{w}}(x_i)-y_i),
+\end{equation}
+e
+\begin{equation}
+	\frac{\partial J(\boldsymbol{w})}{\partial w_1} = \frac{1}{m}\sum_{i=1}^m[(h_{\boldsymbol{w}}(x_i)-y_i)x_i]+\frac{\lambda}{m}w_j.
+\end{equation}
+Note que a derivada parcial com relação à $w_0$ não sofre alterações. O algoritmo do gradiente descendente é o mesmo do que a versão da regressão linear sem a regularização.
+}
+
 \end{document}
