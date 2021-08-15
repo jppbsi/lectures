@@ -275,4 +275,35 @@ Basta, então, treinarmos cada classificador $h^i_{\boldsymbol{w}}(\boldsymbol{x
 \end{equation}
 }
 
+\SliT{Regularização}{
+\justify Como vimos anteriormente, a ideia da regularização é evitar com que a técnica fique muito \textbf{especializada} (viciada) no conjunto de treinamento e, portanto, não consiga generalizar muito bem no conjunto de teste. Vejamos as três principais situações que podem ocorrer em classificadores de padrões.
+
+\begin{center}
+\begin{tabular}{ccc}
+\includegraphics[scale=0.17]{./figs/Regressao_Logistica_Fig13.png} &
+\includegraphics[scale=0.17]{./figs/Regressao_Logistica_Fig14.png} &
+\includegraphics[scale=0.17]{./figs/Regressao_Logistica_Fig15.png} \\
+Subtreinamento & Bom treinamento & Supertreinamento \\
+\end{tabular}
+\end{center}
+}
+
+\Sli{
+Com isso, podemos modificar a Equação 5 da função de custo como segue:
+
+\begin{equation}
+	J(\boldsymbol{w}) = \frac{1}{m} \sum_{i=1}^m[-y_i\log(h_{\boldsymbol{w}}(\boldsymbol{x_i}))-(1-y_i)\log(1-h_{\boldsymbol{w}}(\boldsymbol{x}_i))]+\frac{\lambda}{2m}\sum_{j=1}^nw^2_j,
+\end{equation}
+em que $\lambda$ corresponde à taxa de regularização. Já as derivadas parciais da nova função de custo equivalem à derivadas da MSE no caso da regressão linear, como segue:
+
+\begin{equation}
+	\frac{\partial J(\boldsymbol{w})}{\partial w_0} = \frac{1}{m}\sum_{i=1}^m(h_{\boldsymbol{w}}(x_i)-y_i),
+\end{equation}
+e
+\begin{equation}
+	\frac{\partial J(\boldsymbol{w})}{\partial w_1} = \frac{1}{m}\sum_{i=1}^m[(h_{\boldsymbol{w}}(x_i)-y_i)x_i]+\frac{\lambda}{m}w_j.
+\end{equation}
+O algoritmo do gradiente descendente permanece o mesmo.
+}
+
 \end{document}
