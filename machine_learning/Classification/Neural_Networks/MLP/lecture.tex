@@ -184,13 +184,13 @@ Temos, também, a definição de \textbf{projeção escalar} entre dois vetores,
 \begin{minipage}{0.49\textwidth}
 \includegraphics[scale=0.17]{./figs/Neural_Networks_Fig6.png}
 \end{minipage}%%% to prevent a space
-\begin{minipage}{0.37\textwidth}
+\begin{minipage}{0.43\textwidth}
 Podemos, então, representar a projeção escalar entre dois vetores da seguinte forma: $\boldsymbol{w}^T\boldsymbol{x} = \norm{\boldsymbol{w}}.\cos\phi$. Lembrando que temos as seguintes situações:
 
 	\begin{itemize}
-		\item $\cos\phi > 0$ quando $\phi < 90\degree$.
-		\item $\cos\phi < 0$ quando $\phi > 90\degree$.
-		\item $\cos\phi = 0$ quando $\phi = 90\degree$ 
+		\item $\cos\phi > 0$ quando $0< \phi < 90\degree$.
+		\item $\cos\phi < 0$ quando $90\degree < \phi < 270\degree$.
+		\item $\cos\phi = 0$ quando $\phi = 90\degree$ ou $\phi = 270\degree$
 	\end{itemize}
 	
 \null
@@ -332,7 +332,7 @@ $x^1$ & $x^2$ & $h_{\boldsymbol{w}}(\boldsymbol{x})$                      \\
 \end{minipage}%%% to prevent a space
 \begin{minipage}{0.32\textwidth}
 \scriptsize
-Nossa função hipótese é dada por $h_{\boldsymbol{w}}(\boldsymbol{x})=g(10+20x^1)$. Utilizando $g$ como uma função logística, temos que:
+Nossa função hipótese é dada por $h_{\boldsymbol{w}}(\boldsymbol{x})=g(10-20x^1)$. Utilizando $g$ como uma função logística, temos que:
 \begin{table}[]
 \begin{tabular}{ll}
 \rowcolor[HTML]{EFEFEF} 
@@ -424,7 +424,7 @@ O mesmo acontece com o rótulo $y$ de cada amostra, que passa a ser agora um vet
 \justify Existem diversos algoritmos de treinamento para Redes Neurais MLP, em que o mais conhecido é chamado de \textbf{retropropagação}, do inglês \emph{backpropagation}. Ele possui dois passos: (i) propagação para frente (\emph{forward propagation}) e (ii) propagação para trás (\emph{backpropagation}). Antes de estudarmos o seu funcionamento, vamos dar uma olhada na função de custo:
 
 \begin{equation}
-	J(\boldsymbol{w}) = \frac{1}{m}\left[\sum_{i=1}^m\sum_{k=1}^c-y_i^k\log(h^c_{\boldsymbol{w}}(\boldsymbol{x}_i))-(1-y_i^k)\log(1-h^c_{\boldsymbol{w}}(\boldsymbol{x}_i))\right].
+	J(\boldsymbol{w}) = \frac{1}{m}\left[\sum_{i=1}^m\sum_{k=1}^c-y_i^k\log(h^k_{\boldsymbol{w}}(\boldsymbol{x}_i))-(1-y_i^k)\log(1-h^k_{\boldsymbol{w}}(\boldsymbol{x}_i))\right].
 \end{equation}
 Fazendo uma analogia, a formulação acima contempla uma rede neural com $c$ regressores logísticos caso tenhamos uma função de ativação logística na camada de saída.
 }
@@ -452,7 +452,7 @@ em que $l=1,2,\ldots,L-1$ tal que $L$ denota a quantidade de camadas da rede neu
 	\item $\boldsymbol{b}^{(3)}\leftarrow\left(\boldsymbol{W}^{(2)}\right)^T\boldsymbol{a}^{(2)}$
 	\item $\boldsymbol{a}^{(3)}\leftarrow g\left(\boldsymbol{b}^{(3)}\right)$
 	\item $\boldsymbol{b}^{(4)}\leftarrow\left(\boldsymbol{W}^{(3)}\right)^T\boldsymbol{a}^{(3)}$
-	\item $h_{\boldsymbol{w}}(\boldsymbol{x}) = \boldsymbol{a}^{(4)}\leftarrow g\left(\boldsymbol{a}^{(3)}\right)$
+	\item $h_{\boldsymbol{w}}(\boldsymbol{x}) = \boldsymbol{a}^{(4)}\leftarrow g\left(\boldsymbol{b}^{(4)}\right)$
 \end{enumerate}
 \null
 \par\xdef\tpd{\the\prevdepth}
