@@ -98,6 +98,34 @@
 
 \Sli{
 \justifying Quando o aprendizado é \textbf{consistente}, ou seja, quando $f^\ast$ consegue aprender dos dados? Primeiramente, precisamos definir o espaço de funções ${\cal F}$ que o nosso classificador fará parte. Vamos analisar a figura abaixo.
+
+\begin{minipage}{0.43\textwidth}
+\begin{center}
+\includegraphics[scale=0.21]{./figs/SVM_Fig1.png}
+\end{center}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.49\textwidth}
+\begin{itemize}
+	\item ${\cal F}_{all}$: espaço de todas as funções possíveis
+	\item ${\cal F}$: espaço das funções que o classificador pode aprender
+	\item $f_{bayes}$: classificador de mínimo risco possível
+	\item $f_{min}$: classificador de mínimo risco em ${\cal F}$
+\end{itemize}
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+\justify Podemos, então, associar um \textbf{risco} $R$ à cada classificador. Desta forma, $R(f^\ast)$ corresponde ao risco associado ao classificador $f^\ast$.
+
+\justify Temos que um classificador é dito ser \textbf{consistente} se, e somente se, o seu risco é minimizado quando $m\rightarrow\infty$, ou seja, quando o conjunto de treinamento aumenta. Em outras palavras, a consistência nos diz se estamos conseguindo aprender ou não.
+
+\justify O grande problema é que, quando ${\cal F}\rightarrow{\cal F}_{all}$, o nosso aprendizado não é consistente, pois o espaço de funções possíveis aumenta muito. Assim, devemos restringir o tamanho de ${\cal F}$. No entanto, o nosso dilema é: \textbf{ao restringirmos ${\cal F}$, o nosso erro de aproximação fica grande; ao ampliarmos ${\cal F}$, o nosso erro de estimação aumenta.}
+}
+
+\Sli{
+\justify A pergunta principal é: \textbf{como escolher ${\cal F}\subset{\cal F}_{all}$ e $f^\ast\in{\cal F}$?} A TAE nos ajuda a responder à essa questão propondo as SVMs, que é uma classe de (funções) classificadores ótimas no que diz respeito ao \textbf{compromisso} entre os erros de aproximação e estimação.
 }
 
 \end{document}
