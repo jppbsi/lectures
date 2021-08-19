@@ -206,4 +206,82 @@ Como podemos calcular a distância $d(H_1,h_2)$ entre os hiperplanos?
 \end{minipage}
 }
 
+\Sli{
+Desta forma, para \textbf{maximizar} a margem de separação, devemos \textbf{minimizar} $\norm{\boldsymbol{w}}$. Assim sendo, temos o seguinte problema de otimização:
+
+\begin{equation}
+	\boldsymbol{w}^\ast,b^\ast = \argmin_{\boldsymbol{w},b}\frac{1}{2}\norm{\boldsymbol{w}}^2,
+\end{equation}
+sujeito às seguintes restrições:
+
+\begin{equation}\nonumber
+	y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)-1\geq 0,\ \ \ \forall i=1,2,\ldots,m.
+\end{equation}
+As restrições acima garantem que não existem dados de treinamento entre os hiperplanos de separação.
+}
+
+\Sli{
+\justify Quando temos um problema de otimização sujeito à restrições de desigualdade, utilizamos duas principais ferramentas matemáticas: condições \textbf{KKT} (Karush–Kuhn–Tucker) e os chamados \textbf{Multiplicadores de Lagrange}.
+
+\justify O primeiro passo para a resolução da Equação 3 é criar a função Lagrangiana, a qual vai incorporar as restrições na própria função objetivo:
+
+\begin{equation}
+	L(\boldsymbol{w}, b, \boldsymbol{\alpha}) = \frac{1}{2}\norm{\boldsymbol{w}}^2-\sum_{i=1}^m\alpha_i[y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)-1],
+\end{equation}
+também conhecida como forma \textbf{primal} do problema de otimização, em que $\boldsymbol{\alpha}\in\mathbb{R}^m$ denota os multiplicadores de Lagrange.
+}
+
+\Sli{
+O nosso problema agora passar a ser a otimizar a função Lagrangiana dada pela Equação 4, o que implica em encontrar os valores de $\boldsymbol{\alpha}$, $\boldsymbol{w}$ e $b$ para os quais o gradiente da função é nulo, ou seja:
+
+\begin{equation}
+	\nabla L(\boldsymbol{w}, b, \boldsymbol{\alpha}) = 0.
+\end{equation}
+Isto implica que as derivadas parciais em relação aos parâmetros do hiperplano que desejamos encontrar devem ser nulas, ou seja:
+
+\begin{equation}
+\frac{\partial L(\boldsymbol{w}, b, \boldsymbol{\alpha})}{\partial b} = 0
+\end{equation}
+e
+\begin{equation}
+\frac{\partial L(\boldsymbol{w}, b, \boldsymbol{\alpha})}{\partial \boldsymbol{w}} = 0.	
+\end{equation}
+}
+
+\Sli{
+A derivada parcial com relação ao bias, ou seja, parâmetro $b$ é dada como segue:
+\vspace{0.35cm}
+\begin{align}\nonumber
+\frac{\partial L(\boldsymbol{w}, b, \boldsymbol{\alpha})}{\partial b} &= \frac{1}{2}\norm{\boldsymbol{w}}^2-\sum_{i=1}^m\alpha_i[y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)-1]= 0\\\nonumber
+&= \frac{1}{2}\norm{\boldsymbol{w}}^2-\sum_{i=1}^m[\alpha_iy_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)-\alpha_i] = 0\\
+&= \frac{1}{2}\norm{\boldsymbol{w}}^2-\sum_{i=1}^m\alpha_iy_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)+\sum_{i=1}^m\alpha_i = 0\\\nonumber
+&= \cancelto{0}{\frac{1}{2}\norm{\boldsymbol{w}}^2}-\sum_{i=1}^m[\cancelto{0}{\alpha_iy_i\boldsymbol{w}^T\boldsymbol{x}_i}+\alpha_iy_ib]+\cancelto{0}{\sum_{i=1}^m\alpha_i} = 0\\
+&= \sum_{i=1}^m\alpha_iy_i = 0.\nonumber
+\end{align}
+}
+
+\Sli{
+Já a derivada parcial com relação ao vetor $\boldsymbol{w}$ é dada por:
+\begin{align}\nonumber
+	\frac{\partial L(\boldsymbol{w}, b, \boldsymbol{\alpha})}{\partial \boldsymbol{w}} &= \frac{1}{2}\norm{\boldsymbol{w}}^2-\sum_{i=1}^m\alpha_i[y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)-1]= 0\\\nonumber
+	&= \boldsymbol{w}-\sum_{i=1}^m[\alpha_iy_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)-\alpha_i] = 0\\
+	&= \boldsymbol{w}-\sum_{i=1}^m\alpha_iy_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)+\sum_{i=1}^m\alpha_i = 0\\\nonumber
+	&= \boldsymbol{w}-\sum_{i=1}^m[\alpha_iy_i\boldsymbol{w}^T\boldsymbol{x}_i+\cancelto{0}{\alpha_iy_ib}]+\cancelto{0}{\sum_{i=1}^m\alpha_i} = 0\\
+	&= \boldsymbol{w}-\sum_{i=1}^m\alpha_iy_i\boldsymbol{x}_i\implies \boldsymbol{w}=\sum_{i=1}^m\alpha_iy_i\boldsymbol{x}_i.\nonumber
+\end{align}
+}
+
+\Sli{
+Substituindo-se as Equações 8 e 9 na forma primal do problema (Equação 4), encontramos a sua forma \textbf{dual}. Relembrando a forma primal, temos que ela é composta por dois termos:
+
+\begin{equation}\nonumber
+L(\boldsymbol{w}, b, \boldsymbol{\alpha}) = \overbrace{\frac{1}{2}\norm{\boldsymbol{w}}^2}^{\text{Termo 1}}\underbrace{-\sum_{i=1}^m\alpha_i[y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)-1]}_{\text{Termo 2}}.
+\end{equation}
+Desenvolvendo o primeiro termo e utilizando a Equação 9, temos que:
+\begin{align}\nonumber
+	\frac{1}{2}\norm{\boldsymbol{w}}^2 &= \frac{1}{2}\boldsymbol{w}^T\boldsymbol{w} = \frac{1}{2}\left(\sum_{i=1}^m\alpha_iy_i\boldsymbol{x}_i\right)^T\left(\sum_{i=1}^m\alpha_iy_i\boldsymbol{x}_i\right)\\
+	&= \frac{1}{2}\sum_{i=1}^m\sum_{j=1}^m\alpha_i\alpha_jy_iy_j(\boldsymbol{x}_i^T\boldsymbol{x}_j).
+\end{align}
+}
+
 \end{document}
