@@ -137,4 +137,73 @@
 \end{center}
 }
 
+\Sli{
+\justify Fazemos uma analogia com o algoritmo do Perceptron no sentido que ambos utilizam uma função de decisão linear, ou seja, um hiperplano. A diferença é que o hiperplano do Perceptron não possui as \textbf{propriedades ótimas} que o hiperplano encontrado pelo SVM possui.
+
+\begin{center}
+\begin{tabular}{cc}
+	\includegraphics[scale=0.19]{./figs/SVM_Fig4.png} &\hspace{1cm}
+	\includegraphics[scale=0.19]{./figs/SVM_Fig5.png}
+\end{tabular}
+\end{center}\vspace{-1cm}
+}
+
+\Sli{
+\justify Definimos, também, como \textbf{hiplerplano canônico} $H$ aquele cujas amostras mais próximas satisfaçam $|\boldsymbol{w}^T\boldsymbol{x}+b|=1$. Como ilustrado abaixo, temos que os hiperplanos $H_1$ e $H_2$ definem, então, as margens com relação ao hiperplano canônico. 
+
+\begin{center}
+	\includegraphics[scale=0.19]{./figs/SVM_Fig6.png}
+\end{center}
+}
+
+\Sli{
+\justify \underline{Definição do problema:} dado um conjunto de treinamento rotulado, isto é, classificação supervisionada, ${\cal X}^1=\{(\boldsymbol{x}_1,y_1),(\boldsymbol{x}_2,y_2),\ldots,(\boldsymbol{x}_m,y_m)\}$, as amostras mais próximas do hiperplano canônico $H$ devem satisfazer as seguintes condições:
+
+\begin{itemize}
+	\item $H_1:\boldsymbol{w}^T\boldsymbol{x}_i+b=1\implies \boldsymbol{w}^T\boldsymbol{x}_i+(b-1)=0$
+	\item $H_2:\boldsymbol{w}^T\boldsymbol{x}_i+b=-1\implies \boldsymbol{w}^T\boldsymbol{x}_i+(b+1)=0$
+\end{itemize}
+
+\justify Em termos de classificação, temos que:
+
+\begin{equation}\nonumber
+	\boldsymbol{w}^T\boldsymbol{x}_i+b \leq -1\text{ se $y_i = -1$}
+\end{equation}
+e
+\begin{equation}\nonumber
+	\boldsymbol{w}^T\boldsymbol{x}_i+b \geq 1\text{ se $y_i = 1$}.
+\end{equation}
+}
+
+\Sli{
+Podemos unificar as equações anteriores da seguinte forma:
+
+\begin{equation}
+	y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)-1\geq 0,
+\end{equation}
+que é conhecida pela \textbf{restrição do problema}. 
+
+\justify Note que teremos $m$ restrições, ou seja, uma para cada amostra do conjunto de treinamento, o que é bastante custoso para o classificador. Esse é um dos motivos que torna o SVM uma técnica bastante cara computacionalmente, sendo um dos seus principais pontos negativos.
+}
+
+\Sli{
+Como podemos calcular a distância $d(H_1,h_2)$ entre os hiperplanos?
+
+\begin{minipage}{0.43\textwidth}
+\begin{center}
+\includegraphics[scale=0.17]{./figs/SVM_Fig7.png}
+\end{center}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.49\textwidth}
+\begin{align}\nonumber
+	d(H_1,h_2) &= \frac{b+1}{\norm{\boldsymbol{w}}}-\frac{b-1}{\norm{\boldsymbol{w}}}\\
+	&= \frac{(b+1)-(b-1)}{\norm{\boldsymbol{w}}}\\\nonumber
+	&= \frac{b+1-b+1}{\norm{\boldsymbol{w}}}\\\nonumber
+	&= \frac{2}{\norm{\boldsymbol{w}}}	\nonumber
+\end{align}
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
 \end{document}
