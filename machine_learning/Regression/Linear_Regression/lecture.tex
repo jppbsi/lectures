@@ -496,7 +496,7 @@ As derivadas parciais para $\frac{\partial J(\boldsymbol{w})}{\partial w_j}$ dad
 \end{equation}
 e
 \begin{equation}
-	\frac{\partial J(\boldsymbol{w})}{\partial w_1} = \frac{1}{m}\sum_{i=1}^m[(h_{\boldsymbol{w}}(x_i)-y_i)x_i]+\frac{\lambda}{m}w_j.
+	\frac{\partial J(\boldsymbol{w})}{\partial w_j} = \frac{1}{m}\sum_{i=1}^m[(h_{\boldsymbol{w}}(x_i)-y_i)x_i^j]+\frac{\lambda}{m}w_j.
 \end{equation}
 Note que a derivada parcial com relação à $w_0$ não sofre alterações. O algoritmo do gradiente descendente é o mesmo do que a versão da regressão linear sem a regularização.
 }
