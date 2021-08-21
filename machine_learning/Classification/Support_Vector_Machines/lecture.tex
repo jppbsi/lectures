@@ -284,4 +284,59 @@ Desenvolvendo o primeiro termo e utilizando a Equação 9, temos que:
 \end{align}
 }
 
+\Sli{
+Desenvolvendo o segundo termo, temos que:
+
+\begin{align}\nonumber
+	-\sum_{i=1}^m\alpha_i[y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)-1] &= -\sum_{i=1}^m\alpha_i[y_i\boldsymbol{w}^T\boldsymbol{x}_i+y_ib-1]\\
+	&= -\sum_{i=1}^m[\alpha_iy_i\boldsymbol{w}^T\boldsymbol{x}_i+\alpha_iy_ib-\alpha_i] \\\nonumber
+	&= -\sum_{i=1}^m\alpha_iy_i\boldsymbol{w}^T\boldsymbol{x}_i-\sum_{i=1}^m\alpha_iy_ib+\sum_{i=1}^m\alpha_i\\\nonumber
+	&= -\sum_{i=1}^m\alpha_iy_i\boldsymbol{w}^T\boldsymbol{x}_i-b\sum_{i=1}^m\alpha_iy_i+\sum_{i=1}^m\alpha_i.\\
+\end{align}
+}
+
+\Sli{
+Podemos, ainda, desenvolver a Equação 11 um pouco mais. 
+
+\begin{align}\nonumber
+	-\sum_{i=1}^m\alpha_iy_i\boldsymbol{w}^T\boldsymbol{x}_i-b\cancelto{0\  \text{(Equação 8)}}{\sum_{i=1}^m\alpha_iy_i}+\sum_{i=1}^m\alpha_i &= -\sum_{i=1}^m\alpha_iy_i\boldsymbol{w}^T\boldsymbol{x}_i+\sum_{i=1}^m\alpha_i\\
+	&= -\sum_{i=1}^m\alpha_iy_i\underbrace{\left(\sum_{j=1}^m\alpha_jy_jx_j\right)^T\boldsymbol{x}_i}_{\text{Equação 9}}+\sum_{i=1}^m\alpha_i\\\nonumber
+	&= -\sum_{i=1}^m\sum_{j=1}^m\alpha_i\alpha_jy_iy_j\boldsymbol{x}_i^T\boldsymbol{x}_j+\sum_{i=1}^m\alpha_i.
+\end{align}
+}
+
+\Sli{
+Substituindo-se, então, as Equações 10 (primeiro termo) e 13 (segundo termo) na Equação 4, temos que:
+
+\begin{align}\nonumber
+	L(\boldsymbol{\alpha}) &= \frac{1}{2}\sum_{i=1}^m\sum_{j=1}^m\alpha_i\alpha_jy_iy_j\boldsymbol{x}_i^T\boldsymbol{x}_j-\sum_{i=1}^m\sum_{j=1}^m\alpha_i\alpha_jy_iy_j\boldsymbol{x}_i^T\boldsymbol{x}_j+\sum_{i=1}^m\alpha_i\\
+	&= -\frac{1}{2}\sum_{i=1}^m\sum_{j=1}^m\alpha_i\alpha_jy_iy_j\boldsymbol{x}_i^T\boldsymbol{x}_j+\sum_{i=1}^m\alpha_i.
+\end{align}
+Note que, agora, nossa função objetivo depende apenas dos multiplicadores de Lagrange $\boldsymbol{\alpha}$. Lembre-se que, na Equação 4, nossa função dependia de $\boldsymbol{\alpha}$, $\boldsymbol{w}$ e $b$.
+}
+
+\Sli{
+\justify Como o problema \textbf{primal} era de \textbf{minimização}, agora o problema \textbf{dual} torna-se uma \textbf{maximização} (teoria de otimização matemática). Assim sendo, nosso problema de otimização consiste em resolver a seguinte formulação:
+\vspace{0.17cm}
+\begin{align}\nonumber
+	\boldsymbol{\alpha}^\ast &= \argmax_{\boldsymbol{\alpha}}\{L(\boldsymbol{\alpha})\}\\
+	&= \argmax_{\boldsymbol{\alpha}}\left\{-\frac{1}{2}\sum_{i=1}^m\sum_{j=1}^m\alpha_i\alpha_jy_iy_j\boldsymbol{x}_i^T\boldsymbol{x}_j+\sum_{i=1}^m\alpha_i\right\}, 
+\end{align}
+sujeito às seguintes restrições:
+
+\begin{equation}\nonumber
+	\alpha_i \geq 0,\ \ \forall i=1,2,\ldots,m
+\end{equation}
+e
+\begin{equation}\nonumber
+\sum_{i=1}^m\alpha_iy_i = 0.	
+\end{equation}
+}
+
+\Sli{
+\justify Qual a vantagem de termos um problema em sua forma dual? Temos apenas uma variável de interesse, ou seja, $\boldsymbol{\alpha}$. Assim, para resolvermos a Equação 15, precisamos empregar algum método de otimização quadrática (somatório duplo). É por esse motivo que o processo de treinamento do classificador SVM é \textbf{bastante custoso computacionalmente}.
+
+\justify Desta forma, obtendo-se $\boldsymbol{\alpha}^\ast$ por algum método de otimização matemática, basta utilizamos ele na Equação 9 para obtemos $\boldsymbol{w}$. Já para calcularmos o $b$, precisamos utilizar as condições de KKT.
+}
+
 \end{document}
