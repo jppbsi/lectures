@@ -336,7 +336,11 @@ e
 \Sli{
 \justify Qual a vantagem de termos um problema em sua forma dual? Temos apenas uma variável de interesse, ou seja, $\boldsymbol{\alpha}$. Assim, para resolvermos a Equação 15, precisamos empregar algum método de otimização quadrática (somatório duplo). É por esse motivo que o processo de treinamento do classificador SVM é \textbf{bastante custoso computacionalmente}.
 
-\justify Desta forma, obtendo-se $\boldsymbol{\alpha}^\ast$ por algum método de otimização matemática, basta utilizamos ele na Equação 9 para obtemos $\boldsymbol{w}$. Já para calcularmos o $b$, precisamos utilizar as condições de KKT.
+\justify Desta forma, obtendo-se $\boldsymbol{\alpha}^\ast$ por algum método de otimização matemática, basta utilizamos ele na Equação 9 para obtemos $\boldsymbol{w}$. Já para calcularmos o $b$, precisamos utilizar as condições de KKT, as quais são condições \textbf{necessárias} para que a solução do problema dado pela Equação 15 seja ótima. Essas condições são dadas pelas seguintes restrições:
+
+\begin{equation}
+	\alpha_i^\ast(y_i(\boldsymbol{w}\boldsymbol{x}_i+b)-1) = 0,\ \forall i=1,2,\ldots,m.
+\end{equation}
 }
 
 \end{document}
