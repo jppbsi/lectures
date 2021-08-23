@@ -343,4 +343,23 @@ e
 \end{equation}
 }
 
+\Sli{
+\justify Note que $y_i(\boldsymbol{w}\boldsymbol{x}_i+b)-1) = 0$ ocorre apenas para as amostras que se encontram \textbf{sobre} os hiperplanos $H_1$ e $H_2$. Assim, $\alpha_i$ pode ser \textbf{não nulo} apenas sobre os elementos $\boldsymbol{x}_i$ que se encontram nesses hiperplanos. Para as demais amostras $\boldsymbol{x}_j$, isto é, aquelas estão estão definidas além das margens, temos que $\alpha_j = 0$.
+
+\justify Para esses elementos cujos multiplicadores de Lagrange são não nulos damos o nome de \textbf{vetores de suporte}. Eles correspondem às amostras \textbf{mais informativas} do conjunto de treinamento, pois estão mais próximas do hiperplano separador. Assim sendo, apenas essas amostras são utilizadas no cálculo de $H$, conforme apresenta a Equação 9.
+}
+
+\Sli{
+Temos, então, que $b^\ast$ pode ser calculado como segue:
+
+\begin{equation}
+	b^\ast = \frac{1}{|{\cal S}|}\sum_{\boldsymbol{x}_i\in{\cal S}}\left\{\frac{1}{y_i}-\boldsymbol{w}^T\boldsymbol{x}_i\right\},
+\end{equation}
+em que ${\cal S}\subseteq {\cal X}^1$ denota o conjunto dos vetores de suporte. Podemos, ainda, escrever a equação acima substituindo $\boldsymbol{w}$ pela Equação 9, isto é, em função dos multiplicadores de Lagrange:
+
+\begin{equation}
+	b^\ast = \frac{1}{|{\cal S}|}\sum_{\boldsymbol{x}_i\in{\cal S}}\left\{\frac{1}{y_i}-\sum_{\boldsymbol{x}_j\in{\cal S}}\alpha_j^\ast y_j\boldsymbol{x}_j^T\boldsymbol{x}_i\right\}.
+\end{equation}
+}
+
 \end{document}
