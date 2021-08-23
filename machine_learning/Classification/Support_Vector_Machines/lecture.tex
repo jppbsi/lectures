@@ -12,6 +12,7 @@
 
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator{\sign}{sgn}
 
 % DATA FOR FOOTER
 \date{2021}
@@ -149,7 +150,7 @@
 }
 
 \Sli{
-\justify Definimos, também, como \textbf{hiplerplano canônico} $H$ aquele cujas amostras mais próximas satisfaçam $|\boldsymbol{w}^T\boldsymbol{x}+b|=1$. Como ilustrado abaixo, temos que os hiperplanos $H_1$ e $H_2$ definem, então, as margens com relação ao hiperplano canônico. 
+\justify Definimos, também, como \textbf{hiplerplano canônico} $H$ aquele cujas amostras mais próximas satisfaçam $|\boldsymbol{w}^T\boldsymbol{x}+\theta|=1$. Como ilustrado abaixo, temos que os hiperplanos $H_1$ e $H_2$ definem, então, as margens com relação ao hiperplano canônico. 
 
 \begin{center}
 	\includegraphics[scale=0.19]{./figs/SVM_Fig6.png}
@@ -160,18 +161,18 @@
 \justify \underline{Definição do problema:} dado um conjunto de treinamento rotulado, isto é, classificação supervisionada, ${\cal X}^1=\{(\boldsymbol{x}_1,y_1),(\boldsymbol{x}_2,y_2),\ldots,(\boldsymbol{x}_m,y_m)\}$, as amostras mais próximas do hiperplano canônico $H$ devem satisfazer as seguintes condições:
 
 \begin{itemize}
-	\item $H_1:\boldsymbol{w}^T\boldsymbol{x}_i+b=1\implies \boldsymbol{w}^T\boldsymbol{x}_i+(b-1)=0$
-	\item $H_2:\boldsymbol{w}^T\boldsymbol{x}_i+b=-1\implies \boldsymbol{w}^T\boldsymbol{x}_i+(b+1)=0$
+	\item $H_1:\boldsymbol{w}^T\boldsymbol{x}_i+\theta=1\implies \boldsymbol{w}^T\boldsymbol{x}_i+(\theta-1)=0$
+	\item $H_2:\boldsymbol{w}^T\boldsymbol{x}_i+\theta=-1\implies \boldsymbol{w}^T\boldsymbol{x}_i+(\theta+1)=0$
 \end{itemize}
 
 \justify Em termos de classificação, temos que:
 
 \begin{equation}\nonumber
-	\boldsymbol{w}^T\boldsymbol{x}_i+b \leq -1\text{ se $y_i = -1$}
+	\boldsymbol{w}^T\boldsymbol{x}_i+\theta \leq -1\text{ se $y_i = -1$}
 \end{equation}
 e
 \begin{equation}\nonumber
-	\boldsymbol{w}^T\boldsymbol{x}_i+b \geq 1\text{ se $y_i = 1$}.
+	\boldsymbol{w}^T\boldsymbol{x}_i+\theta \geq 1\text{ se $y_i = 1$}.
 \end{equation}
 }
 
@@ -179,7 +180,7 @@ e
 Podemos unificar as equações anteriores da seguinte forma:
 
 \begin{equation}
-	y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)-1\geq 0,
+	y_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)-1\geq 0,
 \end{equation}
 que é conhecida pela \textbf{restrição do problema}. 
 
@@ -196,9 +197,9 @@ Como podemos calcular a distância $d(H_1,h_2)$ entre os hiperplanos?
 \end{minipage}%%% to prevent a space
 \begin{minipage}{0.49\textwidth}
 \begin{align}\nonumber
-	d(H_1,h_2) &= \frac{b+1}{\norm{\boldsymbol{w}}}-\frac{b-1}{\norm{\boldsymbol{w}}}\\
-	&= \frac{(b+1)-(b-1)}{\norm{\boldsymbol{w}}}\\\nonumber
-	&= \frac{b+1-b+1}{\norm{\boldsymbol{w}}}\\\nonumber
+	d(H_1,h_2) &= \frac{\theta+1}{\norm{\boldsymbol{w}}}-\frac{\theta-1}{\norm{\boldsymbol{w}}}\\
+	&= \frac{(\theta+1)-(\theta-1)}{\norm{\boldsymbol{w}}}\\\nonumber
+	&= \frac{\theta+1-\theta+1}{\norm{\boldsymbol{w}}}\\\nonumber
 	&= \frac{2}{\norm{\boldsymbol{w}}}	\nonumber
 \end{align}
 \null
@@ -210,12 +211,12 @@ Como podemos calcular a distância $d(H_1,h_2)$ entre os hiperplanos?
 Desta forma, para \textbf{maximizar} a margem de separação, devemos \textbf{minimizar} $\norm{\boldsymbol{w}}$. Assim sendo, temos o seguinte problema de otimização:
 
 \begin{equation}
-	\boldsymbol{w}^\ast,b^\ast = \argmin_{\boldsymbol{w},b}\frac{1}{2}\norm{\boldsymbol{w}}^2,
+	\boldsymbol{w}^\ast,\theta^\ast = \argmin_{\boldsymbol{w},\theta}\frac{1}{2}\norm{\boldsymbol{w}}^2,
 \end{equation}
 sujeito às seguintes restrições:
 
 \begin{equation}\nonumber
-	y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)-1\geq 0,\ \ \ \forall i=1,2,\ldots,m.
+	y_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)-1\geq 0,\ \ \ \forall i=1,2,\ldots,m.
 \end{equation}
 As restrições acima garantem que não existem dados de treinamento entre os hiperplanos de separação.
 }
@@ -226,7 +227,7 @@ As restrições acima garantem que não existem dados de treinamento entre os hi
 \justify O primeiro passo para a resolução da Equação 3 é criar a função Lagrangiana, a qual vai incorporar as restrições na própria função objetivo:
 
 \begin{equation}
-	L(\boldsymbol{w}, b, \boldsymbol{\alpha}) = \frac{1}{2}\norm{\boldsymbol{w}}^2-\sum_{i=1}^m\alpha_i[y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)-1],
+	L(\boldsymbol{w}, \theta, \boldsymbol{\alpha}) = \frac{1}{2}\norm{\boldsymbol{w}}^2-\sum_{i=1}^m\alpha_i[y_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)-1],
 \end{equation}
 também conhecida como forma \textbf{primal} do problema de otimização, em que $\boldsymbol{\alpha}\in\mathbb{R}^m$ denota os multiplicadores de Lagrange.
 }
@@ -235,27 +236,27 @@ também conhecida como forma \textbf{primal} do problema de otimização, em que
 O nosso problema agora passar a ser a otimizar a função Lagrangiana dada pela Equação 4, o que implica em encontrar os valores de $\boldsymbol{\alpha}$, $\boldsymbol{w}$ e $b$ para os quais o gradiente da função é nulo, ou seja:
 
 \begin{equation}
-	\nabla L(\boldsymbol{w}, b, \boldsymbol{\alpha}) = 0.
+	\nabla L(\boldsymbol{w}, \theta, \boldsymbol{\alpha}) = 0.
 \end{equation}
 Isto implica que as derivadas parciais em relação aos parâmetros do hiperplano que desejamos encontrar devem ser nulas, ou seja:
 
 \begin{equation}
-\frac{\partial L(\boldsymbol{w}, b, \boldsymbol{\alpha})}{\partial b} = 0
+\frac{\partial L(\boldsymbol{w}, \theta, \boldsymbol{\alpha})}{\partial b} = 0
 \end{equation}
 e
 \begin{equation}
-\frac{\partial L(\boldsymbol{w}, b, \boldsymbol{\alpha})}{\partial \boldsymbol{w}} = 0.	
+\frac{\partial L(\boldsymbol{w}, \theta, \boldsymbol{\alpha})}{\partial \boldsymbol{w}} = 0.	
 \end{equation}
 }
 
 \Sli{
-A derivada parcial com relação ao bias, ou seja, parâmetro $b$ é dada como segue:
+A derivada parcial com relação ao bias, ou seja, parâmetro $\theta$ é dada como segue:
 \vspace{0.35cm}
 \begin{align}\nonumber
-\frac{\partial L(\boldsymbol{w}, b, \boldsymbol{\alpha})}{\partial b} &= \frac{1}{2}\norm{\boldsymbol{w}}^2-\sum_{i=1}^m\alpha_i[y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)-1]= 0\\\nonumber
-&= \frac{1}{2}\norm{\boldsymbol{w}}^2-\sum_{i=1}^m[\alpha_iy_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)-\alpha_i] = 0\\
-&= \frac{1}{2}\norm{\boldsymbol{w}}^2-\sum_{i=1}^m\alpha_iy_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)+\sum_{i=1}^m\alpha_i = 0\\\nonumber
-&= \cancelto{0}{\frac{1}{2}\norm{\boldsymbol{w}}^2}-\sum_{i=1}^m[\cancelto{0}{\alpha_iy_i\boldsymbol{w}^T\boldsymbol{x}_i}+\alpha_iy_ib]+\cancelto{0}{\sum_{i=1}^m\alpha_i} = 0\\
+\frac{\partial L(\boldsymbol{w}, \theta, \boldsymbol{\alpha})}{\partial b} &= \frac{1}{2}\norm{\boldsymbol{w}}^2-\sum_{i=1}^m\alpha_i[y_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)-1]= 0\\\nonumber
+&= \frac{1}{2}\norm{\boldsymbol{w}}^2-\sum_{i=1}^m[\alpha_iy_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)-\alpha_i] = 0\\
+&= \frac{1}{2}\norm{\boldsymbol{w}}^2-\sum_{i=1}^m\alpha_iy_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)+\sum_{i=1}^m\alpha_i = 0\\\nonumber
+&= \cancelto{0}{\frac{1}{2}\norm{\boldsymbol{w}}^2}-\sum_{i=1}^m[\cancelto{0}{\alpha_iy_i\boldsymbol{w}^T\boldsymbol{x}_i}+\alpha_iy_i\theta]+\cancelto{0}{\sum_{i=1}^m\alpha_i} = 0\\
 &= \sum_{i=1}^m\alpha_iy_i = 0.\nonumber
 \end{align}
 }
@@ -263,10 +264,10 @@ A derivada parcial com relação ao bias, ou seja, parâmetro $b$ é dada como s
 \Sli{
 Já a derivada parcial com relação ao vetor $\boldsymbol{w}$ é dada por:
 \begin{align}\nonumber
-	\frac{\partial L(\boldsymbol{w}, b, \boldsymbol{\alpha})}{\partial \boldsymbol{w}} &= \frac{1}{2}\norm{\boldsymbol{w}}^2-\sum_{i=1}^m\alpha_i[y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)-1]= 0\\\nonumber
-	&= \boldsymbol{w}-\sum_{i=1}^m[\alpha_iy_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)-\alpha_i] = 0\\
-	&= \boldsymbol{w}-\sum_{i=1}^m\alpha_iy_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)+\sum_{i=1}^m\alpha_i = 0\\\nonumber
-	&= \boldsymbol{w}-\sum_{i=1}^m[\alpha_iy_i\boldsymbol{w}^T\boldsymbol{x}_i+\cancelto{0}{\alpha_iy_ib}]+\cancelto{0}{\sum_{i=1}^m\alpha_i} = 0\\
+	\frac{\partial L(\boldsymbol{w}, \theta, \boldsymbol{\alpha})}{\partial \boldsymbol{w}} &= \frac{1}{2}\norm{\boldsymbol{w}}^2-\sum_{i=1}^m\alpha_i[y_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)-1]= 0\\\nonumber
+	&= \boldsymbol{w}-\sum_{i=1}^m[\alpha_iy_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)-\alpha_i] = 0\\
+	&= \boldsymbol{w}-\sum_{i=1}^m\alpha_iy_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)+\sum_{i=1}^m\alpha_i = 0\\\nonumber
+	&= \boldsymbol{w}-\sum_{i=1}^m[\alpha_iy_i\boldsymbol{w}^T\boldsymbol{x}_i+\cancelto{0}{\alpha_iy_i\theta}]+\cancelto{0}{\sum_{i=1}^m\alpha_i} = 0\\
 	&= \boldsymbol{w}-\sum_{i=1}^m\alpha_iy_i\boldsymbol{x}_i\implies \boldsymbol{w}=\sum_{i=1}^m\alpha_iy_i\boldsymbol{x}_i.\nonumber
 \end{align}
 }
@@ -275,7 +276,7 @@ Já a derivada parcial com relação ao vetor $\boldsymbol{w}$ é dada por:
 Substituindo-se as Equações 8 e 9 na forma primal do problema (Equação 4), encontramos a sua forma \textbf{dual}. Relembrando a forma primal, temos que ela é composta por dois termos:
 
 \begin{equation}\nonumber
-L(\boldsymbol{w}, b, \boldsymbol{\alpha}) = \overbrace{\frac{1}{2}\norm{\boldsymbol{w}}^2}^{\text{Termo 1}}\underbrace{-\sum_{i=1}^m\alpha_i[y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)-1]}_{\text{Termo 2}}.
+L(\boldsymbol{w}, \theta, \boldsymbol{\alpha}) = \overbrace{\frac{1}{2}\norm{\boldsymbol{w}}^2}^{\text{Termo 1}}\underbrace{-\sum_{i=1}^m\alpha_i[y_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)-1]}_{\text{Termo 2}}.
 \end{equation}
 Desenvolvendo o primeiro termo e utilizando a Equação 9, temos que:
 \begin{align}\nonumber
@@ -288,10 +289,10 @@ Desenvolvendo o primeiro termo e utilizando a Equação 9, temos que:
 Desenvolvendo o segundo termo, temos que:
 
 \begin{align}\nonumber
-	-\sum_{i=1}^m\alpha_i[y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)-1] &= -\sum_{i=1}^m\alpha_i[y_i\boldsymbol{w}^T\boldsymbol{x}_i+y_ib-1]\\
-	&= -\sum_{i=1}^m[\alpha_iy_i\boldsymbol{w}^T\boldsymbol{x}_i+\alpha_iy_ib-\alpha_i] \\\nonumber
-	&= -\sum_{i=1}^m\alpha_iy_i\boldsymbol{w}^T\boldsymbol{x}_i-\sum_{i=1}^m\alpha_iy_ib+\sum_{i=1}^m\alpha_i\\\nonumber
-	&= -\sum_{i=1}^m\alpha_iy_i\boldsymbol{w}^T\boldsymbol{x}_i-b\sum_{i=1}^m\alpha_iy_i+\sum_{i=1}^m\alpha_i.\\
+	-\sum_{i=1}^m\alpha_i[y_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)-1] &= -\sum_{i=1}^m\alpha_i[y_i\boldsymbol{w}^T\boldsymbol{x}_i+y_i\theta-1]\\
+	&= -\sum_{i=1}^m[\alpha_iy_i\boldsymbol{w}^T\boldsymbol{x}_i+\alpha_iy_i\theta-\alpha_i] \\\nonumber
+	&= -\sum_{i=1}^m\alpha_iy_i\boldsymbol{w}^T\boldsymbol{x}_i-\sum_{i=1}^m\alpha_iy_i\theta+\sum_{i=1}^m\alpha_i\\\nonumber
+	&= -\sum_{i=1}^m\alpha_iy_i\boldsymbol{w}^T\boldsymbol{x}_i-\theta\sum_{i=1}^m\alpha_iy_i+\sum_{i=1}^m\alpha_i.\\
 \end{align}
 }
 
@@ -299,7 +300,7 @@ Desenvolvendo o segundo termo, temos que:
 Podemos, ainda, desenvolver a Equação 11 um pouco mais. 
 
 \begin{align}\nonumber
-	-\sum_{i=1}^m\alpha_iy_i\boldsymbol{w}^T\boldsymbol{x}_i-b\cancelto{0\  \text{(Equação 8)}}{\sum_{i=1}^m\alpha_iy_i}+\sum_{i=1}^m\alpha_i &= -\sum_{i=1}^m\alpha_iy_i\boldsymbol{w}^T\boldsymbol{x}_i+\sum_{i=1}^m\alpha_i\\
+	-\sum_{i=1}^m\alpha_iy_i\boldsymbol{w}^T\boldsymbol{x}_i-\theta\cancelto{0\  \text{(Equação 8)}}{\sum_{i=1}^m\alpha_iy_i}+\sum_{i=1}^m\alpha_i &= -\sum_{i=1}^m\alpha_iy_i\boldsymbol{w}^T\boldsymbol{x}_i+\sum_{i=1}^m\alpha_i\\
 	&= -\sum_{i=1}^m\alpha_iy_i\underbrace{\left(\sum_{j=1}^m\alpha_jy_jx_j\right)^T\boldsymbol{x}_i}_{\text{Equação 9}}+\sum_{i=1}^m\alpha_i\\\nonumber
 	&= -\sum_{i=1}^m\sum_{j=1}^m\alpha_i\alpha_jy_iy_j\boldsymbol{x}_i^T\boldsymbol{x}_j+\sum_{i=1}^m\alpha_i.
 \end{align}
@@ -336,21 +337,21 @@ e
 \Sli{
 \justify Qual a vantagem de termos um problema em sua forma dual? Temos apenas uma variável de interesse, ou seja, $\boldsymbol{\alpha}$. Assim, para resolvermos a Equação 15, precisamos empregar algum método de otimização quadrática (somatório duplo). É por esse motivo que o processo de treinamento do classificador SVM é \textbf{bastante custoso computacionalmente}.
 
-\justify Desta forma, obtendo-se $\boldsymbol{\alpha}^\ast$ por algum método de otimização matemática, basta utilizamos ele na Equação 9 para obtemos $\boldsymbol{w}$. Já para calcularmos o $b$, precisamos utilizar as condições de KKT, as quais são condições \textbf{necessárias} para que a solução do problema dado pela Equação 15 seja ótima. Essas condições são dadas pelas seguintes restrições:
+\justify Desta forma, obtendo-se $\boldsymbol{\alpha}^\ast$ por algum método de otimização matemática, basta utilizamos ele na Equação 9 para obtemos $\boldsymbol{w}$. Já para calcularmos o $\theta$, precisamos utilizar as condições de KKT, as quais são condições \textbf{necessárias} para que a solução do problema dado pela Equação 15 seja ótima. Essas condições são dadas pelas seguintes restrições:
 
 \begin{equation}
-	\alpha_i^\ast(y_i(\boldsymbol{w}\boldsymbol{x}_i+b)-1) = 0,\ \forall i=1,2,\ldots,m.
+	\alpha_i^\ast(y_i(\boldsymbol{w}\boldsymbol{x}_i+\theta)-1) = 0,\ \forall i=1,2,\ldots,m.
 \end{equation}
 }
 
 \Sli{
-\justify Note que $y_i(\boldsymbol{w}\boldsymbol{x}_i+b)-1) = 0$ ocorre apenas para as amostras que se encontram \textbf{sobre} os hiperplanos $H_1$ e $H_2$. Assim, $\alpha_i$ pode ser \textbf{não nulo} apenas sobre os elementos $\boldsymbol{x}_i$ que se encontram nesses hiperplanos. Para as demais amostras $\boldsymbol{x}_j$, isto é, aquelas estão estão definidas além das margens, temos que $\alpha_j = 0$.
+\justify Note que $y_i(\boldsymbol{w}\boldsymbol{x}_i+\theta)-1) = 0$ ocorre apenas para as amostras que se encontram \textbf{sobre} os hiperplanos $H_1$ e $H_2$. Assim, $\alpha_i$ pode ser \textbf{não nulo} apenas sobre os elementos $\boldsymbol{x}_i$ que se encontram nesses hiperplanos. Para as demais amostras $\boldsymbol{x}_j$, isto é, aquelas estão estão definidas além das margens, temos que $\alpha_j = 0$.
 
 \justify Para esses elementos cujos multiplicadores de Lagrange são não nulos damos o nome de \textbf{vetores de suporte}. Eles correspondem às amostras \textbf{mais informativas} do conjunto de treinamento, pois estão mais próximas do hiperplano separador. Assim sendo, apenas essas amostras são utilizadas no cálculo de $H$, conforme apresenta a Equação 9.
 }
 
 \Sli{
-Temos, então, que $b^\ast$ pode ser calculado como segue:
+Temos, então, que $\theta^\ast$ pode ser calculado como segue:
 
 \begin{equation}
 	b^\ast = \frac{1}{|{\cal S}|}\sum_{\boldsymbol{x}_i\in{\cal S}}\left\{\frac{1}{y_i}-\boldsymbol{w}^T\boldsymbol{x}_i\right\},
@@ -358,8 +359,23 @@ Temos, então, que $b^\ast$ pode ser calculado como segue:
 em que ${\cal S}\subseteq {\cal X}^1$ denota o conjunto dos vetores de suporte. Podemos, ainda, escrever a equação acima substituindo $\boldsymbol{w}$ pela Equação 9, isto é, em função dos multiplicadores de Lagrange:
 
 \begin{equation}
-	b^\ast = \frac{1}{|{\cal S}|}\sum_{\boldsymbol{x}_i\in{\cal S}}\left\{\frac{1}{y_i}-\sum_{\boldsymbol{x}_j\in{\cal S}}\alpha_j^\ast y_j\boldsymbol{x}_j^T\boldsymbol{x}_i\right\}.
+	\theta^\ast = \frac{1}{|{\cal S}|}\sum_{\boldsymbol{x}_i\in{\cal S}}\left\{\frac{1}{y_i}-\sum_{\boldsymbol{x}_j\in{\cal S}}\alpha_j^\ast y_j\boldsymbol{x}_j^T\boldsymbol{x}_i\right\}.
 \end{equation}
+}
+
+\Sli{
+A função de decisão (classificação) do SVM apenas retorna o sinal da amostra que está sendo avaliada, ou seja:
+
+\begin{equation}
+	h_{\boldsymbol{w}^\ast}(x) = \sign\{(\boldsymbol{w}^\ast)^T\boldsymbol{x}+\theta^\ast\} = \sign\left\{\underbrace{\sum_{\boldsymbol{x}_i\in{\cal S}}y_i\alpha^\ast_i\boldsymbol{x}_i^T}_{\boldsymbol{w}^\ast}\boldsymbol{x}+\theta^\ast\right\}.
+\end{equation}
+\justify Neste caso, caso $h_{\boldsymbol{w}^\ast}(x)<0$ (sinal negativo), então a amostra é classificada como sendo da classe $-1$; ou da classe $1$ caso contrário. Note que $\boldsymbol{w}^\ast$ controla a \textbf{inclinação} do hiperplano ótimo, $\theta^\ast$ define a sua \textbf{posição} em relação às \textbf{margens}.
+}
+
+\SliT{SVMs com Margens Suaves}{
+\justify O objetivo dessa variante é lidar com o problema de sobreposição entre as classes permitindo com que algumas amostras possam violar a restrição e situar-se \textbf{entre} as margens.
+
+\justify Lembrando que as restrições originais eram dadas por $y_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)\geq 1$, $\forall i=1,2\lodts,m$.
 }
 
 \end{document}
