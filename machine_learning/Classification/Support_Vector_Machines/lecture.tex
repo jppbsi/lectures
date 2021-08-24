@@ -492,4 +492,64 @@ Falta, agora, calcularmos $\theta^\ast$, que é computado pela média da Equaç�
 Lembrando que ${\cal S}$ denota o conjunto de todos os vetores de suporte (livres e limitados), e ${\cal V}$ denota os vetores de suporte limitados apenas, ou seja, aquelas amostras para as quais $\alpha_i^\ast<C$.
 }
 
+\SliT{SVMs Não-Lineares}{
+\justify Quando temos dados que são linearmente separáveis, podemos fazer uso das SVMs com margens suaves ou rígidas, como vimos anteriormente. No entanto, como podemos lidar com o caso de dados não lineares, visto que os modelos baseados em SVM aprendidos até agora consegue aprender apenas superfícies de decisão lineares? \textbf{A solução é mapear os dados para um outro espaço de maior dimensão} Esta solução é também conhecida por \emph{kernel trick}.
+\vspace{-.4cm} 
+\begin{center}
+\begin{tabular}{cc}
+\includegraphics[scale=0.17]{./figs/SVM_Fig10.png} &\hspace{2cm} 
+\includegraphics[scale=0.13]{./figs/SVM_Fig11.png}	
+\end{tabular}
+\end{center}
+}
+
+\Sli{
+Como é a ideia dessa \textbf{função de mapeamento}? Suponha que tenhamos o seguinte exemplo:
+
+\begin{itemize}
+	\item $\phi:\mathbb{R}^2\rightarrow\mathbb{R}^3$ (função de mapeamento)
+	\item $\boldsymbol{x}\in\mathbb{R}^2$ (elemento de entrada)
+	\item $\phi(\boldsymbol{x}) = \phi(x^1,x^2) = ((x^1)^2,\sqrt{2}x^1x^2,(x^2)^2)$ (elemento mapeado)
+\end{itemize}
+\justify A ideia é que os dados estarão melhor distribuídos em espaços com maiores dimensões. O \textbf{Teorema de Cover} diz que um problema de classificação de padrões mapeado não-linearmente para um espaço de maior dimensão é mais provável de ser linearmente separável do que no espaço original, dado que o espaço não é densamente povoado.
+}
+
+\Sli{
+Novamente, o problema dual é dado pela seguinte formulação:
+
+\begin{equation}
+	\boldsymbol{\alpha}^\ast = \argmax_{\boldsymbol{\alpha}}\left\{-\frac{1}{2}\sum_{i=1}^m\sum_{j=1}^m\alpha_i\alpha_jy_iy_j\phi(\boldsymbol{x}_i)\phi(\boldsymbol{x}_j)+\sum_{i=1}^m\alpha_i\right\}.
+\end{equation}
+A solução é dada, também, de maneira similar, ou seja:
+
+\begin{equation}
+h_{\boldsymbol{w}^\ast}(x) = \sign\{(\boldsymbol{w}^\ast)^T\boldsymbol{x}+\theta^\ast\} = \sign\left\{\underbrace{\sum_{\boldsymbol{x}_i\in{\cal S}}y_i\alpha^\ast_i\phi(\boldsymbol{x}_i)}_{\boldsymbol{w}^\ast}\phi(\boldsymbol{x})+\theta^\ast\right\}.
+\end{equation}
+}
+
+\Sli{
+O parâmetro $\theta^\ast$, calculado na Equação 24, também pode ser obtido de maneira similar:
+
+\begin{equation}
+	\theta^\ast = \frac{1}{|{\cal V}|}\sum_{\boldsymbol{x}_i\in{\cal S}\wedge\alpha_i\ast<C}\left\{\frac{1}{y_i}-\sum_{\boldsymbol{x}_j\in{\cal S}}\alpha_j^\ast y_j\phi(\boldsymbol{x}_j)\phi(\boldsymbol{x}_i)\right\}.
+\end{equation}
+
+\justify A pergunta é: como projetar o operador de mapeamento $\phi$? Uma solução é por meio das funções \emph{kernel}, em que não é necessário conhecer um mapeamento específico para determinado dado, apenas como realizar produtos escalares no novo espaço.
+}
+
+\Sli{
+Uma função de kernel $K$ é definida, basicamente, como segue:
+
+\begin{equation}
+	K(\boldsymbol{x}_i,\boldsymbol{x}_j) = \phi(\boldsymbol{x}_i)^T\phi(\boldsymbol{x}_j),
+\end{equation}
+ou seja, a função kernel recebe dois vetores no espaço de entrada e retorna o valor do produto escalar das amostras no espaço de maior dimensão. Esse é o então chamado \emph{kernel trick}. Vejamos o exemplo abaixo:
+
+\begin{itemize}
+	\item $\phi:\mathbb{R}^2\rightarrow\mathbb{R}^3$, $\phi(\boldsymbol{x}) = \phi(x^1,x^2) = ((x^1)^2,\sqrt{2}x^1x^2,(x^2)^2)$
+	\item $\boldsymbol{x}_i = (x^1_i,x^2_i)$ e $\boldsymbol{x}_j = (x^1_j,x^2_j)$
+	\item $K(\boldsymbol{x}_i,\boldsymbol{x}_j) = \phi(\boldsymbol{x}_i)^T\phi(\boldsymbol{x}_j) = \overbrace{((x^1_i)^2,\sqrt{2}x^1_ix^2_i,(x^2_i)^2)^T((x^1_j)^2,\sqrt{2}x^1_jx^2_j,(x^2_j)^2)}^{\text{produto interno}}=(x_i^1)^2(x_j^1)^2+\sqrt{2}x^1_ix^2_i\sqrt{2}x^1_jx^2_j+(x^1_j)^2(x^2_j)^2 = ((x_i^1)^2(x_j^1)^2+2x^1_ix^2_ix^1_jx^2_j+(x_i^2)^2(x_j^2)^2$ 
+\end{itemize}
+}
+
 \end{document}
