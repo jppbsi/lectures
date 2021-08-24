@@ -241,7 +241,7 @@ O nosso problema agora passar a ser a otimizar a função Lagrangiana dada pela 
 Isto implica que as derivadas parciais em relação aos parâmetros do hiperplano que desejamos encontrar devem ser nulas, ou seja:
 
 \begin{equation}
-\frac{\partial L(\boldsymbol{w}, \theta, \boldsymbol{\alpha})}{\partial b} = 0
+\frac{\partial L(\boldsymbol{w}, \theta, \boldsymbol{\alpha})}{\partial \theta} = 0
 \end{equation}
 e
 \begin{equation}
@@ -253,7 +253,7 @@ e
 A derivada parcial com relação ao bias, ou seja, parâmetro $\theta$ é dada como segue:
 \vspace{0.35cm}
 \begin{align}\nonumber
-\frac{\partial L(\boldsymbol{w}, \theta, \boldsymbol{\alpha})}{\partial b} &= \frac{1}{2}\norm{\boldsymbol{w}}^2-\sum_{i=1}^m\alpha_i[y_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)-1]= 0\\\nonumber
+\frac{\partial L(\boldsymbol{w}, \theta, \boldsymbol{\alpha})}{\partial \theta} &= \frac{1}{2}\norm{\boldsymbol{w}}^2-\sum_{i=1}^m\alpha_i[y_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)-1]= 0\\\nonumber
 &= \frac{1}{2}\norm{\boldsymbol{w}}^2-\sum_{i=1}^m[\alpha_iy_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)-\alpha_i] = 0\\
 &= \frac{1}{2}\norm{\boldsymbol{w}}^2-\sum_{i=1}^m\alpha_iy_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)+\sum_{i=1}^m\alpha_i = 0\\\nonumber
 &= \cancelto{0}{\frac{1}{2}\norm{\boldsymbol{w}}^2}-\sum_{i=1}^m[\cancelto{0}{\alpha_iy_i\boldsymbol{w}^T\boldsymbol{x}_i}+\alpha_iy_i\theta]+\cancelto{0}{\sum_{i=1}^m\alpha_i} = 0\\
@@ -449,7 +449,7 @@ Multiplicando-se a equação acima por $-1$, temos que:
 -(\boldsymbol{w}^\ast)^T\boldsymbol{x}_i -\theta^\ast = -k \implies (\boldsymbol{w}^\ast)^T\boldsymbol{x}_i +\theta^\ast = k >> 1.
 \end{equation}
 
-A Equação 21 acaba se transformando, novamente, em $\epsilon_i^\ast = \max\{0,1+k\}= 0$, o que é também verdade, pois $\boldsymbol{x}_i$ está longe da margem e, portanto, não precisa de variável de folga.
+A Equação 21 acaba se transformando, novamente, em $\epsilon_i^\ast = \max\{0,1-k\}= 0$, o que é também verdade, pois $\boldsymbol{x}_i$ está longe da margem e, portanto, não precisa de variável de folga.
 
 }
 
