@@ -340,7 +340,7 @@ e
 \justify Desta forma, obtendo-se $\boldsymbol{\alpha}^\ast$ por algum método de otimização matemática, basta utilizamos ele na Equação 9 para obtemos $\boldsymbol{w}$. Já para calcularmos o $\theta$, precisamos utilizar as condições de KKT, as quais são condições \textbf{necessárias} para que a solução do problema dado pela Equação 15 seja ótima. Essas condições são dadas pelas seguintes restrições:
 
 \begin{equation}
-	\alpha_i^\ast(y_i(\boldsymbol{w}\boldsymbol{x}_i+\theta)-1) = 0,\ \forall i=1,2,\ldots,m.
+	\alpha_i^\ast(y_i[(\boldsymbol{w}^\ast)^T\boldsymbol{x}_i+\theta]-1) = 0,\ \forall i=1,2,\ldots,m.
 \end{equation}
 }
 
@@ -375,7 +375,93 @@ A função de decisão (classificação) do SVM apenas retorna o sinal da amostr
 \SliT{SVMs com Margens Suaves}{
 \justify O objetivo dessa variante é lidar com o problema de sobreposição entre as classes permitindo com que algumas amostras possam violar a restrição e situar-se \textbf{entre} as margens.
 
-\justify Lembrando que as restrições originais eram dadas por $y_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)\geq 1$, $\forall i=1,2\ldots,m$.
+\justify Lembrando que as restrições originais eram dadas por $y_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)\geq 1$, $\forall i=1,2\ldots,m$. Agora, nossas novas restrições são dadas por:
+
+\begin{equation}
+	y_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)\geq 1-\epsilon_i,
+\end{equation}
+em que $\epsilon_i\geq 0$ representam as variáveis de folga que possuem o papel de ``suavizar"\ as margens.
+}
+
+\Sli{
+Agora, nossa função objetivo é dada por:
+
+\begin{equation}
+	\boldsymbol{w}^\ast,\theta^\ast,\boldsymbol{\epsilon}^\ast = \argmin\left\{\frac{1}{2}\norm{w}^2+C\left(\sum_{i=1}^m\epsilon_i\right)\right\},
+\end{equation}
+sujeito a $y_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)\geq 1-\epsilon_i$, em que $\epsilon_i\in[0,1]$ indica que os dados estão entre as margens. Note que o parâmetro $C$ controla a relação custo-benefício entre SVMs de margens rígidas e margens suaves.
+}
+
+\Sli{
+\justify A ideia, então, é permitir que amostras estejam posicionadas entre as margens, conforme ilustrado abaixo.
+
+\begin{center}
+\includegraphics[scale=0.19]{./figs/SVM_Fig8.png}
+\end{center}
+}
+
+\Sli{
+A forma dual de nosso problema de otimização é muito similar ao que tínhamos apresentado na formulação das SVMs de margens rígidas (Equação 15), ou seja:
+
+\begin{equation}\nonumber
+	\boldsymbol{\alpha}^\ast = \argmax_{\boldsymbol{\alpha}}\left\{-\frac{1}{2}\sum_{i=1}^m\sum_{j=1}^m\alpha_i\alpha_jy_iy_j\boldsymbol{x}_i^T\boldsymbol{x}_j+\sum_{i=1}^m\alpha_i\right\}, 
+\end{equation}
+sujeito às seguintes restrições:
+
+\begin{equation}\nonumber
+	0 \leq \alpha_i \leq C,\ \ \forall i=1,2,\ldots,m
+\end{equation}
+e
+\begin{equation}\nonumber
+\sum_{i=1}^m\alpha_iy_i = 0.	
+\end{equation}
+}
+
+\Sli{
+\justify O nosso vetor de pesos $\boldsymbol{w}^\ast$ continua sendo calculado pela Equação 9. Já as variáveis de folga podem ser calculadas da seguinte maneira:
+
+\begin{equation}
+	\epsilon_i^\ast = \max\left\{0,1-\left[y_i\sum_{j=1}^my_j\alpha_j^\ast\boldsymbol{x}_i^T\boldsymbol{x}_j\right]+\theta^\ast\right\}.
+\end{equation}
+
+Agora, notem que temos duas condições de KKT:
+
+\begin{equation}
+	\alpha_i^\ast(y_i[(\boldsymbol{w}^\ast)^T\boldsymbol{x}_i+\theta]-1+\boldsymbol{\epsilon}^\ast) = 0,\ \forall i=1,2,\ldots,m.
+\end{equation}
+e
+\begin{equation}
+	(C-\alpha_i^\ast)\epsilon_i^\ast = 0.
+\end{equation}
+}
+
+\Sli{
+\justify No caso das SVMs com margens rígidas, tínhamos que os vetores de suporte eram as amostras $\boldsymbol{x}_i$ cujos multiplicadores de Lagrange $\alpha_i\geq0$. Agora, no caso das SVMs com margens suaves, temos que existem diferentes tipos de vetores de suporte de acordo com os valores de $\alpha_i$ e $\epsilon_i$.\newline
+
+Caso $\alpha_i < C$, temos que $\epsilon_i^\ast = 0$ para a Equação 24 ser satisfeita. Ademais, pela Equação 23, concluímos que $\boldsymbol{x}_i$ é um vetor de suporte que está sobre a margem $H_1$ ou $H_2$ (depende de sua classe). Este seria o mesmo caso das SVMs com margens rígidas.
+}
+
+\Sli{
+Agora, caso $\alpha_i^\ast = C$, temos três possíveis situações:
+
+\begin{enumerate}
+	\item $\epsilon_i^\ast>1$: erros no conjunto de treinamento pois os vetores de suporte cruzam o hiperplano separador.
+	\item $0\leq\epsilon_i^\ast<1$: amostras situadas entre as margens (não são erros, apenas estão violando as regras).
+	\item $\epsilon_i^\ast = 0$: amostras sobre as margens.
+\end{enumerate}
+\vspace{-0.7cm}
+\begin{center}
+\includegraphics[scale=0.14]{./figs/SVM_Fig9.png}
+\end{center}
+}
+
+\Sli{
+Falta, agora, calcularmos $\theta^\ast$, que é computado pela média da Equação 18 sobre todos os vetores de suporte com $\alpha_i<C$, ou seja:
+
+\begin{equation}
+	\theta^\ast = \frac{1}{|{\cal V}|}\sum_{\boldsymbol{x}_i\in{\cal S}\wedge\alpha_i\ast<C}\left\{\frac{1}{y_i}-\sum_{\boldsymbol{x}_j\in{\cal S}}\alpha_j^\ast y_j\boldsymbol{x}_j^T\boldsymbol{x}_i\right\}.
+\end{equation}
+Lembrando que ${\cal S}$ denota o conjunto de todos os vetores de suporte (livres e limitados), e ${\cal V}$ denota os vetores de suporte limitados apenas, ou seja, aquelas amostras para as quais $\alpha_i^\ast<C$.
 }
 
 \end{document}
