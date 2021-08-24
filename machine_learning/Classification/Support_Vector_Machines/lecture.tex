@@ -292,7 +292,7 @@ Desenvolvendo o segundo termo, temos que:
 	-\sum_{i=1}^m\alpha_i[y_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)-1] &= -\sum_{i=1}^m\alpha_i[y_i\boldsymbol{w}^T\boldsymbol{x}_i+y_i\theta-1]\\
 	&= -\sum_{i=1}^m[\alpha_iy_i\boldsymbol{w}^T\boldsymbol{x}_i+\alpha_iy_i\theta-\alpha_i] \\\nonumber
 	&= -\sum_{i=1}^m\alpha_iy_i\boldsymbol{w}^T\boldsymbol{x}_i-\sum_{i=1}^m\alpha_iy_i\theta+\sum_{i=1}^m\alpha_i\\\nonumber
-	&= -\sum_{i=1}^m\alpha_iy_i\boldsymbol{w}^T\boldsymbol{x}_i-\theta\sum_{i=1}^m\alpha_iy_i+\sum_{i=1}^m\alpha_i.\\
+	&= -\sum_{i=1}^m\alpha_iy_i\boldsymbol{w}^T\boldsymbol{x}_i-\theta\sum_{i=1}^m\alpha_iy_i+\sum_{i=1}^m\alpha_i.\\\nonumber
 \end{align}
 }
 
@@ -307,7 +307,7 @@ Podemos, ainda, desenvolver a Equação 11 um pouco mais.
 }
 
 \Sli{
-Substituindo-se, então, as Equações 10 (primeiro termo) e 13 (segundo termo) na Equação 4, temos que:
+Substituindo-se, então, as Equações 10 (primeiro termo) e 12 (segundo termo) na Equação 4, temos que:
 
 \begin{align}\nonumber
 	L(\boldsymbol{\alpha}) &= \frac{1}{2}\sum_{i=1}^m\sum_{j=1}^m\alpha_i\alpha_jy_iy_j\boldsymbol{x}_i^T\boldsymbol{x}_j-\sum_{i=1}^m\sum_{j=1}^m\alpha_i\alpha_jy_iy_j\boldsymbol{x}_i^T\boldsymbol{x}_j+\sum_{i=1}^m\alpha_i\\
@@ -335,9 +335,9 @@ e
 }
 
 \Sli{
-\justify Qual a vantagem de termos um problema em sua forma dual? Temos apenas uma variável de interesse, ou seja, $\boldsymbol{\alpha}$. Assim, para resolvermos a Equação 15, precisamos empregar algum método de otimização quadrática (somatório duplo). É por esse motivo que o processo de treinamento do classificador SVM é \textbf{bastante custoso computacionalmente}.
+\justify Qual a vantagem de termos um problema em sua forma dual? Temos apenas uma variável de interesse, ou seja, $\boldsymbol{\alpha}$. Assim, para resolvermos a Equação 14, precisamos empregar algum método de otimização quadrática (somatório duplo). É por esse motivo que o processo de treinamento do classificador SVM é \textbf{bastante custoso computacionalmente}.
 
-\justify Desta forma, obtendo-se $\boldsymbol{\alpha}^\ast$ por algum método de otimização matemática, basta utilizamos ele na Equação 9 para obtemos $\boldsymbol{w}$. Já para calcularmos o $\theta$, precisamos utilizar as condições de KKT, as quais são condições \textbf{necessárias} para que a solução do problema dado pela Equação 15 seja ótima. Essas condições são dadas pelas seguintes restrições:
+\justify Desta forma, obtendo-se $\boldsymbol{\alpha}^\ast$ por algum método de otimização matemática, basta utilizamos ele na Equação 9 para obtemos $\boldsymbol{w}$. Já para calcularmos o $\theta$, precisamos utilizar as condições de KKT, as quais são condições \textbf{necessárias} para que a solução do problema dado pela Equação 14 seja ótima. Essas condições são dadas pelas seguintes restrições:
 
 \begin{equation}
 	\alpha_i^\ast(y_i[(\boldsymbol{w}^\ast)^T\boldsymbol{x}_i+\theta]-1) = 0,\ \forall i=1,2,\ldots,m.
@@ -345,7 +345,7 @@ e
 }
 
 \Sli{
-\justify Note que $y_i(\boldsymbol{w}\boldsymbol{x}_i+\theta)-1) = 0$ ocorre apenas para as amostras que se encontram \textbf{sobre} os hiperplanos $H_1$ e $H_2$. Assim, $\alpha_i$ pode ser \textbf{não nulo} apenas sobre os elementos $\boldsymbol{x}_i$ que se encontram nesses hiperplanos. Para as demais amostras $\boldsymbol{x}_j$, isto é, aquelas estão estão definidas além das margens, temos que $\alpha_j = 0$.
+\justify Note que $y_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)-1 = 0$ ocorre apenas para as amostras que se encontram \textbf{sobre} os hiperplanos $H_1$ e $H_2$. Assim, $\alpha_i$ pode ser \textbf{não nulo} apenas sobre os elementos $\boldsymbol{x}_i$ que se encontram nesses hiperplanos. Para as demais amostras $\boldsymbol{x}_j$, isto é, aquelas estão estão definidas além das margens, temos que $\alpha_j = 0$ para a condição ser satisfeita.
 
 \justify Para esses elementos cujos multiplicadores de Lagrange são não nulos damos o nome de \textbf{vetores de suporte}. Eles correspondem às amostras \textbf{mais informativas} do conjunto de treinamento, pois estão mais próximas do hiperplano separador. Assim sendo, apenas essas amostras são utilizadas no cálculo de $H$, conforme apresenta a Equação 9.
 }
@@ -354,9 +354,9 @@ e
 Temos, então, que $\theta^\ast$ pode ser calculado como segue:
 
 \begin{equation}
-	b^\ast = \frac{1}{|{\cal S}|}\sum_{\boldsymbol{x}_i\in{\cal S}}\left\{\frac{1}{y_i}-\boldsymbol{w}^T\boldsymbol{x}_i\right\},
+	\theta^\ast = \frac{1}{|{\cal S}|}\sum_{\boldsymbol{x}_i\in{\cal S}}\left\{\frac{1}{y_i}-(\boldsymbol{w}^\ast)^T\boldsymbol{x}_i\right\},
 \end{equation}
-em que ${\cal S}\subseteq {\cal X}^1$ denota o conjunto dos vetores de suporte. Podemos, ainda, escrever a equação acima substituindo $\boldsymbol{w}$ pela Equação 9, isto é, em função dos multiplicadores de Lagrange:
+em que ${\cal S}\subseteq {\cal X}^1$ denota o conjunto dos vetores de suporte. Podemos, ainda, escrever a equação acima substituindo $\boldsymbol{w}^\ast$ pela Equação 9, isto é, em função dos multiplicadores de Lagrange:
 
 \begin{equation}
 	\theta^\ast = \frac{1}{|{\cal S}|}\sum_{\boldsymbol{x}_i\in{\cal S}}\left\{\frac{1}{y_i}-\sum_{\boldsymbol{x}_j\in{\cal S}}\alpha_j^\ast y_j\boldsymbol{x}_j^T\boldsymbol{x}_i\right\}.
@@ -380,7 +380,7 @@ A função de decisão (classificação) do SVM apenas retorna o sinal da amostr
 \begin{equation}
 	y_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)\geq 1-\epsilon_i,
 \end{equation}
-em que $\epsilon_i\geq 0$ representam as variáveis de folga que possuem o papel de ``suavizar"\ as margens.
+em que $\epsilon_i\geq 0$ representam as variáveis de folga que possuem o papel de "suavizar"\ as margens.
 }
 
 \Sli{
@@ -421,9 +421,39 @@ e
 \justify O nosso vetor de pesos $\boldsymbol{w}^\ast$ continua sendo calculado pela Equação 9. Já as variáveis de folga podem ser calculadas da seguinte maneira:
 
 \begin{equation}
-	\epsilon_i^\ast = \max\left\{0,1-\left[y_i\sum_{j=1}^my_j\alpha_j^\ast\boldsymbol{x}_i^T\boldsymbol{x}_j\right]+\theta^\ast\right\}.
+	\epsilon_i^\ast = \max\left\{0,1-\left[y_i\underbrace{\sum_{j=1}^my_j\alpha_j^\ast\boldsymbol{x}_j^T}_{\boldsymbol{w}^\ast}\boldsymbol{x}_i\right]+\theta^\ast\right\}.
 \end{equation}
 
+Notem que interessante: suponha uma amostra $\boldsymbol{x}_i$ que esteja sobre o hiperplano $H_1$, ou seja, $y_i = 1$. Neste caso, o termo $y_i\sum_{j=1}^my_j\alpha_j^\ast\boldsymbol{x}_j^T\boldsymbol{x}_i+\theta^\ast = (\boldsymbol{w}^\ast)^T\boldsymbol{x}_i +\theta^\ast= 1$. A Equação 21 acaba se transformando em $\epsilon_i^\ast = \max\{0,1-1\}= 0$, o que é verdade, pois $\boldsymbol{x}_i$ é um vetor de suporte.
+}
+
+\Sli{
+Suponha, agora, uma outra amostra $\boldsymbol{x}_i$ que pertença à classe $1$, ou seja, $y_1=1$, mas está longe da margem. Neste caso, temos que:
+
+\begin{equation}\nonumber
+	y_i\sum_{j=1}^my_j\alpha_j^\ast\boldsymbol{x}_j^T\boldsymbol{x}_i+\theta^\ast = (\boldsymbol{w}^\ast)^T\boldsymbol{x}_i +\theta^\ast = k >> 1.
+\end{equation}
+A Equação 21 acaba se transformando em $\epsilon_i^\ast = \max\{0,1-k\}= 0$, o que é também verdade, pois $\boldsymbol{x}_i$ está longe da margem e, portanto, não precisa de variável da folga.\newline
+
+Suponha, agora, que $\boldsymbol{x}_i$ pertença à classe $-1$, ou seja, $y_i=-1$, mas está longe da margem. Neste caso, temos que:
+
+\begin{equation}\nonumber
+y_i\sum_{j=1}^my_j\alpha_j^\ast\boldsymbol{x}_j^T\boldsymbol{x}_i+\theta^\ast = -(\boldsymbol{w}^\ast)^T\boldsymbol{x}_i -\theta^\ast = -k << -1. 
+\end{equation}
+}
+
+\Sli{
+Multiplicando-se a equação acima por $-1$, temos que:
+
+\begin{equation}\nonumber
+-(\boldsymbol{w}^\ast)^T\boldsymbol{x}_i -\theta^\ast = -k \implies (\boldsymbol{w}^\ast)^T\boldsymbol{x}_i +\theta^\ast = k >> 1.
+\end{equation}
+
+A Equação 21 acaba se transformando, novamente, em $\epsilon_i^\ast = \max\{0,1+k\}= 0$, o que é também verdade, pois $\boldsymbol{x}_i$ está longe da margem e, portanto, não precisa de variável de folga.
+
+}
+
+\Sli{
 Agora, notem que temos duas condições de KKT:
 
 \begin{equation}
@@ -433,12 +463,10 @@ e
 \begin{equation}
 	(C-\alpha_i^\ast)\epsilon_i^\ast = 0.
 \end{equation}
-}
 
-\Sli{
 \justify No caso das SVMs com margens rígidas, tínhamos que os vetores de suporte eram as amostras $\boldsymbol{x}_i$ cujos multiplicadores de Lagrange $\alpha_i\geq0$. Agora, no caso das SVMs com margens suaves, temos que existem diferentes tipos de vetores de suporte de acordo com os valores de $\alpha_i$ e $\epsilon_i$.\newline
 
-Caso $\alpha_i < C$, temos que $\epsilon_i^\ast = 0$ para a Equação 24 ser satisfeita. Ademais, pela Equação 23, concluímos que $\boldsymbol{x}_i$ é um vetor de suporte que está sobre a margem $H_1$ ou $H_2$ (depende de sua classe). Este seria o mesmo caso das SVMs com margens rígidas.
+Caso $\alpha_i < C$, temos que $\epsilon_i^\ast = 0$ para a Equação 24 ser satisfeita. Ademais, pela Equação 23, concluímos que $\boldsymbol{x}_i$ é um vetor de suporte que está sobre a margem $H_1$ ou $H_2$ (depende de sua classe) ou está longe das margens. Este seria o mesmo caso das SVMs com margens rígidas.
 }
 
 \Sli{
@@ -447,7 +475,7 @@ Agora, caso $\alpha_i^\ast = C$, temos três possíveis situações:
 \begin{enumerate}
 	\item $\epsilon_i^\ast>1$: erros no conjunto de treinamento pois os vetores de suporte cruzam o hiperplano separador.
 	\item $0\leq\epsilon_i^\ast<1$: amostras situadas entre as margens (não são erros, apenas estão violando as regras).
-	\item $\epsilon_i^\ast = 0$: amostras sobre as margens.
+	\item $\epsilon_i^\ast = 0$: amostras sobre as margens ou longe delas.
 \end{enumerate}
 \vspace{-0.7cm}
 \begin{center}
