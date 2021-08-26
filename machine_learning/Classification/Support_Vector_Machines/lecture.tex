@@ -547,8 +547,29 @@ ou seja, a função kernel recebe dois vetores no espaço de entrada e retorna o
 
 \begin{itemize}
 	\item $\phi:\mathbb{R}^2\rightarrow\mathbb{R}^3$, $\phi(\boldsymbol{x}) = \phi(x^1,x^2) = ((x^1)^2,\sqrt{2}x^1x^2,(x^2)^2)$
-	\item $\boldsymbol{x}_i = (x^1_i,x^2_i)$ e $\boldsymbol{x}_j = (x^1_j,x^2_j)$
-	\item $K(\boldsymbol{x}_i,\boldsymbol{x}_j) = \phi(\boldsymbol{x}_i)^T\phi(\boldsymbol{x}_j) = \overbrace{((x^1_i)^2,\sqrt{2}x^1_ix^2_i,(x^2_i)^2)^T((x^1_j)^2,\sqrt{2}x^1_jx^2_j,(x^2_j)^2)}^{\text{produto interno}}=(x_i^1)^2(x_j^1)^2+\sqrt{2}x^1_ix^2_i\sqrt{2}x^1_jx^2_j+(x^1_j)^2(x^2_j)^2 = ((x_i^1)^2(x_j^1)^2+2x^1_ix^2_ix^1_jx^2_j+(x_i^2)^2(x_j^2)^2$ 
+	\item \textcolor{red}{$\boldsymbol{x}_i = (x^1_i,x^2_i)$} e \textcolor{blue}{$\boldsymbol{x}_j = (x^1_j,x^2_j)$}
+	\item $K(\textcolor{red}{\boldsymbol{x}_i},\textcolor{blue}{\boldsymbol{x}_j)} = \textcolor{red}{\phi(\boldsymbol{x}_i)^T}\textcolor{blue}{\phi(\boldsymbol{x}_j)} = \overbrace{\textcolor{red}{((x^1_i)^2,\sqrt{2}x^1_ix^2_i,(x^2_i)^2)^T}\textcolor{blue}{((x^1_j)^2,\sqrt{2}x^1_jx^2_j,(x^2_j)^2)}}^{\text{produto interno}}=\textcolor{red}{(x_i^1)^2}\textcolor{blue}{(x_j^1)^2}+\textcolor{red}{\sqrt{2}x^1_ix^2_i}\textcolor{blue}{\sqrt{2}x^1_jx^2_j}+\textcolor{red}{(x^2_i)^2}\textcolor{blue}{(x^2_j)^2} = \textcolor{red}{(x_i^1)^2}\textcolor{blue}{(x_j^1)^2}+2\textcolor{red}{x^1_ix^2_i}\textcolor{blue}{x^1_jx^2_j}+\textcolor{red}{(x_i^2)^2}\textcolor{blue}{(x_j^2)^2}=(\textcolor{red}{\boldsymbol{x}_i},\textcolor{blue}{\boldsymbol{x}_j})^2\implies$ Lembrando que $(\boldsymbol{x}_i,\boldsymbol{x}_j)^2=(x^1_ix^1_j+x^2_ix^2_j)^2=K(\boldsymbol{x}_i,\boldsymbol{x}_j)$, o conhecido \textbf{kernel polinomial de grau $2$} 
+\end{itemize}
+}
+
+\Sli{
+\justify Desta forma, ao calcularmos $K(\boldsymbol{x}_i,\boldsymbol{x}_j)$ para todos os $m$ elementos do conjunto de treinamento, iremos obter a \textbf{matriz de kernel} $\boldsymbol{K}\in\mathbb{R}^{m\times m}$. Dizemos que uma matriz de kernel é válida caso ela atenda às \textbf{Condições de Mercer}, ou seja, ela é uma matrix positiva e semi-definida (autovalores são todos maiores ou iguais a zero).
+
+\justify Alguns exemplos de função kernel válidas:
+
+\begin{itemize}
+	\item Polinomial: $K(\boldsymbol{x}_i,\boldsymbol{x}_j) = (\boldsymbol{x}_i,\boldsymbol{x}_j)^d$
+	\item Gaussiano: $K(\boldsymbol{x}_i,\boldsymbol{x}_j) = \exp\left\{\frac{-\norm{\boldsymbol{x}_i-\boldsymbol{x}_j}^2}{\sigma}\right\}$
+	\item Sigmoidal: $K(\boldsymbol{x}_i,\boldsymbol{x}_j) = \tanh(\boldsymbol{x}_i,\boldsymbol{x}_j)$
+\end{itemize}
+}
+
+\Sli{
+\justify Um outro desafio é: como tornar SVM válido para problemas de classificação com \textbf{múltiplas classes}? Basicamente, para um problema com $c$ classes temos duas abordagens:
+
+\begin{itemize}
+	\item OVA (\emph{one-versus-all}): treinamos $c$ SVMs e removemos a função $\sign$ da Equação 26 para que a mesma retorne uma pontuação (\emph{score}). A classe da amostra corresponde àquela SVM que retornou a maior pontuação. \textbf{Essa pontuação geralmente é calculada como sendo a distância da amostra a ser classificada até o hiperplano de separação (maior a distância, maior a pontuação).}
+	\item OVO (\emph{one-versus-one}): treinamos $c(c-1)/2$ classificadores SVM, isto é, todos os pares de combinações entre classes. Para cada combinação, o classificador vencedor recebe um voto, e a classe escolhida é a do classificador que recebeu a maior quantidade de votos. \textbf{Uma desvantagem dessa abordagem é que, quando o número de classes é alto, ela é muito custosa.}
 \end{itemize}
 }
 
