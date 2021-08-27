@@ -351,7 +351,7 @@ e
 }
 
 \Sli{
-Temos, então, que $\theta^\ast$ pode ser calculado como segue:
+Como podemos calcular $\theta$? Sabemos que, para as amostras que estão nas margens, a seguinte igualdade é válida: $y_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta) = 1\implies y_i\boldsymbol{w}^T\boldsymbol{x}_i+y_i\theta=1\implies \theta = \frac{1-y_i\boldsymbol{w}^T\boldsymbol{x}_i}{y_i}$. Temos, então, que $\theta^\ast$ pode ser calculado como segue:
 
 \begin{equation}
 	\theta^\ast = \frac{1}{|{\cal S}|}\sum_{\boldsymbol{x}_i\in{\cal S}}\left\{\frac{1}{y_i}-(\boldsymbol{w}^\ast)^T\boldsymbol{x}_i\right\},
