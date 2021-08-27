@@ -464,7 +464,7 @@ e
 	(C-\alpha_i^\ast)\epsilon_i^\ast = 0.
 \end{equation}
 
-\justify No caso das SVMs com margens rígidas, tínhamos que os vetores de suporte eram as amostras $\boldsymbol{x}_i$ cujos multiplicadores de Lagrange $\alpha_i\geq0$. Agora, no caso das SVMs com margens suaves, temos que existem diferentes tipos de vetores de suporte de acordo com os valores de $\alpha_i$ e $\epsilon_i$.\newline
+\justify No caso das SVMs com margens rígidas, tínhamos que os vetores de suporte eram as amostras $\boldsymbol{x}_i$ cujos multiplicadores de Lagrange $\alpha_i>0$. Agora, no caso das SVMs com margens suaves, temos que existem diferentes tipos de vetores de suporte de acordo com os valores de $\alpha_i$ e $\epsilon_i$.\newline
 
 Caso $\alpha_i < C$, temos que $\epsilon_i^\ast = 0$ para a Equação 24 ser satisfeita. Ademais, pela Equação 23, concluímos que $\boldsymbol{x}_i$ é um vetor de suporte que está sobre a margem $H_1$ ou $H_2$ (depende de sua classe) ou está longe das margens. Este seria o mesmo caso das SVMs com margens rígidas.
 }
@@ -487,7 +487,7 @@ Agora, caso $\alpha_i^\ast = C$, temos três possíveis situações:
 Falta, agora, calcularmos $\theta^\ast$, que é computado pela média da Equação 18 sobre todos os vetores de suporte com $\alpha_i<C$, ou seja:
 
 \begin{equation}
-	\theta^\ast = \frac{1}{|{\cal V}|}\sum_{\boldsymbol{x}_i\in{\cal S}\wedge\alpha_i\ast<C}\left\{\frac{1}{y_i}-\sum_{\boldsymbol{x}_j\in{\cal S}}\alpha_j^\ast y_j\boldsymbol{x}_j^T\boldsymbol{x}_i\right\}.
+	\theta^\ast = \frac{1}{|{\cal V}|}\sum_{\boldsymbol{x}_i\in{\cal V}}\left\{\frac{1}{y_i}-\sum_{\boldsymbol{x}_j\in{\cal S}}\alpha_j^\ast y_j\boldsymbol{x}_j^T\boldsymbol{x}_i\right\}.
 \end{equation}
 Lembrando que ${\cal S}$ denota o conjunto de todos os vetores de suporte (livres e limitados), e ${\cal V}$ denota os vetores de suporte limitados apenas, ou seja, aquelas amostras para as quais $\alpha_i^\ast<C$.
 }
@@ -531,7 +531,7 @@ h_{\boldsymbol{w}^\ast}(x) = \sign\{(\boldsymbol{w}^\ast)^T\boldsymbol{x}+\theta
 O parâmetro $\theta^\ast$, calculado na Equação 24, também pode ser obtido de maneira similar:
 
 \begin{equation}
-	\theta^\ast = \frac{1}{|{\cal V}|}\sum_{\boldsymbol{x}_i\in{\cal S}\wedge\alpha_i\ast<C}\left\{\frac{1}{y_i}-\sum_{\boldsymbol{x}_j\in{\cal S}}\alpha_j^\ast y_j\phi(\boldsymbol{x}_j)\phi(\boldsymbol{x}_i)\right\}.
+	\theta^\ast = \frac{1}{|{\cal V}|}\sum_{\boldsymbol{x}_i\in{\cal V}}\left\{\frac{1}{y_i}-\sum_{\boldsymbol{x}_j\in{\cal S}}\alpha_j^\ast y_j\phi(\boldsymbol{x}_j)\phi(\boldsymbol{x}_i)\right\}.
 \end{equation}
 
 \justify A pergunta é: como projetar o operador de mapeamento $\phi$? Uma solução é por meio das funções \emph{kernel}, em que não é necessário conhecer um mapeamento específico para determinado dado, apenas como realizar produtos escalares no novo espaço.
