@@ -81,13 +81,63 @@
 
 \justifying Existe um conjunto de abordagens que tratam o problema de classificação de padrões como sendo uma tarefa de particionamento em \textbf{grafos}. No entanto, o que seriam esses chamados grafos? Grafos podem ser entendidos como estruturas de dados que são compostas por \textbf{vértices} e \textbf{arestas} e que, dependendo de suas propriedades, podem modelar diferentes problemas.
 
-FIGURA AQUI COM EXEMPLOS.
+\begin{center}
+\includegraphics[scale=0.17]{./figs/OPF_Fig1.png}
+\end{center}
 }
 
 \Sli{
-\justify A Teoria dos Grafos é uma área que estuda o comportamento dos grafos e propõe análises teóricas e desenvolvimento de algoritmos para eles. Matematicamente falado, um grafo é definido como $G=({\cal V},{\cal E})$, em que ${\cal V}$ denota o conjunto de vértices (nós) e ${\cal E}$ corresponde ao conjunto de arestas (pares de nós).
+\justify A Teoria dos Grafos é uma área que estuda o comportamento dos grafos e propõe análises teóricas e desenvolvimento de algoritmos para eles. Matematicamente falado, um grafo é definido como $G=({\cal V},{\cal E})$, em que ${\cal V}$ denota o conjunto de vértices (nós) e ${\cal E}$ corresponde ao conjunto de arestas (pares de nós). Vejamos o exemplo abaixo.
 
-ADICIONAR MINI-PAGE COM GRAFO E EXEMPLOS PARA V e E.
+\begin{minipage}{0.43\textwidth}
+\begin{center}
+\includegraphics[scale=0.21]{./figs/OPF_Fig2.png}
+\end{center}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.49\textwidth}
+Neste caso, temos que $G=({\cal V},{\cal E})$, em que ${\cal V}=\{A,B,C,D\}$ e ${\cal E}=\{(A,B),(A,C),(B,C),(C,D)\}$. Note que a \textbf{relação de adjacência} é \textbf{simétrica}, ou seja, as arestas $(A,B)$ e $(B,A)$ são iguais neste caso.
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+\justify Assim sendo, problemas que podem ser modelados como sendo grafos são beneficiados por inúmeros algoritmos já desenvolvidos para diversas aplicações. Grafos podem ser classificados de acordo com sua topologia e relação de adjacência, principalmente. Com relação à topologia, podemos dividir os grafos em:
+
+\begin{center}
+\begin{tabular}{cc}
+\includegraphics[scale=0.19]{./figs/OPF_Fig3.png} &
+\includegraphics[scale=0.19]{./figs/OPF_Fig4.png} \\
+Grafo conexo & Grafo desconexo\\	
+\end{tabular}
+\end{center}
+}
+
+\Sli{
+Ou ainda em:
+
+\begin{center}
+\begin{tabular}{ccc}
+\includegraphics[scale=0.19]{./figs/OPF_Fig3.png} &
+\includegraphics[scale=0.19]{./figs/OPF_Fig5.png} &
+\includegraphics[scale=0.19]{./figs/OPF_Fig6.png}\\
+Grafo cíclico & Grafo acíclico (árvore) & Floresta\\	
+\end{tabular}
+\end{center}
+}
+
+\Sli{
+De acordo com a sua relação de adjacência, podemos classificar os grafos em:
+
+\begin{center}
+\begin{tabular}{cc}
+\includegraphics[scale=0.19]{./figs/OPF_Fig3.png} &
+\includegraphics[scale=0.19]{./figs/OPF_Fig7.png}\\
+Grafo não direcionado & Grafo direcionado\\
+\end{tabular}
+\end{center}
+}
+
 }
 
 \end{document}
