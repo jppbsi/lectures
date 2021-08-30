@@ -428,17 +428,17 @@ Notem que interessante: suponha uma amostra $\boldsymbol{x}_i$ que esteja sobre 
 }
 
 \Sli{
-Suponha, agora, uma outra amostra $\boldsymbol{x}_i$ que pertença à classe $1$, ou seja, $y_1=1$, mas está longe da margem. Neste caso, temos que:
+Suponha, agora, uma outra amostra $\boldsymbol{x}_i$ que pertença à classe $1$, ou seja, $y_1=1$, mas não está sobre a margem. Neste caso, temos que:
 
 \begin{equation}\nonumber
-	y_i\sum_{j=1}^my_j\alpha_j^\ast\boldsymbol{x}_j^T\boldsymbol{x}_i+\theta^\ast = (\boldsymbol{w}^\ast)^T\boldsymbol{x}_i +\theta^\ast = k >> 1.
+	y_i\sum_{j=1}^my_j\alpha_j^\ast\boldsymbol{x}_j^T\boldsymbol{x}_i+\theta^\ast = (\boldsymbol{w}^\ast)^T\boldsymbol{x}_i +\theta^\ast = k > 1.
 \end{equation}
 A Equação 21 acaba se transformando em $\epsilon_i^\ast = \max\{0,1-k\}= 0$, o que é também verdade, pois $\boldsymbol{x}_i$ está longe da margem e, portanto, não precisa de variável da folga.\newline
 
-Suponha, agora, que $\boldsymbol{x}_i$ pertença à classe $-1$, ou seja, $y_i=-1$, mas está longe da margem. Neste caso, temos que:
+Suponha, agora, que $\boldsymbol{x}_i$ pertença à classe $-1$, ou seja, $y_i=-1$, mas não está sobre a margem. Neste caso, temos que:
 
 \begin{equation}\nonumber
-y_i\sum_{j=1}^my_j\alpha_j^\ast\boldsymbol{x}_j^T\boldsymbol{x}_i+\theta^\ast = -(\boldsymbol{w}^\ast)^T\boldsymbol{x}_i -\theta^\ast = -k << -1. 
+y_i\sum_{j=1}^my_j\alpha_j^\ast\boldsymbol{x}_j^T\boldsymbol{x}_i+\theta^\ast = -(\boldsymbol{w}^\ast)^T\boldsymbol{x}_i -\theta^\ast = -k < -1. 
 \end{equation}
 }
 
@@ -446,10 +446,10 @@ y_i\sum_{j=1}^my_j\alpha_j^\ast\boldsymbol{x}_j^T\boldsymbol{x}_i+\theta^\ast = 
 Multiplicando-se a equação acima por $-1$, temos que:
 
 \begin{equation}\nonumber
--(\boldsymbol{w}^\ast)^T\boldsymbol{x}_i -\theta^\ast = -k \implies (\boldsymbol{w}^\ast)^T\boldsymbol{x}_i +\theta^\ast = k >> 1.
+-(\boldsymbol{w}^\ast)^T\boldsymbol{x}_i -\theta^\ast = -k \implies (\boldsymbol{w}^\ast)^T\boldsymbol{x}_i +\theta^\ast = k > 1.
 \end{equation}
 
-A Equação 21 acaba se transformando, novamente, em $\epsilon_i^\ast = \max\{0,1-k\}= 0$, o que é também verdade, pois $\boldsymbol{x}_i$ está longe da margem e, portanto, não precisa de variável de folga.
+A Equação 21 acaba se transformando, novamente, em $\epsilon_i^\ast = \max\{0,1-k\}= 0$, o que é também verdade, pois $\boldsymbol{x}_i$ não encontra-se sobre a margem e, portanto, não precisa de variável de folga.
 
 }
 
@@ -466,7 +466,7 @@ e
 
 \justify No caso das SVMs com margens rígidas, tínhamos que os vetores de suporte eram as amostras $\boldsymbol{x}_i$ cujos multiplicadores de Lagrange $\alpha_i>0$. Agora, no caso das SVMs com margens suaves, temos que existem diferentes tipos de vetores de suporte de acordo com os valores de $\alpha_i$ e $\epsilon_i$.\newline
 
-Caso $\alpha_i < C$, temos que $\epsilon_i^\ast = 0$ para a Equação 24 ser satisfeita. Ademais, pela Equação 23, concluímos que $\boldsymbol{x}_i$ é um vetor de suporte que está sobre a margem $H_1$ ou $H_2$ (depende de sua classe) ou está longe das margens. Este seria o mesmo caso das SVMs com margens rígidas.
+Caso $\alpha_i < C$, temos que $\epsilon_i^\ast = 0$ para a Equação 23 ser satisfeita. Assim, concluímos que $\boldsymbol{x}_i$ é um vetor de suporte que está sobre a margem $H_1$ ou $H_2$ (depende de sua classe) ou é uma amostra que não está posicionada na margem. Este seria o mesmo caso das SVMs com margens rígidas.
 }
 
 \Sli{
@@ -475,7 +475,7 @@ Agora, caso $\alpha_i^\ast = C$, temos três possíveis situações:
 \begin{enumerate}
 	\item $\epsilon_i^\ast>1$: erros no conjunto de treinamento pois os vetores de suporte cruzam o hiperplano separador.
 	\item $0\leq\epsilon_i^\ast<1$: amostras situadas entre as margens (não são erros, apenas estão violando as regras).
-	\item $\epsilon_i^\ast = 0$: amostras sobre as margens ou longe delas.
+	\item $\epsilon_i^\ast = 0$: amostras sobre as margens ou distante delas.
 \end{enumerate}
 \vspace{-0.7cm}
 \begin{center}
