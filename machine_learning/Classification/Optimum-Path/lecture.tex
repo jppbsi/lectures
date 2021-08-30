@@ -138,6 +138,50 @@ Grafo não direcionado & Grafo direcionado\\
 \end{center}
 }
 
+\Sli{
+\justify Grafos são, de maneira geral, definidos como sendo conjuntos de vértices e arestas. Desta forma, conseguimos classificá-los, ainda, de acordo com seus subconjuntos: \textbf{subgrafo gerador} e \textbf{subgrafo gerado}.
+
+\begin{center}
+\begin{tabular}{ccc}
+\includegraphics[scale=0.19]{./figs/OPF_Fig3.png} &
+\includegraphics[scale=0.19]{./figs/OPF_Fig8.png} &
+\includegraphics[scale=0.19]{./figs/OPF_Fig9.png}\\
+Grafo original & Subgrafo gerado & Subgrafo gerador\\	
+\end{tabular}
+\end{center}
+}
+
+\Sli{
+\justify Grafos podem ser ainda \textbf{ponderados} em suas arestas (distâncias entre cidades, por exemplo). Desta forma, temos que nosso grafo pode ser definido como segue: $G=({\cal V},{\cal E},w)$, em que $w:{\cal E}\rightarrow\mathbb{R}$ é a função que associa pesos às arestas. De acordo com essa definição, temos um importante tipo de grafo chamado de \textbf{árvore geradora mínima}, do inglês \emph{minimum spanning tree} - MST, que é um subgrafo gerador, do tipo árvore, cujo somatório dos pesos das arestas é \textbf{mínimo}.
+
+\begin{center}
+\begin{tabular}{cc}
+\includegraphics[scale=0.19]{./figs/OPF_Fig10.png} &
+\includegraphics[scale=0.19]{./figs/OPF_Fig11.png}\\
+Grafo original & MST\\	
+\end{tabular}
+\end{center}
+}
+
+\Sli{
+\justify A técnica Floresta de Caminhos Ótimos, do inglês \emph{Optimum-Path Forest} - OPF, visa modelar o problema de classificação das amostras como sendo uma tarefa de particionamento de um grafo em grupos de amostras com o mesmo rótulo. Neste sentido, as amostras do conjunto de dados correspondem aos nós do grafo e as arestas são definidas por alguma relação de adjacência escolhida previamente. Possui, atualmente, versões supervisionadas, não supervisionadas e semi-supervisionadas.
+
+\justify \underline{Definição do problema:} dados um conjunto de treinamento rotulado e com $m$ amostras, ou seja, ${\cal X}^1 = \{(\boldsymbol{x}_1,y_1),(\boldsymbol{x}_2,y_2),\ldots,(\boldsymbol{x}_m,y_m)\}$ e um grafo $G=({\cal V},{\cal E},w)$, nosso objetivo é então particionar $G$ em grupos de amostras com o mesmo rótulo. Temos que ${\cal V}=\{\boldsymbol{x}_1,\boldsymbol{x}_2,\ldots,\boldsymbol{x}_m\}$, ${\cal E}$ deve ser escolhido de alguma forma que satisfaça o seu problema e $w$ é geralmente escolhido como uma função distância entre duas amostras, ou seja, $w(\boldsymbol{x}_i,\boldsymbol{x}_j)$ calcula a distância entre os nós (amostras) $\boldsymbol{x}_i$ e $\boldsymbol{x}_j$. De maneira geral, o classificador OPF usa a distância euclidiana para este fim.
+}
+
+\Sli{
+\justify Como particionar o conjunto de dados de treinamento em grupos? O classificador OPF usa a ideia de \textbf{competição} entre alguns nós denominados de \textbf{protótipos}, os quais tentam conquistar as demais amostras do conjunto de treinamento atribuindo \textbf{melhores} custos à elas por meio de \textbf{caminhos de custo ótimo}. O que são esses caminhos?
+
+\begin{center}
+\begin{tabular}{ccc}
+\includegraphics[scale=0.19]{./figs/OPF_Fig10.png} &
+\includegraphics[scale=0.19]{./figs/OPF_Fig12.png} &
+\includegraphics[scale=0.19]{./figs/OPF_Fig13.png}\\
+Grafo original & Passeio & Caminho\\
+& $\pi_B=\langle A,B,D,C,B\rangle$ & $\pi_B=\langle A,B,D,C\rangle$
+\end{tabular}
+\end{center}
+
 }
 
 \end{document}
