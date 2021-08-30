@@ -181,7 +181,17 @@ Grafo original & Passeio & Caminho\\
 & $\pi_B=\langle A,B,D,C,B\rangle$ & $\pi_B=\langle A,B,D,C\rangle$
 \end{tabular}
 \end{center}
+}
 
+\Sli{
+\justify O classificador OPF opera em duas etapas, como de costume com outros classificadores, isto é, treinamento e teste. A etapa de treinamento é responsável por particionar o grafo em grupos de amostras com o mesmo rótulo (árvores de caminhos ótimos, do inglês \emph{optimum-path trees} - OPTs), enquanto que a etapa de teste associa, à cada amostra do conjunto de teste, a sua amostra de treinamento mais \textbf{fortemente conexa}.
+
+\justify A etapa de treinamento é composta por três passos:
+\begin{itemize}
+	\item Escolha da relação de adjacência.
+	\item Escolha das amostras protótipos.
+	\item Escolha da função de custo.
+\end{itemize}
 }
 
 \end{document}
