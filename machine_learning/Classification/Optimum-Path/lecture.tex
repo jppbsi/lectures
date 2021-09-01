@@ -200,7 +200,7 @@ Grafo original & Passeio & Caminho\\
 \begin{itemize}
 	\item Relação de adjacência: grafo completo.
 	\item Metodologia para estimar protótipos: MST.
-	\item Função de custo: valor máximo de aresta ao longo do caminho ($f_{max}$).
+	\item Função de custo: valor máximo de aresta ao longo do caminho.
 \end{itemize}
 }
 
@@ -255,6 +255,125 @@ Um outro exemplo de situação bastante comum. Note que o classificador OPF poss
 Grafo de treinamento & MST & Protótipos selecionados\\
 \end{tabular}
 \end{center}
+}
+
+\Sli{
+\justify Como funciona a função de custo de caminho? Como dito anteriormente, OPF pode trabalhar com diferentes opções para relação de adjacência e metodologia para estimar protótipos. O mesmo ocorre com a função de custo. A versão que veremos faz uso da função de custo definida como segue:
+
+\begin{equation}
+	C(\langle \boldsymbol{x}_i\rangle)=
+\begin{cases}
+0\text{ caso $\boldsymbol{x}_i\in{\cal S}$}\\
+\infty\text{ caso contrário,}
+\end{cases}
+\end{equation}
+e
+\begin{equation}
+	C(\pi_{\boldsymbol{x}_j}\cdot \langle \boldsymbol{x}_j,\boldsymbol{x}_k\rangle)=\max\{C(\boldsymbol{x}_j),w(\boldsymbol{x}_j,\boldsymbol{x}_k)\}.
+\end{equation}
+\justify Neste caso, temos que ${\cal S}$ corresponde ao conjunto de protótipos escolhidos pela MST, $\langle \boldsymbol{x}_i\rangle$ denota o caminho trivial composto apenas pelo nó $\boldsymbol{x}_i$, $C(\langle \boldsymbol{x}_i\rangle)$ corresponde ao custo associado à amostra $\boldsymbol{x}_i$ e $w(\boldsymbol{x}_j,\boldsymbol{x}_k)$ denota a distância (peso da aresta) entre os nós $\boldsymbol{x}_j$ e $\boldsymbol{x}_k$, tal que $\boldsymbol{x}_i,\boldsymbol{x}_j,\boldsymbol{x}_k\in{\cal X}^1$. Já o termo $\pi_{\boldsymbol{x}_j}$ corresponde à um caminho que termina na amostra $\boldsymbol{x}_j$.
+}
+
+\Sli{
+O algoritmo do OPF pode ser entendido como um problema de otimização, em que a ideia é atribuir o \textbf{menor custo possível} à cada amostra de treinamento. Desta forma, a ideia seria resolver o seguinte problema de otimização:
+
+\begin{equation}
+C(\boldsymbol{x}_i) = \min\{\max_{\forall \boldsymbol{x}_j\in{\cal X}^1\backslash\{\boldsymbol{x}_i\}}\{C(\boldsymbol{x}_j),w(\boldsymbol{x}_j,\boldsymbol{x}_i)\}\}.
+\end{equation}
+}
+
+\Sli{
+Vejamos um exemplo de funcionamento da etapa de treinamento do algoritmo do OPF.
+
+\begin{center}
+\begin{tabular}{ccc}
+\includegraphics[scale=0.23]{./figs/OPF_Fig26.png} \hspace{3cm}&
+\includegraphics[scale=0.23]{./figs/OPF_Fig27.png} \hspace{3cm}&
+\includegraphics[scale=0.23]{./figs/OPF_Fig28.png}\\
+Grafo de treinamento & MST & Inicialização dos custos\\
+\end{tabular}
+\end{center}
+}
+
+\Sli{
+
+\begin{center}
+\begin{tabular}{ccc}
+\includegraphics[scale=0.23]{./figs/OPF_Fig29.png} \hspace{3cm}&
+\includegraphics[scale=0.23]{./figs/OPF_Fig30.png} \hspace{3cm}&
+\includegraphics[scale=0.23]{./figs/OPF_Fig31.png}\\
+Retirada do protótipo & Custos atualizados & Próximo protótipo\\
+da fila de prioridades & & sai da fila\\
+\end{tabular}
+\end{center}
+}
+
+\Sli{
+
+\begin{center}
+\begin{tabular}{ccc}
+\includegraphics[scale=0.2]{./figs/OPF_Fig32.png} \hspace{3cm}&
+\includegraphics[scale=0.2]{./figs/OPF_Fig33.png} \hspace{1cm}&
+\includegraphics[scale=0.2]{./figs/OPF_Fig34.png}\\
+Custos atualizados & Próxima amostra sai & Sem atualização de custo e próxima \\
+& da fila de prioridades & amostra sai da fila de prioridades \\
+\end{tabular}
+\end{center}
+}
+
+\Sli{
+
+\begin{center}
+\begin{tabular}{ccc}
+\includegraphics[scale=0.21]{./figs/OPF_Fig35.png} \hspace{3cm}&
+\includegraphics[scale=0.21]{./figs/OPF_Fig36.png} \hspace{1cm}&
+\includegraphics[scale=0.21]{./figs/OPF_Fig37.png}\\
+Custos atualizados & Próxima amostra sai & Sem atualização de custo e \\
+& da fila de prioridades & fim do treinamento \\
+\end{tabular}
+\end{center}
+}
+
+\Sli{
+No final da etapa de treinamento, temos a geração de uma \textbf{floresta de caminhos ótimos}, que é composta por \textbf{árvores de caminhos ótimos} cujas raízes são os nós protótipos. 
+
+\begin{center}
+	\includegraphics[scale=0.31]{./figs/OPF_Fig38.png}
+\end{center}
+}
+
+\Sli{
+Já a etapa de classificação funciona da seguinte maneira: dada uma amostra $\boldsymbol{x}\in{\cal X}^2$, conectamos ela à todas as amostras do conjunto de treinamento. Em seguida, verificamos quem oferece o melhor custo, de maneira similar à Equação 3, ou seja:
+
+\begin{equation}
+C(\boldsymbol{x}) = \min\{\max_{\forall \boldsymbol{x}_i\in{\cal X}^1}\{C(\boldsymbol{x}),w(\boldsymbol{x}_i,\boldsymbol{x})\}\}.
+\end{equation}
+
+A amostra $\boldsymbol{x}_i\in{\cal X}^1$ que oferecer o menor custo conquista a amostra de teste e oferece o seu rótulo (classe) à ela.
+}
+
+\Sli{
+\begin{center}
+\begin{tabular}{cc}
+\includegraphics[scale=0.33]{./figs/OPF_Fig39.png} \hspace{3cm}&
+\includegraphics[scale=0.33]{./figs/OPF_Fig40.png} \hspace{1cm} \\
+Amostra de teste é conectada à& Amostra recebe o seu \\
+todas as amostras de treinamento & rótulo final\\
+\end{tabular}
+\end{center}
+}
+
+\Sli{
+\justify O classificador OPF possui outras variantes supervisionadas (OPF com relação de adjacência por $k$-vizinhos mais próximos), semi-supervisionadas e não supervisionadas. Já foi aplicado em diferentes situações, tais como:
+
+\begin{itemize}
+	\item Recuperação de imagens (nativo).
+	\item Classificação por múltiplos rótulos.
+	\item Classificação de imagens (medicina, engenharia e sensoriamento remoto, dentre outras).
+	\item Classificação de gêneros musicais.
+	\item Classificação de sinais.
+	\item Em conjunto com aprendizado em profundidade.
+\end{itemize}
 }
 
 \end{document}
