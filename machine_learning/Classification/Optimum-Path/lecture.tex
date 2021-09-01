@@ -152,7 +152,20 @@ Grafo original & Subgrafo gerado & Subgrafo gerador\\
 }
 
 \Sli{
-\justify Grafos podem ser ainda \textbf{ponderados} em suas arestas (distâncias entre cidades, por exemplo). Desta forma, temos que nosso grafo pode ser definido como segue: $G=({\cal V},{\cal E},w)$, em que $w:{\cal E}\rightarrow\mathbb{R}$ é a função que associa pesos às arestas. De acordo com essa definição, temos um importante tipo de grafo chamado de \textbf{árvore geradora mínima}, do inglês \emph{minimum spanning tree} - MST, que é um subgrafo gerador, do tipo árvore, cujo somatório dos pesos das arestas é \textbf{mínimo}.
+\justify Um grafo é dito ser completo quando todos os pares de nós estão conectados. Uma família bastante conhecida de grafos que obedece à esta propriedade é conhecida por $K_z$, em que $z$ denota o número de nós.
+
+\begin{center}
+\begin{tabular}{ccc}
+\includegraphics[scale=0.19]{./figs/OPF_Fig14.png} &
+\includegraphics[scale=0.19]{./figs/OPF_Fig15.png} &
+\includegraphics[scale=0.19]{./figs/OPF_Fig16.png}\\
+$K_1$ (grafo trivial) & $K_2$ & $K_4$\\
+\end{tabular}
+\end{center}
+}
+
+\Sli{
+\justify Grafos podem ser ainda \textbf{ponderados} em suas arestas (distâncias entre cidades, por exemplo). Desta forma, temos que nosso grafo pode ser definido como segue: $G=({\cal V},{\cal E},w)$, em que $w:{\cal V}\times{\cal V}\rightarrow\mathbb{R}$ é a função que associa pesos às arestas. De acordo com essa definição, temos um importante tipo de grafo chamado de \textbf{árvore geradora mínima}, do inglês \emph{minimum spanning tree} - MST, que é um subgrafo gerador, do tipo árvore, cujo somatório dos pesos das arestas é \textbf{mínimo}.
 
 \begin{center}
 \begin{tabular}{cc}
@@ -164,7 +177,7 @@ Grafo original & MST\\
 }
 
 \Sli{
-\justify A técnica Floresta de Caminhos Ótimos, do inglês \emph{Optimum-Path Forest} - OPF, visa modelar o problema de classificação das amostras como sendo uma tarefa de particionamento de um grafo em grupos de amostras com o mesmo rótulo. Neste sentido, as amostras do conjunto de dados correspondem aos nós do grafo e as arestas são definidas por alguma relação de adjacência escolhida previamente. Possui, atualmente, versões supervisionadas, não supervisionadas e semi-supervisionadas.
+\justify A técnica Floresta de Caminhos Ótimos, do inglês \emph{Optimum-Path Forest} - OPF, visa modelar o problema de classificação das amostras como sendo uma tarefa de particionamento de um grafo em grupos de amostras com o mesmo rótulo. Neste sentido, as amostras do conjunto de dados correspondem aos nós do grafo e as arestas são definidas por alguma relação de adjacência escolhida previamente.
 
 \justify \underline{Definição do problema:} dados um conjunto de treinamento rotulado e com $m$ amostras, ou seja, ${\cal X}^1 = \{(\boldsymbol{x}_1,y_1),(\boldsymbol{x}_2,y_2),\ldots,(\boldsymbol{x}_m,y_m)\}$ e um grafo $G=({\cal V},{\cal E},w)$, nosso objetivo é então particionar $G$ em grupos de amostras com o mesmo rótulo. Temos que ${\cal V}=\{\boldsymbol{x}_1,\boldsymbol{x}_2,\ldots,\boldsymbol{x}_m\}$, ${\cal E}$ deve ser escolhido de alguma forma que satisfaça o seu problema e $w$ é geralmente escolhido como uma função distância entre duas amostras, ou seja, $w(\boldsymbol{x}_i,\boldsymbol{x}_j)$ calcula a distância entre os nós (amostras) $\boldsymbol{x}_i$ e $\boldsymbol{x}_j$. De maneira geral, o classificador OPF usa a distância euclidiana para este fim.
 }
@@ -178,7 +191,7 @@ Grafo original & MST\\
 \includegraphics[scale=0.19]{./figs/OPF_Fig12.png} &
 \includegraphics[scale=0.19]{./figs/OPF_Fig13.png}\\
 Grafo original & Passeio & Caminho\\
-& $\pi_B=\langle A,B,D,C,B\rangle$ & $\pi_B=\langle A,B,D,C\rangle$
+& $\pi_B=\langle A,B,D,C,B\rangle$ & $\pi_B=\langle A,B\rangle$
 \end{tabular}
 \end{center}
 }
@@ -202,19 +215,6 @@ Grafo original & Passeio & Caminho\\
 	\item Metodologia para estimar protótipos: MST.
 	\item Função de custo: valor máximo de aresta ao longo do caminho.
 \end{itemize}
-}
-
-\Sli{
-\justify Um grafo é dito ser completo quando todos os pares de nós estão conectados. Uma família bastante conhecida de grafos que obedece à esta propriedade é conhecida por $K_z$, em que $z$ denota o número de nós.
-
-\begin{center}
-\begin{tabular}{ccc}
-\includegraphics[scale=0.19]{./figs/OPF_Fig14.png} &
-\includegraphics[scale=0.19]{./figs/OPF_Fig15.png} &
-\includegraphics[scale=0.19]{./figs/OPF_Fig16.png}\\
-$K_1$ (grafo trivial) & $K_1$ & $K_4$\\
-\end{tabular}
-\end{center}
 }
 
 \Sli{
@@ -261,7 +261,7 @@ Grafo de treinamento & MST & Protótipos selecionados\\
 \justify Como funciona a função de custo de caminho? Como dito anteriormente, OPF pode trabalhar com diferentes opções para relação de adjacência e metodologia para estimar protótipos. O mesmo ocorre com a função de custo. A versão que veremos faz uso da função de custo definida como segue:
 
 \begin{equation}
-	C(\langle \boldsymbol{x}_i\rangle)=
+	C(\boldsymbol{x}_i)=
 \begin{cases}
 0\text{ caso $\boldsymbol{x}_i\in{\cal S}$}\\
 \infty\text{ caso contrário,}
@@ -269,9 +269,9 @@ Grafo de treinamento & MST & Protótipos selecionados\\
 \end{equation}
 e
 \begin{equation}
-	C(\pi_{\boldsymbol{x}_j}\cdot \langle \boldsymbol{x}_j,\boldsymbol{x}_k\rangle)=\max\{C(\boldsymbol{x}_j),w(\boldsymbol{x}_j,\boldsymbol{x}_k)\}.
+	C_{\boldsymbol{x}_j}(\boldsymbol{x}_i)=\max\{C(\boldsymbol{x}_j),w(\boldsymbol{x}_j,\boldsymbol{x}_k)\}.
 \end{equation}
-\justify Neste caso, temos que ${\cal S}$ corresponde ao conjunto de protótipos escolhidos pela MST, $\langle \boldsymbol{x}_i\rangle$ denota o caminho trivial composto apenas pelo nó $\boldsymbol{x}_i$, $C(\langle \boldsymbol{x}_i\rangle)$ corresponde ao custo associado à amostra $\boldsymbol{x}_i$ e $w(\boldsymbol{x}_j,\boldsymbol{x}_k)$ denota a distância (peso da aresta) entre os nós $\boldsymbol{x}_j$ e $\boldsymbol{x}_k$, tal que $\boldsymbol{x}_i,\boldsymbol{x}_j,\boldsymbol{x}_k\in{\cal X}^1$. Já o termo $\pi_{\boldsymbol{x}_j}$ corresponde à um caminho que termina na amostra $\boldsymbol{x}_j$.
+\justify Neste caso, temos que ${\cal S}$ corresponde ao conjunto de protótipos escolhidos pela MST, $C_{\boldsymbol{x}_j}(\boldsymbol{x}_i)$ corresponde ao custo oferecido pela amostra $\boldsymbol{x}_j$ para a amostra $\boldsymbol{x}_i$ e $w(\boldsymbol{x}_j,\boldsymbol{x}_k)$ denota a distância (peso da aresta) entre os nós $\boldsymbol{x}_j$ e $\boldsymbol{x}_k$, tal que $\boldsymbol{x}_i,\boldsymbol{x}_j,\boldsymbol{x}_k\in{\cal X}^1$.
 }
 
 \Sli{
