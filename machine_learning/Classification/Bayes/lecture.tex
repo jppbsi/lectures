@@ -116,7 +116,7 @@ $p(\boldsymbol{x}|\omega_2)\sim{\cal N}(\mu_2,\sigma^2_2)$
 Dados esses três componentes, temos que a regra de Bayes é formulada como segue:
 
 \begin{equation}
-	p(\omega_i|\boldsymbol{x}) = \frac{p(\boldsymbol{x}|\omega_ip(\omega_i)}{p(\boldsymbol{x})},
+	p(\omega_i|\boldsymbol{x}) = \frac{p(\boldsymbol{x}|\omega_i)p(\omega_i)}{p(\boldsymbol{x})},
 \end{equation}
 em que $p(\boldsymbol{x})$ é uma constante normalizadora que não depende da classe, calculada como segue:
 
@@ -149,11 +149,111 @@ A fórmula acima faz com que $p(\omega_i|\boldsymbol{x})\in[0,1]$.
 }
 
 \Sli{
-Temos que $p({\cal X}^1_i;\theta_i)$ corresponde à \textbf{densidade conjunta} das amostras da classe $\omega_i$ como função dos parâmetros:
+\justifying Temos que $p({\cal X}^1_i;\theta_i)$ corresponde à \textbf{densidade conjunta} das amostras da classe $\omega_i$ em função dos parâmetros:
 
 \begin{equation}
-	p({\cal X}^1_i;\theta_i) = \prod_{x\in{\cal X}^1_i}p(x;\theta_i),
+	p({\cal X}^1_i;\theta_i) = \prod_{x_j\in{\cal X}^1_i}p(x_j;\theta_i),
 \end{equation}
+em que $p(x_j;\theta_i)=\frac{1}{\sqrt{2\pi\sigma^2_i}}\exp\left\{\frac{(x_j-\mu_i)^2}{2\sigma^2_i}\right\}$ possui a mesma formulação da Equação 3.
+}
+
+\Sli{
+\justifying Para fins de tratabilidade matemática, é comum maximizar o logaritmo da verossimilhança, ou seja:
+
+\begin{equation}
+	\log p({\cal X}^1_i;\theta_i)=\sum_{x_j\in{\cal X}^1_i}\log p(x_j;\theta_i).
+\end{equation}
+A equação acima, após algumas derivações matemáticas, resulta em:
+
+\begin{equation}
+	\log p({\cal X}^1_i;\theta_i)=-\frac{m_i^\prime}{2}\log2\pi-\frac{m_i^\prime}{2}\log\sigma^2_i-\frac{1}{2\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2,
+\end{equation}
+em que $m_i^\prime = |{\cal X}^1_i|$.
+}
+
+\Sli{
+\justifying Assim sendo, nosso problema passar a ser encontrar o conjunto de parâmetros $\theta_i$ que maximiza a seguinte equação:
+
+\begin{equation}
+\hat{\mu}_i,\hat{\sigma}_i = \argmax_{\mu_i\sigma_i^2}\{\log p({\cal X}^1_i;\theta_i)\}.
+\end{equation}
+Note que essa formulação precisa ser realizada para todas as classes, ou seja, $i=1,2,\ldots,c$.\newline
+
+\justifying Para resolvermos o problema acima, basta calcular a derivada de $\log p({\cal X}^1_i;\theta_i)$ em relação à cada um dos seus parâmetros e igualar à zero, ou seja:
+
+\begin{equation}\nonumber
+	\frac{\partial \log p({\cal X}^1_i;\theta_i)}{\partial\mu_i}\text{\ \ e\ \ }\frac{\partial \log p({\cal X}^1_i;\theta_i)}{\partial\sigma_i^2}.
+\end{equation}
+}
+
+\Sli{
+Vamos calcular a derivada da função em relação ao parâmetro $\mu_i$, ou seja:
+
+\begin{align}\nonumber
+	\frac{\partial \log p({\cal X}^1_i;\theta_i)}{\partial\mu_i} & = -\cancelto{0}{\frac{m_i^\prime}{2}\log2\pi}-\cancelto{0}{\frac{m_i^\prime}{2}\log\sigma^2_i}-\frac{1}{2\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2 \\
+		&= -\frac{1}{\xcancel{2}\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^{\xcancel{2}} = -\frac{1}{\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i) = 0\\\nonumber
+		&= \implies \frac{1}{\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i) = 0.
+\end{align}
+}
+
+\Sli{
+Dividindo ambos termos da Equação 9 por $1/\sigma^2_i$, temos que:
+
+\begin{align}\nonumber
+	\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i) &= 0\implies\sum_{x_j\in{\cal X}^1_i}x_j-\sum_{x_j\in{\cal X}^1_i}\mu_i = \sum_{x_j\in{\cal X}^1_i}x_j-m_i^\prime\mu_i = 0\\
+	&\implies-m_i^\prime\mu_i = -\sum_{x_j\in{\cal X}^1_i}x_j\implies m_i^\prime\mu_i=\sum_{x_j\in{\cal X}^1_i}x_j\\
+	&\implies\mu_i = \frac{1}{m_i^\prime}\sum_{x_j\in{\cal X}^1_i}x_j\nonumber,
+\end{align}
+que é, basicamente, a equação da média amostral como conhecemos, ou seja, o melhor estimador possível!
+}
+
+\Sli{
+Vamos calcular a derivada da função em relação ao parâmetro $\sigma^2_i$, ou seja:
+
+\begin{align}\nonumber
+	\frac{\partial \log p({\cal X}^1_i;\theta_i)}{\partial\sigma^2_i} & = \cancelto{0}{-\frac{m_i^\prime}{2}\log2\pi}-\cancelto{\frac{\partial\log a}{\partial a} = 1/a}{\frac{m_i^\prime}{2}\log\sigma^2_i}-\frac{1}{2\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2 \\
+		&= -\frac{m^\prime_i}{2\sigma^2_i}\cancelto{\frac{\partial -1/a}{\partial a} = 1/a^2}{-\frac{1}{2\sigma^2_i}}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2=-\frac{m^\prime_i}{2\sigma^2_i}+\frac{1}{2\sigma^4_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2 = 0.\\\nonumber
+\end{align}
+}
+
+\Sli{
+Multiplicando ambos termos da Equação 11 por $2\sigma^2_i$, temos que:
+
+\begin{align}\nonumber
+	-m^\prime_i+\frac{1}{\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2 &= 0\implies \frac{1}{\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2 = m^\prime_i\\
+	&\implies\sigma^2_i = \frac{1}{m^\prime_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2,
+\end{align}
+que também denota a equação conhecida da variância das amostras da classe $\omega_i$.
+}
+
+\Sli{
+\justifying Agora, como calculamos a função de decisão?  Seja $d_i(x)$ a função de decisão que define o classificador Bayesiano sob hipótese Gaussiana no caso unidimensional para a classe $\omega_i$. Temos que ela pode ser calculada da seguinte forma:
+
+\begin{equation}
+	d_i(x) = p(x|\omega_i)p(\omega_i),
+\end{equation}
+que é, basicamente, o numerador da Regra de Bayes (Equação 1), ou seja, um índice de pertinência da amostra $x$ para a classe $\omega_i$.\newline
+
+\justifying Para fins de tratabilidade matemática, apliquemos a função logarítimica na Equação 13:
+
+\begin{align}\nonumber
+	d_i(x) &= \log(p(x|\omega_i)p(\omega_i))\\
+		&= \log p(x|\omega_i)+ \log p(\omega_i).
+\end{align}
+}
+
+\Sli{
+Simplificando um pouco mais a Equação 14, temos que:
+\vspace{-0.27cm}
+\begin{align}\nonumber
+	d_i(x) &= \log p(x|\omega_i)+ \log p(\omega_i)\\\nonumber
+	&= \log\left[\frac{1}{\sqrt{2\pi\sigma^2_i}}\exp\left\{-\frac{1}{2\sigma^2_i}(x-\mu_i)^2\right\}\right]+\log p(\omega_i)\\\nonumber
+	&= \log\left[\frac{1}{\sqrt{2\pi\sigma^2_i}}\right]+\log\left[\exp\left\{-\frac{1}{2\sigma^2_i}(x-\mu_i)^2\right\}\right]+\log p(\omega_i)\\
+	&= \log(2\pi\sigma^2_i)^{-1/2}-\frac{1}{2\sigma^2_i}(x-\mu_i)^2+\log p(\omega_i)\\\nonumber
+	&= -\frac{1}{2}\log(2\pi\sigma^2_i)-\frac{1}{2\sigma^2_i}(x-\mu_i)^2+\log p(\omega_i)\\\nonumber
+	&= -\frac{1}{2}\left[\log(2\pi\sigma)+\log(\sigma_i^2)\right]-\frac{1}{2\sigma^2_i}(x-\mu_i)^2+\log p(\omega_i).\\\nonumber
+\end{align}
+
 }
 
 \end{document}
