@@ -93,8 +93,6 @@ Além disso, temos os seguintes componentes em nosso ferramental:
 }
 
 \Sli{
-Além disso, temos os seguintes componentes em nosso ferramental:
-
 \begin{itemize}
 	\item $p(\boldsymbol{x}|\omega_i)$: \textbf{probabilidade condicional} da classe $\omega_i$ (verossimilhança). Ela descreve a função de densidade de probabilidade, ou seja, qual o comportamento de $\boldsymbol{x}$ dentro da classe $\omega_i$. Ex: se $\boldsymbol{x}$ corresponde à altura do jogador em metros, $p(\boldsymbol{x}|\omega_i)$ descreve a distribuição das alturas dos jogadores de futebol e $p(\boldsymbol{x}|\omega_2)$ descreve a distribuição das alturas dos jogadores de basquete. Assumindo que temos uma hipótese Gaussiana, podemos representar $p(\boldsymbol{x}|\omega_i)$ como segue:
 \end{itemize}
@@ -110,8 +108,52 @@ $p(\boldsymbol{x}|\omega_2)\sim{\cal N}(\mu_2,\sigma^2_2)$
 \end{minipage}
 }
 
-%\begin{center}
-%\includegraphics[scale=0.17]{./figs/OPF_Fig1.png}
-%\end{center}
+\Sli{
+\begin{itemize}
+\item $p(\omega_i|\boldsymbol{x})$: \textbf{probabilidade a posteriori} da classe $\omega_i$, isto é, a probabilidade de decidirmos pela classe $\omega_i$ dada que observamos a amostra $\boldsymbol{x}$.
+\end{itemize}
+
+Dados esses três componentes, temos que a regra de Bayes é formulada como segue:
+
+\begin{equation}
+	p(\omega_i|\boldsymbol{x}) = \frac{p(\boldsymbol{x}|\omega_ip(\omega_i)}{p(\boldsymbol{x})},
+\end{equation}
+em que $p(\boldsymbol{x})$ é uma constante normalizadora que não depende da classe, calculada como segue:
+
+\begin{equation}
+	p(\boldsymbol{x}) = \sum_{j=1}^cp(\boldsymbol{x}|\omega_j)p(\omega_j).
+\end{equation}
+A fórmula acima faz com que $p(\omega_i|\boldsymbol{x})\in[0,1]$.
+}
+
+\SliT{Classificador Bayesiano sob Hipótese Gaussiana}{
+\secx{Caso Unidimensional}
+
+\justifying Neste caso, temos que nossa amostra $x\in\mathbb{R}$, ou seja, temos apenas uma única característica. Como em nosso exemplo anterior de classificar um jogador como sendo de basquete ou futebol, assuma que $x$ seja dado pela altura dos indivíduos.\newline
+
+\justifying No caso unidimensional, temos que a probabilidade condicional da classe $\omega_i$ é dada por:
+
+\begin{equation}
+	p(x|\omega_i) = \frac{1}{\sqrt{2\pi\sigma^2_i}}\exp\left\{\frac{-(x-\mu_i)^2}{2\sigma^2_i}\right\}.
+\end{equation}
+}
+
+\Sli{
+\justifying A equação de uma função de densidade probabilidade Gaussiana possui dois parâmetros, isto é, a média $\mu_i$ e a variância $\sigma^2_i$, $\forall i=1,2,\ldots,c$. Assim sendo, a etapa de treinamento do classificador Bayesiano consiste em estimar esses parâmetros a partir dos dados de treinamento. Dado um problema com $c$ classes, o objetivo é aprender esses parâmetros para cada Gaussiana, isto é, uma para cada classe. Denotamos por $\boldsymbol{\theta}=\{\theta_1,\theta_2,\ldots,\theta_c\}$ esse conjunto de parâmetros a ser aprendido, em que $\theta_i = (\mu_i,\sigma^2_i)$.\newline
+
+\justifying Um dos métodos mais conhecidos para aprendizado do conjunto de parâmetros $\boldsymbol{\theta}$ é o da máxima verossimilhança, ou seja, queremos maximizar a verossimilhança sobre o conjunto de dados de treinamento. Seja ${\cal X}^1_i\subset{\cal X}^1$ o subconjunto dos dados de treinamento que contém apenas amostras da classe $\omega_i$, $\forall i=1,2,\ldots,c$. Desta forma, o método da máxima verossimilhança consiste em encontrar $\theta_i$ que satisfaz a seguinte formulação:
+
+\begin{equation}
+	\hat{\mu_i},\hat{\sigma}^2_i = \argmax_{\mu_i,\sigma^2_i}\{p({\cal X}^1_i;\theta_i)\}.
+\end{equation}
+}
+
+\Sli{
+Temos que $p({\cal X}^1_i;\theta_i)$ corresponde à \textbf{densidade conjunta} das amostras da classe $\omega_i$ como função dos parâmetros:
+
+\begin{equation}
+	p({\cal X}^1_i;\theta_i) = \prod_{x\in{\cal X}^1_i}p(x;\theta_i),
+\end{equation}
+}
 
 \end{document}
