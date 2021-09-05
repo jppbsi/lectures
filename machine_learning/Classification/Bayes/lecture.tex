@@ -450,4 +450,19 @@ em que $w_{i1} = \boldsymbol{\mu_i}^T\boldsymbol{\Sigma}^{-1}$ e $w_{i0}=-\frac{
 Novamente, temos uma \textbf{função discriminante linear}. Assim sendo, podemos dizer que o classificador Bayesiano sob hipótese Gaussiana com uma única matriz de covariância é um classificador linear!
 }
 
+\Sli{
+\begin{itemize}
+	\item \underline{Caso 3:} quando temos uma matriz de covariância para cada classe. Considerando, novamente, a função de decisão da Equação 26, temos que:
+	\begin{align}\nonumber
+	d_i(\boldsymbol{x}) &= -\frac{1}{2}\log(\boldsymbol{|\Sigma_i|})-\frac{1}{2}(\boldsymbol{x}-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma_i}^{-1}(\boldsymbol{x}-\boldsymbol{\mu}_i)+\log p(\omega_i)\\
+	&= -\frac{1}{2}\log(\boldsymbol{|\Sigma_i|})\underbrace{-\frac{1}{2}\boldsymbol{x}^T\boldsymbol{\Sigma_i}^{-1}\boldsymbol{x}}_{\text{termo quadrático em $\boldsymbol{x}$}}+\boldsymbol{\mu}_i^T\boldsymbol{\Sigma_i}^{-1}\boldsymbol{x}-\frac{1}{2}\boldsymbol{\mu}_i^T\boldsymbol{\Sigma_i}^{-1}\boldsymbol{\mu_i}+\log p(\omega_i).\\\nonumber
+	\end{align}
+\end{itemize}
+Temos, agora, uma função discriminante quadrática, ou seja:
+\begin{equation}
+	d_i(\boldsymbol{x}) = \boldsymbol{x}^T\boldsymbol{W}_{i2}\boldsymbol{x}+\boldsymbol{W}_{i1}\boldsymbol{x}+\boldsymbol{W}_{i0},
+\end{equation}
+onde $\boldsymbol{W}_{i2}=-\frac{1}{2}\boldsymbol{\Sigma_i}^{-1}$, $\boldsymbol{W}_{i1}=\boldsymbol{\mu_i}^T\boldsymbol{\Sigma_i}^{-1}$ e $\boldsymbol{W}_{i0}=-\frac{1}{2}\log(\boldsymbol{|\Sigma_i|})-\frac{1}{2}\boldsymbol{\mu}_i^T\boldsymbol{\Sigma_i}^{-1}\boldsymbol{\mu_i}+\log p(\omega_i)$.
+}
+
 \end{document}
