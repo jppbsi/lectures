@@ -276,7 +276,7 @@ A equação acima é a função de decisão final do classificador Bayesiano.
 \justifying Agora, suponha que cada amostra de nosso conjunto de dados possua mais atributos, isto é, $\boldsymbol{x}\in\mathbb{R}^n$, $n>1$. A ideia do classificador Bayesiano é a mesma, ou seja, vamos maximizar o logaritmo da máxima verossimilhança para obter as formulações dos parâmetros de nossa função de densidade de probabilidade Gaussiana. No caso de uma Gaussiana multidimensional, a sua formulação é dada por:
 
 \begin{equation}
-	p(\boldsymbol{x}_j|\theta_i) = \frac{1}{(2\pi)^{m^\prime_i/2}}\exp\left\{-\frac{1}{2}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\right\},
+	p(\boldsymbol{x}_j|\theta_i) = \frac{1}{(2\pi)^{m^\prime_i/2}|\Sigma_i|^{1/2}}\exp\left\{-\frac{1}{2}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\right\},
 \end{equation}
 em que $\theta_i=(\boldsymbol{\mu}_i,\boldsymbol{\Sigma}_i)$ denota o conjunto de parâmetros da Gaussiana da classe $\omega_i$, em que $\boldsymbol{\mu}_i\in\mathbb{R}^n$ corresponde ao seu vetor de médias e $\boldsymbol{\Sigma}_i\in\mathbb{R}^{n\times n}$ denota a sua matriz de covariância. 
 }
@@ -317,7 +317,7 @@ Temos, ainda, que:
 \begin{align}\nonumber
 	\log p({\cal X}^1_i|\theta_i) &= \sum_{\boldsymbol{x}_j\in{\cal X}^1_i}\log p(\boldsymbol{x}_j|\theta_i)\\
 	&= \sum_{\boldsymbol{x}_j\in{\cal X}^1_i}\log\left[\frac{1}{(2\pi)^{m^\prime_i/2}}\exp\left\{-\frac{1}{2}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\right\}\right]\\
-	&= \underbrace{-\frac{nm^\prime_i}{2}\log(2\pi)-\frac{m^\prime_i}{2}\log(|\boldsymbol{\Sigma}_i|)-\frac{1}{2}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)}_{\text{função que queremos derivar!}}\nonumber
+	&= \underbrace{-\frac{nm^\prime_i}{2}\log(2\pi)-\frac{m^\prime_i}{2}\log(\boldsymbol{|\Sigma}_i^{-1}|)-\frac{1}{2}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)}_{\text{função que queremos derivar!}}\nonumber
 \end{align}
 }
 
@@ -325,7 +325,7 @@ Temos, ainda, que:
 \justifying Para resolvermos, então, a Equação 18, temos que calcular a sua derivada em relação aos parâmetros e igualar à zero, de maneira similar a que fizemos no caso unidimensional. Começando pela variável $\boldsymbol{\mu_i}$, temos que:
 
 \begin{align}
-	\frac{\partial \log p({\cal X}^1_i|\theta_i)}{\partial \boldsymbol{\mu_i}} &= \cancelto{0}{-\frac{nm^\prime_i}{2}\log(2\pi)}-\cancelto{0}{\frac{m^\prime_i}{2}\log(|\boldsymbol{\Sigma}_i|)}-\frac{1}{2}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\\
+	\frac{\partial \log p({\cal X}^1_i|\theta_i)}{\partial \boldsymbol{\mu_i}} &= \cancelto{0}{-\frac{nm^\prime_i}{2}\log(2\pi)}-\cancelto{0}{\frac{m^\prime_i}{2}\log(|\boldsymbol{\Sigma}_i^{-1}|)}-\frac{1}{2}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\\
 	&= -\frac{1}{2}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i) = 0.\nonumber
 \end{align}
 
@@ -351,6 +351,81 @@ Desta forma, temos que:
 que também corresponde à media dos elementos da classe $\omega_i$.
 }
 
+\Sli{
+Precisamos, agora, calcular a derivada da Equação 21 em relação ao parâmetro $\boldsymbol{\Sigma_i}^{-1}$:
 
+\begin{align}
+	\frac{\partial \log p({\cal X}^1_i|\theta_i)}{\partial \boldsymbol{\boldsymbol{|\Sigma_i}^{-1}|}} &= \cancelto{0}{-\frac{nm^\prime_i}{2}\log(2\pi)}-\frac{m^\prime_i}{2}\cancelto{\frac{\partial \log(a)}{\partial a}=1/a}{\log(\boldsymbol{|\Sigma}_i^{-1}|)}-\frac{1}{2}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\\
+	&= \frac{m^\prime_i\boldsymbol{\Sigma}_i}{2}-\frac{1}{2}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T(\boldsymbol{x}_j-\boldsymbol{\mu}_i) = 0.\nonumber
+\end{align}
+
+Isolando $\boldsymbol{\Sigma}_i$, temos que:
+
+\begin{equation}
+	\boldsymbol{\Sigma}_i = \frac{1}{m^\prime_i}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T(\boldsymbol{x}_j-\boldsymbol{\mu}_i),
+\end{equation}
+que é a expressão conhecida da matriz de covariância.
+}
+
+
+\Sli{
+Temos que o termo exponencial da Gaussiana multivariada, isto é, $(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma_i}^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)$,  é conhecido como \textbf{Distância de Mahalanobis}. No caso da função de decisão, temos que:
+
+\begin{align}\nonumber
+	d_i(\boldsymbol{x}) &= \log(p(\boldsymbol{x}|\omega_i)p(\omega_i))\\
+	&= \log p(\boldsymbol{x}|\omega_i)+\log p(\omega_i)\\\nonumber
+	&= \log\left[\frac{1}{(2\pi)^{m^\prime_i/2}|\Sigma_i|^{1/2}}\exp\left\{-\frac{1}{2}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\right\}\right]\\\nonumber
+	&= -\frac{1}{2}\log(\boldsymbol{|\Sigma_i}|)-\frac{1}{2}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma_i}^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)+\log p(\omega_i).\\\nonumber
+\end{align}
+}
+
+\Sli{
+No entanto, dependendo da forma com a qual estimamos as matrizes de covariância, o comportamento do classificador Bayesiano se altera. Temos, basicamente, três casos:
+
+\begin{itemize}
+	\item \underline{Caso 1:} quando as matrizes de covariância das classes são iguais e diagonais, ou seja, utilizamos a mesma matriz de covariância para todas as classes.
+\end{itemize}
+
+\begin{minipage}{0.49\textwidth}
+\begin{equation}\nonumber
+	\boldsymbol{\Sigma} =
+	\begin{bmatrix}
+		\sigma^2 & 0 & 0 & \ldots & 0\\
+		0 & \sigma^2 & 0 & \ldots & 0\\
+		0 & 0 & \sigma^2 & \ldots & 0\\
+		\vdots & \vdots & \vdots & \ddots & \vdots\\
+		0 & 0 & 0 & \ldots & \sigma^2\\
+	\end{bmatrix}
+\end{equation}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.37\textwidth}
+Esse caso é bom quando temos um pequeno número de amostras por classe, pois podemos calcular a matriz utilizando todas as amostras de treinamento. \textbf{Note que temos uma mesma variância para todos os atributos.}
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+\justifying Neste caso, temos que $\boldsymbol{\Sigma} = \sigma^2\boldsymbol{I}$, em que $\boldsymbol{I}\in\mathbb{R}^{n\times n}$ corresponde à matriz identidade. Para esta situação, a função de decisão dada pela Equação 26 pode ser escrita como segue:
+
+\begin{align}\nonumber
+	d_i(\boldsymbol{x}) &= -\frac{1}{2}\log(\boldsymbol{|\Sigma_i|})-\frac{1}{2}(\boldsymbol{x}-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma_i}^{-1}(\boldsymbol{x}-\boldsymbol{\mu}_i)+\log p(\omega_i)\\
+	&= -\frac{1}{2}\log((\sigma^2)^n)-\frac{1}{2}(\boldsymbol{x}-\boldsymbol{\mu}_i)^T\frac{1}{\sigma^2}(\boldsymbol{x}-\boldsymbol{\mu}_i)+\log p(\omega_i)\\\nonumber
+	&= \underbrace{\cancelto{0}{-\frac{n}{2}\log(\sigma^2)}}_{\text{constante em $i$}}-\frac{1}{2\sigma^2}(\boldsymbol{x}-\boldsymbol{\mu}_i)^T(\boldsymbol{x}-\boldsymbol{\mu}_i)+\log p(\omega_i)\\\nonumber
+	&= -\frac{1}{2\sigma^2}(\underbrace{\cancelto{0}{\boldsymbol{x}^T\boldsymbol{x}}}_{\text{constante em $i$}}-2\boldsymbol{x}^T\boldsymbol{\mu_i}+\boldsymbol{\mu_i}^T\boldsymbol{\mu_i})+\log p(\omega_i)\\\nonumber
+	&= \frac{1}{\sigma^2}\boldsymbol{x}^T\boldsymbol{\mu_i}-\frac{1}{2\sigma^2}\boldsymbol{\mu_i}^T\boldsymbol{\mu_i}+\log p(\omega_i).\nonumber
+\end{align}
+}
+
+\Sli{
+A Equação 27 é, na verdade, \textbf{linear} em $\boldsymbol{x}$, ou seja:
+
+\begin{equation}
+	d_i(\boldsymbol{x}) = w_{i1}^T\boldsymbol{x}+w_{i0},
+\end{equation}
+em que $w_{i1} = \frac{1}{\sigma^2}\boldsymbol{\mu_i}$ e $w_{i0}=-\frac{1}{2\sigma^2}\boldsymbol{\mu_i}^T\boldsymbol{\mu_i}+\log p(\omega_i)$ atua como sendo um bias.\newline
+
+Denotamos que a equação acima representa uma \textbf{função discriminante linear}. Assim sendo, podemos dizer que o classificador Bayesiano sob hipótese Gaussiana com uma única matriz de covariância diagonal é um classificador linear!
+}
 
 \end{document}
