@@ -409,7 +409,7 @@ Esse caso é bom quando temos um pequeno número de amostras por classe, pois po
 \justifying Neste caso, temos que $\boldsymbol{\Sigma} = \sigma^2\boldsymbol{I}$, em que $\boldsymbol{I}\in\mathbb{R}^{n\times n}$ corresponde à matriz identidade. Para esta situação, a função de decisão dada pela Equação 26 pode ser escrita como segue:
 
 \begin{align}\nonumber
-	d_i(\boldsymbol{x}) &= -\frac{1}{2}\log(\boldsymbol{|\Sigma_i|})-\frac{1}{2}(\boldsymbol{x}-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma_i}^{-1}(\boldsymbol{x}-\boldsymbol{\mu}_i)+\log p(\omega_i)\\
+	d_i(\boldsymbol{x}) &= -\frac{1}{2}\log(\boldsymbol{|\Sigma|})-\frac{1}{2}(\boldsymbol{x}-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}^{-1}(\boldsymbol{x}-\boldsymbol{\mu}_i)+\log p(\omega_i)\\
 	&= -\frac{1}{2}\log((\sigma^2)^n)-\frac{1}{2}(\boldsymbol{x}-\boldsymbol{\mu}_i)^T\frac{1}{\sigma^2}(\boldsymbol{x}-\boldsymbol{\mu}_i)+\log p(\omega_i)\\\nonumber
 	&= \underbrace{\cancelto{0}{-\frac{n}{2}\log(\sigma^2)}}_{\text{constante em $i$}}-\frac{1}{2\sigma^2}(\boldsymbol{x}-\boldsymbol{\mu}_i)^T(\boldsymbol{x}-\boldsymbol{\mu}_i)+\log p(\omega_i)\\\nonumber
 	&= -\frac{1}{2\sigma^2}(\underbrace{\cancelto{0}{\boldsymbol{x}^T\boldsymbol{x}}}_{\text{constante em $i$}}-2\boldsymbol{x}^T\boldsymbol{\mu_i}+\boldsymbol{\mu_i}^T\boldsymbol{\mu_i})+\log p(\omega_i)\\\nonumber
@@ -426,6 +426,28 @@ A Equação 27 é, na verdade, \textbf{linear} em $\boldsymbol{x}$, ou seja:
 em que $w_{i1} = \frac{1}{\sigma^2}\boldsymbol{\mu_i}$ e $w_{i0}=-\frac{1}{2\sigma^2}\boldsymbol{\mu_i}^T\boldsymbol{\mu_i}+\log p(\omega_i)$ atua como sendo um bias.\newline
 
 Denotamos que a equação acima representa uma \textbf{função discriminante linear}. Assim sendo, podemos dizer que o classificador Bayesiano sob hipótese Gaussiana com uma única matriz de covariância diagonal é um classificador linear!
+}
+
+\Sli{
+\begin{itemize}
+	\item \underline{Caso 2:} quando as matrizes de covariância das classes são iguais mas não diagonais. Considerando, novamente, a função de decisão da Equação 26, temos que:
+	\begin{align}\nonumber
+	d_i(\boldsymbol{x}) &= \underbrace{\cancelto{0}{-\frac{1}{2}\log(\boldsymbol{|\Sigma|})}}_{\text{constante em $i$}}-\frac{1}{2}(\boldsymbol{x}-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}^{-1}(\boldsymbol{x}-\boldsymbol{\mu}_i)+\log p(\omega_i)\\
+	&= \underbrace{\cancelto{0}{-\frac{1}{2}\boldsymbol{x}^T\Sigma^{-1}\boldsymbol{x}}}_{\text{constante em $i$}}+\boldsymbol{\mu_i}^T\Sigma^{-1}\boldsymbol{x}-\frac{1}{2}\boldsymbol{\mu_i}^T\Sigma^{-1}\boldsymbol{\mu_i}+\log p(\omega_i)\\\nonumber
+	&=+\boldsymbol{\mu_i}^T\Sigma^{-1}\boldsymbol{x}-\frac{1}{2}\boldsymbol{\mu_i}^T\Sigma^{-1}\boldsymbol{\mu_i}+\log p(\omega_i).\\\nonumber
+	\end{align}
+\end{itemize}
+}
+
+\Sli{
+De maneira similar ao caso 1, a Equação 29 é, na verdade, \textbf{linear} em $\boldsymbol{x}$, ou seja:
+
+\begin{equation}
+	d_i(\boldsymbol{x}) = w_{i1}^T\boldsymbol{x}+w_{i0},
+\end{equation}
+em que $w_{i1} = \boldsymbol{\mu_i}^T\boldsymbol{\Sigma}^{-1}$ e $w_{i0}=-\frac{1}{2}\boldsymbol{\mu_i}^T\Sigma^{-1}\boldsymbol{\mu_i}+\log p(\omega_i)$.\newline
+
+Novamente, temos uma \textbf{função discriminante linear}. Assim sendo, podemos dizer que o classificador Bayesiano sob hipótese Gaussiana com uma única matriz de covariância é um classificador linear!
 }
 
 \end{document}
