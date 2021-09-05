@@ -251,9 +251,28 @@ Simplificando um pouco mais a Equação 14, temos que:
 	&= \log\left[\frac{1}{\sqrt{2\pi\sigma^2_i}}\right]+\log\left[\exp\left\{-\frac{1}{2\sigma^2_i}(x-\mu_i)^2\right\}\right]+\log p(\omega_i)\\
 	&= \log(2\pi\sigma^2_i)^{-1/2}-\frac{1}{2\sigma^2_i}(x-\mu_i)^2+\log p(\omega_i)\\\nonumber
 	&= -\frac{1}{2}\log(2\pi\sigma^2_i)-\frac{1}{2\sigma^2_i}(x-\mu_i)^2+\log p(\omega_i)\\\nonumber
-	&= -\frac{1}{2}\left[\log(2\pi\sigma)+\log(\sigma_i^2)\right]-\frac{1}{2\sigma^2_i}(x-\mu_i)^2+\log p(\omega_i).\\\nonumber
+	&= -\frac{1}{2}\left[\log(2\pi)+\log(\sigma_i^2)\right]-\frac{1}{2\sigma^2_i}(x-\mu_i)^2+\log p(\omega_i).\\\nonumber
 \end{align}
+}
 
+\Sli{
+Finalmente, a Equação 15 torna-se a seguinte:
+
+\begin{align}
+	d_i(x) &= \cancelto{\text{constante}}{-\frac{1}{2}\log(2\pi)}-\frac{1}{2}\log(\sigma^2_i)-\frac{1}{2\sigma^2_i}(x-\mu_i)^2+\log p(\omega_i)\\
+	&= -\frac{1}{2}\log(\sigma^2_i)-\frac{1}{2\sigma^2_i}(x-\mu_i)^2+\log p(\omega_i).\nonumber
+\end{align}
+A equação acima é a função de decisão final do classificador Bayesiano.
+}
+
+\Sli{
+\justifying Na prática, o classificador Bayesiano funciona da seguinte maneira: supondo o nosso problema de classificação de jogadores de futebol $(\omega_1)$ ou de basquete $(\omega_2)$, precisamos calcular $\boldsymbol{\theta}=\{\theta_1,\theta_2\}$ via treinamento. \newline
+
+\justifying Em seguida, para classificar uma amostra $x^\ast\in{\cal X}^2$, calculamos $d_1(x^\ast)$ e $d_2(x^\ast)$. Caso $d_1(x^\ast)>d_2(x^\ast)$, então a amostra $x^\ast$ é atribuída à classe $\omega_1$ (jogador de futebol). Caso contrário, $x^\ast$ é atribuída à classe $\omega_2$ (jogador de basquete).
+}
+
+\Sli{
+\secx{Caso Multidimensional}
 }
 
 \end{document}
