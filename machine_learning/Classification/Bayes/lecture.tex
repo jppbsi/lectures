@@ -149,12 +149,12 @@ A fórmula acima faz com que $p(\omega_i|\boldsymbol{x})\in[0,1]$.
 }
 
 \Sli{
-\justifying Temos que $p({\cal X}^1_i;\theta_i)$ corresponde à \textbf{densidade conjunta} das amostras da classe $\omega_i$ em função dos parâmetros:
+\justifying Temos que $p({\cal X}^1_i|\theta_i)$ corresponde à \textbf{densidade conjunta} das amostras da classe $\omega_i$ em função dos parâmetros:
 
 \begin{equation}
 	p({\cal X}^1_i|\theta_i) = \prod_{x_j\in{\cal X}^1_i}p(x_j|\theta_i),
 \end{equation}
-em que $p(x_j|\theta_i)=\frac{1}{\sqrt{2\pi\sigma^2_i}}\exp\left\{\frac{(x_j-\mu_i)^2}{2\sigma^2_i}\right\}$ possui a mesma formulação da Equação 3.
+em que $p(x_j|\theta_i)=\frac{1}{\sqrt{2\pi\sigma^2_i}}\exp\left\{-\frac{(x_j-\mu_i)^2}{2\sigma^2_i}\right\}$ possui a mesma formulação da Equação 3.
 }
 
 \Sli{
@@ -175,7 +175,7 @@ em que $m_i^\prime = |{\cal X}^1_i|$.
 \justifying Assim sendo, nosso problema passar a ser encontrar o conjunto de parâmetros $\theta_i$ que maximiza a seguinte equação:
 
 \begin{equation}
-\hat{\mu}_i,\hat{\sigma}_i = \argmax_{\mu_i\sigma_i^2}\{\log p({\cal X}^1_i|\theta_i)\}.
+\hat{\mu}_i,\hat{\sigma}_i = \argmax_{\mu_i,\sigma_i^2}\{\log p({\cal X}^1_i|\theta_i)\}.
 \end{equation}
 Note que essa formulação precisa ser realizada para todas as classes, ou seja, $i=1,2,\ldots,c$.\newline
 
@@ -202,7 +202,7 @@ Dividindo ambos termos da Equação 9 por $1/\sigma^2_i$, temos que:
 \begin{align}\nonumber
 	\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i) &= 0\implies\sum_{x_j\in{\cal X}^1_i}x_j-\sum_{x_j\in{\cal X}^1_i}\mu_i = \sum_{x_j\in{\cal X}^1_i}x_j-m_i^\prime\mu_i = 0\\
 	&\implies-m_i^\prime\mu_i = -\sum_{x_j\in{\cal X}^1_i}x_j\implies m_i^\prime\mu_i=\sum_{x_j\in{\cal X}^1_i}x_j\\
-	&\implies\mu_i = \frac{1}{m_i^\prime}\sum_{x_j\in{\cal X}^1_i}x_j\nonumber,
+	&\implies\hat{\mu_i} = \frac{1}{m_i^\prime}\sum_{x_j\in{\cal X}^1_i}x_j\nonumber,
 \end{align}
 que é, basicamente, a equação da média amostral como conhecemos, ou seja, o melhor estimador possível!
 }
@@ -221,7 +221,7 @@ Multiplicando ambos termos da Equação 11 por $2\sigma^2_i$, temos que:
 
 \begin{align}\nonumber
 	-m^\prime_i+\frac{1}{\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2 &= 0\implies \frac{1}{\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2 = m^\prime_i\\
-	&\implies\sigma^2_i = \frac{1}{m^\prime_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2,
+	&\implies\hat{\sigma}^2_i = \frac{1}{m^\prime_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2,
 \end{align}
 que também denota a equação conhecida da variância das amostras da classe $\omega_i$.
 }
