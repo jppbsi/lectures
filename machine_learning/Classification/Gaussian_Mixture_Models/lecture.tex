@@ -105,6 +105,44 @@ No caso, os pesos $w_k$ representam a probabilidade que uma amostra $\boldsymbol
 }
 
 \Sli{
+\justifying Seja ${\cal Z}=\{z_1,z_2,\ldots,z_m\}$ um conjunto de variáveis latentes em que cada uma delas está relacionada com uma amostra do conjunto de treinamento ${\cal X}^1$. Dado o conjunto de parâmetros $\boldsymbol{\theta}$, temos que a função de verossimilhança é dada por:
+
+\begin{equation}
+	L(\boldsymbol{\theta}|{\cal X}^1,{\cal Z}) = p({\cal X}^1,{\cal Z}|\boldsymbol{\theta}),
+\end{equation}
+\justifying em que $p({\cal X}^1,{\cal Z}|\boldsymbol{\theta})$ corresponde à densidade conjunta de ${\cal X}^1$ e ${\cal Z}$. Ademais, o estimador de máxima verossimilhança do vetor de parâmetros $\boldsymbol{\theta}$ é dado, então, pela \textbf{maximização da verossimilhança marginal} (só temos acesso ao ${\cal X}^1$) dos dados observados, ou seja:
+
+\begin{equation}
+	L(\boldsymbol{\theta}|{\cal X}^1) = p({\cal X}^1|\boldsymbol{\theta}) = \int p({\cal X}^1,{\cal Z}|\boldsymbol{\theta})\mathrm{d}{\cal Z}.
+\end{equation}
+A formulação acima corresponde à calcular a integral da probabilidade conjunta em ${\cal Z}$.
+}
+
+\Sli{
+\justifying No entanto, não temos como calcular essa integral manualmente, pois não temos conhecido de ${\cal Z}$. No entanto, o algoritmo E-M é um estimador iterativo para a verossimilhança marginal. Ele funciona por meio da aplicação sucessiva de dois passos:
+
+\begin{enumerate}
+	\item \emph{Expectation} (E): calcula o valor esperado do logaritmo da verossimilhança com relação à distribuição condicional de ${\cal Z}$ dado ${\cal X}^1$ utilizando a estimativa atual dos parâmetros $\boldsymbol{\theta}$:
+	\begin{equation}
+		Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(t)}) = \mathbb{E}_{{\cal Z}|{\cal X}^1,\boldsymbol{\theta}^{(t)}}[\log L(\boldsymbol{\theta}|{\cal X}^1,{\cal Z})],
+	\end{equation}
+	em que $Q$ denota uma "quantidade".
+	\item \emph{Expectation} (M): encontra os parâmetros que maximizam essa quantidade $Q$:
+	\begin{equation}
+		\boldsymbol{\theta}^{(t+1)} = \argmax_{\boldsymbol{\theta}}Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(t)}).
+	\end{equation}
+\end{enumerate}
+De maneira geral, a ideia do algoritmo E-M é executar os passos 1 e 2 de maneira iterativa até que $|\boldsymbol{\theta}^{(t+1)}-\boldsymbol{\theta}^{(t)}|<\epsilon$. \textbf{A variável latente ${\cal Z}$ nos diz, basicamente, a pertinência de uma dada amostra $\boldsymbol{x}\in{\cal X}^1$ pertencer à um determinado agrupamento (classe).}
+}
+
+\Sli{
+Basicamente, temos as seguintes informações acerca de nosso problema:
+
+\begin{itemize}
+	\item Observações em ${\cal X}^1$ podem ser discretas ou contínuas (ex: podem ser oriundas de distribuições Gaussianas).
+	\item Variáveis latentes em ${\cal Z}$ são discretas (pseudo-rótulos).
+	\item Os parâmetros em $\boldsymbol{\theta}$ são contínuos.
+\end{itemize}
 }
 
 \end{document}
