@@ -145,4 +145,30 @@ Basicamente, temos as seguintes informações acerca de nosso problema:
 \end{itemize}
 }
 
+\Sli{
+Basicamente, os passos do E-M são os seguintes:
+
+\begin{enumerate}
+	\item Inicializar o conjunto de parâmetros $\boldsymbol{\theta}$ de maneira aleatória.
+	\begin{itemize}
+		\item \underline{Passo E:} para cada amostra $\boldsymbol{x}_i\in{\cal X}^1$ associamos uma pontuação $\gamma_{ik}$ que denota a probabilidade dessa amostra pertencer ao agrupamento $k$.
+		\item \underline{Passo M:} dadas as pontuações para todas as amostras, ajusto $\boldsymbol{\theta}_k$ para cada Gaussiana (agrupamento) $k$ utilizando utilizando uma função de verossimilhança marginal (Equação 4).
+	\end{itemize}
+	\item Avaliamos a função do logaritmos da verossimilhança. Caso ela tenha estabilizado entre as iterações, podemos assumir que o método convergiu e interrompemos o processo treinamento.
+\end{enumerate}
+No entanto, uma maneira melhor de inicializar $\mu_k$ e $\Sigma_k$ é via algoritmo do $k$-médias, em que $k=1,2,\ldots,K$. Já os pesos $w_k$ podem ser inicializados como $w_k = \frac{C_k}{|{\cal X}^1|}$, em que $C_k$ corresponde ao número de amostras do agrupamento $k$.
+}
+
+\Sli{
+Vamos às equações de atualização:
+
+\begin{itemize}
+	\item \underline{Passo E:} temos que as pontuações podem ser calculadas como segue:
+	\begin{equation}
+		\gamma^{(t)}_{ik} = \frac{w_kp(\boldsymbol{x}_i|\boldsymbol{\mu}_k,\boldsymbol{\Sigma}_k)}{\sum_{j=1}^Kw_jp(\boldsymbol{x}_j|\boldsymbol{\mu}_j,\boldsymbol{\Sigma}_j)}.
+	\end{equation}
+	A equação assim equivale ao preenchimento de uma matrix $\boldsymbol{\gamma}\in\mathbb{R}^{K\times|{\cal X}^1|}$.
+\end{itemize}
+}
+
 \end{document}
