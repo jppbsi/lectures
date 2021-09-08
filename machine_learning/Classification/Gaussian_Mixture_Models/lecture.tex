@@ -96,6 +96,10 @@ As componentes são densidades Gaussianas multivariadas dadas por:
 	p(\boldsymbol{x}_i|\theta_k) = \frac{1}{(2\pi)^{m^\prime_k/2}|\Sigma_k|^{1/2}}\exp\left\{-\frac{1}{2}(\boldsymbol{x}_i-\boldsymbol{\mu}_k)^T\boldsymbol{\Sigma}_k^{-1}(\boldsymbol{x}_i-\boldsymbol{\mu}_k)\right\}.
 \end{equation}
 No caso, os pesos $w_k$ representam a probabilidade que uma amostra $\boldsymbol{x}_i\in{\cal X}^1$ selecionada aleatoriamente tenha sigo gerada pela componente $k$. Vejamos o exemplo de uma mistura 1D com $k=3$.
+
+\begin{center}
+	\includegraphics[scale=0.21]{./figs/GMM_Fig1.png}
+\end{center}
 }
 
 \Sli{
@@ -168,6 +172,16 @@ Vamos às equações de atualização:
 		\gamma^{(t)}_{ik} = \frac{w_kp(\boldsymbol{x}_i|\boldsymbol{\mu}_k,\boldsymbol{\Sigma}_k)}{\sum_{j=1}^Kw_jp(\boldsymbol{x}_j|\boldsymbol{\mu}_j,\boldsymbol{\Sigma}_j)}.
 	\end{equation}
 	A equação assim equivale ao preenchimento de uma matrix $\boldsymbol{\gamma}\in\mathbb{R}^{K\times|{\cal X}^1|}$.
+\end{itemize}
+}
+
+\Sli{
+\begin{itemize}
+	\item \underline{Passo M:} as seguintes equações são então utilizadas para atualizar os valores dos parâmetros:
+\begin{equation}
+	C_k = \sum_{i=1}^{{\cal X}^1}
+\end{equation}
+
 \end{itemize}
 }
 
