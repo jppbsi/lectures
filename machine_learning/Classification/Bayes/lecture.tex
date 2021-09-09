@@ -329,10 +329,10 @@ Temos, ainda, que:
 	&= -\frac{1}{2}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i) = 0.\nonumber
 \end{align}
 
-Multiplicando-se ambos lados por $-2$ e por $\boldsymbol{\Sigma_i}$, temos que:
+Multiplicando-se ambos lados por $-2\boldsymbol{\Sigma_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T$, temos que:
 
 \begin{equation}\nonumber
-	-\frac{1}{2}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i) = \sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T=0.
+	\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)=0.
 \end{equation}
 }
 
@@ -374,7 +374,7 @@ Temos que o termo exponencial da Gaussiana multivariada, isto é, $(\boldsymbol{
 \begin{align}\nonumber
 	d_i(\boldsymbol{x}) &= \log(p(\boldsymbol{x}|\omega_i)p(\omega_i))\\
 	&= \log p(\boldsymbol{x}|\omega_i)+\log p(\omega_i)\\\nonumber
-	&= \log\left[\frac{1}{(2\pi)^{m^\prime_i/2}|\Sigma_i|^{1/2}}\exp\left\{-\frac{1}{2}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\right\}\right]\\\nonumber
+	&= \log\left[\frac{1}{(2\pi)^{m^\prime_i/2}|\Sigma_i|^{1/2}}\exp\left\{-\frac{1}{2}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\right\}\right]+\log p(\omega_i)\\\nonumber
 	&= -\frac{1}{2}\log(\boldsymbol{|\Sigma_i}|)-\frac{1}{2}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma_i}^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)+\log p(\omega_i).\\\nonumber
 \end{align}
 }
@@ -429,58 +429,7 @@ Denotamos que a equação acima representa uma \textbf{função discriminante li
 }
 
 \Sli{
-\begin{itemize}
-	\item \underline{Caso 2:} quando as matrizes de covariância das classes são iguais mas não diagonais. Considerando, novamente, a função de decisão da Equação 26, temos que:
-	\begin{align}\nonumber
-	d_i(\boldsymbol{x}) &= \underbrace{\cancelto{0}{-\frac{1}{2}\log(\boldsymbol{|\Sigma|})}}_{\text{constante em $i$}}-\frac{1}{2}(\boldsymbol{x}-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}^{-1}(\boldsymbol{x}-\boldsymbol{\mu}_i)+\log p(\omega_i)\\
-	&= \underbrace{\cancelto{0}{-\frac{1}{2}\boldsymbol{x}^T\Sigma^{-1}\boldsymbol{x}}}_{\text{constante em $i$}}+\boldsymbol{\mu_i}^T\Sigma^{-1}\boldsymbol{x}-\frac{1}{2}\boldsymbol{\mu_i}^T\Sigma^{-1}\boldsymbol{\mu_i}+\log p(\omega_i)\\\nonumber
-	&=+\boldsymbol{\mu_i}^T\Sigma^{-1}\boldsymbol{x}-\frac{1}{2}\boldsymbol{\mu_i}^T\Sigma^{-1}\boldsymbol{\mu_i}+\log p(\omega_i).\\\nonumber
-	\end{align}
-\end{itemize}
-}
-
-\Sli{
-De maneira similar ao caso 1, a Equação 29 é, na verdade, \textbf{linear} em $\boldsymbol{x}$, ou seja:
-
-\begin{equation}
-	d_i(\boldsymbol{x}) = w_{i1}^T\boldsymbol{x}+w_{i0},
-\end{equation}
-em que $w_{i1} = \boldsymbol{\mu_i}^T\boldsymbol{\Sigma}^{-1}$ e $w_{i0}=-\frac{1}{2}\boldsymbol{\mu_i}^T\Sigma^{-1}\boldsymbol{\mu_i}+\log p(\omega_i)$.\newline
-
-Novamente, temos uma \textbf{função discriminante linear}. Assim sendo, podemos dizer que o classificador Bayesiano sob hipótese Gaussiana com uma única matriz de covariância é um classificador linear!
-}
-
-\Sli{
-\begin{itemize}
-	\item \underline{Caso 3:} quando temos uma matriz de covariância para cada classe. Considerando, novamente, a função de decisão da Equação 26, temos que:
-	\begin{align}\nonumber
-	d_i(\boldsymbol{x}) &= -\frac{1}{2}\log(\boldsymbol{|\Sigma_i|})-\frac{1}{2}(\boldsymbol{x}-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma_i}^{-1}(\boldsymbol{x}-\boldsymbol{\mu}_i)+\log p(\omega_i)\\
-	&= -\frac{1}{2}\log(\boldsymbol{|\Sigma_i|})\underbrace{-\frac{1}{2}\boldsymbol{x}^T\boldsymbol{\Sigma_i}^{-1}\boldsymbol{x}}_{\text{termo quadrático em $\boldsymbol{x}$}}+\boldsymbol{\mu}_i^T\boldsymbol{\Sigma_i}^{-1}\boldsymbol{x}-\frac{1}{2}\boldsymbol{\mu}_i^T\boldsymbol{\Sigma_i}^{-1}\boldsymbol{\mu_i}+\log p(\omega_i).\\\nonumber
-	\end{align}
-\end{itemize}
-Temos, agora, uma função discriminante quadrática, ou seja:
-\begin{equation}
-	d_i(\boldsymbol{x}) = \boldsymbol{x}^T\boldsymbol{W}_{i2}\boldsymbol{x}+\boldsymbol{W}_{i1}\boldsymbol{x}+\boldsymbol{W}_{i0},
-\end{equation}
-onde $\boldsymbol{W}_{i2}=-\frac{1}{2}\boldsymbol{\Sigma_i}^{-1}$, $\boldsymbol{W}_{i1}=\boldsymbol{\mu_i}^T\boldsymbol{\Sigma_i}^{-1}$ e $\boldsymbol{W}_{i0}=-\frac{1}{2}\log(\boldsymbol{|\Sigma_i|})-\frac{1}{2}\boldsymbol{\mu}_i^T\boldsymbol{\Sigma_i}^{-1}\boldsymbol{\mu_i}+\log p(\omega_i)$.
-}
-
-\Sli{
-Vamos, agora, analisar as funções de decisão para cada um dos casos apresentados anteriormente:
-
-\begin{itemize}
-	\item \underline{Caso 1:} quando as matrizes de covariância das classes são iguais e diagonais, temos um classificador linear cuja função de decisão é dada pela Equação 28:
- 
-	\begin{equation}
-	d_i(\boldsymbol{x}) = w_{i1}^T\boldsymbol{x}+w_{i0},
-	\end{equation}
-em que $w_{i1} = \frac{1}{\sigma^2}\boldsymbol{\mu_i}$ e $w_{i0}=-\frac{1}{2\sigma^2}\boldsymbol{\mu_i}^T\boldsymbol{\mu_i}+\log p(\omega_i)$.
-\end{itemize}
-Suponha um problema com duas classes, ou seja, temos que calcular $d_1(\boldsymbol{x})$ e $d_2(\boldsymbol{x})$.
-}
-
-\Sli{
-Para obtermos a decisão de separação, basta igualarmos $d_1(\boldsymbol{x})$ e $d_2(\boldsymbol{x})$ e encontrarmos esse hiperplano analiticamente, como segue:
+Suponha um problema com duas classes, ou seja, temos que calcular $d_1(\boldsymbol{x})$ e $d_2(\boldsymbol{x})$. Para obtermos a decisão de separação, basta igualarmos $d_1(\boldsymbol{x})$ e $d_2(\boldsymbol{x})$ e encontrarmos esse hiperplano analiticamente, como segue:
 
 \begin{align}\nonumber
 d_1(\boldsymbol{x}) &= d_2(\boldsymbol{x})\implies w_{11}^T\boldsymbol{x}+w_{10} = w_{21}^T\boldsymbol{x}+w_{20}\\
@@ -509,7 +458,7 @@ Assumindo que $\boldsymbol{w} = (\boldsymbol{\mu_1}-\boldsymbol{\mu_2})$ e $\bol
 \Sli{
 \justifying A Equação 26 define um \textbf{hiperplano separador} que passa sobre o bias $\boldsymbol{b}$, em que $\boldsymbol{w}$ denota a diferença entre as médias. Temos, então, que a solução da Equação 26 corresponde à todos os valores de $\boldsymbol{x}$ que são ortogonais à $\boldsymbol{w}$ e deslocados do bias $\boldsymbol{b}$.\newline
 
-\justifying Assumindo, por exemplo, que as classes são equiprováveis, ou seja, $p(\omega_1) = p(\omega_2)$, temos que $\log\frac{p(\omega_1)}{\omega_2} = 0$ na Equação 35, resultando em $b = -\frac{1}{2}(\boldsymbol{\mu_1}-\boldsymbol{\mu_2})$. Neste caso, temos que o hiperplano separador é ortogonal ao vetor $\boldsymbol{w}$, ou seja, ortogonal à diferença das médias e corta $w$ no seu ponto médio (mediatriz). 
+\justifying Assumindo, por exemplo, que as classes são equiprováveis, ou seja, $p(\omega_1) = p(\omega_2)$, temos que $\log\frac{p(\omega_1)}{p\omega_2} = 0$ na Equação 35, resultando em $b = -\frac{1}{2}(\boldsymbol{\mu_1}-\boldsymbol{\mu_2})$. Neste caso, temos que o hiperplano separador é ortogonal ao vetor $\boldsymbol{w}$, ou seja, ortogonal à diferença das médias e corta $w$ no seu ponto médio (mediatriz). 
 }
 
 \Sli{
@@ -522,13 +471,27 @@ A figura abaixo ilustra esta situação.
 
 \Sli{
 \begin{itemize}
-	\item \underline{Caso 2:} quando as matrizes de covariância das classes são iguais mas não diagonais, temos um classificador linear cuja função de decisão é dada pela Equação 30:
+	\item \underline{Caso 2:} quando as matrizes de covariância das classes são iguais mas não diagonais. Considerando, novamente, a função de decisão da Equação 26, temos que:
+	\begin{align}\nonumber
+	d_i(\boldsymbol{x}) &= \underbrace{\cancelto{0}{-\frac{1}{2}\log(\boldsymbol{|\Sigma|})}}_{\text{constante em $i$}}-\frac{1}{2}(\boldsymbol{x}-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}^{-1}(\boldsymbol{x}-\boldsymbol{\mu}_i)+\log p(\omega_i)\\
+	&= \underbrace{\cancelto{0}{-\frac{1}{2}\boldsymbol{x}^T\Sigma^{-1}\boldsymbol{x}}}_{\text{constante em $i$}}+\boldsymbol{\mu_i}^T\Sigma^{-1}\boldsymbol{x}-\frac{1}{2}\boldsymbol{\mu_i}^T\Sigma^{-1}\boldsymbol{\mu_i}+\log p(\omega_i)\\\nonumber
+	&=\boldsymbol{\mu_i}^T\Sigma^{-1}\boldsymbol{x}-\frac{1}{2}\boldsymbol{\mu_i}^T\Sigma^{-1}\boldsymbol{\mu_i}+\log p(\omega_i).\\\nonumber
+	\end{align}
+\end{itemize}
+}
 
-\begin{equation}\nonumber
+\Sli{
+De maneira similar ao caso 1, a Equação 29 é, na verdade, \textbf{linear} em $\boldsymbol{x}$, ou seja:
+
+\begin{equation}
 	d_i(\boldsymbol{x}) = w_{i1}^T\boldsymbol{x}+w_{i0},
 \end{equation}
-em que $w_{i1} = \boldsymbol{\mu}_i^T\boldsymbol{\Sigma}^{-1}$ e $w_{i0}=-\frac{1}{2}\boldsymbol{\mu}_i^T\Sigma^{-1}\boldsymbol{\mu_i}+\log p(\omega_i)$.
-\end{itemize}
+em que $w_{i1} = \boldsymbol{\mu_i}^T\boldsymbol{\Sigma}^{-1}$ e $w_{i0}=-\frac{1}{2}\boldsymbol{\mu_i}^T\Sigma^{-1}\boldsymbol{\mu_i}+\log p(\omega_i)$.\newline
+
+Novamente, temos uma \textbf{função discriminante linear}. Assim sendo, podemos dizer que o classificador Bayesiano sob hipótese Gaussiana com uma única matriz de covariância é um classificador linear!
+}
+
+\Sli{
 Novamente, suponha um problema de classificação em duas classes, ou seja, temos que calcular $d_1(\boldsymbol{x})$ e $d_2(\boldsymbol{x})$. Para obtermos a função de decisão, basta igualarmos ambos termos, isto é, $d_1(\boldsymbol{x}) = d_2(\boldsymbol{x})$ e calcularmos o hiperplano separador analiticamente. Neste caso, temos que:
 
 \begin{equation}\nonumber
@@ -566,21 +529,24 @@ A figura abaixo ilustra esta situação.
 
 \Sli{
 \begin{itemize}
-	\item \underline{Caso 3:} quando existem matrizes de covariância para cada classe, temos um classificador quadrático cuja função de decisão é dada pela Equação 32:
-
-\begin{equation}\nonumber
+	\item \underline{Caso 3:} quando temos uma matriz de covariância para cada classe. Considerando, novamente, a função de decisão da Equação 26, temos que:
+	\begin{align}\nonumber
+	d_i(\boldsymbol{x}) &= -\frac{1}{2}\log(\boldsymbol{|\Sigma_i|})-\frac{1}{2}(\boldsymbol{x}-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma_i}^{-1}(\boldsymbol{x}-\boldsymbol{\mu}_i)+\log p(\omega_i)\\
+	&= -\frac{1}{2}\log(\boldsymbol{|\Sigma_i|})\underbrace{-\frac{1}{2}\boldsymbol{x}^T\boldsymbol{\Sigma_i}^{-1}\boldsymbol{x}}_{\text{termo quadrático em $\boldsymbol{x}$}}+\boldsymbol{\mu}_i^T\boldsymbol{\Sigma_i}^{-1}\boldsymbol{x}-\frac{1}{2}\boldsymbol{\mu}_i^T\boldsymbol{\Sigma_i}^{-1}\boldsymbol{\mu_i}+\log p(\omega_i).\\\nonumber
+	\end{align}
+\end{itemize}
+Temos, agora, uma função discriminante quadrática, ou seja:
+\begin{equation}
 	d_i(\boldsymbol{x}) = \boldsymbol{x}^T\boldsymbol{W}_{i2}\boldsymbol{x}+\boldsymbol{W}_{i1}\boldsymbol{x}+\boldsymbol{W}_{i0},
 \end{equation}
 onde $\boldsymbol{W}_{i2}=-\frac{1}{2}\boldsymbol{\Sigma_i}^{-1}$, $\boldsymbol{W}_{i1}=\boldsymbol{\mu_i}^T\boldsymbol{\Sigma_i}^{-1}$ e $\boldsymbol{W}_{i0}=-\frac{1}{2}\log(\boldsymbol{|\Sigma_i|})-\frac{1}{2}\boldsymbol{\mu}_i^T\boldsymbol{\Sigma_i}^{-1}\boldsymbol{\mu_i}+\log p(\omega_i)$.
-
-\end{itemize}
-Novamente, suponha um problema de classificação em duas classes, ou seja, temos que calcular $d_1(\boldsymbol{x})$ e $d_2(\boldsymbol{x})$. Para obtermos a função de decisão, basta igualarmos ambos termos, isto é, $d_1(\boldsymbol{x}) = d_2(\boldsymbol{x})$ e calcularmos o hiperplano separador analiticamente. \textbf{Essa é, geralmente, a versão mais utilizada do classificador Bayesiano pelo seu melhor poder de generalização.}
 }
 
 \Sli{
-A figura abaixo ilustra esta situação.
+Novamente, suponha um problema de classificação em duas classes, ou seja, temos que calcular $d_1(\boldsymbol{x})$ e $d_2(\boldsymbol{x})$. Para obtermos a função de decisão, basta igualarmos ambos termos, isto é, $d_1(\boldsymbol{x}) = d_2(\boldsymbol{x})$ e calcularmos o hiperplano separador analiticamente. \textbf{Essa é, geralmente, a versão mais utilizada do classificador Bayesiano pelo seu melhor poder de generalização. A figura abaixo ilustra esta situação.}
+
 \begin{center}
-\includegraphics[scale=0.15]{./figs/Bayes_Fig4.png}
+\includegraphics[scale=0.1]{./figs/Bayes_Fig4.png}
 \end{center}
 }
 
