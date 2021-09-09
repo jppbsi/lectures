@@ -81,7 +81,7 @@
 
 \justifying Modelo de Misturas de Gaussianas, do inglês \emph{Gaussian Misture Models} - GMMs, é uma técnica de \textbf{aprendizado não supervisionado} que pode ser entendida como uma generalização do $k$-médias. Ao invés de estimarmos os centroides de cada agrupamento, tentamos estimar também a forma e proporção de cada Gaussiana que compõe a mistura.\newline
 
-\justifying \underline{Definição do problema:} seja ${\cal X}^1=\{\boldsymbol{x}_1,\boldsymbol{x}_2,\ldots,\boldsymbol{x}_m\}$ um conjunto de dados de treinamento tal que $\boldsymbol{x}_i\in\mathbb{R}^n$. Assumimos que as amostras são independentes e identicamente distribuídas (i.i.d.) a partir de uma função de densidade de probabilidade $p(\boldsymbol{x}_i)$, $\boldsymbol{x}_i\in{\cal X}^1$. Assumimos, também, que $p(\boldsymbol{x}_i)$ é uma \textbf{mistura finita} de $K$ componentes, ou seja:
+\justifying \underline{Definição do problema:} seja ${\cal X}=\{\boldsymbol{x}_1,\boldsymbol{x}_2,\ldots,\boldsymbol{x}_m\}$ um conjunto de dados tal que $\boldsymbol{x}_i\in\mathbb{R}^n$. Assumimos que as amostras são independentes e identicamente distribuídas (i.i.d.) a partir de uma função de densidade de probabilidade $p(\boldsymbol{x}_i)$, $\boldsymbol{x}_i\in{\cal X}$. Assumimos, também, que $p(\boldsymbol{x}_i)$ é uma \textbf{mistura finita} de $K$ componentes, ou seja:
 \vspace{-0.1cm}
 \begin{equation}
 	p(\boldsymbol{x}_i|\boldsymbol{\theta}) = \sum_{k=1}^Kw_kp(\boldsymbol{x}_i|\boldsymbol{\theta}),
@@ -95,7 +95,7 @@ As componentes são densidades Gaussianas multivariadas dadas por:
 \begin{equation}
 	p(\boldsymbol{x}_i|\theta_k) = \frac{1}{(2\pi)^{m^\prime_k/2}|\Sigma_k|^{1/2}}\exp\left\{-\frac{1}{2}(\boldsymbol{x}_i-\boldsymbol{\mu}_k)^T\boldsymbol{\Sigma}_k^{-1}(\boldsymbol{x}_i-\boldsymbol{\mu}_k)\right\}.
 \end{equation}
-No caso, os pesos $w_k$ representam a probabilidade que uma amostra $\boldsymbol{x}_i\in{\cal X}^1$ selecionada aleatoriamente tenha sigo gerada pela componente $k$. Vejamos o exemplo de uma mistura 1D com $k=3$.
+No caso, os pesos $w_k$ representam a probabilidade que uma amostra $\boldsymbol{x}_i\in{\cal X}$ selecionada aleatoriamente tenha sigo gerada pela componente $k$. Vejamos o exemplo de uma mistura 1D com $k=3$.
 
 \begin{center}
 	\includegraphics[scale=0.21]{./figs/GMM_Fig1.png}
@@ -109,15 +109,15 @@ No caso, os pesos $w_k$ representam a probabilidade que uma amostra $\boldsymbol
 }
 
 \Sli{
-\justifying Seja ${\cal Z}=\{z_1,z_2,\ldots,z_m\}$ um conjunto de variáveis latentes em que cada uma delas está relacionada com uma amostra do conjunto de treinamento ${\cal X}^1$. Dado o conjunto de parâmetros $\boldsymbol{\theta}$, temos que a função de verossimilhança é dada por:
+\justifying Seja ${\cal Z}=\{z_1,z_2,\ldots,z_m\}$ um conjunto de variáveis latentes em que cada uma delas está relacionada com uma amostra do conjunto de treinamento ${\cal X}$. Dado o conjunto de parâmetros $\boldsymbol{\theta}$, temos que a função de verossimilhança é dada por:
 
 \begin{equation}
-	L(\boldsymbol{\theta}|{\cal X}^1,{\cal Z}) = p({\cal X}^1,{\cal Z}|\boldsymbol{\theta}),
+	L(\boldsymbol{\theta}|{\cal X},{\cal Z}) = p({\cal X},{\cal Z}|\boldsymbol{\theta}),
 \end{equation}
-\justifying em que $p({\cal X}^1,{\cal Z}|\boldsymbol{\theta})$ corresponde à densidade conjunta de ${\cal X}^1$ e ${\cal Z}$. Ademais, o estimador de máxima verossimilhança do vetor de parâmetros $\boldsymbol{\theta}$ é dado, então, pela \textbf{maximização da verossimilhança marginal} (só temos acesso ao ${\cal X}^1$) dos dados observados, ou seja:
+\justifying em que $p({\cal X},{\cal Z}|\boldsymbol{\theta})$ corresponde à densidade conjunta de ${\cal X}$ e ${\cal Z}$. Ademais, o estimador de máxima verossimilhança do vetor de parâmetros $\boldsymbol{\theta}$ é dado, então, pela \textbf{maximização da verossimilhança marginal} (só temos acesso ao ${\cal X}$) dos dados observados, ou seja:
 
 \begin{equation}
-	L(\boldsymbol{\theta}|{\cal X}^1) = p({\cal X}^1|\boldsymbol{\theta}) = \int p({\cal X}^1,{\cal Z}|\boldsymbol{\theta})\mathrm{d}{\cal Z}.
+	L(\boldsymbol{\theta}|{\cal X}) = p({\cal X}|\boldsymbol{\theta}) = \int p({\cal X},{\cal Z}|\boldsymbol{\theta})\mathrm{d}{\cal Z}.
 \end{equation}
 A formulação acima corresponde à calcular a integral da probabilidade conjunta em ${\cal Z}$.
 }
@@ -126,9 +126,9 @@ A formulação acima corresponde à calcular a integral da probabilidade conjunt
 \justifying No entanto, não temos como calcular essa integral manualmente, pois não temos conhecido de ${\cal Z}$. No entanto, o algoritmo E-M é um estimador iterativo para a verossimilhança marginal. Ele funciona por meio da aplicação sucessiva de dois passos:
 
 \begin{enumerate}
-	\item \emph{Expectation} (E): calcula o valor esperado do logaritmo da verossimilhança com relação à distribuição condicional de ${\cal Z}$ dado ${\cal X}^1$ utilizando a estimativa atual dos parâmetros $\boldsymbol{\theta}$:
+	\item \emph{Expectation} (E): calcula o valor esperado do logaritmo da verossimilhança com relação à distribuição condicional de ${\cal Z}$ dado ${\cal X}$ utilizando a estimativa atual dos parâmetros $\boldsymbol{\theta}$:
 	\begin{equation}
-		Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(t)}) = \mathbb{E}_{{\cal Z}|{\cal X}^1,\boldsymbol{\theta}^{(t)}}[\log L(\boldsymbol{\theta}|{\cal X}^1,{\cal Z})],
+		Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(t)}) = \mathbb{E}_{{\cal Z}|{\cal X},\boldsymbol{\theta}^{(t)}}[\log L(\boldsymbol{\theta}|{\cal X},{\cal Z})],
 	\end{equation}
 	em que $Q$ denota uma "quantidade".
 	\item \emph{Expectation} (M): encontra os parâmetros que maximizam essa quantidade $Q$:
@@ -136,14 +136,14 @@ A formulação acima corresponde à calcular a integral da probabilidade conjunt
 		\boldsymbol{\theta}^{(t+1)} = \argmax_{\boldsymbol{\theta}}Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(t)}).
 	\end{equation}
 \end{enumerate}
-De maneira geral, a ideia do algoritmo E-M é executar os passos 1 e 2 de maneira iterativa até que $|\boldsymbol{\theta}^{(t+1)}-\boldsymbol{\theta}^{(t)}|<\epsilon$. \textbf{A variável latente ${\cal Z}$ nos diz, basicamente, a pertinência de uma dada amostra $\boldsymbol{x}\in{\cal X}^1$ pertencer à um determinado agrupamento (classe).}
+De maneira geral, a ideia do algoritmo E-M é executar os passos 1 e 2 de maneira iterativa até que $|\boldsymbol{\theta}^{(t+1)}-\boldsymbol{\theta}^{(t)}|<\epsilon$. \textbf{A variável latente ${\cal Z}$ nos diz, basicamente, a pertinência de uma dada amostra $\boldsymbol{x}\in{\cal X}$ pertencer à um determinado agrupamento (classe).}
 }
 
 \Sli{
 Basicamente, temos as seguintes informações acerca de nosso problema:
 
 \begin{itemize}
-	\item Observações em ${\cal X}^1$ podem ser discretas ou contínuas (ex: podem ser oriundas de distribuições Gaussianas).
+	\item Observações em ${\cal X}$ podem ser discretas ou contínuas (ex: podem ser oriundas de distribuições Gaussianas).
 	\item Variáveis latentes em ${\cal Z}$ são discretas (pseudo-rótulos).
 	\item Os parâmetros em $\boldsymbol{\theta}$ são contínuos.
 \end{itemize}
@@ -155,23 +155,23 @@ Basicamente, os passos do E-M são os seguintes:
 \begin{enumerate}
 	\item Inicializar o conjunto de parâmetros $\boldsymbol{\theta}$ de maneira aleatória.
 	\begin{itemize}
-		\item \underline{Passo E:} para cada amostra $\boldsymbol{x}_i\in{\cal X}^1$ associamos uma pontuação $\gamma_{ik}$ que denota a probabilidade dessa amostra pertencer ao agrupamento $k$.
+		\item \underline{Passo E:} para cada amostra $\boldsymbol{x}_i\in{\cal X}$ associamos uma pontuação $\gamma_{ki}$ que denota a probabilidade dessa amostra pertencer ao agrupamento $k$.
 		\item \underline{Passo M:} dadas as pontuações para todas as amostras, ajusto $\boldsymbol{\theta}_k$ para cada Gaussiana (agrupamento) $k$ utilizando utilizando uma função de verossimilhança marginal (Equação 4).
 	\end{itemize}
 	\item Avaliamos a função do logaritmos da verossimilhança. Caso ela tenha estabilizado entre as iterações, podemos assumir que o método convergiu e interrompemos o processo treinamento.
 \end{enumerate}
-No entanto, uma maneira melhor de inicializar $\mu_k$ e $\Sigma_k$ é via algoritmo do $k$-médias, em que $k=1,2,\ldots,K$. Já os pesos $w_k$ podem ser inicializados como $w_k = \frac{C_k}{|{\cal X}^1|}$, em que $C_k$ corresponde ao número de amostras do agrupamento $k$.
+No entanto, uma maneira melhor de inicializar $\mu_k$ e $\Sigma_k$ é via algoritmo do $k$-médias, em que $k=1,2,\ldots,K$. Já os pesos $w_k$ podem ser inicializados como $w_k = \frac{C_k}{|{\cal X}|}$, em que $C_k$ corresponde ao número de amostras do agrupamento $k$.
 }
 
 \Sli{
 Vamos às equações de atualização:
 
 \begin{itemize}
-	\item \underline{Passo E:} temos que as pontuações podem ser calculadas como segue:
+	\item \underline{Passo E:} temos que as pontuações na iteração $t$ podem ser calculadas como segue:
 	\begin{equation}
-		\gamma^{(t)}_{ik} = \frac{w_kp(\boldsymbol{x}_i|\boldsymbol{\mu}_k,\boldsymbol{\Sigma}_k)}{\sum_{j=1}^Kw_jp(\boldsymbol{x}_j|\boldsymbol{\mu}_j,\boldsymbol{\Sigma}_j)}.
+		\gamma^{(t)}_{ki} = \frac{w_kp(\boldsymbol{x}_i|\boldsymbol{\mu}_k,\boldsymbol{\Sigma}_k)}{\sum_{j=1}^Kw_jp(\boldsymbol{x}_i|\boldsymbol{\mu}_j,\boldsymbol{\Sigma}_j)}.
 	\end{equation}
-	A equação assim equivale ao preenchimento de uma matrix $\boldsymbol{\gamma}\in\mathbb{R}^{K\times|{\cal X}^1|}$.
+	A equação assim equivale ao preenchimento de uma matrix $\boldsymbol{\gamma}\in\mathbb{R}^{K\times|{\cal X}|}$.
 \end{itemize}
 }
 
@@ -179,10 +179,41 @@ Vamos às equações de atualização:
 \begin{itemize}
 	\item \underline{Passo M:} as seguintes equações são então utilizadas para atualizar os valores dos parâmetros:
 \begin{equation}
-	C_k = \sum_{i=1}^{{\cal X}^1}
+	C_k = \sum_{i=1}^{{\cal X}}T^{(t)}_{ki},
+\end{equation}
+em que $\boldsymbol{T}^{(t)}\in\mathbb{R}^{K\times|{\cal X}|}$ é uma matriz da iteração $t$ e definida da seguinte forma:
+
+\begin{equation}
+	\boldsymbol{T}^{(t)}_{ki} = 
+	\begin{cases}
+		1 & \text{ a amostra $\boldsymbol{x}_i$ pertence ao agrupamento $k$}\\
+		0 & \text{caso contrário.}
+	\end{cases}
+\end{equation}
+\end{itemize}
+}
+
+\Sli{
+\begin{equation}
+	\boldsymbol{\mu}_k^{(t+1)} = \frac{1}{C_k}\sum_{i=1}^{|{\cal X}|}\gamma^{(t)}_{ki}\boldsymbol{x}_i,
 \end{equation}
 
-\end{itemize}
+\begin{equation}
+	\boldsymbol{\Sigma}_k^{(t+1)} =\frac{1}{C_k}\sum_{i=1}^{|{\cal X}|}T^{(t)}_{ki}(\boldsymbol{x}_i-\boldsymbol{\mu}_k)^T(\boldsymbol{x}_i-\boldsymbol{\mu}_k),
+\end{equation}
+e
+\begin{equation}
+	w_k^{(t+1)} = \frac{C_k}{|{\cal X}|}.
+\end{equation}
+}
+
+\Sli{
+\justifying O logaritmo da verossimilhança é utilizado como critério de parada do algoritmo. Essa verossimilhança é uma medida de \textbf{confiança} que temos que os dados do conjunto de dados ${\cal X}$ são gerados pelos parâmetros estimados:
+
+\begin{equation}
+	\log p({\cal X}|\boldsymbol{\theta}) = \sum_{i=1}^{|{\cal X}|}\log\left[\sum_{k=1}^Kw_kp(\boldsymbol{x}_i|\boldsymbol{\mu}_k,\boldsymbol{\Sigma}_k)\right].
+\end{equation}
+A equação acima deve ser calculada ao final de cada iteração do algoritmo E-M.
 }
 
 \end{document}
