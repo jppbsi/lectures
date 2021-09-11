@@ -79,12 +79,12 @@
 
 \SliT{Introdução}{
 
-\justifying Modelo de Misturas de Gaussianas, do inglês \emph{Gaussian Misture Models} - GMMs, é uma técnica de \textbf{aprendizado não supervisionado} que pode ser entendida como uma generalização do $k$-médias. Ao invés de estimarmos os centroides de cada agrupamento, tentamos estimar também a forma e proporção de cada Gaussiana que compõe a mistura.\newline
+\justifying Modelo de Misturas de Gaussianas, do inglês \emph{Gaussian Mixture Models} - GMMs, é uma técnica de \textbf{aprendizado não supervisionado} que pode ser entendida como uma generalização do $k$-Médias. Ao invés de estimarmos os centroides de cada agrupamento, tentamos estimar também a forma e proporção de cada Gaussiana que compõe a mistura.\newline
 
 \justifying \underline{Definição do problema:} seja ${\cal X}=\{\boldsymbol{x}_1,\boldsymbol{x}_2,\ldots,\boldsymbol{x}_m\}$ um conjunto de dados tal que $\boldsymbol{x}_i\in\mathbb{R}^n$. Assumimos que as amostras são independentes e identicamente distribuídas (i.i.d.) a partir de uma função de densidade de probabilidade $p(\boldsymbol{x}_i)$, $\boldsymbol{x}_i\in{\cal X}$. Assumimos, também, que $p(\boldsymbol{x}_i)$ é uma \textbf{mistura finita} de $K$ componentes, ou seja:
 \vspace{-0.1cm}
 \begin{equation}
-	p(\boldsymbol{x}_i|\boldsymbol{\theta}) = \sum_{k=1}^Kw_kp(\boldsymbol{x}_i|\boldsymbol{\theta}),
+	p(\boldsymbol{x}_i|\boldsymbol{\theta}) = \sum_{k=1}^Kw_kp(\boldsymbol{x}_i|\theta_k),
 \end{equation}
 em que $\theta_k = (w_k,\boldsymbol{\mu}_k,\boldsymbol{\Sigma}_k)$ corresponde aos parâmetros relativos à Gaussiana $k$ e $\sum_{k=1}^kw_k=1$.
 }
@@ -131,7 +131,7 @@ A formulação acima corresponde à calcular a integral da probabilidade conjunt
 		Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(t)}) = \mathbb{E}_{{\cal Z}|{\cal X},\boldsymbol{\theta}^{(t)}}[\log L(\boldsymbol{\theta}|{\cal X},{\cal Z})],
 	\end{equation}
 	em que $Q$ denota uma "quantidade".
-	\item \emph{Expectation} (M): encontra os parâmetros que maximizam essa quantidade $Q$:
+	\item \emph{Maximization} (M): encontra os parâmetros que maximizam essa quantidade $Q$:
 	\begin{equation}
 		\boldsymbol{\theta}^{(t+1)} = \argmax_{\boldsymbol{\theta}}Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(t)}).
 	\end{equation}
@@ -160,7 +160,7 @@ Basicamente, os passos do E-M são os seguintes:
 	\end{itemize}
 	\item Avaliamos a função do logaritmos da verossimilhança. Caso ela tenha estabilizado entre as iterações, podemos assumir que o método convergiu e interrompemos o processo treinamento.
 \end{enumerate}
-No entanto, uma maneira melhor de inicializar $\mu_k$ e $\Sigma_k$ é via algoritmo do $k$-médias, em que $k=1,2,\ldots,K$. Já os pesos $w_k$ podem ser inicializados como $w_k = \frac{C_k}{|{\cal X}|}$, em que $C_k$ corresponde ao número de amostras do agrupamento $k$.
+No entanto, uma maneira melhor de inicializar $\mu_k$ e $\Sigma_k$ é via algoritmo do $k$-Médias, em que $k=1,2,\ldots,K$. Já os pesos $w_k$ podem ser inicializados como $w_k = \frac{C_k}{|{\cal X}|}$, em que $C_k$ corresponde ao número de amostras do agrupamento $k$.
 }
 
 \Sli{
