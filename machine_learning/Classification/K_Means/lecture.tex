@@ -79,7 +79,7 @@
 
 \SliT{Introdução}{
 
-\justifying Existem problemas para os quais não temos acesso aos rótulos da classes , ou seja, temos um problema de \textbf{aprendizado não supervisionada} (agrupamento). Nestas situações, não observamos os rótulos das amostras, tendo apenas um conjunto de dados definido da seguinte forma: ${\cal X} = \{\boldsymbol{x}_1,\boldsymbol{x}_2,\ldots,\boldsymbol{x}_m\}$, em que $\boldsymbol{x}_i\in\mathbb{R}^n$.
+\justifying Existem problemas para os quais não temos acesso aos rótulos da classes, ou seja, temos um problema de \textbf{aprendizado não supervisionada} (agrupamento). Nestas situações, não observamos os rótulos das amostras, tendo apenas um conjunto de dados definido da seguinte forma: ${\cal X} = \{\boldsymbol{x}_1,\boldsymbol{x}_2,\ldots,\boldsymbol{x}_m\}$, em que $\boldsymbol{x}_i\in\mathbb{R}^n$.
 
 \begin{center}
 	\includegraphics[scale=0.147]{./figs/KMeans_Fig1.png}
@@ -106,7 +106,7 @@ Note que desejamos os centros dos grupos que estão mais próximos dos dados, ou
 	\item Associe cada amostra $\boldsymbol{x}\in{\cal X}$ ao seu centroide $\boldsymbol{\mu}_j$ mais próximo e faça ${\cal S}_j \leftarrow {\cal S}_j\cup\{\boldsymbol{x}\}$, $j=1,2,\ldots,k$.
 	\item Calcule o novo centroide $\boldsymbol{\mu}_j$ de cada grupo ${\cal S}_j$.
 	\item Faça ${\cal S}_j \leftarrow \{\}$, $j=1,2,\ldots,k$.
-	\item Execute os passos anteriores até a convergência, ou seja, até os centroides não se moverem mais.
+	\item Execute os passos $2-4$ até a convergência, ou seja, até os centroides não se moverem mais.
 \end{enumerate}
 }
 
