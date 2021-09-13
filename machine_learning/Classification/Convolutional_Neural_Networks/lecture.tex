@@ -107,6 +107,19 @@
 }
 
 \SliT{Aprendizado de Características}{
+\justifying A primeira operação que veremos é a de \textbf{convolução}, que é amplamente utilizada em tarefas de processamento de imagens e visão computacional, tais como filtragem de imagens (borramento e ruído) e detecção de bordas, por exemplo. Vejamos um exemplo.
+
+\begin{center}
+\includegraphics[scale=0.33]{./figs/CNN_Fig3.png}
+\end{center}
+}
+
+\Sli{
+\justifying A posição central da matriz de entrada $9\times9$ é substituída pelo valor obtido pela sua convolução com a máscara do filtro $5\times 5$ e o valor armazenado na matriz de saída $5\times 5$ (mapa de características). O procedimento é repetido até que toda a matriz de entrada tenha sido avaliada. Note que um trecho da matriz é descartado, por isso que a saída possui dimensões menores (podemos contornar isso com o \emph{zero padding}).
+
+\begin{center}
+\includegraphics[scale=0.33]{./figs/CNN_Fig4.png}
+\end{center}
 }
 
 \end{document}
