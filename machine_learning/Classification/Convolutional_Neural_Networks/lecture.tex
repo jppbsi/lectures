@@ -129,7 +129,7 @@ Como calcular o tamanho da saída? Suponha que as dimensões do dado de entrada 
 }
 
 \Sli{
-Quais os parâmetros envolvidos em uma operação de convolução?
+Quais os hiperparâmetros envolvidos em uma operação de convolução? \textbf{Parâmetros $\times$ hiperparâmetros}.
 
 \begin{itemize}
 	\item Qual tipo de máscara (\emph{kernel}) iremos utilizar?
@@ -151,7 +151,7 @@ Dependendo do tipo de máscara utilizado, diferentes informações são obtidas 
 }
 
 \Sli{
-\justifying O que temos, na prática, são valores nas máscaras que podem ser interpretados como \textbf{pesos} que serão aprendidos pela CNN durante o seu processo de treinamento. Como calcular a quantidade desses parâmetros? Vejamos o exemplo abaixo.
+\justifying O que temos, na prática, são valores nas máscaras que podem ser interpretados como \textbf{pesos} que serão aprendidos pela CNN durante o seu processo de treinamento. Como calcular a quantidade desses parâmetros? Vejamos o exemplo abaixo (estamos assumindo \emph{padding}).
 
 \begin{minipage}{0.51\textwidth}
 \includegraphics[scale=0.47]{./figs/CNN_Fig7.png}\end{minipage}%%% to prevent a space
@@ -172,7 +172,26 @@ Saída             & Densa                       & 1.200 & 1.200*2+2 biases = 24
 \null
 \par\xdef\tpd{\the\prevdepth}
 \end{minipage}
+}
 
+\Sli{
+\justifying Qual o papel dos valores dos hiperparâmetros de uma CNN?
+
+\begin{itemize}
+	\item \justifying\underline{Tamanho do \emph{kernel}:} possui um papel muito importante em tarefas de classificação de imagens. \emph{Kernels} pequenos extraem uma quantidade maior de informações (\textbf{informações locais}) pois as reduções de tamanho entre as camadas são menores permitindo, assim, arquiteturas mais profundas. Por outro lado, \emph{kernels} maiores geram reduções mais rápidas no tamanho dos \emph{feature maps} e extraem informações mais \textbf{globais}.
+	\item Valor de \emph{stride}: possui um impacto similar ao tamanho do \emph{kernel}, em que maiores valores proporcionam reduções mais rápidas dos \emph{feature maps}. Valores de \emph{stride} menores resultam em mais características aprendidas.
+\end{itemize}
+\justifying Dado que valores menores de \emph{stride} e de tamanho de \emph{kernels} proporcionam o aprendizado de mais características, por que não adotá-los sempre? \textbf{Isto requer bases de dados maiores.}
+}
+
+\Sli{
+Resumindo, temos que tomar decisões sobre os seguintes itens acerca de uma camada de convolução:
+
+\begin{enumerate}
+	\item Tipo do \emph{padding}.
+	\item Tamanho do \emph{kernel}.
+	\item Valor de \emph{stride}.
+\end{enumerate}
 }
 
 \end{document}
