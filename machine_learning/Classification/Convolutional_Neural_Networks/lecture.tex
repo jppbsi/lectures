@@ -107,6 +107,8 @@
 }
 
 \SliT{Aprendizado de Características}{
+\secx{Convolução}\newline
+
 \justifying A primeira operação que veremos é a de \textbf{convolução}, que é amplamente utilizada em tarefas de processamento de imagens e visão computacional, tais como filtragem de imagens (borramento e ruído) e detecção de bordas, por exemplo. Vejamos um exemplo.
 
 \begin{center}
@@ -115,11 +117,34 @@
 }
 
 \Sli{
-\justifying A posição central da matriz de entrada $9\times9$ é substituída pelo valor obtido pela sua convolução com a máscara do filtro $5\times 5$ e o valor armazenado na matriz de saída $5\times 5$ (mapa de características). O procedimento é repetido até que toda a matriz de entrada tenha sido avaliada. Note que um trecho da matriz é descartado, por isso que a saída possui dimensões menores (podemos contornar isso com o \emph{zero padding}).
+\justifying A posição central da matriz de entrada $9\times9$ é substituída pelo valor obtido pela sua convolução com a máscara do filtro $5\times 5$ e o valor armazenado na matriz de saída $5\times 5$ (mapa de características). O procedimento é repetido até que toda a matriz de entrada tenha sido avaliada. Note que um trecho da matriz é descartado, por isso que a saída possui dimensões menores (podemos contornar isso com o \emph{zero padding} ou espelhamento da máscara).
 
 \begin{center}
 \includegraphics[scale=0.33]{./figs/CNN_Fig4.png}
 \end{center}
+
+}
+
+\Sli{
+Quais os parâmetros envolvidos em uma operação de convolução?
+
+\begin{itemize}
+	\item Qual tipo de máscara (filtro) iremos utilizar?
+	\item Qual a melhor dimensão?
+	\item Quantos filtros serão empregados?
+	\item Qual o valor do \emph{stride}?
+\end{itemize}
+}
+
+\Sli{
+Dependendo do tipo de máscara utilizado, diferentes informações são obtidas na saída (\emph{feature maps}). Que tipo de informação de saída temos nos exemplos abaixo?\newline
+
+\centerline{
+\begin{tabular}{cc}
+	\includegraphics[scale=0.377]{./figs/CNN_Fig5.png} &\hspace{1cm}
+	\includegraphics[scale=0.377]{./figs/CNN_Fig6.png} \\
+	(a) Filtro passa-altas & (b) Filtro passa-baixas
+\end{tabular}}
 }
 
 \end{document}
