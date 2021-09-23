@@ -197,7 +197,7 @@ Resumindo, temos que tomar decisões sobre os seguintes itens acerca de uma cama
 \Sli{
 \secx{Pooling}\newline
 
-\justifying Existem diferentes tipos de operações de agrupamento ou \emph{pooling}, cujo objetivo principal é diminuir a resolução dos \emph{feature maps} e adicionar propriedades de invariância à rede. A diminuição do tamanho dos \emph{feature maps} acarreta no decréscimo do número de parâmetros a serem aprendidos pela rede, permitindo um treinamento mais eficiente.\newline
+\justifying Existem diferentes tipos de operações de agrupamento ou \emph{pooling}, cujo objetivo principal é \textbf{diminuir a resolução} (\emph{downsampling}) dos \emph{feature maps} e adicionar \textbf{propriedades de invariância} à rede. A diminuição do tamanho dos \emph{feature maps} acarreta no decréscimo do número de parâmetros a serem aprendidos pela rede, permitindo um treinamento mais eficiente.\newline
 
 \justifying Dentre os principais tipos de \emph{pooling}, podemos citar:
 
@@ -209,14 +209,32 @@ Resumindo, temos que tomar decisões sobre os seguintes itens acerca de uma cama
 }
 
 \Sli{
-\justifying Seguem algumas ilustrações para exemplificar o funcionamento dos tipos de \emph{pooling} mencionados anteriormente.
+\justifying Seguem algumas ilustrações para exemplificar o funcionamento dos tipos de \emph{pooling} mencionados anteriormente.\newline
 
 \centerline{
 \begin{tabular}{cc}
-	\includegraphics[scale=0.397]{./figs/CNN_Fig8.png} &\hspace{1cm}
-	\includegraphics[scale=0.397]{./figs/CNN_Fig8.png} \\
+	\includegraphics[scale=0.597]{./figs/CNN_Fig8.png} &\hspace{1cm}
+	\includegraphics[scale=0.597]{./figs/CNN_Fig8.png} \\
 	(a) Max-Pooling (stride = 2) & (b) Average Pooling (stride = 2)
 \end{tabular}}
+}
+
+\Sli{
+\justifying Já a técnica de \emph{global pooling} é mais radical no contexto de um \emph{downsampling}, pois reduz todo o \emph{feature map} em um único valor. Neste caso, podemos utilizar tanto \emph{max-pooling} quanto \emph{average pooling}.\newline
+
+\justifying Geralmente, camadas de \emph{max-pooling} tendem a prover resultados melhores, pois é mais informativo utilizarmos o maior valor dentro de uma janela do que ``mascará-los"\ por meio do seu valor médio.
+}
+
+\Sli{
+\secx{Ativação}\newline
+
+\justifying CNNs, usualmente, são compostas por inúmeras camadas, não sendo interessante fazer uso de funções de ativação do tipo sigmoide ou tangente hiperbólica (problemas de saturação). Outra característica interessante das funções de ativação é sua característica de \textbf{não linearidade}, permitindo com que a rede aprenda funções de decisão não lineares.\newline
+
+\justifying Umas das funções de ativação mais utilizadas é a ReLU (\emph{Rectified Linear Unit}) devido à sua simplicidade e alto grau de não linearidade. Sua formulação é dada como segue:
+
+\begin{equation}
+	\text{ReLU(x)} = \max\{0,x\}.
+\end{equation}
 }
 
 \end{document}
