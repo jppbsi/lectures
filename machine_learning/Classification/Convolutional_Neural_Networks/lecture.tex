@@ -214,7 +214,7 @@ Resumindo, temos que tomar decisões sobre os seguintes itens acerca de uma cama
 \centerline{
 \begin{tabular}{cc}
 	\includegraphics[scale=0.597]{./figs/CNN_Fig8.png} &\hspace{1cm}
-	\includegraphics[scale=0.597]{./figs/CNN_Fig8.png} \\
+	\includegraphics[scale=0.597]{./figs/CNN_Fig9.png} \\
 	(a) Max-Pooling (stride = 2) & (b) Average Pooling (stride = 2)
 \end{tabular}}
 }
@@ -235,6 +235,42 @@ Resumindo, temos que tomar decisões sobre os seguintes itens acerca de uma cama
 \begin{equation}
 	\text{ReLU(x)} = \max\{0,x\}.
 \end{equation}
+}
+
+\Sli{
+Segue, abaixo, o gráfico da função \text{ReLU(x)}. Note que a função só retorna algo quando sua entrada possui valor maior do que $0$, ajudando no tempo de treinamento.
+
+\begin{minipage}{0.49\textwidth}
+\begin{center}
+	\includegraphics[scale=0.197]{./figs/CNN_Fig10.png}
+\end{center}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.5\textwidth}
+A derivada da função \text{ReLU(x)} é dada como segue:
+
+\begin{equation}
+	\text{ReLU(x)}^\prime = 
+	\begin{cases}
+		0 \text{ caso $x \leq 0$} \\
+		1 \text{ caso contrário.}
+	\end{cases}
+\end{equation}
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+\secx{Flattening}\newline
+
+\justifying Antes de enviar nossos dados que passaram pelas camadas de convolução, \emph{pooling} e ativação para as camadas do tipo \emph{fully connected} ou \emph{dense layers}, precisamos ``achatar"\ o \textbf{tensor} (dados). A operação nesta camada é bastante simples, dado que recebemos uma entrada com múltiplas dimensões (\emph{feature maps}) e a saída é um vetor unidimensional, como ilustrado abaixo.
+
+\centerline{
+\begin{tabular}{cc}
+	\includegraphics[scale=0.537]{./figs/CNN_Fig11.png} &\hspace{3cm}
+	\includegraphics[scale=0.537]{./figs/CNN_Fig12.png} \\
+\end{tabular}}
+
 }
 
 \end{document}
