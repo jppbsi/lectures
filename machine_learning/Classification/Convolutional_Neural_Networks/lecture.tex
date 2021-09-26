@@ -8,7 +8,7 @@
 \usepackage[portuguese]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{ragged2e,gensymb}
+\usepackage{ragged2e,graphicx,gensymb,bm,epsfig}
 
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
@@ -270,7 +270,36 @@ A derivada da função \text{ReLU(x)} é dada como segue:
 	\includegraphics[scale=0.537]{./figs/CNN_Fig11.png} &\hspace{3cm}
 	\includegraphics[scale=0.537]{./figs/CNN_Fig12.png} \\
 \end{tabular}}
+}
 
+\Sli{
+\secx{Fully Connected + Dropout}\newline
+
+\justifying A parte final consiste em adotar camadas do tipo \emph{fully connected}, de maneira similar à uma Rede Neural MLP, com uma saída do tipo \emph{softmax} no final. Também é bastante comum adotarmos uma técnica de regularização conhecida por \emph{Dropout}, a qual ``remove"\ neurônios de maneira aleatória visando acelerar o processo de treinamento e prevenir \emph{overfitting}.
+
+\begin{center}
+	\includegraphics[scale=0.597]{./figs/CNN_Fig13.png}
+\end{center}
+}
+
+\Sli{
+\justifying A função \emph{softmax} $\sigma:\mathbb{R}^K\rightarrow [0,1]^K$ é uma generalização da função logística, em que $K$ corresponde ao número de classes.
+
+\begin{minipage}{0.49\textwidth}
+\begin{center}
+	\includegraphics[scale=0.597]{./figs/CNN_Fig14.eps}
+\end{center}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.5\textwidth}
+A sua formulação é dada como segue:
+\begin{equation}
+	\sigma_i(\mathbf{z}) = \frac{e^{z_i}}{\sum_{j=1}^Ke^{z_j}}.
+\end{equation}
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+
+\justifying \textbf{Por que \emph{softmax} e não a função logística?} Usualmente, a função logística é aplicada em cada neurônio de saída sem considerarmos todos os outros. No caso, \emph{softmax} acaba resultando em uma probabilidade do neurônio de cada classe responder à um estímulo (dado) de entrada.
 }
 
 \end{document}
