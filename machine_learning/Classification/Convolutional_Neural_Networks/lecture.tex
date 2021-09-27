@@ -337,7 +337,7 @@ Vejamos, agora, cada um desses tipos.
 \end{center}
 \end{minipage}%%% to prevent a space
 \begin{minipage}{0.5\textwidth}
-Cada um dos pontos vermelhos requer $3\times3=9$ operações de multiplicação e $8$ de adição. Desta forma, a convolução de todo o dado de entrada requer $9\times 9 = 81$ operações de multiplicação e $8\times 9= 72$ de adição.
+Cada um dos pontos vermelhos requer $3\times3=9$ operações de multiplicação. Desta forma, a convolução de todo o dado de entrada requer $9\times 9 = 81$ operações de multiplicação.
 \null
 \par\xdef\tpd{\the\prevdepth}
 \end{minipage}
@@ -350,7 +350,14 @@ Vejamos, agora, o que acontece quando ``quebramos"\ uma convolução 2D em duas 
 	\includegraphics[scale=0.537]{./figs/CNN_Fig16.eps}
 \end{center}
 
-No total, teremos $45+27 = 72$ operações de multiplicação e $30+18 = 48$ operações de adição.
+No total, teremos $45+27 = 72$ operações de multiplicação.
 }
+
+\Sli{
+\secxx{Convolução Separada em Profundidade}\newline
+
+\justifying A convolução separada em profundidade é aplicada em dados de entrada multidimensionais (imagens coloridas, por exemplo). A ideia consiste em aplicar a convolução em cada canal (dimensão) separadamente, e depois aplicar uma convolução do tipo pontual (\emph{pointwise convolution}). Primeiro, vamos entender como é feita a convolução em dados de entrada com múltiplas dimensões.\newline
+}
+
 
 \end{document}
