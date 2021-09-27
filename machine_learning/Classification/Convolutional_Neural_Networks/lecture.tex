@@ -302,4 +302,41 @@ A sua formulação é dada como segue:
 \justifying \textbf{Por que \emph{softmax} e não a função logística?} Usualmente, a função logística é aplicada em cada neurônio de saída sem considerarmos todos os outros. No caso, \emph{softmax} acaba resultando em uma probabilidade do neurônio de cada classe responder à um estímulo (dado) de entrada.
 }
 
+\SliT{Tipos de Operações de Convolução}{
+\justifying Existem diferentes maneiras de executarmos a mesma tarefa de convolução, tais como:
+
+\begin{itemize}
+	\item Convolução Separada (\emph{Separable Convolution}) e 
+	\item Convolução Dilatada (\emph{Dilated Convolution})
+\end{itemize}
+
+\justifying Usualmente, elas produzem o mesmo resultado no final, mas conseguem melhorar a eficiência do modelo em relação às convoluções tradicionais.
+}
+
+\Sli{
+\secx{Convolução Separada}\newline
+
+\justifying Consiste em ``quebrar"\ a convolução em \emph{kernels} com tamanhos menores. Existem dois tipos de convolução separada:
+
+\begin{itemize}
+	\item Convolução Separada Espacial (\emph{Spatially Separable Convolution}) e
+	\item Convolução Separada em Profundidade (\emph{Depthwise Separable Convolution})
+\end{itemize}
+
+Vejamos, agora, cada um desses tipos.
+}
+
+\Sli{
+\secxx{Convolução Separada Espacial}\newline
+
+\justifying A convolução separada espacial, no caso 2D, consiste em aplicar duas convoluções 1D de maneira sequencial, de tal forma que o resultado final será o mesmo.\newline
+
+\centerline{
+\begin{tabular}{cc}
+	\includegraphics[scale=0.437]{./figs/CNN_Fig15.eps} &\hspace{1cm}
+	\includegraphics[scale=0.437]{./figs/CNN_Fig16.eps} \\
+	Convolução convencional & Convolução separada espacial\\
+\end{tabular}}
+}
+
 \end{document}
