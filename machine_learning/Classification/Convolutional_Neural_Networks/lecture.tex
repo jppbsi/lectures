@@ -306,8 +306,9 @@ A sua formulação é dada como segue:
 \justifying Existem diferentes maneiras de executarmos a mesma tarefa de convolução, tais como:
 
 \begin{itemize}
-	\item Convolução Separada (\emph{Separable Convolution}) e 
-	\item Convolução Dilatada (\emph{Dilated Convolution})
+	\item Convolução Separada (\emph{Separable Convolution})
+	\item Convolução Dilatada (\emph{Dilated Convolution}) e
+	\item Convolução Deformável (\emph{Deformable Convolution}) 
 \end{itemize}
 
 \justifying Usualmente, elas produzem o mesmo resultado no final, mas conseguem melhorar a eficiência do modelo em relação às convoluções tradicionais.
@@ -394,7 +395,17 @@ Nossa entrada $32\times32\times3$ passará por uma convolução com uma máscara
 \Sli{
 \secx{Convolução Dilatada}\newline
 
-\justifying 
+\justifying Operações de convolução convencionais processam todos os vizinhos em conjunto, ou seja, levam em consideração todas as características que estão delimitadas pelo tamanho da máscara. Entretanto, para algumas aplicações, é interessante ``pularmos"\ alguns vizinhos no sentido de ter uma \emph{visão mais ampla} durante o processo de convolução aumentando um parâmetro apenas (quantidade de vizinhos a serem pulados).
+
+\begin{center}
+		\includegraphics[scale=0.367]{./figs/CNN_Fig21.eps}
+\end{center}
 }
+
+\Sli{
+\secx{Convolução Deformável}\newline
+
+\justifying
+} 
 
 \end{document}
