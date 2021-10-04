@@ -405,7 +405,21 @@ Nossa entrada $32\times32\times3$ passará por uma convolução com uma máscara
 \Sli{
 \secx{Convolução Deformável}\newline
 
-\justifying
+\justifying Operações de convolução convencionais são bastante rígidas no que diz respeito ao formato das máscaras, isto é, são sempre matrizes quadradas. \textbf{E se aprendêssemos o formato dessas máscaras?} Esta é a ideia principal por conta das convoluções deformáveis.\newline
+
+\centerline{
+\begin{tabular}{cc}
+	\includegraphics[scale=0.317]{./figs/CNN_Fig22.eps} &\hspace{1cm}
+	\includegraphics[scale=0.317]{./figs/CNN_Fig23.eps} \\
+	(a) Convolução convencional & (b) Convolução deformável
+\end{tabular}}
+}
+
+\SliT{Treinamento}{
+
+\justifying O processo de treinamento de uma rede neural profunda consiste em encontrar os valores dos parâmetros que minimizam uma função de custo. Quais são esses parâmetros? \textbf{Os pesos das máscaras de convolução e das conexões das camadas fully connected.} No que o tamanho das máscaras, quantidade de filtros e valores de \emph{stride} são denominados de \textbf{hiperparâmetros} e, portando, não são aprendidos.
+
+\justifying No que diz respeito ao treinamento, precisamos escolher dois itens: (i) função de custo e (ii) técnica otimizadora. Usualmente, adota-se a \textbf{entropia cruzada} para a função de custo e a técnica \emph{Adam} para a etapa de otimização.
 } 
 
 \end{document}
