@@ -8,7 +8,7 @@
 \usepackage[portuguese]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{ragged2e,gensymb}
+\usepackage{ragged2e,gensymb,bm,amsmath,amssymb}
 
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
@@ -16,7 +16,7 @@
 
 % DATA FOR FOOTER
 \date{2021}
-\title{- Classificador Bayesiano}
+\title{- Análise Discriminante Linear}
 \author{João Paulo Papa}
 \institute{Advanced Institute for Artificial Intelligence (AI2)}
 
@@ -66,7 +66,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ###############################################################################
 % FIRST SLIDE
-\SliTit{{\LARGE Classificador Bayesiano}}{Advanced Institute for Artificial Intelligence -- AI2}{https://advancedinstitute.ai}
+\SliTit{{\LARGE Análise Discriminante Linear}}{Advanced Institute for Artificial Intelligence -- AI2}{https://advancedinstitute.ai}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ###############################################################################
 % SLIDE SUB-TITLE
@@ -79,475 +79,134 @@
 
 \SliT{Introdução}{
 
-\justifying A Teoria de Decisão Bayesiana é um ferramental matemático que nos permite construir classificadores \textbf{paramétricos}, ou seja, técnicas que assumem a hipótese de que os dados seguem alguma distribuição (hipótese Gaussiana na grande maioria dos casos).\newline
-
-\justifying \underline{Definição do problema:} seja ${\cal X}^1=\{(\boldsymbol{x}_1,y_1),(\boldsymbol{x}_2,y_2),\ldots,(\boldsymbol{x}_m,y_m)\}$ um conjunto de dados de treinamento tal que $\boldsymbol{x}_i\in\mathbb{R}^n$ corresponde a uma amostra e $y_i\in{\cal Y}$ representa o rótulo dessa amostra, em que ${\cal Y}=\{\omega_1,\omega_2,\ldots,\omega_c\}$.
+\justifying Análise Discriminante Linear, do inglês \emph{Linear Discriminant Analysis} - LDA, é uma técnica \textbf{supervisionada} que objetiva \textbf{maximizar a separabilidade} entre as classes. A ideia é gerar agrupamentos em que a distância intraclasse (elementos de mesma classe) seja pequena, enquanto que a distância interclasse (elementos de classes distintas) seja grande. \textbf{Queremos, então, gerar agrupamentos compactos e distantes.}
 }
 
 \Sli{
-Além disso, temos os seguintes componentes em nosso ferramental:
+\justifying Seja ${\cal X}=\{(\bm{x}_1,y_1),(\bm{x}_2,y_2),\ldots,(\bm{x}_z,y_z)\}$ um conjunto de dados rotulado tal que $\bm{x}_i\in\mathbb{R}^n$. Temos que ${\cal X}_1\subset {\cal X}$ e ${\cal X}_2\subset {\cal X}$ representam duas partições que denotam os conjuntos de treinamento e teste, respectivamente. Ademais, seja ${\cal Y}=\{\omega_1,\omega_2,\ldots,\omega_c\}$ o conjunto de rótulos	possíveis. Em nosso exemplo, vamos assumir que temos apenas duas classes, isto é, $\omega_1$ e $\omega_2$.
 
-\begin{itemize}
-	\item $p(\omega_i)$: \textbf{probabilidade a priori} da classe $\omega_i$ (proporção). Ex: em um problema de classificar indivíduos em jogadores de futebol ($\omega_1$) ou basquete ($\omega_2$), se nós temos $90$ jogadores de futebol e $10$ de basquete, então $p(\omega_1) = 0.9$ e $p(\omega_2) = 0.1$. Na prática, $p(\omega_1)$ denota a probabilidade de, ao selecionar algum jogador de maneira aleatória, ele ser um jogador de futebol. O mesmo vale para $p(\omega_2)$.
-\end{itemize}
+\justifying Podemos calcular as médias de cada agrupamento da seguinte forma:
+
+\begin{equation}\nonumber
+\bm{\mu}_1 = \frac{1}{m_1}\sum_{\bm{x}_i\in\omega_1}\bm{x}_i \text{\ \ \ \ e\ \ \ \ } \bm{\mu}_2 = \frac{1}{m_2}\sum_{\bm{x}_j\in\omega_2}\bm{x}_j,
+\end{equation}
+\justifying em que $m_1$ e $m_2$ correspondem ao número de amostras de treinamento das classes $1$ e $2$, respectivamente. Já $\bm{\mu}_1$ e $\bm{\mu}_2$ denotam os centros dos agrupamentos das amostras das classes $1$ e $2$, respectivamente.
 }
 
 \Sli{
-\begin{itemize}
-	\item $p(\boldsymbol{x}|\omega_i)$: \textbf{probabilidade condicional} da classe $\omega_i$ (verossimilhança). Ela descreve a função de densidade de probabilidade, ou seja, qual o comportamento de $\boldsymbol{x}$ dentro da classe $\omega_i$. Ex: se $\boldsymbol{x}$ corresponde à altura do jogador em metros, $p(\boldsymbol{x}|\omega_i)$ descreve a distribuição das alturas dos jogadores de futebol e $p(\boldsymbol{x}|\omega_2)$ descreve a distribuição das alturas dos jogadores de basquete. Assumindo que temos uma hipótese Gaussiana, podemos representar $p(\boldsymbol{x}|\omega_i)$ como segue:
-\end{itemize}
-\vspace{-0.1cm}
-\begin{minipage}{0.49\textwidth}
-\includegraphics[scale=0.15]{./figs/Bayes_Fig1.png}
+\justifying \underline{Objetivo:} dado um conjunto de treinamento ${\cal X}_1$, achar um vetor direção $\bm{w}\in\mathbb{R}^n$ de tal forma que, quando projetarmos nossas amostras nesta direção, maximizaremos a sua separabilidade.
+
+\justifying Sejam $\hat{\bm{\mu}_1}$ e $\hat{\bm{\mu}_2}$ as médias dos dados das classes $1$ e $2$, respectivamente, projetados na direção $\bm{w}$:
+
+\begin{minipage}{0.57\textwidth}
+\begin{align}\nonumber
+	\hat{\bm{\mu}_1} &= \frac{1}{m_1}\sum_{\bm{x}_i\in\omega_1}\bm{w}^T\bm{x}_i \\
+	&= \underbrace{\bm{w}^T}_{\text{constante}}\left(\frac{1}{m_1}\sum_{\bm{x}_i\in\omega_1}\bm{x}_i\right)\\
+	&= \bm{w}^T\bm{\mu}_1.\nonumber
+\end{align}
 \end{minipage}%%% to prevent a space
-\begin{minipage}{0.37\textwidth}
-$p(\boldsymbol{x}|\omega_1)\sim{\cal N}(\mu_1,\sigma^2_1)$\\
-$p(\boldsymbol{x}|\omega_2)\sim{\cal N}(\mu_2,\sigma^2_2)$
+\begin{minipage}{0.42\textwidth}
+\begin{align}\nonumber
+	\hat{\bm{\mu}_2} &= \frac{1}{m_2}\sum_{\bm{x}_j\in\omega_2}\bm{w}^T\bm{x}_j \\
+	&= \underbrace{\bm{w}^T}_{\text{constante}}\left(\frac{1}{m_2}\sum_{\bm{x}_j\in\omega_2}\bm{x}_j\right)\\
+	&= \bm{w}^T\bm{\mu}_2.\nonumber
+\end{align}
+
 \null
 \par\xdef\tpd{\the\prevdepth}
 \end{minipage}
 }
 
 \Sli{
-\begin{itemize}
-\item $p(\omega_i|\boldsymbol{x})$: \textbf{probabilidade a posteriori} da classe $\omega_i$, isto é, a probabilidade de decidirmos pela classe $\omega_i$ dada que observamos a amostra $\boldsymbol{x}$.
-\end{itemize}
-
-Dados esses três componentes, temos que a regra de Bayes é formulada como segue:
-
-\begin{equation}
-	p(\omega_i|\boldsymbol{x}) = \frac{p(\boldsymbol{x}|\omega_i)p(\omega_i)}{p(\boldsymbol{x})},
-\end{equation}
-em que $p(\boldsymbol{x})$ é uma constante normalizadora que não depende da classe, calculada como segue:
-
-\begin{equation}
-	p(\boldsymbol{x}) = \sum_{j=1}^cp(\boldsymbol{x}|\omega_j)p(\omega_j).
-\end{equation}
-A fórmula acima faz com que $p(\omega_i|\boldsymbol{x})\in[0,1]$.
+\justifying Um critério interessante seria maximizar a diferença entre as médias projetadas, ou seja, $|\hat{\bm{\mu}}_1-\hat{\bm{\mu}}_2|$:
 }
 
-\SliT{Classificador Bayesiano sob Hipótese Gaussiana}{
-\secx{Caso Unidimensional}
-
-\justifying Neste caso, temos que nossa amostra $x\in\mathbb{R}$, ou seja, temos apenas uma única característica. Como em nosso exemplo anterior de classificar um jogador como sendo de basquete ou futebol, assuma que $x$ seja dado pela altura dos indivíduos.\newline
-
-\justifying No caso unidimensional, temos que a probabilidade condicional da classe $\omega_i$ é dada por:
+\Sli{
+\justifying Dado o nosso conjunto de dados ${\cal X}=\{(\bm{x}_1,y_1),(\bm{x}_2,y_2),\ldots,(\bm{x}_z,y_z)\}$, temos que sua média amostral é dada por:
 
 \begin{equation}
-	p(x|\omega_i) = \frac{1}{\sqrt{2\pi\sigma^2_i}}\exp\left\{\frac{-(x-\mu_i)^2}{2\sigma^2_i}\right\}.
+	\bm{\mu} = \frac{1}{z}\sum_{i=1}^z\bm{x}_i,
+\end{equation}
+e o seu espalhamento (\emph{scatter}) é calculado como segue:
+
+\begin{equation}
+	\bm{s}^2 = \sum_{i=1}^z(\bm{x}_i-\bm{\mu})^2.
+\end{equation}
+
+Ademais, seja $\hat{\bm{x}}_i=\bm{w}^T\bm{x}_i$ a projeção da amostra $\bm{x}_i$ na direção do vetor $\bm{w}$.
+}
+
+\Sli{
+\justifying Temos que os espalhamentos no espaço projetado para as classes $\omega_1$ e $\omega_2$ são definidos como segue:
+
+\begin{equation}
+\label{e.espalhamento_class_1}
+	\hat{\bm{s}}_1^2 = \sum_{\hat{\bm{x}}_i\in\omega_1}(\hat{\bm{x}}_i-\hat{\mu}_1)^2,
+\end{equation}
+e
+\begin{equation}
+\label{e.espalhamento_class_2}
+	\hat{\bm{s}}_2^2 = \sum_{\hat{\bm{x}}_j\in\omega_2}(\hat{\bm{x}}_j-\hat{\mu}_2)^2.
+\end{equation}
+\justifying Assim, desejamos \textbf{maximizar a distância entre as médias} e \textbf{minimizar o espalhamento entre as classes}. O Critério de Fisher atende à esta nossa exigência.
+}
+
+\Sli{
+\justifying Temos, então, que maximizar o Critério de Fisher, dado por:
+
+\begin{equation}
+	J(\bm{w}) = \frac{(\hat{\mu}_1-\hat{\mu}_2)}{\hat{\bm{s}}_1^2+\hat{\bm{s}}_2^2}.
+\end{equation}
+Desta forma, queremos encontrar o vetor $\bm{w}$ que maximiza o critério, acima, ou seja:
+
+\begin{equation}
+	w^\ast = \argmax_{\bm{w}}J(\bm{w}).
+\end{equation}
+No entanto, precisamos reescrever tanto o numerador quanto o denominador em termos de $\bm{w}$.
+}
+
+\Sli{
+\justifying Antes da projeção, podemos obter as matrizes de espalhamento (\emph{scatter}) das classes $\omega_1$ e $\omega_2$ como segue:
+
+\begin{equation}
+	\bm{S}_1 = \sum_{\bm{x}_i\in\omega_1}(\bm{x}_i-\bm{\mu}_1)(\bm{x}_i-\bm{\mu}_1)^T
+\end{equation}
+e
+\begin{equation}
+	\bm{S}_2 = \sum_{\bm{x}_j\in\omega_2}(\bm{x}_j-\bm{\mu}_2)(\bm{x}_j-\bm{\mu}_2)^T.
+\end{equation}
+Seja $S_A = S_1+S_2$ a matriz de espalhamento \textbf{intraclasse}. Podemos reescrever a Equação 5 como segue:
+
+\begin{equation}
+	\hat{\bm{s}}_1^2 = \sum_{\hat{\bm{x}_i}\in\omega_1}(\hat{\bm{x}_i}-\hat{\bm{\mu}_1})^2 = \sum_{\hat{\bm{x}_i}\in\omega_1}(\bm{w}^T\bm{x}_i-\bm{w}^T\bm{\mu}_1)^2 = \sum_{\hat{\bm{x}_i}\in\omega_1}[\bm{w}^T(\bm{x}_i-\bm{\mu}_1)]^T[\bm{w}^T(\bm{x}_i-\bm{\mu}_1)].
 \end{equation}
 }
 
 \Sli{
-\justifying A equação de uma função de densidade probabilidade Gaussiana possui dois parâmetros, isto é, a média $\mu_i$ e a variância $\sigma^2_i$, $\forall i=1,2,\ldots,c$. Assim sendo, a etapa de treinamento do classificador Bayesiano consiste em estimar esses parâmetros a partir dos dados de treinamento. Dado um problema com $c$ classes, o objetivo é aprender esses parâmetros para cada Gaussiana, isto é, uma para cada classe. Denotamos por $\boldsymbol{\theta}=\{\theta_1,\theta_2,\ldots,\theta_c\}$ esse conjunto de parâmetros a ser aprendido, em que $\theta_i = (\mu_i,\sigma^2_i)$.\newline
-
-\justifying Um dos métodos mais conhecidos para aprendizado do conjunto de parâmetros $\boldsymbol{\theta}$ é o da máxima verossimilhança, ou seja, queremos maximizar a verossimilhança sobre o conjunto de dados de treinamento. Seja ${\cal X}^1_i\subset{\cal X}^1$ o subconjunto dos dados de treinamento que contém apenas amostras da classe $\omega_i$, $\forall i=1,2,\ldots,c$. Desta forma, o método da máxima verossimilhança consiste em encontrar $\theta_i$ que satisfaz a seguinte formulação:
-
-\begin{equation}
-	\hat{\mu_i},\hat{\sigma}^2_i = \argmax_{\mu_i,\sigma^2_i}\{p({\cal X}^1_i|\theta_i)\}.
-\end{equation}
-}
-
-\Sli{
-\justifying Temos que $p({\cal X}^1_i;\theta_i)$ corresponde à \textbf{densidade conjunta} das amostras da classe $\omega_i$ em função dos parâmetros:
-
-\begin{equation}
-	p({\cal X}^1_i|\theta_i) = \prod_{x_j\in{\cal X}^1_i}p(x_j|\theta_i),
-\end{equation}
-em que $p(x_j|\theta_i)=\frac{1}{\sqrt{2\pi\sigma^2_i}}\exp\left\{\frac{(x_j-\mu_i)^2}{2\sigma^2_i}\right\}$ possui a mesma formulação da Equação 3.
-}
-
-\Sli{
-\justifying Para fins de tratabilidade matemática, é comum maximizar o logaritmo da verossimilhança, ou seja:
-
-\begin{equation}
-	\log p({\cal X}^1_i|\theta_i)=\sum_{x_j\in{\cal X}^1_i}\log p(x_j|\theta_i).
-\end{equation}
-A equação acima, após algumas derivações matemáticas, resulta em:
-
-\begin{equation}
-	\log p({\cal X}^1_i|\theta_i)=-\frac{m_i^\prime}{2}\log2\pi-\frac{m_i^\prime}{2}\log\sigma^2_i-\frac{1}{2\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2,
-\end{equation}
-em que $m_i^\prime = |{\cal X}^1_i|$.
-}
-
-\Sli{
-\justifying Assim sendo, nosso problema passar a ser encontrar o conjunto de parâmetros $\theta_i$ que maximiza a seguinte equação:
-
-\begin{equation}
-\hat{\mu}_i,\hat{\sigma}_i = \argmax_{\mu_i\sigma_i^2}\{\log p({\cal X}^1_i|\theta_i)\}.
-\end{equation}
-Note que essa formulação precisa ser realizada para todas as classes, ou seja, $i=1,2,\ldots,c$.\newline
-
-\justifying Para resolvermos o problema acima, basta calcular a derivada de $\log p({\cal X}^1_i;\theta_i)$ em relação à cada um dos seus parâmetros e igualar à zero, ou seja:
-
-\begin{equation}\nonumber
-	\frac{\partial \log p({\cal X}^1_i|\theta_i)}{\partial\mu_i}\text{\ \ e\ \ }\frac{\partial \log p({\cal X}^1_i|\theta_i)}{\partial\sigma_i^2}.
-\end{equation}
-}
-
-\Sli{
-Vamos calcular a derivada da função em relação ao parâmetro $\mu_i$, ou seja:
+\justifying Rearranjando os termos, temos que:
 
 \begin{align}\nonumber
-	\frac{\partial \log p({\cal X}^1_i|\theta_i)}{\partial\mu_i} & = -\cancelto{0}{\frac{m_i^\prime}{2}\log2\pi}-\cancelto{0}{\frac{m_i^\prime}{2}\log\sigma^2_i}-\frac{1}{2\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2 \\
-		&= -\frac{1}{\xcancel{2}\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^{\xcancel{2}} = -\frac{1}{\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i) = 0\\\nonumber
-		&= \implies \frac{1}{\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i) = 0.
-\end{align}
-}
-
-\Sli{
-Dividindo ambos termos da Equação 9 por $1/\sigma^2_i$, temos que:
-
-\begin{align}\nonumber
-	\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i) &= 0\implies\sum_{x_j\in{\cal X}^1_i}x_j-\sum_{x_j\in{\cal X}^1_i}\mu_i = \sum_{x_j\in{\cal X}^1_i}x_j-m_i^\prime\mu_i = 0\\
-	&\implies-m_i^\prime\mu_i = -\sum_{x_j\in{\cal X}^1_i}x_j\implies m_i^\prime\mu_i=\sum_{x_j\in{\cal X}^1_i}x_j\\
-	&\implies\mu_i = \frac{1}{m_i^\prime}\sum_{x_j\in{\cal X}^1_i}x_j\nonumber,
-\end{align}
-que é, basicamente, a equação da média amostral como conhecemos, ou seja, o melhor estimador possível!
-}
-
-\Sli{
-Vamos calcular a derivada da função em relação ao parâmetro $\sigma^2_i$, ou seja:
-
-\begin{align}\nonumber
-	\frac{\partial \log p({\cal X}^1_i|\theta_i)}{\partial\sigma^2_i} & = \cancelto{0}{-\frac{m_i^\prime}{2}\log2\pi}-\cancelto{\frac{\partial\log a}{\partial a} = 1/a}{\frac{m_i^\prime}{2}\log\sigma^2_i}-\frac{1}{2\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2 \\
-		&= -\frac{m^\prime_i}{2\sigma^2_i}\cancelto{\frac{\partial -1/a}{\partial a} = 1/a^2}{-\frac{1}{2\sigma^2_i}}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2=-\frac{m^\prime_i}{2\sigma^2_i}+\frac{1}{2\sigma^4_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2 = 0.\\\nonumber
-\end{align}
-}
-
-\Sli{
-Multiplicando ambos termos da Equação 11 por $2\sigma^2_i$, temos que:
-
-\begin{align}\nonumber
-	-m^\prime_i+\frac{1}{\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2 &= 0\implies \frac{1}{\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2 = m^\prime_i\\
-	&\implies\sigma^2_i = \frac{1}{m^\prime_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2,
-\end{align}
-que também denota a equação conhecida da variância das amostras da classe $\omega_i$.
-}
-
-\Sli{
-\justifying Agora, como calculamos a função de decisão?  Seja $d_i(x)$ a função de decisão que define o classificador Bayesiano sob hipótese Gaussiana no caso unidimensional para a classe $\omega_i$. Temos que ela pode ser calculada da seguinte forma:
-
-\begin{equation}
-	d_i(x) = p(x|\omega_i)p(\omega_i),
-\end{equation}
-que é, basicamente, o numerador da Regra de Bayes (Equação 1), ou seja, um índice de pertinência da amostra $x$ para a classe $\omega_i$.\newline
-
-\justifying Para fins de tratabilidade matemática, apliquemos a função logarítimica na Equação 13:
-
-\begin{align}\nonumber
-	d_i(x) &= \log(p(x|\omega_i)p(\omega_i))\\
-		&= \log p(x|\omega_i)+ \log p(\omega_i).
-\end{align}
-}
-
-\Sli{
-Simplificando um pouco mais a Equação 14, temos que:
-\vspace{-0.27cm}
-\begin{align}\nonumber
-	d_i(x) &= \log p(x|\omega_i)+ \log p(\omega_i)\\\nonumber
-	&= \log\left[\frac{1}{\sqrt{2\pi\sigma^2_i}}\exp\left\{-\frac{1}{2\sigma^2_i}(x-\mu_i)^2\right\}\right]+\log p(\omega_i)\\\nonumber
-	&= \log\left[\frac{1}{\sqrt{2\pi\sigma^2_i}}\right]+\log\left[\exp\left\{-\frac{1}{2\sigma^2_i}(x-\mu_i)^2\right\}\right]+\log p(\omega_i)\\
-	&= \log(2\pi\sigma^2_i)^{-1/2}-\frac{1}{2\sigma^2_i}(x-\mu_i)^2+\log p(\omega_i)\\\nonumber
-	&= -\frac{1}{2}\log(2\pi\sigma^2_i)-\frac{1}{2\sigma^2_i}(x-\mu_i)^2+\log p(\omega_i)\\\nonumber
-	&= -\frac{1}{2}\left[\log(2\pi)+\log(\sigma_i^2)\right]-\frac{1}{2\sigma^2_i}(x-\mu_i)^2+\log p(\omega_i).\\\nonumber
-\end{align}
-}
-
-\Sli{
-Finalmente, a Equação 15 torna-se a seguinte:
-
-\begin{align}
-	d_i(x) &= \cancelto{\text{constante}}{-\frac{1}{2}\log(2\pi)}-\frac{1}{2}\log(\sigma^2_i)-\frac{1}{2\sigma^2_i}(x-\mu_i)^2+\log p(\omega_i)\\
-	&= -\frac{1}{2}\log(\sigma^2_i)-\frac{1}{2\sigma^2_i}(x-\mu_i)^2+\log p(\omega_i).\nonumber
-\end{align}
-A equação acima é a função de decisão final do classificador Bayesiano.
-}
-
-\Sli{
-\justifying Na prática, o classificador Bayesiano funciona da seguinte maneira: supondo o nosso problema de classificação de jogadores de futebol $(\omega_1)$ ou de basquete $(\omega_2)$, precisamos calcular $\boldsymbol{\theta}=\{\theta_1,\theta_2\}$ via treinamento. \newline
-
-\justifying Em seguida, para classificar uma amostra $x^\ast\in{\cal X}^2$, calculamos $d_1(x^\ast)$ e $d_2(x^\ast)$. Caso $d_1(x^\ast)>d_2(x^\ast)$, então a amostra $x^\ast$ é atribuída à classe $\omega_1$ (jogador de futebol). Caso contrário, $x^\ast$ é atribuída à classe $\omega_2$ (jogador de basquete).
-}
-
-\Sli{
-\secx{Caso Multidimensional}\\\ \\
-\justifying Agora, suponha que cada amostra de nosso conjunto de dados possua mais atributos, isto é, $\boldsymbol{x}\in\mathbb{R}^n$, $n>1$. A ideia do classificador Bayesiano é a mesma, ou seja, vamos maximizar o logaritmo da máxima verossimilhança para obter as formulações dos parâmetros de nossa função de densidade de probabilidade Gaussiana. No caso de uma Gaussiana multidimensional, a sua formulação é dada por:
-
-\begin{equation}
-	p(\boldsymbol{x}_j|\theta_i) = \frac{1}{(2\pi)^{m^\prime_i/2}|\Sigma_i|^{1/2}}\exp\left\{-\frac{1}{2}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\right\},
-\end{equation}
-em que $\theta_i=(\boldsymbol{\mu}_i,\boldsymbol{\Sigma}_i)$ denota o conjunto de parâmetros da Gaussiana da classe $\omega_i$, em que $\boldsymbol{\mu}_i\in\mathbb{R}^n$ corresponde ao seu vetor de médias e $\boldsymbol{\Sigma}_i\in\mathbb{R}^{n\times n}$ denota a sua matriz de covariância. 
-}
-
-\Sli{
-Qual a função da matriz de covariância? Ela representa informações sobre as variâncias dos diferentes atributos, como segue:
-
-\begin{equation}
-	\boldsymbol{\Sigma}_i =
-	\begin{bmatrix}
-		\sigma^2_1 & \sigma_{12} & \sigma_{13} & \ldots & \sigma_{1n}\\
-		\sigma_{21} & \sigma^2_2 & \sigma_{23} & \ldots & \sigma_{2n}\\
-		\sigma_{31} & \sigma_{32} & \sigma^2_3 & \ldots & \sigma_{3n}\\
-		\vdots & \vdots & \vdots & \ddots & \vdots\\
-		\sigma_{n1} & \sigma_{n2} & \sigma_{n3} & \ldots & \sigma^2_{n}\\
-	\end{bmatrix},
-\end{equation}
-\justifying em que $\sigma^2_i$ na diagonal principal corresponde à variância do atributo $i$, e $\sigma_{ij}$ denota o valor da covariância entre os atributos $i$ e $j$, ou seja, como o atributo $i$ se comporta em relação ao valor do atributo $j$. Temos que a correlação entre elas é \textbf{positiva} quando o aumento em uma delas ocasiona aumento na outra. A correlação é \textbf{negativa} quando o valor de uma variável aumenta e a outra diminui, e \textbf{nula} quando não existe correlação entre elas.
-}
-
-\Sli{
-Como mencionado anteriormente, a etapa de treinamento consiste em resolver a seguinte formulação:
-
-\begin{equation}
-	\hat{\boldsymbol{\mu}_i},\hat{\boldsymbol{\Sigma}_i} = \argmax_{\boldsymbol{\mu}_i,\boldsymbol{\Sigma}_i}\{\log p({\cal X}^1_i|\theta_i)\}.
-\end{equation}
-
-Lembrando que a probabilidade conjunta $p({\cal X}^1_i|\theta_i)$ é dada por:
-
-\begin{equation}
-	p({\cal X}^1_i|\theta_i) = \prod_{\boldsymbol{x}_j\in{\cal X}^1_i}p(\boldsymbol{x}_j|\theta_i).
-\end{equation}
-}
-
-\Sli{
-Temos, ainda, que:
-
-\begin{align}\nonumber
-	\log p({\cal X}^1_i|\theta_i) &= \sum_{\boldsymbol{x}_j\in{\cal X}^1_i}\log p(\boldsymbol{x}_j|\theta_i)\\
-	&= \sum_{\boldsymbol{x}_j\in{\cal X}^1_i}\log\left[\frac{1}{(2\pi)^{m^\prime_i/2}}\exp\left\{-\frac{1}{2}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\right\}\right]\\
-	&= \underbrace{-\frac{nm^\prime_i}{2}\log(2\pi)-\frac{m^\prime_i}{2}\log(\boldsymbol{|\Sigma}_i^{-1}|)-\frac{1}{2}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)}_{\text{função que queremos derivar!}}\nonumber
-\end{align}
-}
-
-\Sli{
-\justifying Para resolvermos, então, a Equação 18, temos que calcular a sua derivada em relação aos parâmetros e igualar à zero, de maneira similar a que fizemos no caso unidimensional. Começando pela variável $\boldsymbol{\mu_i}$, temos que:
-
-\begin{align}
-	\frac{\partial \log p({\cal X}^1_i|\theta_i)}{\partial \boldsymbol{\mu_i}} &= \cancelto{0}{-\frac{nm^\prime_i}{2}\log(2\pi)}-\cancelto{0}{\frac{m^\prime_i}{2}\log(|\boldsymbol{\Sigma}_i^{-1}|)}-\frac{1}{2}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\\
-	&= -\frac{1}{2}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i) = 0.\nonumber
-\end{align}
-
-Multiplicando-se ambos lados por $-2\boldsymbol{\Sigma_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T$, temos que:
-
-\begin{equation}\nonumber
-	\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)=0.
-\end{equation}
-}
-
-\Sli{
-Distribuindo o somatório, temos que:
-
-\begin{equation}\nonumber
-	\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}\boldsymbol{x}_j-\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}\boldsymbol{\mu}_i=0.
-\end{equation}
-
-Desta forma, temos que:
-
-\begin{equation}
-	\hat{\boldsymbol{\mu}_i} = \frac{1}{m^\prime_i}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}\boldsymbol{x}_j,
-\end{equation}
-que também corresponde à media dos elementos da classe $\omega_i$.
-}
-
-\Sli{
-Precisamos, agora, calcular a derivada da Equação 21 em relação ao parâmetro $\boldsymbol{\Sigma_i}^{-1}$:
-
-\begin{align}
-	\frac{\partial \log p({\cal X}^1_i|\theta_i)}{\partial \boldsymbol{\boldsymbol{|\Sigma_i}^{-1}|}} &= \cancelto{0}{-\frac{nm^\prime_i}{2}\log(2\pi)}-\frac{m^\prime_i}{2}\cancelto{\frac{\partial \log(a)}{\partial a}=1/a}{\log(\boldsymbol{|\Sigma}_i^{-1}|)}-\frac{1}{2}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\\
-	&= \frac{m^\prime_i\boldsymbol{\Sigma}_i}{2}-\frac{1}{2}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T(\boldsymbol{x}_j-\boldsymbol{\mu}_i) = 0.\nonumber
-\end{align}
-
-Isolando $\boldsymbol{\Sigma}_i$, temos que:
-
-\begin{equation}
-	\boldsymbol{\Sigma}_i = \frac{1}{m^\prime_i}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T(\boldsymbol{x}_j-\boldsymbol{\mu}_i),
-\end{equation}
-que é a expressão conhecida da matriz de covariância.
-}
-
-
-\Sli{
-Temos que o termo exponencial da Gaussiana multivariada, isto é, $(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma_i}^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)$,  é conhecido como \textbf{Distância de Mahalanobis}. No caso da função de decisão, temos que:
-
-\begin{align}\nonumber
-	d_i(\boldsymbol{x}) &= \log(p(\boldsymbol{x}|\omega_i)p(\omega_i))\\
-	&= \log p(\boldsymbol{x}|\omega_i)+\log p(\omega_i)\\\nonumber
-	&= \log\left[\frac{1}{(2\pi)^{m^\prime_i/2}|\Sigma_i|^{1/2}}\exp\left\{-\frac{1}{2}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\right\}\right]+\log p(\omega_i)\\\nonumber
-	&= -\frac{1}{2}\log(\boldsymbol{|\Sigma_i}|)-\frac{1}{2}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma_i}^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)+\log p(\omega_i).\\\nonumber
-\end{align}
-}
-
-\Sli{
-No entanto, dependendo da forma com a qual estimamos as matrizes de covariância, o comportamento do classificador Bayesiano se altera. Temos, basicamente, três casos:
-
-\begin{itemize}
-	\item \underline{Caso 1:} quando as matrizes de covariância das classes são iguais e diagonais, ou seja, utilizamos a mesma matriz de covariância para todas as classes.
-\end{itemize}
-
-\begin{minipage}{0.49\textwidth}
-\begin{equation}\nonumber
-	\boldsymbol{\Sigma} =
-	\begin{bmatrix}
-		\sigma^2 & 0 & 0 & \ldots & 0\\
-		0 & \sigma^2 & 0 & \ldots & 0\\
-		0 & 0 & \sigma^2 & \ldots & 0\\
-		\vdots & \vdots & \vdots & \ddots & \vdots\\
-		0 & 0 & 0 & \ldots & \sigma^2\\
-	\end{bmatrix}
-\end{equation}
-\end{minipage}%%% to prevent a space
-\begin{minipage}{0.37\textwidth}
-Esse caso é bom quando temos um pequeno número de amostras por classe, pois podemos calcular a matriz utilizando todas as amostras de treinamento. \textbf{Note que temos uma mesma variância para todos os atributos.}
-\null
-\par\xdef\tpd{\the\prevdepth}
-\end{minipage}
-}
-
-\Sli{
-\justifying Neste caso, temos que $\boldsymbol{\Sigma} = \sigma^2\boldsymbol{I}$, em que $\boldsymbol{I}\in\mathbb{R}^{n\times n}$ corresponde à matriz identidade. Para esta situação, a função de decisão dada pela Equação 26 pode ser escrita como segue:
-
-\begin{align}\nonumber
-	d_i(\boldsymbol{x}) &= -\frac{1}{2}\log(\boldsymbol{|\Sigma|})-\frac{1}{2}(\boldsymbol{x}-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}^{-1}(\boldsymbol{x}-\boldsymbol{\mu}_i)+\log p(\omega_i)\\
-	&= -\frac{1}{2}\log((\sigma^2)^n)-\frac{1}{2}(\boldsymbol{x}-\boldsymbol{\mu}_i)^T\frac{1}{\sigma^2}(\boldsymbol{x}-\boldsymbol{\mu}_i)+\log p(\omega_i)\\\nonumber
-	&= \underbrace{\cancelto{0}{-\frac{n}{2}\log(\sigma^2)}}_{\text{constante em $i$}}-\frac{1}{2\sigma^2}(\boldsymbol{x}-\boldsymbol{\mu}_i)^T(\boldsymbol{x}-\boldsymbol{\mu}_i)+\log p(\omega_i)\\\nonumber
-	&= -\frac{1}{2\sigma^2}(\underbrace{\cancelto{0}{\boldsymbol{x}^T\boldsymbol{x}}}_{\text{constante em $i$}}-2\boldsymbol{x}^T\boldsymbol{\mu_i}+\boldsymbol{\mu_i}^T\boldsymbol{\mu_i})+\log p(\omega_i)\\\nonumber
-	&= \frac{1}{\sigma^2}\boldsymbol{x}^T\boldsymbol{\mu_i}-\frac{1}{2\sigma^2}\boldsymbol{\mu_i}^T\boldsymbol{\mu_i}+\log p(\omega_i).\nonumber
-\end{align}
-}
-
-\Sli{
-A Equação 27 é, na verdade, \textbf{linear} em $\boldsymbol{x}$, ou seja:
-
-\begin{equation}
-	d_i(\boldsymbol{x}) = w_{i1}^T\boldsymbol{x}+w_{i0},
-\end{equation}
-em que $w_{i1} = \frac{1}{\sigma^2}\boldsymbol{\mu_i}$ e $w_{i0}=-\frac{1}{2\sigma^2}\boldsymbol{\mu_i}^T\boldsymbol{\mu_i}+\log p(\omega_i)$ atua como sendo um bias.\newline
-
-Denotamos que a equação acima representa uma \textbf{função discriminante linear}. Assim sendo, podemos dizer que o classificador Bayesiano sob hipótese Gaussiana com uma única matriz de covariância diagonal é um classificador linear!
-}
-
-\Sli{
-Suponha um problema com duas classes, ou seja, temos que calcular $d_1(\boldsymbol{x})$ e $d_2(\boldsymbol{x})$. Para obtermos a decisão de separação, basta igualarmos $d_1(\boldsymbol{x})$ e $d_2(\boldsymbol{x})$ e encontrarmos esse hiperplano analiticamente, como segue:
-
-\begin{align}\nonumber
-d_1(\boldsymbol{x}) &= d_2(\boldsymbol{x})\implies w_{11}^T\boldsymbol{x}+w_{10} = w_{21}^T\boldsymbol{x}+w_{20}\\
-&\implies \frac{1}{\sigma^2}\boldsymbol{\mu_1}\boldsymbol{x}-\frac{1}{2\sigma^2}\boldsymbol{\mu_1}^T\boldsymbol{\mu_1}+\log p(\omega_1) = \frac{1}{\sigma^2}\boldsymbol{\mu_2}\boldsymbol{x}-\frac{1}{2\sigma^2}\boldsymbol{\mu_2}^T\boldsymbol{\mu_2}+\log p(\omega_2)\\\nonumber
-&\overset{\times\sigma^2}{\implies}\boldsymbol{\mu_1}\boldsymbol{x}-\frac{1}{2}\boldsymbol{\mu_1}^T\boldsymbol{\mu_1}+\sigma^2\log p(\omega_1) = \boldsymbol{\mu_2}\boldsymbol{x}-\frac{1}{2}\boldsymbol{\mu_2}^T\boldsymbol{\mu_2}+\sigma^2\log p(\omega_2)\\\nonumber
-&\overset{\text{rearranjando}}{\implies}\boldsymbol{\mu_1}^T\boldsymbol{x}-\boldsymbol{\mu_2}^T\boldsymbol{x}-\frac{1}{2}\boldsymbol{\mu_1}^T\boldsymbol{\mu_1}+\frac{1}{2}\boldsymbol{\mu_2}^T\boldsymbol{\mu_2}+\sigma^2\log p(\omega_1)-\sigma^2\log p(\omega_2) = 0\\\nonumber
-&\overset{\text{evidência}}{\implies} \boldsymbol{x}(\boldsymbol{\mu_1}^T-\boldsymbol{\mu_2}^T)-\frac{1}{2}(\boldsymbol{\mu_1}^T\boldsymbol{\mu_1}-\boldsymbol{\mu_2}^T\boldsymbol{\mu_2})+\sigma^2(\log p(\omega_1)-\log p(\omega_2)) = 0\\
-&\implies \boldsymbol{x}(\boldsymbol{\mu_1}-\boldsymbol{\mu_2})^T-\frac{1}{2}(\boldsymbol{\mu_1}-\boldsymbol{\mu_2})^T(\boldsymbol{\mu_1}-\boldsymbol{\mu_2})+\sigma^2\left(\log\frac{p(\omega_1)}{p(\omega_2)}\right) = 0\nonumber
-\end{align}
-}
-
-\Sli{
-Colocando $(\boldsymbol{\mu_1}-\boldsymbol{\mu_2})^T$ em evidência na Equação 34, temos que:
-
-\begin{eqnarray}
-\boldsymbol{x}(\boldsymbol{\mu_1}-\boldsymbol{\mu_2})^T-\frac{1}{2}(\boldsymbol{\mu_1}-\boldsymbol{\mu_2})^T(\boldsymbol{\mu_1}-\boldsymbol{\mu_2})+\sigma^2\left(\log\frac{p(\omega_1)}{p(\omega_2)}\right) = 0\\
-	(\boldsymbol{\mu_1}-\boldsymbol{\mu_2})^T\left[\boldsymbol{x}-\frac{1}{2}(\boldsymbol{\mu_1}-\boldsymbol{\mu_2})+\frac{\sigma^2}{(\boldsymbol{\mu_1}-\boldsymbol{\mu_2})^T}\log\frac{p(\omega_1)}{p(\omega_2)}\right]\nonumber.
-\end{eqnarray}
-Assumindo que $\boldsymbol{w} = (\boldsymbol{\mu_1}-\boldsymbol{\mu_2})$ e $\boldsymbol{b} = -\frac{1}{2}(\boldsymbol{\mu_1}-\boldsymbol{\mu_2})+\frac{\sigma^2}{(\boldsymbol{\mu_1}-\boldsymbol{\mu_2})^T}\log\frac{p(\omega_1)}{p(\omega_2)}$, temos a equação de um hiperplano:
-
-\begin{equation}
-	\boldsymbol{w}^T(\boldsymbol{x}-\boldsymbol{b}) = 0.
-\end{equation}
-}
-
-\Sli{
-\justifying A Equação 26 define um \textbf{hiperplano separador} que passa sobre o bias $\boldsymbol{b}$, em que $\boldsymbol{w}$ denota a diferença entre as médias. Temos, então, que a solução da Equação 26 corresponde à todos os valores de $\boldsymbol{x}$ que são ortogonais à $\boldsymbol{w}$ e deslocados do bias $\boldsymbol{b}$.\newline
-
-\justifying Assumindo, por exemplo, que as classes são equiprováveis, ou seja, $p(\omega_1) = p(\omega_2)$, temos que $\log\frac{p(\omega_1)}{p\omega_2} = 0$ na Equação 35, resultando em $b = -\frac{1}{2}(\boldsymbol{\mu_1}-\boldsymbol{\mu_2})$. Neste caso, temos que o hiperplano separador é ortogonal ao vetor $\boldsymbol{w}$, ou seja, ortogonal à diferença das médias e corta $w$ no seu ponto médio (mediatriz). 
-}
-
-\Sli{
-A figura abaixo ilustra esta situação.
-
-\begin{center}
-\includegraphics[scale=0.15]{./figs/Bayes_Fig2.png}
-\end{center}
-}
-
-\Sli{
-\begin{itemize}
-	\item \underline{Caso 2:} quando as matrizes de covariância das classes são iguais mas não diagonais. Considerando, novamente, a função de decisão da Equação 26, temos que:
-	\begin{align}\nonumber
-	d_i(\boldsymbol{x}) &= \underbrace{\cancelto{0}{-\frac{1}{2}\log(\boldsymbol{|\Sigma|})}}_{\text{constante em $i$}}-\frac{1}{2}(\boldsymbol{x}-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}^{-1}(\boldsymbol{x}-\boldsymbol{\mu}_i)+\log p(\omega_i)\\
-	&= \underbrace{\cancelto{0}{-\frac{1}{2}\boldsymbol{x}^T\Sigma^{-1}\boldsymbol{x}}}_{\text{constante em $i$}}+\boldsymbol{\mu_i}^T\Sigma^{-1}\boldsymbol{x}-\frac{1}{2}\boldsymbol{\mu_i}^T\Sigma^{-1}\boldsymbol{\mu_i}+\log p(\omega_i)\\\nonumber
-	&=\boldsymbol{\mu_i}^T\Sigma^{-1}\boldsymbol{x}-\frac{1}{2}\boldsymbol{\mu_i}^T\Sigma^{-1}\boldsymbol{\mu_i}+\log p(\omega_i).\\\nonumber
+	\hat{\bm{s}}_1^2 &= \sum_{\hat{\bm{x}_i}\in\omega_1}[\bm{w}^T(\bm{x}_i-\bm{\mu}_1)]^T[\bm{w}^T(\bm{x}_i-\bm{\mu}_1)]\\
+	&= \sum_{\hat{\bm{x}_i}\in\omega_1}[(\bm{x}_i-\bm{\mu}_1)^T\bm{w}]^T[(\bm{x}_i-\bm{\mu}_1)^T\bm{w}]\\\nonumber
+	&= \sum_{\hat{\bm{x}_i}\in\omega_1}\bm{w}^T(\bm{x}_i-\bm{\mu}_1)(\bm{x}_i-\bm{\mu}_1)^T\bm{w}\\\nonumber
+	&= \bm{w}^T\underbrace{\sum_{\hat{\bm{x}_i}\in\omega_1}(\bm{x}_i-\bm{\mu}_1)(\bm{x}_i-\bm{\mu}_1)^T}_{\bm{S}_1}\bm{w}\\\nonumber
+	&= \bm{w}^T\bm{S}_1\bm{w}.
 	\end{align}
-\end{itemize}
 }
 
 \Sli{
-De maneira similar ao caso 1, a Equação 29 é, na verdade, \textbf{linear} em $\boldsymbol{x}$, ou seja:
+\justifying De maneira análoga, podemos escrever:
 
 \begin{equation}
-	d_i(\boldsymbol{x}) = w_{i1}^T\boldsymbol{x}+w_{i0},
+	\hat{\bm{s}}_2^2 = \bm{w}^T\bm{S}_2\bm{w}.
 \end{equation}
-em que $w_{i1} = \boldsymbol{\mu_i}^T\boldsymbol{\Sigma}^{-1}$ e $w_{i0}=-\frac{1}{2}\boldsymbol{\mu_i}^T\Sigma^{-1}\boldsymbol{\mu_i}+\log p(\omega_i)$.\newline
 
-Novamente, temos uma \textbf{função discriminante linear}. Assim sendo, podemos dizer que o classificador Bayesiano sob hipótese Gaussiana com uma única matriz de covariância é um classificador linear!
-}
+\justifying Substituindo-se as Equações 12 e 13 na Equação 7, temos que:
 
-\Sli{
-Novamente, suponha um problema de classificação em duas classes, ou seja, temos que calcular $d_1(\boldsymbol{x})$ e $d_2(\boldsymbol{x})$. Para obtermos a função de decisão, basta igualarmos ambos termos, isto é, $d_1(\boldsymbol{x}) = d_2(\boldsymbol{x})$ e calcularmos o hiperplano separador analiticamente. Neste caso, temos que:
-
-\begin{equation}\nonumber
-	d_1(\boldsymbol{x}) = d_2(\boldsymbol{x}).
-\end{equation}
-}
-
-\Sli{
-Expandindo a equação anterior, temos:
-\begin{align}\nonumber
-	&\implies \boldsymbol{\mu}_1^T\boldsymbol{\Sigma}^{-1}\boldsymbol{x}-\frac{1}{2}\boldsymbol{\mu}_1^T\Sigma^{-1}\boldsymbol{\mu_1}+\log p(\omega_1) = \boldsymbol{\mu}_2^T\boldsymbol{\Sigma}^{-1}\boldsymbol{x}-\frac{1}{2}\boldsymbol{\mu}_2^T\Sigma^{-1}\boldsymbol{\mu_2}+\log p(\omega_2)\\
-	&\implies \boldsymbol{\mu}_1^T\boldsymbol{\Sigma}^{-1}\boldsymbol{x}-\frac{1}{2}\boldsymbol{\mu}_1^T\Sigma^{-1}\boldsymbol{\mu_1}+\log p(\omega_1)-\boldsymbol{\mu}_2^T\boldsymbol{\Sigma}^{-1}\boldsymbol{x}+\frac{1}{2}\boldsymbol{\mu}_2^T\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu_2}-\log p(\omega_2) = 0\\\nonumber
-	&\overset{\text{rearranjando}}{\implies}\boldsymbol{\mu}_1^T\boldsymbol{\Sigma}^{-1}\boldsymbol{x}-\boldsymbol{\mu}_2^T\boldsymbol{\Sigma}^{-1}\boldsymbol{x}-\frac{1}{2}\boldsymbol{\mu}_1^T\Sigma^{-1}\boldsymbol{\mu_1}+\frac{1}{2}\boldsymbol{\mu}_2^T\Sigma^{-1}\boldsymbol{\mu_2}+\log\left(\frac{p(\omega_1)}{p(\omega_2)}\right)= 0\\\nonumber
-	&\overset{\text{evidência}}{\implies}\boldsymbol{\Sigma}^{-1}(\boldsymbol{\mu_1}-\boldsymbol{\mu}_2)\boldsymbol{x}-\frac{1}{2}\boldsymbol{\Sigma}^{-1}(\boldsymbol{\mu}_1^T\boldsymbol{\mu_1}-\boldsymbol{\mu}_2^T\boldsymbol{\mu_2})+\log\left(\frac{p(\omega_1)}{p(\omega_2)}\right)= 0\\\nonumber
-	&\overset{\text{evidência}}{\implies}\boldsymbol{\Sigma}^{-1}(\boldsymbol{\mu_1}-\boldsymbol{\mu}_2)\left[\boldsymbol{x}-\frac{1}{2}\frac{(\boldsymbol{\mu}_1^T\boldsymbol{\mu_1}-\boldsymbol{\mu}_2^T\boldsymbol{\mu_2})}{(\boldsymbol{\mu_1}-\boldsymbol{\mu}_2)}+\frac{\log\left(\frac{p(\omega_1)}{p(\omega_2)}\right)}{\boldsymbol{\Sigma}^{-1}(\boldsymbol{\mu_1}-\boldsymbol{\mu}_2)}\right] = 0\\\nonumber.
-\end{align}
-}
-
-\Sli{
-A Equação 37 pode ser escrita da seguinte forma:
-
-\begin{equation}\nonumber
-	\boldsymbol{w}^T(\boldsymbol{x}-\boldsymbol{b}) = 0,
-\end{equation}
-em que $w = \boldsymbol{\Sigma}^{-1}(\boldsymbol{\mu_1}-\boldsymbol{\mu}_2)$ e $b = \frac{1}{2}\frac{(\boldsymbol{\mu}_1^T\boldsymbol{\mu_1}-\boldsymbol{\mu}_2^T\boldsymbol{\mu_2})}{(\boldsymbol{\mu_1}-\boldsymbol{\mu}_2)}-\frac{\log\left(\frac{p(\omega_1)}{p(\omega_2)}\right)}{\boldsymbol{\Sigma}^{-1}(\boldsymbol{\mu_1}-\boldsymbol{\mu}_2)}$.\newline\ \\
-\justifying Neste caso, temos que o hiperplano separador não é ortogonal à diferênça entre as médias, pois ele está rotacionado pela matriz de covariância $\boldsymbol{\Sigma}^{-1}$. \textbf{O hiperplano fica alinhado de acordo com a matriz de covariância.}
-}
-
-\Sli{
-A figura abaixo ilustra esta situação.
-\begin{center}
-\includegraphics[scale=0.15]{./figs/Bayes_Fig3.png}
-\end{center}
-}
-
-\Sli{
-\begin{itemize}
-	\item \underline{Caso 3:} quando temos uma matriz de covariância para cada classe. Considerando, novamente, a função de decisão da Equação 26, temos que:
-	\begin{align}\nonumber
-	d_i(\boldsymbol{x}) &= -\frac{1}{2}\log(\boldsymbol{|\Sigma_i|})-\frac{1}{2}(\boldsymbol{x}-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma_i}^{-1}(\boldsymbol{x}-\boldsymbol{\mu}_i)+\log p(\omega_i)\\
-	&= -\frac{1}{2}\log(\boldsymbol{|\Sigma_i|})\underbrace{-\frac{1}{2}\boldsymbol{x}^T\boldsymbol{\Sigma_i}^{-1}\boldsymbol{x}}_{\text{termo quadrático em $\boldsymbol{x}$}}+\boldsymbol{\mu}_i^T\boldsymbol{\Sigma_i}^{-1}\boldsymbol{x}-\frac{1}{2}\boldsymbol{\mu}_i^T\boldsymbol{\Sigma_i}^{-1}\boldsymbol{\mu_i}+\log p(\omega_i).\\\nonumber
-	\end{align}
-\end{itemize}
-Temos, agora, uma função discriminante quadrática, ou seja:
 \begin{equation}
-	d_i(\boldsymbol{x}) = \boldsymbol{x}^T\boldsymbol{W}_{i2}\boldsymbol{x}+\boldsymbol{W}_{i1}\boldsymbol{x}+\boldsymbol{W}_{i0},
+	J(\bm{w}) = \frac{\hat{\bm{\mu}}_1-\hat{\bm{\mu}}_2}{\hat{\bm{s}}_1^2-\hat{\bm{s}}_2^2} = \frac{\hat{\bm{\mu}}_1-\hat{\bm{\mu}}_2}{\bm{w}^T\bm{S}_1\bm{w}-\bm{w}^T\bm{S}_2\bm{w}} = \frac{\hat{\bm{\mu}}_1-\hat{\bm{\mu}}_2}{\bm{w}^T(\underbrace{\bm{S}_1+\bm{S}_2}_{\bm{S}_A})\bm{w}} = \frac{\hat{\bm{\mu}}_1-\hat{\bm{\mu}}_2}{\bm{w}^T\bm{S}_A\bm{w}},
 \end{equation}
-onde $\boldsymbol{W}_{i2}=-\frac{1}{2}\boldsymbol{\Sigma_i}^{-1}$, $\boldsymbol{W}_{i1}=\boldsymbol{\mu_i}^T\boldsymbol{\Sigma_i}^{-1}$ e $\boldsymbol{W}_{i0}=-\frac{1}{2}\log(\boldsymbol{|\Sigma_i|})-\frac{1}{2}\boldsymbol{\mu}_i^T\boldsymbol{\Sigma_i}^{-1}\boldsymbol{\mu_i}+\log p(\omega_i)$.
-}
-
-\Sli{
-Novamente, suponha um problema de classificação em duas classes, ou seja, temos que calcular $d_1(\boldsymbol{x})$ e $d_2(\boldsymbol{x})$. Para obtermos a função de decisão, basta igualarmos ambos termos, isto é, $d_1(\boldsymbol{x}) = d_2(\boldsymbol{x})$ e calcularmos o hiperplano separador analiticamente. \textbf{Essa é, geralmente, a versão mais utilizada do classificador Bayesiano pelo seu melhor poder de generalização. A figura abaixo ilustra esta situação.}
-
-\begin{center}
-\includegraphics[scale=0.1]{./figs/Bayes_Fig4.png}
-\end{center}
+a qual é uma forma quadrática em $\bm{w}$.
 }
 
 \end{document}
