@@ -209,4 +209,36 @@ Seja $S_A = S_1+S_2$ a matriz de espalhamento \textbf{intraclasse}. Podemos rees
 a qual é uma forma quadrática em $\bm{w}$.
 }
 
+\Sli{
+\justifying Seja, agora, $\bm{S}_B$ a matriz de espalhamento interclasses, que pode ser definida como segue:
+
+\begin{equation}
+	\bm{S}_B = (\bm{\mu}_1-\bm{\mu}_2)(\bm{\mu}_1-\bm{\mu}_2)^T,
+\end{equation}
+a qual mede a separação entre os vetores média antes da projeção. Note que o numerador da Equação 14 pode ser expressa como:
+
+\begin{equation}
+	(\bm{\mu}_1-\bm{\mu}_2)^2 = (\bm{w}^T\bm{\mu}_1-\bm{w}^T\bm{\mu}_2)^2 = [\bm{w}^T(\bm{\mu}_1-\bm{\mu}_2)]^T[\bm{w}^T(\bm{\mu}_1-\bm{\mu}_2)].
+\end{equation}
+Rearranjando os produtos internos, temos que:
+\begin{equation}
+	(\bm{\mu}_1-\bm{\mu}_2)^2 = [(\bm{\mu}_1-\bm{\mu}_2)\bm{w}^T]^T[(\bm{\mu}_1-\bm{\mu}_2)\bm{w}^T]=\bm{w}^T(\bm{\mu}_1-\bm{\mu}_2)(\bm{\mu}_1-\bm{\mu}_2)^T\bm{w} = \bm{w}^T\bm{S}_B\bm{w}.
+\end{equation}
+}
+
+\Sli{
+\justifying Podemos reescrever o numerador da Equação 14 utilizando o resultado da Equação 17, obtendo uma expressão final para o Critério de Fisher:
+
+\begin{equation}
+	J(\bm{w}) = \frac{\bm{w}^T\bm{S}_B\bm{w}}{\bm{w}^T\bm{S}_A\bm{w}}.
+\end{equation}
+
+Precisamos, agora, maximizar a Equação 18 com relação à $\bm{w}$, ou seja, calculamos $\frac{\partial J(\bm{w})}{\partial\bm{w}}$, resultando em uma equação fechada para o cálculo de $\bm{w}$, dada por:
+
+\begin{equation}
+	\bm{w}^\ast = \bm{S}_{A}^{-1}(\bm{\mu}_1-\bm{\mu}_2),
+\end{equation}
+que é, basicamente, a diferença entre as médias modulada pela matriz de espalhamento.
+}
+
 \end{document}
