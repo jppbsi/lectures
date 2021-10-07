@@ -80,6 +80,10 @@
 \SliT{Introdução}{
 
 \justifying Análise Discriminante Linear, do inglês \emph{Linear Discriminant Analysis} - LDA, é uma técnica \textbf{supervisionada} que objetiva \textbf{maximizar a separabilidade} entre as classes. A ideia é gerar agrupamentos em que a distância intraclasse (elementos de mesma classe) seja pequena, enquanto que a distância interclasse (elementos de classes distintas) seja grande. \textbf{Queremos, então, gerar agrupamentos compactos e distantes.}
+
+\begin{center}
+\includegraphics[scale=0.19]{./figs/LDA_Fig1.png}
+\end{center}
 }
 
 \Sli{
@@ -119,6 +123,19 @@
 
 \Sli{
 \justifying Um critério interessante seria maximizar a diferença entre as médias projetadas, ou seja, $|\hat{\bm{\mu}}_1-\hat{\bm{\mu}}_2|$:
+
+\begin{minipage}{0.41\textwidth}
+\begin{center}
+\includegraphics[scale=0.19]{./figs/LDA_Fig2.png}
+\end{center}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.42\textwidth}
+Neste exemplo, a distância entre as médias é maior no eixo $x^1$, mas a separabilidade é maior no eixo $x^2$.
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+
+Por que isto ocorre? A abordagem acima não leva em consideração a variância, ou seja, o \textbf{espalhamento} entre as classe.
 }
 
 \Sli{
