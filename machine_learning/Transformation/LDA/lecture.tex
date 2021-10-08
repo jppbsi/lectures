@@ -258,4 +258,73 @@ Precisamos, agora, maximizar a Equação 18 com relação à $\bm{w}$, ou seja, 
 que é, basicamente, a diferença entre as médias modulada pela matriz de espalhamento.
 }
 
+\SliT{Análise Discriminante Múltipla}{
+
+\justifying Suponha, agora, que tenhamos um problema de classificação por múltiplas classes, isto é, ${\cal Y}=\{\omega_1,\omega_2,\ldots,\omega_c\}$. Neste caso, podemos reduzir a dimensionalidade do espaço original para, no máximo, $c-1$ classes. Temos que a operação de transformação é dada por:
+
+\begin{equation}
+	\hat{\bm{x}_i} = \bm{W}^T\bm{x}_i,
+\end{equation}
+em que, novamente, $\bm{x}_i\in\mathbb{R}^n$ e $\bm{W}\in\mathbb{R}^{n\times d}$ é uma matriz de projeção para um espaço com $d<c$ dimensões. Temos que cada coluna de $\bm{W}$ é uma direção ortogonal $\bm{w}_j$ .
+}
+
+\Sli{
+\justifying Relembrando que temos as seguintes definições:
+
+\begin{itemize}
+	\item $m_i$: número de elementos do conjunto de treinamento da classe $\omega_i$.
+	\item $\bm{\mu}_i$: média dos elementos da classe classe $\omega_i$.
+	\item $\bm{\mu}$: média global, isto é, de todo o conjunto de treinamento.
+\end{itemize}
+A função objetivo (Critério de Fisher) a ser maximizada é dada por:
+
+\begin{equation}
+	J(\bm{W}) = \frac{|\bm{W}^T\bm{S}_B\bm{W}|}{|\bm{W}^T\bm{S}_A\bm{W}|},
+\end{equation}
+em que $|\cdot|$ calcula o determinante de uma matriz.
+}
+
+\Sli{
+\justifying Já as matrizes $\bm{S}_A$ e $\bm{S}_B$ são calculadas como segue:
+
+\begin{equation}
+	\bm{S}_A = \sum_{i=1}^c\bm{S}_i = \sum_{i=1}^c\sum_{\bm{x}_j\in\omega_i}(\bm{x}_j-\bm{\mu}_i)(\bm{x}_j-\bm{\mu}_i)^T,
+\end{equation}
+em que $\bm{S}_i$ representa a matriz de espalhamento da classe $\omega_i$, e
+
+\begin{equation}
+	\bm{S}_B = \sum_{i=1}^cm_i(\bm{\mu}_i-\bm{\mu})(\bm{\mu}_i-\bm{\mu})^T.
+\end{equation}
+Pode-se mostrar que o posto (rank) da matriz $\bm{S}_B$ é $c-1$, ou seja, o número de linhas ou colunas linearmente independentes é limitado superiormente à $c-1$ (número de direções discriminantes do método).
+}
+
+\Sli{
+\justifying A condição para maximização de nosso Critério de Fisher é dada por:
+
+\begin{equation}\nonumber
+	\frac{\partial J(\bm{W})}{\partial \bm{W}} = 0.
+\end{equation}
+Resolvendo analiticamente a equação acima, chegamos na seguinte formulação:
+
+\begin{equation}
+	(\bm{S}_B\bm{W}) = \lambda\bm{S}_A\bm{W}.
+\end{equation}
+Caso $\bm{S}_A$ admita inversa, temos que:
+
+\begin{equation}
+	(\bm{S}_A^{-1}\bm{S}_B)\bm{W} = \lambda\bm{W}.
+\end{equation}
+Para resolver o problema, basta selecionarmos, no máximo, $c-1$ autovetores de $(\bm{S}_A^{-1}\bm{S}_B)$ associados aos $c-1$ maiores autovalores.
+}
+
+\Sli{
+\justifying Algumas limitações do LDA:
+
+\begin{itemize}
+	\item Não é interessante para problemas com poucas classes e muitas características.
+	\item Quanto a média das classes são muito próximas, o numerador da Equação 7 tende a $0$.
+	\item Situações em que a função de custo (objetivo) assume valores muito altos (classes com formas não lineares).
+\end{itemize}
+}
+
 \end{document}
