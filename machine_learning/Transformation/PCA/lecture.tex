@@ -111,7 +111,61 @@
 \begin{center}
 \includegraphics[scale=0.13]{./figs/PCA_Fig3.png}
 \end{center}
+}
 
+\SliT{Autovalores e Autovetores: Uma Breve Introdução}{
+
+\justifying Seja $V$ um espaço vetorial com $n$ dimensões que contempla um produto interno. Então, temos que:
+
+\begin{equation}
+	\langle \bm{u},\bm{v}\rangle = \bm{u}^T\bm{v} = \sum_{i=1}^nu_iv_i,
+\end{equation}
+e
+\begin{equation}
+	\langle \bm{v},\bm{v}\rangle = \bm{v}^T\bm{v} = \sum_{i=1}^nv_i = \norm{v}^2.
+\end{equation}
+}
+
+\Sli{
+\justifying Geometricamente falando, como vimos anteriormente, o produto interno entre os vetores $\bm{u}$ e $\bm{v}$ é a \textbf{projeção} de $\bm{u}$ em $\bm{v}$.
+
+\begin{center}
+\includegraphics[scale=0.19]{./figs/PCA_Fig4.png}
+\end{center}
+
+A ideia é que neste espaço vetorial eu consiga definir \textbf{operadores lineares}, ou seja, funções (matrizes) $\bm{P}$ que mapeiam vetores de entrada $\bm{v}$ em vetores de saída $\mu{u}$, ou seja:
+
+\begin{equation}
+	\bm{u} = \bm{P}\bm{v}.
+\end{equation}
+}
+
+\Sli{
+\justifying No estudo de autovalores e autovetores, estamos interessados em operadores lineares que possuem a seguinte característica: dado um operador linear $\bm{P}$ para quais vetores $\bm{v}$ a saída da Equação 3, ou seja, $\bm{u}$, aponta para a mesma direção da entrada, sendo apenas esticados ou encolhidos? Matematicamente falando, temos que:
+
+\begin{equation}
+	\bm{u} = \bm{P}\bm{v} = \lambda\bm{v}.
+\end{equation}
+\justifying Todos os vetores $\bm{v}$ que satisfazem a equação acima são chamados de \textbf{autovetores} de $\bm{P}$, e todos os escalares $\lambda$ que satisfazem a formulação acima são chamados de \textbf{autovalores} de $\bm{P}$. Na prática, $\lambda$ é um fator de escala de redução ou incremento do vetor $\bm{v}$. \underline{Assim sendo, dizemos} \underline{que $\bm{v}\in\mathbb{R}^n$ é um autovetor de $\bm{P}\in\mathbb{R}^{n\times n}$ com autovalor $\lambda$ se $\bm{v}\neq0$ e $\bm{P}\bm{v} = \lambda\bm{v}$}.
+}
+
+\Sli{
+\justifying Para fins de explicação, tomemos o seguinte exemplo: seja $\bm{P} = \bm{I}\in\mathbb{R}^{n\times n}$ o operador identidade. Então, $\bm{I}\bm{v} = 1\bm{v}$, $\forall \bm{v}\in\mathbb{R}^n$. Desta forma, $\bm{v}$ é um autovetor de $\bm{I}$ com autovalor $\lambda=1$. Vejamos um outro exemplo, o operador de projeção em $\mathbb{R}^2$.
+
+\begin{minipage}{0.42\textwidth}
+\includegraphics[scale=0.15]{./figs/PCA_Fig5.png}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.57\textwidth}
+\justifying Podemos definir o operador $\bm{P}_S$, o qual projeta o vetor $\bm{u}$ no subespaço (reta) $S$:
+
+\begin{equation}
+	\bm{u}^\prime= \bm{P}_S\bm{u}.
+\end{equation}
+Supondo um vetor $\bm{w}\in{S}$, temos que $\bm{w} = \bm{P}_S\bm{w}$, dado que $\bm{w}$ já faz parte do subespaço $S$. Neste caso, todo vetor que pertence à reta $S$ é um autovetor de $\bm{P}_S$ com autovalor $\lambda=1$.
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+ Seja, agora, $S^\perp$ o subespaço ortogonal a $\bm{S}$, e $\bm{x}\in S^\perp$, ou seja, quando eu aplicar o operador $\bm{P}_S$ em algum elemento de $\bm{S}$, resulta no valor $0$ (origem). Então, temos que $\bm{P}_S\bm{x} = 0\bm{x}$, ou seja, todo vetor que pertence a $S^\perp$ é um autovetor de $\bm{P}_S$ com autovalor $\lambda=0$.
 }
 
 \end{document}
