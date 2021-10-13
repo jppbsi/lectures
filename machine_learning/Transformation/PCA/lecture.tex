@@ -168,4 +168,42 @@ Supondo um vetor $\bm{w}\in{S}$, temos que $\bm{w} = \bm{P}_S\bm{w}$, dado que $
  Seja, agora, $S^\perp$ o subespaço ortogonal a $\bm{S}$, e $\bm{x}\in S^\perp$, ou seja, quando eu aplicar o operador $\bm{P}_S$ em algum elemento de $\bm{S}$, resulta no valor $0$ (origem). Então, temos que $\bm{P}_S\bm{x} = 0\bm{x}$, ou seja, todo vetor que pertence a $S^\perp$ é um autovetor de $\bm{P}_S$ com autovalor $\lambda=0$.
 }
 
+\Sli{
+\justifying Podemos extrapolar esse arcabouço de autovetores e autovalores para matrizes. Por exemplo, como podemos calcular os autovalores e autovetores de uma matrix $\bm{A}$? Da Equação 4, temos que:
+
+\begin{equation}\nonumber
+	\bm{A}\bm{v} = \lambda\bm{v}.
+\end{equation}	
+Rearranjando os temos, temos:
+\begin{equation}\nonumber
+	\bm{A}\bm{v} - \lambda\bm{I}\bm{v} = 0\implies (\bm{A}- \lambda\bm{I})\bm{v} = 0.
+\end{equation}
+Existe um teorema da álgebra linear que nos diz o seguinte: $\bm{A}\bm{v} = 0$ admite solução não nula se, e somente se, $det(\bm{A}) = 0$. Assim, $det(\bm{A}- \lambda\bm{I}) = 0$ em nosso caso.
+}
+
+\Sli{
+Ex: seja a matriz:
+\begin{equation}\nonumber
+\bm{A}=	\begin{bmatrix}
+		3/2&-1/2\\
+		-1/2&3/2
+		\end{bmatrix}.
+\end{equation}
+
+Temos que: 
+\begin{align}\nonumber
+\bm{A}-\lambda\bm{I} &=	\begin{bmatrix}
+		3/2&-1/2\\
+		-1/2&3/2
+		\end{bmatrix}-\lambda\begin{bmatrix}
+		1&0\\
+		0&1
+		\end{bmatrix}\\
+		&= \begin{bmatrix}
+		3/2-\lambda&-1/2\\
+		-1/2&3/2-\lambda
+		\end{bmatrix}.
+\end{align}
+}
+
 \end{document}
