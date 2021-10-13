@@ -293,8 +293,8 @@ Desta forma, $\bm{v}^{(1)}$ é o autovetor associado ao autovalor $\lambda_1$.
 		1
 		\end{bmatrix}\implies\bm{v}^{(1)}= 
 		\begin{bmatrix}
-		\frac{1}{\norm{\bm{v}^{(1)}}_2}\\
-		\frac{1}{\norm{\bm{v}^{(1)}}_2}
+		\frac{1}{\norm{\bm{v}^{(1)}}}\\
+		\frac{1}{\norm{\bm{v}^{(1)}}}
 		\end{bmatrix}\implies\bm{v}^{(1)}= 
 		\begin{bmatrix}
 		\frac{1}{\sqrt{2}}\\
@@ -330,8 +330,8 @@ Novamente, utilizamos o autovetor canônico:
 		1
 		\end{bmatrix}\implies\bm{v}^{(2)}= 
 		\begin{bmatrix}
-		\frac{1}{\norm{\bm{v}^{(1)}}_2}\\
-		-\frac{1}{\norm{\bm{v}^{(1)}}_2}
+		\frac{1}{\norm{\bm{v}^{(1)}}}\\
+		-\frac{1}{\norm{\bm{v}^{(1)}}}
 		\end{bmatrix}\implies\bm{v}^{(2)}= 
 		\begin{bmatrix}
 		\frac{1}{\sqrt{2}}\\
@@ -351,6 +351,24 @@ Desta forma, temos que $\bm{v}^{(1)}$ e $\bm{v}^{(2)}$ são os nossos autovetore
 \null
 \par\xdef\tpd{\the\prevdepth}
 \end{minipage}
+}
+
+\Sli{
+\justifying Podemos organizar os autovetores em uma matriz $\bm{Q}$ da seguinte forma:
+
+\begin{equation}\nonumber
+	\bm{Q} = \begin{bmatrix}
+		\bm{v}^{(1)} & \bm{v}^{(2)} & \ldots & \bm{v}^{(n)}.
+	\end{bmatrix}
+\end{equation}
+Ademais, temos que uma matriz é dita ser \textbf{positiva semidefinida} se todos os seus autovalores foram maiores ou iguais a $0$. Temos, ainda, uma outra definição: ``Seja $\bm{P}$ um operador linear. Caso a matriz $\bm{Q}$ dos seus autovetores defina uma nova base em $\mathbb{R}^n$, então $\bm{P}\bm{Q}=\bm{Q}\bm{\Lambda}$, em que $\bm{\Lambda}$ representa a matriz diagonal dos autovalores".
+
+\justifying Um outro teorema fundamental (decomposição expectral) nos diz que: ``Seja $\bm{P}$ uma matriz quadrada $n\times n$, $\bm{Q}$ a sua matriz de autovetores (nas colunas) e $\bm{\Lambda}$ a sua matriz diagonal de autovalores. Então, temos que  a matriz $\bm{P}$ pode ser decomposta da seguinte forma:"
+
+\begin{equation}
+	\bm{P} = \bm{Q}\bm{\Lambda}\bm{Q}^{-1}.
+\end{equation}
+Caso $\bm{P}$ seja ortogonal (ex: matrizes de rotação do espaço), então $\bm{Q}^{-1} = \bm{Q}^T$. Desta forma, temos que $\bm{P} = \bm{Q}\bm{\Lambda}\bm{Q}^T$.
 }
 
 \end{document}
