@@ -175,7 +175,7 @@ Supondo um vetor $\bm{w}\in{S}$, temos que $\bm{w} = \bm{P}_S\bm{w}$, dado que $
 	\bm{A}\bm{v} = \lambda\bm{v}.
 \end{equation}	
 Rearranjando os temos, temos:
-\begin{equation}\nonumber
+\begin{equation}
 	\bm{A}\bm{v} - \lambda\bm{I}\bm{v} = 0\implies (\bm{A}- \lambda\bm{I})\bm{v} = 0.
 \end{equation}
 Existe um teorema da álgebra linear que nos diz o seguinte: $\bm{A}\bm{v} = 0$ admite solução não nula se, e somente se, $det(\bm{A}) = 0$. Assim, $det(\bm{A}- \lambda\bm{I}) = 0$ em nosso caso.
@@ -198,12 +198,159 @@ Temos que:
 		\end{bmatrix}-\lambda\begin{bmatrix}
 		1&0\\
 		0&1
-		\end{bmatrix}\\
+		\end{bmatrix}\\\nonumber
 		&= \begin{bmatrix}
 		3/2-\lambda&-1/2\\
 		-1/2&3/2-\lambda
 		\end{bmatrix}.
 \end{align}
+}
+
+\Sli{
+Sabemos que $det(\bm{A}- \lambda\bm{I}) = 0$, ou seja:
+
+\begin{equation}\nonumber
+	\left(\frac{3}{2}-\lambda\right)^2-\left(-\frac{1}{2}*-\frac{1}{2}\right) = \left(\frac{3}{2}-\lambda\right)^2-\frac{1}{4} = 0,
+\end{equation}
+o que implica em:
+
+\begin{equation}\nonumber
+	\frac{9}{4}-2\frac{3}{2}\lambda+\lambda^2-\frac{1}{4} = 0\implies \lambda^2-3\lambda+2 = 0.
+\end{equation}
+Assim sendo, temos uma equação do segundo grau cujas soluções são $\lambda_1 = 1$ e $\lambda_2 = 2$.
+}
+
+\Sli{
+Para obtermos o autovetor associado ao autovalor $\lambda_1 = 1$, temos que:
+
+\begin{align}\nonumber
+\bm{A}-\lambda\bm{I} &=	\begin{bmatrix}
+		3/2&-1/2\\
+		-1/2&3/2
+		\end{bmatrix}-1\begin{bmatrix}
+		1&0\\
+		0&1
+		\end{bmatrix}\\
+		&= \begin{bmatrix}
+		3/2-1&-1/2\\
+		-1/2&3/2-1
+		\end{bmatrix}\\\nonumber
+		&= \begin{bmatrix}
+		1/2&-1/2\\
+		-1/2&1/2
+		\end{bmatrix}.
+\end{align}
+}
+
+\Sli{
+Continuando, substituindo o resultado da Equação 7 na Equação 6, temos:
+
+\begin{equation}\nonumber
+	(\bm{A}-\lambda\bm{I})\bm{v} = 0
+\end{equation}
+
+\begin{equation}\nonumber
+	\begin{bmatrix}
+		1/2&-1/2\\
+		-1/2&1/2
+		\end{bmatrix}\bm{v} = 0
+\end{equation}
+
+\begin{equation}\nonumber
+		\begin{bmatrix}
+		1/2&-1/2\\
+		-1/2&1/2
+		\end{bmatrix}\begin{bmatrix}
+		v_1\\
+		v_2
+		\end{bmatrix} = \begin{bmatrix}
+		0\\
+		0
+		\end{bmatrix}\implies \left\{
+			\begin{array}{ll}
+			\frac{1}{2}v_1-\frac{1}{2}v_2 = 0 & \\
+			-\frac{1}{2}v_1+\frac{1}{2}v_2 = 0 &
+		\end{array}\right.\implies v_1=v_2\implies \bm{v}^{(1)} 
+\end{equation}
+Desta forma, $\bm{v}^{(1)}$ é o autovetor associado ao autovalor $\lambda_1$. 
+}
+
+\Sli{
+\justifying Note que temos infinitos autovetores associadores ao autovalor $\lambda_1$, basta apenas que as componentes tenham o mesmo valor. Ex: $\bm{v}^{(1)}= \begin{bmatrix}
+		1\\
+		1
+		\end{bmatrix}$ ou $\bm{v}^{(1)}= \begin{bmatrix}
+		7\\
+		7
+		\end{bmatrix}$. Qual a diferença entre eles? \textbf{Todos apontam para a mesma direção, mas possuem magnitudes diferentes.} \newline
+
+\justifying Usualmente, utilizamos o \textbf{autovetor canônico}, ou seja, aquele que tem \textbf{norma unitária}. Basta tomarmos um autovetor qualquer e dividirmos cada componente pela sua norma, ou seja:
+
+\begin{equation}\nonumber
+	\bm{v}^{(1)}= 
+	\begin{bmatrix}
+		1\\
+		1
+		\end{bmatrix}\implies\bm{v}^{(1)}= 
+		\begin{bmatrix}
+		\frac{1}{\norm{\bm{v}^{(1)}}_2}\\
+		\frac{1}{\norm{\bm{v}^{(1)}}_2}
+		\end{bmatrix}\implies\bm{v}^{(1)}= 
+		\begin{bmatrix}
+		\frac{1}{\sqrt{2}}\\
+		\frac{1}{\sqrt{2}}
+		\end{bmatrix}.
+\end{equation}
+}
+
+\Sli{
+Agora, repetimos o processo para o autovalor $\lambda_2 = 0$:
+
+\begin{equation}\nonumber
+		\begin{bmatrix}
+		-1/2&-1/2\\
+		-1/2&-1/2
+		\end{bmatrix}\begin{bmatrix}
+		v_1\\
+		v_2
+		\end{bmatrix} = \begin{bmatrix}
+		0\\
+		0
+		\end{bmatrix}\implies \left\{
+			\begin{array}{ll}
+			-\frac{1}{2}v_1-\frac{1}{2}v_2 = 0 & \\
+			-\frac{1}{2}v_1-\frac{1}{2}v_2 = 0 &
+		\end{array}\right.\implies v_1=-v_2\implies \bm{v}^{(2)}. 
+\end{equation}
+Novamente, utilizamos o autovetor canônico:
+\begin{equation}\nonumber
+	\bm{v}^{(2)}= 
+	\begin{bmatrix}
+		1\\
+		1
+		\end{bmatrix}\implies\bm{v}^{(2)}= 
+		\begin{bmatrix}
+		\frac{1}{\norm{\bm{v}^{(1)}}_2}\\
+		-\frac{1}{\norm{\bm{v}^{(1)}}_2}
+		\end{bmatrix}\implies\bm{v}^{(2)}= 
+		\begin{bmatrix}
+		\frac{1}{\sqrt{2}}\\
+		-\frac{1}{\sqrt{2}}
+		\end{bmatrix}.
+\end{equation}
+}
+
+\Sli{
+Desta forma, temos que $\bm{v}^{(1)}$ e $\bm{v}^{(2)}$ são os nossos autovetores do operador linear $\bm{P}_S$. Geometricamente falando, temos o seguinte:
+
+\begin{minipage}{0.42\textwidth}
+\includegraphics[scale=0.15]{./figs/PCA_Fig6.png}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.57\textwidth}
+\justifying Temos que os autovetores definem uma nova base no sistema de coordenadas. Existe um teorema que nos diz o seguinte: ``Se $\bm{P}$ é um operador linear que possui $n$ autovalores distintos, então os autovetores de $\bm{P}$ definem uma nova base em $\mathbb{R}^n$."
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
 }
 
 \end{document}
