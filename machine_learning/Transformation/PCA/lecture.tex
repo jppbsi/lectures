@@ -371,4 +371,130 @@ Ademais, temos que uma matriz é dita ser \textbf{positiva semidefinida} se todo
 Caso $\bm{P}$ seja ortogonal (ex: matrizes de rotação do espaço), então $\bm{Q}^{-1} = \bm{Q}^T$. Desta forma, temos que $\bm{P} = \bm{Q}\bm{\Lambda}\bm{Q}^T$.
 }
 
+\SliT{Análise de Componentes Principais pela Maximização da Variância}{
+
+\justifying A técnica PCA nos permite tratar dados de alta dimensionalidade identificando a dependência entre as variáveis para representá-los de uma forma mais compacta e minimizando a perda de informação relevante. É uma das técnicas mais utilizadas no contexto de \textbf{redução de características}. Possui outros nomes, tais como: (i) Transformação de Karhunen-Loeve, (ii) Transformação de Hotelling e (iii) Decomposição em Valores Singulares.
+}
+
+\Sli{
+Características principais:
+
+\begin{itemize}
+	\item Transformação linear: assume a hipótese que os dados encontram-se em um subespaço Euclidiano de $\mathbb{R}^n$.
+	\item Método não supervisionado.
+	\item Decorrelaciona os dados de entrada eliminando redundâncias (a matriz de covariância dos dados transformados é diagonal).
+\end{itemize}
+
+\begin{equation}\nonumber
+	\bm{x}\in\mathbb{R}^n\overset{\text{PCA}}{\implies}\hat{\bm{x}}\in\mathbb{R}^d
+\end{equation}
+Basicamente, queremos achar um operador que projete os dados de entrada em um espaço de saída com menor dimensão.
+}
+
+\Sli{
+\justifying Seja $Z=[T^T,S^T]$ uma base ortonormal em $\mathbb{R}^n$, em que:
+
+\begin{itemize}
+	\item $T^T = [\bm{w}_1,\bm{w}_2,\ldots,\bm{w}_d]$ corresponde ao vetor de componentes que iremos \textbf{reter} no processo de redução e
+	\item $S^T = [\bm{w}_{k+1},\bm{w}_{k+2},\ldots,\bm{w}_n]$ corresponde ao vetor de componentes que iremos \textbf{descartar}.
+\end{itemize}
+\justifying Desta forma, $T$ representa o novo sistema de eixos coordenados encontrados pelo PCA, enquanto que $S$ representa o subespaço eliminado durante o processo de redução.\newline
+
+\justifying \underline{Problema:} dado um espaço de entrada, queremos encontrar as $d$ direções $\bm{w}_i$ que, ao projetarmos os dados, maximizam a variância (espalhamento) retida na nova representação.
+}
+
+\Sli{
+\justifying Temos que nosso vetor $\bm{x}\in\mathbb{R}^n$ pode ser expandido em nossa base ortonormal da seguinte forma:
+
+\begin{equation}
+	\bm{x} = \sum_{j=1}^n(\bm{x}^T\bm{w}_j)\bm{w}_j = \sum_{j=1}^nc_j\bm{w}_j,
+\end{equation}
+em que $\bm{c}\in\mathbb{R}^n$ corresponde ao vetor de coeficientes de expansão.
+
+\begin{minipage}{0.42\textwidth}
+	\includegraphics[scale=0.12]{./figs/PCA_Fig7.png}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.57\textwidth}
+\justifying Note que o termo $\bm{x}^T\bm{w}_j$ corresponde à projeção de $\bm{x}$ no vetor de base $\bm{w}_j$.
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+Temos que o vetor reduzido para o novo espaço pode ser calculado da seguinte forma:
+
+\begin{equation}
+	\hat{\bm{x}} = T\bm{x}\implies\hat{\bm{x}}^T = \bm{x}^TT^T = \sum_{j=1}^nc_j\bm{w}_j^TT^T.
+\end{equation}
+Note que a propriedade de ortonormalidade (bases ortonormais) nos diz que:
+
+\begin{equation}
+	\bm{w}_i^T\bm{w}_j = \begin{cases}
+		1 & \text{se $i=j$}\\
+		0 & \text{caso contrário.}
+	\end{cases}
+\end{equation}
+Assim, podemos reescrever a Equação 10 conforme segue:
+
+\begin{equation}
+	\hat{\bm{x}} = \sum_{j=1}^nc_j\bm{w}_j^TT^T = \sum_{j=1}^nc_j\bm{w}_j^T[\bm{w}_1,\bm{w}_2,\ldots,\bm{w}_n] = [c_1,c_2,\ldots,c_n].
+\end{equation}
+}
+
+\Sli{
+\justifying Assim, queremos encontrar uma transformação $T$ (conjunto de componentes) que \textbf{maximize} a variância retida nos dados, ou seja, queremos maximizar a seguinte função:
+
+\begin{equation}
+	L(T) = E\left[\norm{\hat{\bm{x}}^2}\right] = \left[\hat{\bm{x}}^T\hat{\bm{x}}\right]=\sum_{j=1}^dE[c_j^2],
+\end{equation}
+lembrando que $\norm{\hat{\bm{x}}^2}$ corresponde à norma ao quadrado de $\bm{\hat{x}}$, ou seja, queremos obter novas componentes cujas normas (distâncias a partir da origem) sejam maximizadas, ou seja, estejam mais ``espalhadas". Note que $\left[\hat{\bm{x}}^T\hat{\bm{x}}\right] = E\left[\hat{x}_1^2\right] + E\left[\hat{x}_2^2\right]+\ldots+E\left[\hat{x}_d^2\right]$, ou seja, a soma das variâncias em cada eixo coordenado da nova representação.
+}
+
+\Sli{
+\justifying Da Equação 9, temos que $c_j = \bm{x}^T\bm{w}_j$. Assim, substuindo-se $c_j$ na Equação 13, temos que:
+
+\begin{align}\nonumber
+	L(T) &= \sum_{i=1}^dE[c_j^2] = \sum_{i=1}^dE[(\bm{x}^T\bm{w}_j)^2]\\
+		&= \sum_{i=1}^dE[\bm{w}_i^T\bm{x}\bm{x}^T\bm{w}_i] = \sum_{i=1}^d\bm{w}_i^TE[\bm{x}\bm{x}^T]\bm{w}_i\\\nonumber
+		&= \sum_{i=1}^d\bm{w}_i^T\Sigma_{\bm{x}}\bm{w}_i,
+\end{align}
+em que $\Sigma_{\bm{x}}$ corresponde à matrix de covariância dos dados observados, ou seja, do vetor de entrada $\bm{x}$. Ademais, temos que a Equação 14 está sujeita à restrição $\norm{\bm{w}_i}^2 = 1$.
+}
+
+\Sli{
+\justifying Desta forma, o problema de otimização consiste em: 
+
+\begin{equation}
+	\bm{w}^\ast = \argmax_{\bm{w}}\sum_{i=1}^d\bm{w}_i^T\Sigma_{\bm{x}}\bm{w}_i,
+\end{equation}
+sujeito à $\norm{\bm{w}_i}^2 = 1$, $\forall i = 1,2\ldots,d$. Desta forma, nosso problema consiste em encontrar as $d$ direções ortogonais $\bm{w}_i$ que maximizam o somatório acima. Note que o somatório contém a matriz de covariância dos dados, ou seja, queremos maximizar a sua variância nessas direções ortogonais.\newline
+
+\justifying Temos, então, um problema de otimização com restrições de desigualdade, ou seja, precisamos fazer uso da técnica de Multiplicadores de Lagrange.
+}
+
+\Sli{
+\justifying Escrevendo a Equação 14 de acordo com os Multiplicadores de Lagrange, temos que:
+
+\begin{equation}
+	L(T,\bm{\alpha}) = \sum_{i=1}^d\bm{w}_i^T\Sigma_{\bm{x}}\bm{w}_i-\sum_{i=1}^d\alpha_i(\underbrace{\bm{w}_i^T\bm{w}_i-1}_{\norm{\bm{w}}^2=1}).
+\end{equation}
+Como queremos maximizar a equação acima visando cada $\bm{w}_i$, basta, então, calcularmos a derivada de $L(T,\bm{\alpha})$ em relação à $\bm{w}_i$ e igualarmos à 0, ou seja:
+
+\begin{equation}
+\frac{\partial L(T,\bm{\alpha})}{\partial \bm{w}_i} = \bm{\Sigma_{\bm{x}}}\bm{w}_i-\alpha_i\bm{w}_i = 0	\implies\bm{\Sigma_{\bm{x}}}\bm{w}_i = \alpha_i\bm{w}_i.
+\end{equation}
+\justifying O resultado da equação acima nos leva à formulação do problema de encontrar os autovalores e autovetores. \textbf{Assim, as direções $\bm{w}_i$ são os autovetores da matriz de covariância dos dados de entrada.}
+}
+
+\Sli{
+\justifying Podemos reescrever a Equação 15 da seguinte forma:
+
+\begin{align}\nonumber
+	\bm{w}^\ast &= \argmax_{\bm{w}}\sum_{i=1}^d\bm{w}_i^T\Sigma_{\bm{x}}\bm{w}_i = \argmax_{\bm{w}}\sum_{i=1}^d\bm{w}_i^T\alpha_i\bm{w}_i\\
+	&= \argmax_{\bm{w}}\sum_{i=1}^d\alpha_i\cancelto{1}{\norm{\bm{w}_i}^2} = \argmax_{\bm{w}}\sum_{i=1}^d\alpha_i.\\\nonumber
+\end{align}
+A equação acima nos diz que devemos maximizar o somatório dos $d$ autovalores. \underline{Isto define o} \underline{nosso problema, ou seja, encontrar as $d$ direções que maximizam a variância dos dados!}
+}
+
 \end{document}
