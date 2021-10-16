@@ -570,8 +570,68 @@ Um outro ponto interessante é que os autovalores $\lambda_1$ e $\lambda_2$ são
 Após aplicarmos operações distributivas e rearranjando os temos, temos que:
 
 \begin{equation}
-	L(T) = E\left[\norm{\bm{x}}^2\right]-\sum_{j=1}^dE\left[(\bm{w}_j^T\bm{x})^2\right]
+	L(T) = E\left[\norm{\bm{x}}^2\right]-\sum_{j=1}^dE\left[(\bm{w}_j^T\bm{x})^2\right].
 \end{equation}	
+Note que o primeiro termo não depende de $\bm{w}_j$ (que é o queremos encontrar), sendo uma constante. Desta forma, para minimizar o erro quadrático médio, precisamos \textbf{maximizar} o segundo termo, pois ele é negativo. Este termo nada mais é do que a variância retida em cada novo eixo coordenado da base $T$.
+}
+
+\Sli{
+\justifying Assim, podemos reescrever a Equação 26 como segue:
+
+\begin{align}\nonumber
+	L(T) &= E\left[\norm{\bm{x}}^2\right]-\sum_{j=1}^dE\left[(\bm{w}_j^T\bm{x})^2\right]\\\nonumber
+	&= E\left[\norm{\bm{x}}^2\right]-\sum_{j=1}^dE\left[(\bm{w}_j^T\bm{x}\bm{x}^T\bm{w}_j)\right]\\
+	&= E\left[\norm{\bm{x}}^2\right]-\sum_{j=1}^d\bm{w}_j^TE\left[\bm{x}\bm{x}^T\right]\bm{w}_j\\
+	&= E\left[\norm{\bm{x}}^2\right]-\sum_{j=1}^d\bm{w}_j^T\Sigma_{\bm{x}}\bm{w}_j\nonumber
+\end{align}	
+}
+
+\Sli{
+\justifying A equação anterior nos remete à mesma forma quadrática da formulação do PCA com a maximização das variâncias. \textbf{Assim sendo, para minimizarmos o erro quadrático médio, basta maximizarmos o espalhamento (variâncias) novamente!} Como fizemos anteriormente, basta derivarmos a função de custo dada pela Equação 27 com relação à $\bm{w}_j$, $\forall j = 1,2,\ldots,d$ e igualarmos à $0$. Chegaremos no mesmo caso anterior, ou seja, a solução é dada na forma de uma equação de autovalores e autovetores, isto é, $\Sigma_{\bm{x}}\bm{w}_j = \lambda_j\bm{w}_j$. Isto significa que, voltando à Equação 27, temos a seguinte equivalência:
+
+\begin{align}\nonumber
+	L(T) &= E\left[\norm{\bm{x}}^2\right]-\sum_{j=1}^d\bm{w}_j^T\Sigma_{\bm{x}}\bm{w}_j\\
+	&= E\left[\norm{\bm{x}}^2\right]-\sum_{j=1}^d\bm{w}_j^T\lambda_j\bm{w}_j = E\left[\norm{\bm{x}}^2\right]-\sum_{j=1}^d\lambda_j.
+\end{align}
+O último termo é simplicado por conta das propriedade de ortonormalidade.
+}
+
+\Sli{
+\justifying Algumas limitações do PCA:
+
+\begin{itemize}
+	\item PCA foi projeto para \textbf{compactação} de dados, e não classificação. Caso a gente queira compactar os dados, PCA é a primeira escolha pois ele é ótimo neste sentido. No entanto, ele não é supervisionado.
+\end{itemize}
+
+\begin{minipage}{0.42\textwidth}
+\includegraphics[scale=0.16]{./figs/PCA_Fig9.png}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.57\textwidth}
+\justifying Podemos observar que, nesta situação, PCA vai projetar as amostras na direção de maior variância, ou seja, $u_1$. No entanto, as amostras das classes diferentes ficarão todas sobrepostas.
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+\justifying No entanto, caso projetássemos as amostras na direção $u_2$ (melhor espalhamento), elas estariam melhor separadas. Esta é, então, uma limitação da técnica PCA.
+
+\begin{center}
+\includegraphics[scale=0.16]{./figs/PCA_Fig10.png}
+\end{center}
+}
+
+\Sli{
+Vejamos, então, o algoritmo do PCA.
+
+\begin{enumerate}
+	\item Carregar a base de dados ${\cal X} = \{\bm{x}_1,\bm{x}_2,\ldots,\bm{x}_m\}$, tal que $\bm{x}_i\in\mathbb{R}^n$.
+	\item Calcule o vetor média global $\bm{\mu}_{\bm{x}}\in\mathbb{R}^n$ e a matriz de covariância $\Sigma_{\bm{x}}\in\mathbb{R}^{n\times n}$.
+	\item Calcule os autovetores e autovalores de $\Sigma_{\bm{x}}$.
+	\item Selecione os $d$ autovetores associados aos $d$ maiores autovalores da matriz de covariância, denotados por $[\bm{w}_1,\bm{w}_2,\ldots,\bm{w}_d]$.
+	\item Defina a matriz de transformação $\bm{W}_{PCA}\in\mathbb{R}^{n\times d}$.
+	\item Projetar dados na nova base $\hat{\bm{x}_i} = \bm{W}^T_{PCA}\bm{x}_i$, $\forall i=1,2,\ldots,m$.
+\end{enumerate}
 }
 
 \end{document}
