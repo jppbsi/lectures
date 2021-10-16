@@ -1,0 +1,7 @@
+*.aux
+*.nav
+*.log
+*.out
+*.snm
+*.toc
+*eps-converted-to*
