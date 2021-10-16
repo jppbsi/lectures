@@ -497,4 +497,81 @@ Como queremos maximizar a equação acima visando cada $\bm{w}_i$, basta, então
 A equação acima nos diz que devemos maximizar o somatório dos $d$ autovalores. \underline{Isto define o} \underline{nosso problema, ou seja, encontrar as $d$ direções que maximizam a variância dos dados!}
 }
 
+\Sli{
+\justifying Agora, veremos por que PCA decorrelaciona os dados, ou seja, a matriz de covariância do vetor transformado $\hat{\bm{x}}$ é uma matriz diagonal. Suponha a seguinte transformação \textbf{linear} abaixo:
+
+\begin{equation}
+	\hat{\bm{x}} = \bm{A}\bm{x}.
+\end{equation}
+Existe um teorema que diz a matriz de covariância de $\hat{\bm{x}}$ pode ser obtida da seguinte forma:
+
+\begin{equation}
+	\Sigma_{\hat{\bm{x}}} = \bm{A}^T\Sigma_{\bm{x}}\bm{A}.
+\end{equation}
+Ademais, temos que toda matriz simétrica e positivasemi definida possui uma decomposição $\bm{A} = \bm{Q}\bm{\Lambda}\bm{Q}^T$, em que $\bm{Q}$ é a matriz coluna dos autovetores e $\bm{\Lambda}$ é a matriz diagonal dos seus autovalores (\textbf{decomposição espectral}, como vimos anteriormente). \textbf{Sabemos que as matrizes de covariância são positivas e semidefinidas!}
+}
+
+\Sli{
+\justifying Desta forma, podemos reescrever a Equação 20 da seguinte forma:
+
+\begin{equation}
+	\Sigma_{\hat{\bm{x}}} = \bm{A}^T\Sigma_{\bm{x}}\bm{A} = \bm{A}^T\underbrace{\bm{Q}\bm{\Lambda}\bm{Q}^T}_{\Sigma_{\bm{x}}}\bm{A}.
+\end{equation}
+Note que a matriz $\bm{A}$ na Equação 19, caso consideremos essa transformação linear sendo dada pelo PCA, acaba sendo a própria matriz de autovetores, ou seja, $\bm{A} = \bm{Q}$. Assim, podemos reescrever a Equação 21 como segue:
+
+\begin{equation}
+	\Sigma_{\hat{\bm{x}}} = \bm{A}^T\bm{Q}\bm{\Lambda}\bm{Q}^T\bm{A} = \bm{Q}^T\bm{Q}\bm{\Lambda}\bm{Q}^T\bm{Q}.
+\end{equation}
+}
+
+\Sli{
+Como a nossa base é \textbf{ortonormal}, temos que $\bm{Q}^T\bm{Q} = \bm{I}$. Assim, chegamos à uma formulação final para $\Sigma_{\hat{\bm{x}}}$:
+
+\begin{equation}
+	\Sigma_{\hat{\bm{x}}} = \bm{\Lambda} = \begin{bmatrix}
+		\lambda_1 & 0 & \ldots & 0\\
+		0 & \lambda_2 & \ldots & 0\\
+		0 & 0 & \ldots & 0\\
+		0 & 0 & \ldots & \lambda_d\\
+	\end{bmatrix},
+\end{equation}
+que é uma \textbf{matriz diagonal}, ou seja os dados estão decorrelacionados! Assim, após a transformação PCA, dizemos que não há correlação entre os atributos selecionados.
+}
+
+\Sli{
+Vejamos, agora, uma interpretação geométrica do PCA.
+
+\begin{minipage}{0.54\textwidth}
+\includegraphics[scale=0.23]{./figs/PCA_Fig8.png}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.47\textwidth}
+\justifying Neste caso, temos que os eixos coordenados na cor preta representam o espaço original, e os eixos verdes representam o espaço transformado via PCA. Note que os novos eixos são \textbf{ortogonais} entre si. O vetor $\bm{x}$ acaba sendo projetado no eixo $u_2$, pois a variância nele é maior do que em $u_2$.
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+Um outro ponto interessante é que os autovalores $\lambda_1$ e $\lambda_2$ são, na verdade, as \textbf{variâncias dos novos eixos}, ou seja, eles codificam o quanto alongada está a elipse.
+}
+
+\SliT{Análise de Componentes Principais pela Minimização do Erro Quadrático Médio}{
+
+\justifying Um segundo critério para formularmos o problema de otimização do PCA é pelo erro quadrático médio. Desta forma, o PCA é ótimo em dois sentidos, isto é, ele \textbf{maximiza} o espalhamento dos dados e também \textbf{minimiza} o erro quadrático médio do vetor original para o vetor reduzido. Assim, podemos reformar a função a ser otimizada para:
+
+\begin{equation}
+	L(T) = E\left[\norm{\bm{x}-\hat{\bm{x}}}^2\right] = E\left[\norm{\bm{x}-\sum_{j=1}^d(\bm{w}^T_j\bm{x})\bm{w}_j}^2\right].
+\end{equation}
+}
+
+\Sli{
+\justifying Aplicando a definição de norma ao quadrado, temos que:
+
+\begin{equation}
+	L(T) = E\left[\norm{\bm{x}-\hat{\bm{x}}}^2\right] = E\left[\left(\bm{x}-\sum_{j=1}^d(\bm{w}^T_j\bm{x})\bm{w}_j\right)\left(\bm{x}-\sum_{j=1}^d(\bm{w}^T_j\bm{x})\bm{w}_j\right)\right].
+\end{equation}
+Após aplicarmos operações distributivas e rearranjando os temos, temos que:
+
+\begin{equation}
+	L(T) = E\left[\norm{\bm{x}}^2\right]-\sum_{j=1}^dE\left[(\bm{w}_j^T\bm{x})^2\right]
+\end{equation}	
+}
+
 \end{document}
