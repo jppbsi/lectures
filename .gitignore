@@ -4,4 +4,7 @@
 *.out
 *.snm
 *.toc
+*.dvi
 *eps-converted-to*
+.DS_Store
+.texpadtmp
