@@ -79,8 +79,31 @@
 
 \SliT{Introdução}{
 
-\justifying Técnicas de redução de dimensionalidade/transformação do espaço de características visam obter versões mais \textbf{compactas}/\textbf{representativas} de nossos dados. Dado um conjunto de dados ${\cal X}=\{(\bm{x}_1,y_1),(\bm{x}_2,y_2),\ldots,(\bm{x}_z,y_z)\}$ em que $\bm{x}_i\in\mathbb{R}^n$ e $y_i\in\mathbb{N}$, a ideia consiste em obter um novo conjunto $\hat{{\cal X}}=\{(\hat{\bm{x}}_1,y_1),(\hat{\bm{x}}_2,y_2),\ldots,(\hat{\bm{x}}_z,y_z)\}$, em que $\hat{\bm{x}}_i\in\mathbb{R}^d$ e $d<n$.
+\justifying \emph{Kernel PCA} (KPCA) é uma técnica que busca generalizar PCA visando realizar \textbf{redução não linear de dimensionalidade}. Lembrando que PCA assume que os dados estão em um espaço Euclidiano, ou seja, linear. Na hipótese que os dados estão em um espaço não linear, PCA não consegue garantir a sua otimalidade.\newline
 
+\justifying Seja, então, um conjunto de dados ${\cal X}=\{\bm{x}_1,\bm{x}_2,\ldots,\bm{x}_m\}$ tal que $\bm{x}_i\in\mathbb{R}^n$ representa uma amostra no espaço de características original. A ideia do KPCA é fazer uso de uma função de mapeamento não linear, também conhecida por \emph{kernel}, $\phi(\bm{x})\in\mathbb{R}^{n^{\prime}}$, tal que $n^\prime>n$, visando mapear os dados para um espaço de maior dimensão. Geralmente, esses mapeamentos são custosos pois envolvem a projeção das amostras nestes espaços com maior dimensão. No entanto, podemos contornar isso com o \emph{kernel trick}, em que podemos \textbf{calcular o produto interno} no espaço de alta dimensão \textbf{sem a necessidade} de projeção dos dados.
+}
+
+\Sli{
+\justifying Desta forma, KPCA realiza um aumento temporário da dimensionalidade do espaço para depois realizar a sua redução. \textbf{A ideia é incorporar não linearidades durante o processo de redução de dimensionalidade.}\newline
+
+\justifying A primeira hipótese do KPCA é assumir que a média amostral após o mapeamento para o espaço de maior dimensão vale zero, ou seja:
+
+\begin{equation}
+	\bm{\mu}^\prime = \frac{1}{m}\sum_{i=1}^m\phi(\bm{x}_i) = 0,
+\end{equation}
+em que $\bm{\mu}^\prime\in\mathbb{R}^{n^{\prime}}$. Neste caso, KPCA assume que a média amostral está situada na origem do espaço de dados.
+}
+
+\Sli{
+\justifying Já a matriz de covariância $\bm{\Sigma}\in\mathbb{R}^{n^\prime\times n^\prime}$ é dada por:
+
+\begin{equation}
+	\bm{\Sigma} = \frac{1}{m}\sum_{i=1}^m(\phi(\bm{x}_i)-\cancelto{0}{\bm{\mu}^\prime})(\phi(\bm{x}_i)-\cancelto{0}{\bm{\mu}^\prime})^T = \frac{1}{m}\sum_{i=1}^m\phi(\bm{x}_i)\phi(\bm{x}_i)^T.
+\end{equation}
+\justifying Temos que os autovetores $\bm{v}_k$ da matriz $\bm{\Sigma}$ são dados por:
+
+$\forall k = 1,2,\ldots,n^\prime$.
 }
 
 \end{document}
