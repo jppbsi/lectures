@@ -115,25 +115,43 @@
 
 \SliT{Autovalores e Autovetores: Uma Breve Introdução}{
 
-\justifying Seja $V$ um espaço vetorial com $n$ dimensões que contempla um produto interno. Então, temos que:
+\justifying Seja $V$ um espaço vetorial com $n$ dimensões que contempla um produto interno e dois vetores $\bm{u},\bm{v}\in V$. Supondo que $V$ seja um espaço Euclidiano, temos que seus vetores possuem uma \textbf{direção} e uma \textbf{magnitude}. O \textbf{produto interno} entre seus vetores pode ser calculado da seguinte forma:
 
 \begin{equation}
-	\langle \bm{u},\bm{v}\rangle = \bm{u}^T\bm{v} = \sum_{i=1}^nu_iv_i,
+	\langle \bm{u},\bm{v}\rangle = \bm{u}^T\bm{v} = \sum_{i=1}^nu_iv_i.
 \end{equation}
-e
+
+Uma outra possibilidade para calcular o produto interno entre dois vetores é dada como segue:
+
 \begin{equation}
-	\langle \bm{v},\bm{v}\rangle = \bm{v}^T\bm{v} = \sum_{i=1}^nv_i = \norm{v}.
+	\langle \bm{u},\bm{v}\rangle = \norm{\bm{u}}.\norm{\bm{v}}.\cos(\theta),
 \end{equation}
+em que $\theta$ corresponde ao ângulo entre os dois vetores e $\norm{\cdot}$ representa a magnitude do vetor.
 }
 
 \Sli{
-\justifying Geometricamente falando, como vimos anteriormente, o produto interno entre os vetores $\bm{u}$ e $\bm{v}$ é a \textbf{projeção} de $\bm{u}$ em $\bm{v}$.
+\justifying Esta formulação modela o produto interno entre os vetores $\bm{u}$ e $\bm{v}$ como sendo a \textbf{projeção} de $\bm{u}$ em $\bm{v}$.
 
 \begin{center}
 \includegraphics[scale=0.19]{./figs/PCA_Fig4.png}
 \end{center}
 
-A ideia é que neste espaço vetorial eu consiga definir \textbf{operadores lineares}, ou seja, funções (matrizes) $\bm{P}$ que mapeiam vetores de entrada $\bm{v}$ em vetores de saída $\mu{u}$, ou seja:
+Temos, também, que:
+
+\begin{equation}
+	\langle \bm{v},\bm{v}\rangle = \bm{v}^T\bm{v} = \sum_{i=1}^nv_i^2 = \norm{v}^2.
+\end{equation}
+}
+
+\Sli{
+\justifying Existem diferentes maneiras de calcular a norma (magnitude) de um vetor. A norma Euclidiana $\norm{\bm{v}}_2$ de um vetor, também chamada de norma $L_2$, é calculada da seguinte forma:
+
+\begin{equation}
+	\norm{\bm{v}}_2 = \sqrt{\sum_{i=1}^nv_i^2}.
+\end{equation}
+Usualmente, denotamos a norma Euclidiana por $\norm{\cdot}$.
+
+\justifying A ideia é que neste espaço vetorial eu consiga definir \textbf{operadores lineares}, ou seja, funções (matrizes) $\bm{P}$ que mapeiam vetores de entrada $\bm{v}$ em vetores de saída $\mu{u}$, ou seja:
 
 \begin{equation}
 	\bm{u} = \bm{P}\bm{v}.
@@ -165,11 +183,11 @@ Supondo um vetor $\bm{w}\in{S}$, temos que $\bm{w} = \bm{P}_S\bm{w}$, dado que $
 \null
 \par\xdef\tpd{\the\prevdepth}
 \end{minipage}
- Seja, agora, $S^\perp$ o subespaço ortogonal a $\bm{S}$, e $\bm{x}\in S^\perp$, ou seja, quando eu aplicar o operador $\bm{P}_S$ em algum elemento de $\bm{S}$, resulta no valor $0$ (origem). Então, temos que $\bm{P}_S\bm{x} = 0\bm{x}$, ou seja, todo vetor que pertence a $S^\perp$ é um autovetor de $\bm{P}_S$ com autovalor $\lambda=0$.
+ Seja, agora, $S^\perp$ o subespaço ortogonal a $\bm{S}$, e $\bm{x}\in S^\perp$, ou seja, quando eu aplicar o operador $\bm{P}_S$ em algum elemento de $\bm{S}^\perp$, resulta no valor $0$ (origem). Então, temos que $\bm{P}_S\bm{x} = 0\bm{x}$, ou seja, todo vetor que pertence a $S^\perp$ é um autovetor de $\bm{P}_S$ com autovalor $\lambda=0$.
 }
 
 \Sli{
-\justifying Podemos extrapolar esse arcabouço de autovetores e autovalores para matrizes. Por exemplo, como podemos calcular os autovalores e autovetores de uma matrix $\bm{A}$? Da Equação 4, temos que:
+\justifying Podemos extrapolar esse arcabouço de autovetores e autovalores para matrizes. Por exemplo, como podemos calcular os autovalores e autovetores de uma matrix $\bm{A}$? Da Equação 6, temos que:
 
 \begin{equation}\nonumber
 	\bm{A}\bm{v} = \lambda\bm{v}.
@@ -304,7 +322,7 @@ Desta forma, $\bm{v}^{(1)}$ é o autovetor associado ao autovalor $\lambda_1$.
 }
 
 \Sli{
-Agora, repetimos o processo para o autovalor $\lambda_2 = 0$:
+Agora, repetimos o processo para o autovalor $\lambda_2 = 2$:
 
 \begin{equation}\nonumber
 		\begin{bmatrix}
