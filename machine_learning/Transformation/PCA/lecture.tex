@@ -464,7 +464,7 @@ Assim, podemos reescrever a Equação 10 conforme segue:
 \justifying Assim, queremos encontrar uma transformação $T$ (conjunto de componentes) que \textbf{maximize} a variância retida nos dados, ou seja, queremos maximizar a seguinte função:
 
 \begin{equation}
-	L(T) = E\left[\norm{\hat{\bm{x}}^2}\right] = \left[\hat{\bm{x}}^T\hat{\bm{x}}\right]=\sum_{j=1}^dE[c_j^2],
+	L(T) = E\left[\norm{\hat{\bm{x}}}^2\right] = \left[\hat{\bm{x}}^T\hat{\bm{x}}\right]=\sum_{j=1}^dE[c_j^2],
 \end{equation}
 lembrando que $\norm{\hat{\bm{x}}^2}$ corresponde à norma ao quadrado de $\bm{\hat{x}}$, ou seja, queremos obter novas componentes cujas normas (distâncias a partir da origem) sejam maximizadas, ou seja, estejam mais ``espalhadas". Note que $\left[\hat{\bm{x}}^T\hat{\bm{x}}\right] = E\left[\hat{x}_1^2\right] + E\left[\hat{x}_2^2\right]+\ldots+E\left[\hat{x}_d^2\right]$, ou seja, a soma das variâncias em cada eixo coordenado da nova representação.
 }
@@ -473,11 +473,11 @@ lembrando que $\norm{\hat{\bm{x}}^2}$ corresponde à norma ao quadrado de $\bm{\
 \justifying Da Equação 9, temos que $c_j = \bm{x}^T\bm{w}_j$. Assim, substuindo-se $c_j$ na Equação 13, temos que:
 
 \begin{align}\nonumber
-	L(T) &= \sum_{i=1}^dE[c_j^2] = \sum_{i=1}^dE[(\bm{x}^T\bm{w}_j)^2]\\
+	L(T) &= \sum_{i=1}^dE[c_i^2] = \sum_{i=1}^dE[(\bm{x}^T\bm{w}_i)^2]\\
 		&= \sum_{i=1}^dE[\bm{w}_i^T\bm{x}\bm{x}^T\bm{w}_i] = \sum_{i=1}^d\bm{w}_i^TE[\bm{x}\bm{x}^T]\bm{w}_i\\\nonumber
 		&= \sum_{i=1}^d\bm{w}_i^T\Sigma_{\bm{x}}\bm{w}_i,
 \end{align}
-em que $\Sigma_{\bm{x}}$ corresponde à matrix de covariância dos dados observados, ou seja, do vetor de entrada $\bm{x}$. Ademais, temos que a Equação 14 está sujeita à restrição $\norm{\bm{w}_i}^2 = 1$.
+em que $\Sigma_{\bm{x}}$ corresponde à matrix de covariância dos dados observados, ou seja, do vetor de entrada $\bm{x}$. Ademais, temos que a Equação 16 está sujeita à restrição $\norm{\bm{w}_i}^2 = 1$.
 }
 
 \Sli{
@@ -492,7 +492,7 @@ sujeito à $\norm{\bm{w}_i}^2 = 1$, $\forall i = 1,2\ldots,d$. Desta forma, noss
 }
 
 \Sli{
-\justifying Escrevendo a Equação 14 de acordo com os Multiplicadores de Lagrange, temos que:
+\justifying Escrevendo a Equação 16 de acordo com os Multiplicadores de Lagrange, temos que:
 
 \begin{equation}
 	L(T,\bm{\alpha}) = \sum_{i=1}^d\bm{w}_i^T\Sigma_{\bm{x}}\bm{w}_i-\sum_{i=1}^d\alpha_i(\underbrace{\bm{w}_i^T\bm{w}_i-1}_{\norm{\bm{w}}^2=1}).
@@ -506,7 +506,7 @@ Como queremos maximizar a equação acima visando cada $\bm{w}_i$, basta, então
 }
 
 \Sli{
-\justifying Podemos reescrever a Equação 15 da seguinte forma:
+\justifying Podemos reescrever a Equação 17 da seguinte forma:
 
 \begin{align}\nonumber
 	\bm{w}^\ast &= \argmax_{\bm{w}}\sum_{i=1}^d\bm{w}_i^T\Sigma_{\bm{x}}\bm{w}_i = \argmax_{\bm{w}}\sum_{i=1}^d\bm{w}_i^T\alpha_i\bm{w}_i\\
@@ -526,16 +526,16 @@ Existe um teorema que diz a matriz de covariância de $\hat{\bm{x}}$ pode ser ob
 \begin{equation}
 	\Sigma_{\hat{\bm{x}}} = \bm{A}^T\Sigma_{\bm{x}}\bm{A}.
 \end{equation}
-Ademais, temos que toda matriz simétrica e positivasemi definida possui uma decomposição $\bm{A} = \bm{Q}\bm{\Lambda}\bm{Q}^T$, em que $\bm{Q}$ é a matriz coluna dos autovetores e $\bm{\Lambda}$ é a matriz diagonal dos seus autovalores (\textbf{decomposição espectral}, como vimos anteriormente). \textbf{Sabemos que as matrizes de covariância são positivas e semidefinidas!}
+Ademais, temos que toda matriz simétrica e positiva semidefinida possui uma decomposição $\bm{A} = \bm{Q}\bm{\Lambda}\bm{Q}^T$, em que $\bm{Q}$ é a matriz coluna dos autovetores e $\bm{\Lambda}$ é a matriz diagonal dos seus autovalores (\textbf{decomposição espectral}, como vimos anteriormente). \textbf{Sabemos que as matrizes de covariância são positivas e semidefinidas!}
 }
 
 \Sli{
-\justifying Desta forma, podemos reescrever a Equação 20 da seguinte forma:
+\justifying Desta forma, podemos reescrever a Equação 22 da seguinte forma:
 
 \begin{equation}
 	\Sigma_{\hat{\bm{x}}} = \bm{A}^T\Sigma_{\bm{x}}\bm{A} = \bm{A}^T\underbrace{\bm{Q}\bm{\Lambda}\bm{Q}^T}_{\Sigma_{\bm{x}}}\bm{A}.
 \end{equation}
-Note que a matriz $\bm{A}$ na Equação 19, caso consideremos essa transformação linear sendo dada pelo PCA, acaba sendo a própria matriz de autovetores, ou seja, $\bm{A} = \bm{Q}$. Assim, podemos reescrever a Equação 21 como segue:
+Note que a matriz $\bm{A}$ na Equação 21, caso consideremos essa transformação linear sendo dada pelo PCA, acaba sendo a própria matriz de autovetores, ou seja, $\bm{A} = \bm{Q}$. Assim, podemos reescrever a Equação 23 como segue:
 
 \begin{equation}
 	\Sigma_{\hat{\bm{x}}} = \bm{A}^T\bm{Q}\bm{\Lambda}\bm{Q}^T\bm{A} = \bm{Q}^T\bm{Q}\bm{\Lambda}\bm{Q}^T\bm{Q}.
@@ -594,7 +594,7 @@ Note que o primeiro termo não depende de $\bm{w}_j$ (que é o queremos encontra
 }
 
 \Sli{
-\justifying Assim, podemos reescrever a Equação 26 como segue:
+\justifying Assim, podemos reescrever a Equação 28 como segue:
 
 \begin{align}\nonumber
 	L(T) &= E\left[\norm{\bm{x}}^2\right]-\sum_{j=1}^dE\left[(\bm{w}_j^T\bm{x})^2\right]\\\nonumber
@@ -605,7 +605,7 @@ Note que o primeiro termo não depende de $\bm{w}_j$ (que é o queremos encontra
 }
 
 \Sli{
-\justifying A equação anterior nos remete à mesma forma quadrática da formulação do PCA com a maximização das variâncias. \textbf{Assim sendo, para minimizarmos o erro quadrático médio, basta maximizarmos o espalhamento (variâncias) novamente!} Como fizemos anteriormente, basta derivarmos a função de custo dada pela Equação 27 com relação à $\bm{w}_j$, $\forall j = 1,2,\ldots,d$ e igualarmos à $0$. Chegaremos no mesmo caso anterior, ou seja, a solução é dada na forma de uma equação de autovalores e autovetores, isto é, $\Sigma_{\bm{x}}\bm{w}_j = \lambda_j\bm{w}_j$. Isto significa que, voltando à Equação 27, temos a seguinte equivalência:
+\justifying A equação anterior nos remete à mesma forma quadrática da formulação do PCA com a maximização das variâncias. \textbf{Assim sendo, para minimizarmos o erro quadrático médio, basta maximizarmos o espalhamento (variâncias) novamente!} Como fizemos anteriormente, basta derivarmos a função de custo dada pela Equação 29 com relação à $\bm{w}_j$, $\forall j = 1,2,\ldots,d$ e igualarmos à $0$. Chegaremos no mesmo caso anterior, ou seja, a solução é dada na forma de uma equação de autovalores e autovetores, isto é, $\Sigma_{\bm{x}}\bm{w}_j = \lambda_j\bm{w}_j$. Isto significa que, voltando à Equação 29, temos a seguinte equivalência:
 
 \begin{align}\nonumber
 	L(T) &= E\left[\norm{\bm{x}}^2\right]-\sum_{j=1}^d\bm{w}_j^T\Sigma_{\bm{x}}\bm{w}_j\\
