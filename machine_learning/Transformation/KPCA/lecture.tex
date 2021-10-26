@@ -1,5 +1,5 @@
 %Fiquemos com Deus e Nossa Senhora!
-%Sao Jose de Cupertino rogai por nos!!
+%Sao Jose de Cupertino rogai por nos que recorremos a vos!!!
 % ### Uses XeLaTeX ### %
 % ### Needs beamer-master ### %
 \documentclass[aspectratio=169]{beamer} %. Aspect Ratio 16:9
@@ -103,7 +103,92 @@ em que $\bm{\mu}^\prime\in\mathbb{R}^{n^{\prime}}$. Neste caso, KPCA assume que 
 \end{equation}
 \justifying Temos que os autovetores $\bm{v}_k$ da matriz $\bm{\Sigma}$ são dados por:
 
-$\forall k = 1,2,\ldots,n^\prime$.
+\begin{equation}
+	\bm{\Sigma}\bm{v}_k = \lambda\bm{v}_k,\ \ \forall k = 1,2,\ldots,n^\prime.
+\end{equation}
+}
+
+\Sli{
+\justifying Existe um teorema bastante importante que nos diz que os autovetores de $\bm{\Sigma}$ podem ser escritos como uma combinação linear das características, ou seja:
+
+\begin{equation}
+	\bm{v}_k = \sum_{i=1}^{m}\alpha_{ki}\phi(\bm{x}_i).
+\end{equation}
+Assim sendo, para calcularmos os autovetores da matriz de covariância $\bm{\Sigma}$, basta sabermos os vetores $\bm{\alpha}_k$. Substituindo-se a Equação 2 na Equação 3, temos que:
+
+\begin{equation}
+	\bm{\Sigma}\bm{v}_k = \underbrace{\frac{1}{m}\sum_{i=1}^m\phi(\bm{x}_i)\phi(\bm{x}_i)^T}_{\bm{\Sigma}}\bm{v}_k = \lambda\bm{v}_k. 
+\end{equation}
+}
+
+\Sli{
+\justifying A Equação 5 implica em:
+
+\begin{equation}
+	\bm{v}_k = \frac{1}{m\lambda}\sum_{i=1}^m\phi(\bm{x}_i)\phi(\bm{x}_i)^T\bm{v}_k = \frac{1}{m\lambda}\sum_{i=1}^m[\phi(\bm{x}_i)^T\bm{v}_k]\phi(\bm{x}_i) = \sum_{i=1}^{m}\alpha_{ki}\phi(\bm{x}_i),
+\end{equation}
+em que $\alpha_{ki} = \frac{1}{m\lambda}\phi(\bm{x}_i)^T\bm{v}_k$. Agora, substituindo-se a Equação 6 na Equação 5, temos que:
+
+\begin{equation}
+	\frac{1}{m}\sum_{i=1}^m\phi(\bm{x}_i)\phi(\bm{x}_i)^T\left(\sum_{j=1}^{m}\alpha_{ki}\phi(\bm{x}_i)\right) = \lambda\sum_{j=1}^{m}\alpha_{kj}\phi(\bm{x}_j).
+\end{equation}
+}
+
+\Sli{
+\justifying Reescrevendo a Equação 7, temos que:
+
+\begin{equation}
+	\frac{1}{m}\sum_{i=1}^m\phi(\bm{x}_i)\left(\sum_{j=1}^{m}\alpha_{kj}\phi(\bm{x}_i)^T\phi(\bm{x}_j)\right) = \lambda\sum_{j=1}^{m}\alpha_{kj}\phi(\bm{x}_j).
+\end{equation}
+Fazendo uso do \emph{kernel trick}, ou seja, $K(\bm{x}_i,\bm{x}_j)=\phi(\bm{x}_i)^T\phi(\bm{x}_j)$ temos que:
+
+\begin{equation}
+	\frac{1}{m}\sum_{i=1}^m\phi(\bm{x}_i)\left(\sum_{j=1}^{m}\alpha_{kj}K(\bm{x}_i,\bm{x}_j)\right) = \lambda\sum_{j=1}^{m}\alpha_{kj}\phi(\bm{x}_j).
+\end{equation}
+}
+
+\Sli{
+\justifying Multiplicando ambos lados da Equação 9 por $\phi(\bm{x}_l)^T$, temos que:
+
+\begin{equation}
+	\frac{1}{m}\sum_{i=1}^m\phi(\bm{x}_l)^T\phi(\bm{x}_i)\left(\sum_{j=1}^{m}\alpha_{kj}K(\bm{x}_i,\bm{x}_j)\right) = \lambda\sum_{j=1}^{m}\alpha_{kj}\phi(\bm{x}_l)^T\phi(\bm{x}_j).
+\end{equation}
+Usando novamente o \emph{kernel trick}, temos que:
+
+\begin{equation}
+	\frac{1}{m}\sum_{i=1}^mK(\bm{x}_l,\bm{x}_i)\left(\sum_{j=1}^{m}\alpha_{kj}K(\bm{x}_i,\bm{x}_j)\right) = \lambda\sum_{j=1}^{m}\alpha_{kj}K(\bm{x}_l,\bm{x}_i).
+\end{equation}
+Temos que nossa formulação está, agora, escrita em função da matriz de \emph{kernel}.
+}
+
+\Sli{
+\justifying Podemos expressar a Equação 11 em sua notação matriz-vetor, como segue:
+
+\begin{equation}
+	\bm{K}^2\bm{\alpha}_k = (\lambda n)\bm{K}\bm{\alpha}_k.
+\end{equation}
+Multiplicando-se ambos lados por $\bm{K}^{-1}$, temos que:
+
+\begin{equation}
+	\bm{K}\bm{\alpha}_k = (\lambda n)\bm{\alpha}_k.
+\end{equation}
+Quem são os $\bm{\alpha}_k$? São os \textbf{autovetores} da matriz de \emph{kernel}!
+}
+
+\Sli{
+\justifying Para uma dada amostra $\bm{x}$, calculamos a sua projeção na $k$-ésima componente da seguinte forma:
+
+\begin{equation}
+	\hat{\bm{x}} = \phi(\bm{x})^T\bm{v}_k = \underbrace{\sum_{i=1}^n\alpha_{ki}\phi(\bm{x}_i)}_{\bm{v}_k}\phi(\bm{x})^T = \sum_{i=1}^n\alpha_{ki}K(\bm{x},\bm{x}_i).
+\end{equation}
+Basicamente, a projeção de uma amostra $\bm{x}$ na $k$-ésima componente resume-se a realizar o seu mapeamento para um espaço de maior dimensão com $\phi(\bm{x})$ e depois projetar em $\bm{v}_k$.
+
+%\justifying Sabendo que a norma dos autovetores é igual à 1, ou seja, $\bm{v}^T_k\bm{v}_k = 1$, da Equação 4 temos que:
+
+%\begin{equation}
+%	\sum_{i=1}^{m}\alpha_{ki}\phi(\bm{x}_i)^T\sum_{i=1}^{m}\alpha_{ki}\phi(\bm{x}_i) = \sum_{i=1}^n\sum_{j=1}^n\alpha_{ki}\alpha_{kj}\phi(\bm{x}_i)^T\phi(\bm{x}_j) = 1\implies \bm{\alpha}^T_k\bm{K}\bm{\alpha}_k = 1.
+%\end{equation}
+
 }
 
 \end{document}
