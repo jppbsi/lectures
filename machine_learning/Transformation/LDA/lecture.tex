@@ -172,12 +172,12 @@ e
 \justifying Temos, então, que maximizar o Critério de Fisher, dado por:
 
 \begin{equation}
-	J(\bm{w}) = \frac{(\hat{\mu}_1-\hat{\mu}_2)}{\hat{\bm{s}}_1^2+\hat{\bm{s}}_2^2}.
+	J(\bm{w}) = \frac{(\hat{\mu}_1-\hat{\mu}_2)^2}{\hat{\bm{s}}_1^2+\hat{\bm{s}}_2^2}.
 \end{equation}
 Desta forma, queremos encontrar o vetor $\bm{w}$ que maximiza o critério, acima, ou seja:
 
 \begin{equation}
-	w^\ast = \argmax_{\bm{w}}J(\bm{w}).
+	\bold{w}^\ast = \argmax_{\bm{w}}J(\bm{w}).
 \end{equation}
 No entanto, precisamos reescrever tanto o numerador quanto o denominador em termos de $\bm{w}$.
 }
@@ -195,7 +195,7 @@ e
 Seja $S_A = S_1+S_2$ a matriz de espalhamento \textbf{intraclasse}. Podemos reescrever a Equação 5 como segue:
 
 \begin{equation}
-	\hat{\bm{s}}_1^2 = \sum_{\hat{\bm{x}_i}\in\omega_1}(\hat{\bm{x}_i}-\hat{\bm{\mu}_1})^2 = \sum_{\hat{\bm{x}_i}\in\omega_1}(\bm{w}^T\bm{x}_i-\bm{w}^T\bm{\mu}_1)^2 = \sum_{\hat{\bm{x}_i}\in\omega_1}[\bm{w}^T(\bm{x}_i-\bm{\mu}_1)]^T[\bm{w}^T(\bm{x}_i-\bm{\mu}_1)].
+	\hat{\bm{s}}_1^2 = \sum_{\hat{\bm{x}_i}\in\omega_1}(\hat{\bm{x}_i}-\hat{\bm{\mu}_1})^2 = \sum_{\bm{x}_i\in\omega_1}(\bm{w}^T\bm{x}_i-\bm{w}^T\bm{\mu}_1)^2 = \sum_{\bm{x}_i\in\omega_1}[\bm{w}^T(\bm{x}_i-\bm{\mu}_1)]^T[\bm{w}^T(\bm{x}_i-\bm{\mu}_1)].
 \end{equation}
 }
 
@@ -203,10 +203,10 @@ Seja $S_A = S_1+S_2$ a matriz de espalhamento \textbf{intraclasse}. Podemos rees
 \justifying Rearranjando os termos, temos que:
 
 \begin{align}\nonumber
-	\hat{\bm{s}}_1^2 &= \sum_{\hat{\bm{x}_i}\in\omega_1}[\bm{w}^T(\bm{x}_i-\bm{\mu}_1)]^T[\bm{w}^T(\bm{x}_i-\bm{\mu}_1)]\\
-	&= \sum_{\hat{\bm{x}_i}\in\omega_1}[(\bm{x}_i-\bm{\mu}_1)^T\bm{w}]^T[(\bm{x}_i-\bm{\mu}_1)^T\bm{w}]\\\nonumber
-	&= \sum_{\hat{\bm{x}_i}\in\omega_1}\bm{w}^T(\bm{x}_i-\bm{\mu}_1)(\bm{x}_i-\bm{\mu}_1)^T\bm{w}\\\nonumber
-	&= \bm{w}^T\underbrace{\sum_{\hat{\bm{x}_i}\in\omega_1}(\bm{x}_i-\bm{\mu}_1)(\bm{x}_i-\bm{\mu}_1)^T}_{\bm{S}_1}\bm{w}\\\nonumber
+	\hat{\bm{s}}_1^2 &= \sum_{\bm{x}_i\in\omega_1}[\bm{w}^T(\bm{x}_i-\bm{\mu}_1)]^T[\bm{w}^T(\bm{x}_i-\bm{\mu}_1)]\\
+	&= \sum_{\bm{x}_i\in\omega_1}[(\bm{x}_i-\bm{\mu}_1)^T\bm{w}]^T[(\bm{x}_i-\bm{\mu}_1)^T\bm{w}]\\\nonumber
+	&= \sum_{\bm{x}_i\in\omega_1}\bm{w}^T(\bm{x}_i-\bm{\mu}_1)(\bm{x}_i-\bm{\mu}_1)^T\bm{w}\\\nonumber
+	&= \bm{w}^T\underbrace{\sum_{\bm{x}_i\in\omega_1}(\bm{x}_i-\bm{\mu}_1)(\bm{x}_i-\bm{\mu}_1)^T}_{\bm{S}_1}\bm{w}\\\nonumber
 	&= \bm{w}^T\bm{S}_1\bm{w}.
 	\end{align}
 }
@@ -221,7 +221,7 @@ Seja $S_A = S_1+S_2$ a matriz de espalhamento \textbf{intraclasse}. Podemos rees
 \justifying Substituindo-se as Equações 12 e 13 na Equação 7, temos que:
 
 \begin{equation}
-	J(\bm{w}) = \frac{\hat{\bm{\mu}}_1-\hat{\bm{\mu}}_2}{\hat{\bm{s}}_1^2-\hat{\bm{s}}_2^2} = \frac{\hat{\bm{\mu}}_1-\hat{\bm{\mu}}_2}{\bm{w}^T\bm{S}_1\bm{w}-\bm{w}^T\bm{S}_2\bm{w}} = \frac{\hat{\bm{\mu}}_1-\hat{\bm{\mu}}_2}{\bm{w}^T(\underbrace{\bm{S}_1+\bm{S}_2}_{\bm{S}_A})\bm{w}} = \frac{\hat{\bm{\mu}}_1-\hat{\bm{\mu}}_2}{\bm{w}^T\bm{S}_A\bm{w}},
+	J(\bm{w}) = \frac{(\hat{\bm{\mu}}_1-\hat{\bm{\mu}}_2)^2}{\hat{\bm{s}}_1^2-\hat{\bm{s}}_2^2} = \frac{(\hat{\bm{\mu}}_1-\hat{\bm{\mu}}_2)^2}{\bm{w}^T\bm{S}_1\bm{w}+\bm{w}^T\bm{S}_2\bm{w}} = \frac{(\hat{\bm{\mu}}_1-\hat{\bm{\mu}}_2)^2}{\bm{w}^T(\underbrace{\bm{S}_1+\bm{S}_2}_{\bm{S}_A})\bm{w}} = \frac{(\hat{\bm{\mu}}_1-\hat{\bm{\mu}}_2)^2}{\bm{w}^T\bm{S}_A\bm{w}},
 \end{equation}
 a qual é uma forma quadrática em $\bm{w}$.
 }
@@ -232,14 +232,14 @@ a qual é uma forma quadrática em $\bm{w}$.
 \begin{equation}
 	\bm{S}_B = (\bm{\mu}_1-\bm{\mu}_2)(\bm{\mu}_1-\bm{\mu}_2)^T,
 \end{equation}
-a qual mede a separação entre os vetores média antes da projeção. Note que o numerador da Equação 14 pode ser expressa como:
+a qual mede a separação entre os vetores média antes da projeção. Note que o numerador da Equação 14 pode ser expressado como:
 
 \begin{equation}
-	(\bm{\mu}_1-\bm{\mu}_2)^2 = (\bm{w}^T\bm{\mu}_1-\bm{w}^T\bm{\mu}_2)^2 = [\bm{w}^T(\bm{\mu}_1-\bm{\mu}_2)]^T[\bm{w}^T(\bm{\mu}_1-\bm{\mu}_2)].
+	(\hat{\bm{\mu}}_1-\hat{\bm{\mu}}_2)^2 = (\bm{w}^T\bm{\mu}_1-\bm{w}^T\bm{\mu}_2)^2 = [\bm{w}^T(\bm{\mu}_1-\bm{\mu}_2)]^T[\bm{w}^T(\bm{\mu}_1-\bm{\mu}_2)].
 \end{equation}
 Rearranjando os produtos internos, temos que:
 \begin{equation}
-	(\bm{\mu}_1-\bm{\mu}_2)^2 = [(\bm{\mu}_1-\bm{\mu}_2)\bm{w}^T]^T[(\bm{\mu}_1-\bm{\mu}_2)\bm{w}^T]=\bm{w}^T(\bm{\mu}_1-\bm{\mu}_2)(\bm{\mu}_1-\bm{\mu}_2)^T\bm{w} = \bm{w}^T\bm{S}_B\bm{w}.
+	(\hat{\bm{\mu}}_1-\hat{\bm{\mu}}_2)^2 = [(\bm{\mu}_1-\bm{\mu}_2)\bm{w}^T]^T[(\bm{\mu}_1-\bm{\mu}_2)\bm{w}^T]=\bm{w}^T(\bm{\mu}_1-\bm{\mu}_2)(\bm{\mu}_1-\bm{\mu}_2)^T\bm{w} = \bm{w}^T\bm{S}_B\bm{w}.
 \end{equation}
 }
 
@@ -260,7 +260,7 @@ que é, basicamente, a diferença entre as médias modulada pela matriz de espal
 
 \SliT{Análise Discriminante Múltipla}{
 
-\justifying Suponha, agora, que tenhamos um problema de classificação por múltiplas classes, isto é, ${\cal Y}=\{\omega_1,\omega_2,\ldots,\omega_c\}$. Neste caso, podemos reduzir a dimensionalidade do espaço original para, no máximo, $c-1$ classes. Temos que a operação de transformação é dada por:
+\justifying Suponha, agora, que tenhamos um problema de classificação por múltiplas classes, isto é, ${\cal Y}=\{\omega_1,\omega_2,\ldots,\omega_c\}$.  este caso, podemos reduzir a dimensionalidade do espaço original para, no máximo, $c-1$ classes, utilizando a Análise Discriminante Múltipla, do inglês \emph{Multiple Discriminant Analysis} (MDA). Temos que a operação de transformação é dada por:
 
 \begin{equation}
 	\hat{\bm{x}_i} = \bm{W}^T\bm{x}_i,
@@ -318,7 +318,7 @@ Para resolver o problema, basta selecionarmos, no máximo, $c-1$ autovetores de 
 }
 
 \Sli{
-\justifying Algumas limitações do LDA:
+\justifying Algumas limitações do LDA/MDA:
 
 \begin{itemize}
 	\item Não é interessante para problemas com poucas classes e muitas características.
