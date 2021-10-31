@@ -98,11 +98,11 @@ Note que o critério é o mesmo que LDA. O que muda, porém, é a maneira com a 
 \end{equation}
 Além disso, temos que:
 \begin{equation}
-	\bm{S}_A = \bm{S}_1+\bm{S}_2,
+	\bm{S}^\phi_A = \bm{S}^\phi_1+\bm{S}^\phi_2,
 \end{equation}
 em que
 \begin{equation}
-	\bm{S}_i = \sum_{\bm{x}_j\in\omega_1}(\phi(\bm{x}_j)-\bm{\mu}_i^\phi)(\phi(\bm{x}_j)-\bm{\mu}_i^\phi)^T,\ i\in\{1,2\}.
+	\bm{S}^\phi_i = \sum_{\bm{x}_j\in\omega_1}(\phi(\bm{x}_j)-\bm{\mu}_i^\phi)(\phi(\bm{x}_j)-\bm{\mu}_i^\phi)^T,\ i\in\{1,2\}.
 \end{equation}
 Temos que a média de cada classe é dada por:
 \begin{equation}
@@ -120,17 +120,86 @@ em que $m_i$ denota a quantidade de elementos do conjunto de treinamento ${\cal 
 }
 
 \Sli{
-\justifying Temos que a projeção de $\bm{\mu}^\phi_j$ na direção do vetor $\bm{w}$ é dada por:
+\justifying Temos que a projeção de $\bm{\mu}^\phi_1$ na direção do vetor $\bm{w}$ é dada por:
 
 \begin{align}\nonumber
-	\bm{w}^T\bm{\mu}^\phi_j &= \overbrace{\left(\sum_{i=1}^m\alpha_i\phi(\bm{x}_i)\right)^T}^{\bm{w}^T}\overbrace{\left(\frac{1}{m_j}\sum_{k=1}^{m_j}\phi(\bm{x}_k)\right)}^{\bm{\mu}^\phi_j}=\frac{1}{m_j}\sum_{i=1}^m\sum_{k=1}^{m_j}\alpha_i\overbrace{\phi(\bm{x}_i)^T\phi(\bm{x}_k)}^{\text{kernel}} \\
-	 &= \frac{1}{m_j}\sum_{i=1}^m\sum_{k=1}^{m_j}\alpha_i K(\bm{x}_i^T,\bm{x}_k),\ i\in\{1,2\}.
+	\bm{w}^T\bm{\mu}^\phi_1 &= \overbrace{\left(\sum_{i=1}^m\alpha_i\phi(\bm{x}_i)\right)^T}^{\bm{w}^T}\overbrace{\left(\frac{1}{m_1}\sum_{j=1}^{m_1}\phi(\bm{x}_j)\right)}^{\bm{\mu}^\phi_1}=\frac{1}{m_1}\sum_{i=1}^m\sum_{j=1}^{m_1}\alpha_i\overbrace{\phi(\bm{x}_i)^T\phi(\bm{x}_j)}^{\text{kernel}} \\
+	 &= \frac{1}{m_1}\sum_{i=1}^m\sum_{j=1}^{m_1}\alpha_i K(\bm{x}_i^T,\bm{x}_j).
 \end{align}
+}
+
+\Sli{
+\justifying De maneira análoga, temos que a projeção de $\bm{\mu}^\phi_2$ na direção do vetor $\bm{w}$ é dada por:
+
+\begin{align}\nonumber
+	\bm{w}^T\bm{\mu}^\phi_2 &= \overbrace{\left(\sum_{i=1}^m\alpha_i\phi(\bm{x}_i)\right)^T}^{\bm{w}^T}\overbrace{\left(\frac{1}{m_2}\sum_{j=1}^{m_2}\phi(\bm{x}_j)\right)}^{\bm{\mu}^\phi_2}=\frac{1}{m_1}\sum_{i=1}^m\sum_{j=1}^{m_2}\alpha_i\overbrace{\phi(\bm{x}_i)^T\phi(\bm{x}_j)}^{\text{kernel}} \\
+	 &= \frac{1}{m_2}\sum_{i=1}^m\sum_{j=1}^{m_2}\alpha_i K(\bm{x}_i^T,\bm{x}_j).
+\end{align}
+
 Note, então, que as projeções dependem da matriz de \emph{kernel} e que $(\bm{w}^T\bm{\mu}^\phi_j)\in\mathbb{R}$, $i\in\{1,2\}$.
 }
 
 \Sli{
-\justifying 
+\justifying Seja $\bm{k}^1\in\mathbb{R}^n$ tal que:
+
+\begin{equation}
+	\bm{k}^1_i = \frac{1}{m_1}\sum_{j=1}^{m_1}K(\bm{x}_i,\bm{x}_j),
+\end{equation}
+em que $\bm{x}_j\in\omega_1$ e $\bm{x}_i\in{\cal X}_1$. Basicamente, a equação acima calcula a média da $i$-ésima linha da matriz de \emph{kernel} da classe $1$. O mesmo vale para o cálculo de $\bm{k}^2\in\mathbb{R}^n$, ou seja:
+
+\begin{equation}
+	\bm{k}^2_i = \frac{1}{m_2}\sum_{j=1}^{m_2}K(\bm{x}_i,\bm{x}_j).
+\end{equation}
+}
+
+\Sli{
+\justifying Desta forma, podemos reescrever a Equação 7 da seguinte forma:
+
+\begin{align}\nonumber
+	\bm{w}^T\bm{\mu}^\phi_1 &= \frac{1}{m_1}\sum_{i=1}^m\sum_{j=1}^{m_1}\alpha_i K(\bm{x}_i^T,\bm{x}_j)\\\nonumber
+	&= \sum_{i=1}^m\frac{1}{m_1}\sum_{j=1}^{m_1}\alpha_i K(\bm{x}_i^T,\bm{x}_j)\\
+	&= \sum_{i=1}^m\alpha_i\underbrace{\frac{1}{m_1}\sum_{j=1}^{m_1}K(\bm{x}_i^T,\bm{x}_j)}_{\bm{k}^1_i}\\\nonumber
+	&= \sum_{i=1}^m\alpha_i\bm{k}^1_i = \bm{\alpha}\bm{k}^1,\nonumber
+\end{align}
+em que $\bm{\alpha}\in\mathbb{R}^n$.
+}
+
+\Sli{
+\justifying De modo análogo, podemos reescrever a Equação 8 da seguinte forma:
+
+\begin{align}\nonumber
+	\bm{w}^T\bm{\mu}^\phi_2 &= \frac{1}{m_2}\sum_{i=1}^m\sum_{j=1}^{m_2}\alpha_i K(\bm{x}_i^T,\bm{x}_j)\\\nonumber
+	&= \sum_{i=1}^m\frac{1}{m_2}\sum_{j=1}^{m_2}\alpha_i K(\bm{x}_i^T,\bm{x}_j)\\
+	&= \sum_{i=1}^m\alpha_i\underbrace{\frac{1}{m_2}\sum_{j=1}^{m_2}K(\bm{x}_i^T,\bm{x}_j)}_{\bm{k}^2_i}\\\nonumber
+	&= \sum_{i=1}^m\alpha_i\bm{k}^2_i = \bm{\alpha}\bm{k}^2.\nonumber
+\end{align}
+A ideia de toda essa manipulação é para reescrevermos a Equação 1 (Critério de Fisher).
+}
+
+\Sli{
+Desta fora, conseguimos reescrever o numerador da Equação 1 da seguinte forma:
+
+\begin{align}\nonumber
+	\bm{w}^T\bm{S}^\phi_B\bm{w} &= \bm{w}^T(\bm{\mu}_1^\phi-\bm{\mu}_2^\phi)(\bm{\mu}_1^\phi-\bm{\mu}_2^\phi)^T\bm{w}\\\nonumber
+	&= (\bm{w}^T\bm{\mu}_1^\phi-\bm{w}^T\bm{\mu}_2^\phi)({\bm{\mu}_1^\phi}^T\bm{w}-{\bm{\mu}_2^\phi}^T\bm{w})\\
+	&= (\bm{\alpha}^T\bm{k}^1-\bm{\alpha}^T\bm{k}^2)({\bm{k}^1}^T\bm{\alpha}-{\bm{k}^2}^T\bm{\alpha})\\\nonumber
+	&= \bm{\alpha}^T(\bm{k}^1-\bm{k}^2)(\bm{k}^1-\bm{k}^2)^T\bm{\alpha}\\
+	&= \bm{\alpha}^T\bm{k}^\ast\bm{\alpha}\nonumber,
+\end{align}
+em que $\bm{k}^\ast = (\bm{k}^1-\bm{k}^2)(\bm{k}^1-\bm{k}^2)^T$.
+}
+
+\Sli{
+\justifying Agora, reescreveremos o denominador da Equação 1, ou seja:
+
+\begin{align}\nonumber
+	\bm{w}^T\bm{S}^\phi_A\bm{w} &= \left(\sum_{i=1}^m\alpha_i\phi(\bm{x}_i)\right)^T\bm{S}^\phi_A\left(\sum_{l=1}^m\alpha_i\phi(\bm{x}_l)\right)\\
+	&= \left(\sum_{i=1}^m\alpha_i\phi(\bm{x}_i)\right)^T\underbrace{\left(\sum_{j=1}^2\sum_{k=1}^{m_j}(\phi(\bm{x}_k)-\bm{\mu_j}^\phi)(\phi(\bm{x}_k)-\bm{\mu_j}^\phi)^T\right)}_{\bm{S}^\phi_A = \bm{S}^\phi_1+\bm{S}^\phi_2}\left(\sum_{l=1}^m\alpha_i\phi(\bm{x}_l)\right).
+\end{align}
+}
+
+\Sli{
+\justifying Agrupando os somatórios, temos que:
 }
 
 \end{document}
