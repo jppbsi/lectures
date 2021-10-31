@@ -82,7 +82,7 @@
 
 \justifying A técnica de \emph{Kernel Fisher Discriminant Analysis} - (KFDA) é uma \textbf{generalização não linear} para LDA. Novamente, faremos uso dos \emph{kernels} para tornar LDA uma técnica de projeção não linear. Inicialmente, iremos abordar a versão para classificação com duas classes.\newline
 
-\justifying Seja, então, ${\cal X} = \{(\bm{x}_1,y_1),(\bm{x}_2,y_2),\ldots,(\bm{x}_m,y_m)\}$ um conjunto de dados tal que $\bm{x}_i\in\mathbb{R}^n$ e $\phi:\mathbb{R}^n\rightarrow\mathbb{R}^{n^\prime}$ uma função de mapeamento não linear tal que $n^\prime>n$. Ademais, temos que ${\cal Y}=\{\omega_1,\omega_2\}$ de tal forma que $y_i\in\mathbb{\cal Y}$, $i=1,2,\ldots,m$. No KFDA busca-se maximizar o seguinte critério:
+\justifying Seja, então, ${\cal X} = \{(\bm{x}_1,y_1),(\bm{x}_2,y_2),\ldots,(\bm{x}_z,y_z)\}$ um conjunto de dados tal que $\bm{x}_i\in\mathbb{R}^n$ e $\phi:\mathbb{R}^n\rightarrow\mathbb{R}^{n^\prime}$ uma função de mapeamento não linear tal que $n^\prime>n$. Ademais, temos que ${\cal Y}=\{\omega_1,\omega_2\}$ de tal forma que $y_i\in\mathbb{\cal Y}$, $i=1,2,\ldots,m$. No KFDA busca-se maximizar o seguinte critério:
 
 \begin{equation}
 	J(\bm{w}) = \frac{\bm{w}^T\bm{S}^\phi_B\bm{w}}{\bm{w}^T\bm{S}^\phi_A\bm{w}}.
@@ -108,7 +108,29 @@ Temos que a média de cada classe é dada por:
 \begin{equation}
 	\bm{\mu}_i^\phi = \frac{1}{m_i}\sum_{j=1}^{m_i}\phi(\bm{x}_j),\ i\in\{1,2\},
 \end{equation}
-em que $m_i$ denota a quantidade de elementos da classe $\omega_i$.
+em que $m_i$ denota a quantidade de elementos do conjunto de treinamento ${\cal X}_1\subset{\cal X}$ da classe $\omega_i$ tal que $|{\cal X}_1|=m=m_1+m_2$.
+}
+
+\Sli{
+\justifying Existe um teorema importante que diz que \textbf{qualquer} vetor solução $\bm{w}\in\mathbb{R}^{n^\prime}$ para o problema de maximizar a Equação 1 deve fazer parte do espaço gerado por todas as amostras do conjunto de treinamento. Assim, temos que $\bm{w}$ é uma combinação linear das amostras de treinamento, ou seja:
+
+\begin{equation}
+\bm{w} = \sum_{i=1}^m\alpha_i\phi(\bm{x}_i),\ \ \forall \bm{x}_i\in{\cal X}_1.	
+\end{equation}
+}
+
+\Sli{
+\justifying Temos que a projeção de $\bm{\mu}^\phi_j$ na direção do vetor $\bm{w}$ é dada por:
+
+\begin{align}\nonumber
+	\bm{w}^T\bm{\mu}^\phi_j &= \overbrace{\left(\sum_{i=1}^m\alpha_i\phi(\bm{x}_i)\right)^T}^{\bm{w}^T}\overbrace{\left(\frac{1}{m_j}\sum_{k=1}^{m_j}\phi(\bm{x}_k)\right)}^{\bm{\mu}^\phi_j}=\frac{1}{m_j}\sum_{i=1}^m\sum_{k=1}^{m_j}\alpha_i\overbrace{\phi(\bm{x}_i)^T\phi(\bm{x}_k)}^{\text{kernel}} \\
+	 &= \frac{1}{m_j}\sum_{i=1}^m\sum_{k=1}^{m_j}\alpha_i K(\bm{x}_i^T,\bm{x}_k),\ i\in\{1,2\}.
+\end{align}
+Note, então, que as projeções dependem da matriz de \emph{kernel} e que $(\bm{w}^T\bm{\mu}^\phi_j)\in\mathbb{R}$, $i\in\{1,2\}$.
+}
+
+\Sli{
+\justifying 
 }
 
 \end{document}
