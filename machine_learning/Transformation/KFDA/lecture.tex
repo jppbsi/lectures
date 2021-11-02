@@ -199,7 +199,44 @@ em que $\bm{k}^\ast = (\bm{k}^1-\bm{k}^2)(\bm{k}^1-\bm{k}^2)^T$.
 }
 
 \Sli{
-\justifying Agrupando os somatórios, temos que:
+\justifying Agrupando os somatórios e realizando algumas simplificações, temos que:
+
+\begin{equation}
+	\bm{w}^T\bm{S}^\phi_A\bm{w} = \bm{\alpha}^T\bm{N}\bm{\alpha},
+\end{equation}
+em que $\bm{N} = \bm{N}_1+\bm{N}_2 = \underbrace{\bm{K}_1(\bm{I}_1-\bm{1}_{m_1})\bm{K}_1^T}_{\bm{N}_1}+\underbrace{\bm{K}_2(\bm{I}_2-\bm{1}_{m_2})\bm{K}_2^T}_{\bm{N}_2}$. Neste caso, temos que $\bm{K}_1\in\mathbb{R}^{m\times m_1}$ corresponde à matriz de \emph{kernel} da classe $\omega_1$, $\bm{I}_1\in\mathbb{R}^{m_1\times m_1}$ denota a matriz identidade correspondente à classe $\omega_1$ e $\bm{1}_{m_1}$ representa a matriz com entradas $1/m_1$ também da classe $\omega_1$. De maneira análoga, podemos definir $\bm{K}_2\in\mathbb{R}^{m\times m_2}$, $\bm{I}_2\in\mathbb{R}^{m_1\times m_2}$ como sendo as matrizes de \emph{kernel}, identidade e com entradas $1/m_2$ da classe $\omega_2$, respectivamente.
+}
+
+\Sli{
+Desta forma, conseguimos reescrever a Equação 1 da seguinte forma:
+
+\begin{equation}
+	J(\bm{\alpha}) = \frac{\bm{\alpha}^T\bm{k}^\ast\bm{\alpha}}{\bm{\alpha}^T\bm{N}\bm{\alpha}}.
+\end{equation}
+A condição necessária para otimizarmos a equação acima é dada por:
+
+\begin{equation}
+	\frac{\partial J(\bm{\alpha})}{\partial \bm{\alpha}} = 0.
+\end{equation}
+A solução da Equação 17 é dada por:
+\begin{equation}
+	\frac{\partial J(\bm{\alpha})}{\partial \bm{\alpha}} \implies (\bm{N}^{-1}\bm{k}^\ast)\bm{\alpha} = \lambda\bm{\alpha}.
+\end{equation}
+Assim sendo, a solução é dada pelo autovetor $\bm{\alpha}$ associado ao maior autovalor da matriz $(\bm{N}^{-1}\bm{k}^\ast)$, que é baseada nas matrizes de \emph{kernel}.
+}
+
+\Sli{
+Agora, dada uma amostra de teste $\bm{x}\in{\cal X}_2$, como realizamos a sua projeção LDA? Basta, então, projetarmos essa amostra no vetor $\bm{w}$ encontrado pela função de otimização dada pela Equação 16:
+
+\begin{equation}
+	\hat{\bm{x}} = \phi(\bm{x})^T\bm{w}.
+\end{equation}
+No entanto, a Equação 16 é escrita em termos de $\bm{\alpha}$, o que nos remete à Equação 6, ou seja:
+
+\begin{equation}
+		\hat{\bm{x}} = \phi(\bm{x})^T\bm{w} = \phi(\bm{x})^T\sum_{i=1}^m\alpha_i\phi(\bm{x}) = \sum_{i=1}^m\alpha_i\phi(\bm{x})^T\phi(\bm{x}) = \sum_{i=1}^m\alpha_i K(\bm{x},\bm{x}_i).
+\end{equation}
+Assim sendo, uma amostra de teste pode ser projetada por meio de uma combinação linear das funções de \emph{kernel} das amostras do conjunto de treinamento.
 }
 
 \end{document}
