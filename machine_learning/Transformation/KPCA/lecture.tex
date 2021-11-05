@@ -97,15 +97,15 @@ em que $\bm{\mu}^\prime\in\mathbb{R}^{n^{\prime}}$. Neste caso, KPCA assume que 
 }
 
 \Sli{
-\justifying Já a matriz de covariância $\bm{\Sigma}\in\mathbb{R}^{n^\prime\times n^\prime}$ é dada por:
+\justifying Já a matriz de covariância $\bm{\Sigma}^\prime\in\mathbb{R}^{n^\prime\times n^\prime}$ é dada por:
 
 \begin{equation}
-	\bm{\Sigma} = \frac{1}{m}\sum_{i=1}^m(\phi(\bm{x}_i)-\cancelto{0}{\bm{\mu}^\prime})(\phi(\bm{x}_i)-\cancelto{0}{\bm{\mu}^\prime})^T = \frac{1}{m}\sum_{i=1}^m\phi(\bm{x}_i)\phi(\bm{x}_i)^T.
+	\bm{\Sigma}^\prime = \frac{1}{m}\sum_{i=1}^m(\phi(\bm{x}_i)-\cancelto{0}{\bm{\mu}^\prime})(\phi(\bm{x}_i)-\cancelto{0}{\bm{\mu}^\prime})^T = \frac{1}{m}\sum_{i=1}^m\phi(\bm{x}_i)\phi(\bm{x}_i)^T.
 \end{equation}
 \justifying Temos que os autovetores $\bm{v}_k$ da matriz $\bm{\Sigma}$ são dados por:
 
 \begin{equation}
-	\bm{\Sigma}\bm{v}_k = \lambda\bm{v}_k,\ \ \forall k = 1,2,\ldots,n^\prime.
+	\bm{\Sigma}^\prime\bm{v}_k = \lambda\bm{v}_k,\ \ \forall k = 1,2,\ldots,n^\prime.
 \end{equation}
 }
 
@@ -115,10 +115,10 @@ em que $\bm{\mu}^\prime\in\mathbb{R}^{n^{\prime}}$. Neste caso, KPCA assume que 
 \begin{equation}
 	\bm{v}_k = \sum_{i=1}^{m}\alpha_{ki}\phi(\bm{x}_i).
 \end{equation}
-Assim sendo, para calcularmos os autovetores da matriz de covariância $\bm{\Sigma}$, basta sabermos os vetores $\bm{\alpha}_k$. Substituindo-se a Equação 2 na Equação 3, temos que:
+Assim sendo, para calcularmos os autovetores da matriz de covariância $\bm{\Sigma}^\prime$, basta sabermos os vetores $\bm{\alpha}_k$. Substituindo-se a Equação 2 na Equação 3, temos que:
 
 \begin{equation}
-	\bm{\Sigma}\bm{v}_k = \underbrace{\frac{1}{m}\sum_{i=1}^m\phi(\bm{x}_i)\phi(\bm{x}_i)^T}_{\bm{\Sigma}}\bm{v}_k = \lambda\bm{v}_k. 
+	\bm{\Sigma}^\prime\bm{v}_k = \underbrace{\frac{1}{m}\sum_{i=1}^m\phi(\bm{x}_i)\phi(\bm{x}_i)^T}_{\bm{\Sigma}^\prime}\bm{v}_k = \lambda\bm{v}_k. 
 \end{equation}
 }
 
@@ -166,12 +166,12 @@ Temos que nossa formulação está, agora, escrita em função da matriz de \emp
 \justifying Podemos expressar a Equação 11 em sua notação matriz-vetor, como segue:
 
 \begin{equation}
-	\bm{K}^2\bm{\alpha}_k = (\lambda n)\bm{K}\bm{\alpha}_k.
+	\bm{K}^2\bm{\alpha}_k = (\lambda m)\bm{K}\bm{\alpha}_k.
 \end{equation}
 Multiplicando-se ambos lados por $\bm{K}^{-1}$, temos que:
 
 \begin{equation}
-	\bm{K}\bm{\alpha}_k = (\lambda n)\bm{\alpha}_k.
+	\bm{K}\bm{\alpha}_k = (\lambda m)\bm{\alpha}_k.
 \end{equation}
 Quem são os $\bm{\alpha}_k$? São os \textbf{autovetores} da matriz de \emph{kernel}!
 }
@@ -183,12 +183,6 @@ Quem são os $\bm{\alpha}_k$? São os \textbf{autovetores} da matriz de \emph{ke
 	\hat{\bm{x}} = \phi(\bm{x})^T\bm{v}_k = \underbrace{\sum_{i=1}^n\alpha_{ki}\phi(\bm{x}_i)}_{\bm{v}_k}\phi(\bm{x})^T = \sum_{i=1}^n\alpha_{ki}K(\bm{x},\bm{x}_i).
 \end{equation}
 Basicamente, a projeção de uma amostra $\bm{x}$ na $k$-ésima componente resume-se a realizar o seu mapeamento para um espaço de maior dimensão com $\phi(\bm{x})$ e depois projetar em $\bm{v}_k$. \textbf{A vantagem do \emph{kernel trick} é que não precisamos calcular explicitamente $\phi(\bm{x}_i)$, $\forall i$, basta apenas computar a matriz de \emph{kernel} diretamente do conjunto de dados.}
-
-%\justifying Sabendo que a norma dos autovetores é igual à 1, ou seja, $\bm{v}^T_k\bm{v}_k = 1$, da Equação 4 temos que:
-
-%\begin{equation}
-%	\sum_{i=1}^{m}\alpha_{ki}\phi(\bm{x}_i)^T\sum_{i=1}^{m}\alpha_{ki}\phi(\bm{x}_i) = \sum_{i=1}^n\sum_{j=1}^n\alpha_{ki}\alpha_{kj}\phi(\bm{x}_i)^T\phi(\bm{x}_j) = 1\implies \bm{\alpha}^T_k\bm{K}\bm{\alpha}_k = 1.
-%\end{equation}
 }
 
 \Sli{
@@ -201,7 +195,7 @@ Basicamente, a projeção de uma amostra $\bm{x}$ na $k$-ésima componente resum
 Note, também, que se o dado projetado não tiver média nula, precisamos centralizá-lo da seguinte maneira:
 
 \begin{equation}
-	\tilde{\phi}(\bm{x}_i) = \phi(\bm{x}_i) - \frac{1}{n}\sum_{j=1}^n\phi(\bm{x}_j).
+	\tilde{\phi}(\bm{x}_i) = \phi(\bm{x}_i) - \frac{1}{m}\sum_{j=1}^m\phi(\bm{x}_j).
 \end{equation}
 }
 
@@ -209,14 +203,14 @@ Note, também, que se o dado projetado não tiver média nula, precisamos centra
 \justifying Já a matriz \emph{kernel} correspondente (centralizada) é dada por:
 
 \begin{align}\nonumber
-\tilde{K}(\bm{x}_i,\bm{x}_j) &= \tilde{\phi}(\bm{x}_i)^T\tilde{\phi}(\bm{x}_j) = \left(\phi(\bm{x}_i)-\frac{1}{n}\sum_{k=1}^n\phi(\bm{x}_k)\right)^T\left(\phi(\bm{x}_j)-\frac{1}{n}\sum_{k=1}^n\phi(\bm{x}_k)\right)\\
+\tilde{K}(\bm{x}_i,\bm{x}_j) &= \tilde{\phi}(\bm{x}_i)^T\tilde{\phi}(\bm{x}_j) = \left(\phi(\bm{x}_i)-\frac{1}{m}\sum_{k=1}^m\phi(\bm{x}_k)\right)^T\left(\phi(\bm{x}_j)-\frac{1}{m}\sum_{k=1}^m\phi(\bm{x}_k)\right)\\
 \begin{split}
-&=\phi(\bm{x}_i)^T\phi(\bm{x}_j)-\frac{1}{n}\sum_{k=1}^n\phi(\bm{x}_i)^T\phi(\bm{x}_k)-\frac{1}{n}\sum_{k=1}^n\phi(\bm{x}_k)^T\phi(\bm{x}_j)\\
-	&\qquad +\frac{1}{n^2}\sum_{k=1}^n\sum_{l=1}^n\phi(\bm{x}_k)^T\phi(\bm{x}_l)
+&=\phi(\bm{x}_i)^T\phi(\bm{x}_j)-\frac{1}{m}\sum_{k=1}^m\phi(\bm{x}_i)^T\phi(\bm{x}_k)-\frac{1}{m}\sum_{k=1}^m\phi(\bm{x}_k)^T\phi(\bm{x}_j)\\
+	&\qquad +\frac{1}{m^2}\sum_{k=1}^m\sum_{l=1}^m\phi(\bm{x}_k)^T\phi(\bm{x}_l)
 \end{split}\\
 \begin{split}
-&= K(\bm{x}_i,\bm{x}_j)-\frac{1}{n}\sum_{k=1}^nK(\bm{x}_i,\bm{x}_j)-\frac{1}{n}\sum_{k=1}^nK(\bm{x}_k,\bm{x}_j)\\
-&\qquad+\frac{1}{n^2}\sum_{k=1}^n\sum_{l=1}^nK(\bm{x}_k,\bm{x}_l).
+&= K(\bm{x}_i,\bm{x}_j)-\frac{1}{m}\sum_{k=1}^mK(\bm{x}_i,\bm{x}_j)-\frac{1}{m}\sum_{k=1}^mK(\bm{x}_k,\bm{x}_j)\\
+&\qquad+\frac{1}{n^2}\sum_{k=1}^m\sum_{l=1}^mK(\bm{x}_k,\bm{x}_l).
 \end{split}\nonumber
 \end{align}
 }
@@ -225,15 +219,15 @@ Note, também, que se o dado projetado não tiver média nula, precisamos centra
 Em sua forma matricial, podemos escrever a Equação 16 como segue (matriz Gram):
 
 \begin{equation}
-	\tilde{\bm{K}} = \bm{K}-1_n\bm{K}-\bm{K}1_n+1_n\bm{K}1_n,
+	\tilde{\bm{K}} = \bm{K}-1_m\bm{K}-\bm{K}1_m+1_m\bm{K}1_m,
 \end{equation}
-em que $1_n\in\mathbb{R}^{n\times n}$ é uma matriz com todos elementos iguais à $1/n$. Vejamos, agora, o algoritmo do KPCA:
+em que $1_n\in\mathbb{R}^{m\times m}$ é uma matriz com todos elementos iguais à $1/m$. Vejamos, agora, o algoritmo do KPCA:
 
 \begin{enumerate}
 	\item Construir matriz \emph{kernel} $\bm{K}$ a partir dos dados, em que $K_{i,j} = K(\bm{x}_i,\bm{x}_j)$.
 	\item Construir matriz Gram $\tilde{\bm{K}}$ utilizando a Equação 17.
 	\item Utilize Equação 13 para encontrar os autovetores $\bm{\alpha}_k$ (use $\tilde{\bm{K}}$).
-	\item Calcule os $k$ componentes principais utilizando a Equação 14, $k=1,2,\ldots,d$.
+	\item Calcule os $d$ componentes principais utilizando a Equação 14.
 \end{enumerate}
 }
 
