@@ -82,7 +82,7 @@
 
 \justifying A técnica de \emph{Kernel Fisher Discriminant Analysis} - (KFDA) é uma \textbf{generalização não linear} para LDA. Novamente, faremos uso dos \emph{kernels} para tornar LDA uma técnica de projeção não linear. Inicialmente, iremos abordar a versão para classificação com duas classes.\newline
 
-\justifying Seja, então, ${\cal X} = \{(\bm{x}_1,y_1),(\bm{x}_2,y_2),\ldots,(\bm{x}_z,y_z)\}$ um conjunto de dados tal que $\bm{x}_i\in\mathbb{R}^n$ e $\phi:\mathbb{R}^n\rightarrow\mathbb{R}^{n^\prime}$ uma função de mapeamento não linear tal que $n^\prime>n$. Ademais, temos que ${\cal Y}=\{\omega_1,\omega_2\}$ de tal forma que $y_i\in\mathbb{\cal Y}$, $i=1,2,\ldots,m$. No KFDA busca-se maximizar o seguinte critério:
+\justifying Seja, então, ${\cal X} = \{(\bm{x}_1,y_1),(\bm{x}_2,y_2),\ldots,(\bm{x}_z,y_z)\}$ um conjunto de dados tal que $\bm{x}_i\in\mathbb{R}^n$ e $\phi:\mathbb{R}^n\rightarrow\mathbb{R}^{n^\prime}$ uma função de mapeamento não linear tal que $n^\prime>n$. Ademais, temos que ${\cal Y}=\{\omega_1,\omega_2\}$ de tal forma que $y_i\in\mathbb{\cal Y}$. No KFDA busca-se maximizar o seguinte critério:
 
 \begin{equation}
 	J(\bm{w}) = \frac{\bm{w}^T\bm{S}^\phi_B\bm{w}}{\bm{w}^T\bm{S}^\phi_A\bm{w}}.
@@ -102,7 +102,7 @@ Além disso, temos que:
 \end{equation}
 em que
 \begin{equation}
-	\bm{S}^\phi_i = \sum_{\bm{x}_j\in\omega_1}(\phi(\bm{x}_j)-\bm{\mu}_i^\phi)(\phi(\bm{x}_j)-\bm{\mu}_i^\phi)^T,\ i\in\{1,2\}.
+	\bm{S}^\phi_i = \sum_{\bm{x}_j\in\omega_i}(\phi(\bm{x}_j)-\bm{\mu}_i^\phi)(\phi(\bm{x}_j)-\bm{\mu}_i^\phi)^T,\ i\in\{1,2\}.
 \end{equation}
 Temos que a média de cada classe é dada por:
 \begin{equation}
@@ -124,7 +124,7 @@ em que $m_i$ denota a quantidade de elementos do conjunto de treinamento ${\cal 
 
 \begin{align}\nonumber
 	\bm{w}^T\bm{\mu}^\phi_1 &= \overbrace{\left(\sum_{i=1}^m\alpha_i\phi(\bm{x}_i)\right)^T}^{\bm{w}^T}\overbrace{\left(\frac{1}{m_1}\sum_{j=1}^{m_1}\phi(\bm{x}_j)\right)}^{\bm{\mu}^\phi_1}=\frac{1}{m_1}\sum_{i=1}^m\sum_{j=1}^{m_1}\alpha_i\overbrace{\phi(\bm{x}_i)^T\phi(\bm{x}_j)}^{\text{kernel}} \\
-	 &= \frac{1}{m_1}\sum_{i=1}^m\sum_{j=1}^{m_1}\alpha_i K(\bm{x}_i^T,\bm{x}_j).
+	 &= \frac{1}{m_1}\sum_{i=1}^m\sum_{j=1}^{m_1}\alpha_i K(\bm{x}_i,\bm{x}_j).
 \end{align}
 }
 
@@ -133,19 +133,19 @@ em que $m_i$ denota a quantidade de elementos do conjunto de treinamento ${\cal 
 
 \begin{align}\nonumber
 	\bm{w}^T\bm{\mu}^\phi_2 &= \overbrace{\left(\sum_{i=1}^m\alpha_i\phi(\bm{x}_i)\right)^T}^{\bm{w}^T}\overbrace{\left(\frac{1}{m_2}\sum_{j=1}^{m_2}\phi(\bm{x}_j)\right)}^{\bm{\mu}^\phi_2}=\frac{1}{m_1}\sum_{i=1}^m\sum_{j=1}^{m_2}\alpha_i\overbrace{\phi(\bm{x}_i)^T\phi(\bm{x}_j)}^{\text{kernel}} \\
-	 &= \frac{1}{m_2}\sum_{i=1}^m\sum_{j=1}^{m_2}\alpha_i K(\bm{x}_i^T,\bm{x}_j).
+	 &= \frac{1}{m_2}\sum_{i=1}^m\sum_{j=1}^{m_2}\alpha_i K(\bm{x}_i,\bm{x}_j).
 \end{align}
 
-Note, então, que as projeções dependem da matriz de \emph{kernel} e que $(\bm{w}^T\bm{\mu}^\phi_j)\in\mathbb{R}$, $i\in\{1,2\}$.
+Note, então, que as projeções dependem da matriz de \emph{kernel} e $\bm{\alpha}$, e que $(\bm{w}^T\bm{\mu}^\phi_i)\in\mathbb{R}$, $i\in\{1,2\}$.
 }
 
 \Sli{
-\justifying Seja $\bm{M}^1\in\mathbb{R}^n$ tal que:
+\justifying Seja $\bm{M}^1\in\mathbb{R}^m$ tal que:
 
 \begin{equation}
 	\bm{M}^1_i = \frac{1}{m_1}\sum_{j=1}^{m_1}K(\bm{x}_i,\bm{x}_j),
 \end{equation}
-em que $\bm{x}_j\in\omega_1$ e $\bm{x}_i\in{\cal X}_1$. Basicamente, a equação acima calcula a média da $i$-ésima linha da matriz de \emph{kernel} da classe $1$. O mesmo vale para o cálculo de $\bm{M}^2\in\mathbb{R}^n$, ou seja:
+em que $\bm{x}_j\in\omega_1$ e $\bm{x}_i\in{\cal X}_1$. Basicamente, a equação acima calcula a média da $i$-ésima linha da matriz de \emph{kernel} da classe $1$. O mesmo vale para o cálculo de $\bm{M}^2\in\mathbb{R}^m$, ou seja:
 
 \begin{equation}
 	\bm{M}^2_i = \frac{1}{m_2}\sum_{j=1}^{m_2}K(\bm{x}_i,\bm{x}_j).
@@ -156,21 +156,21 @@ em que $\bm{x}_j\in\omega_1$ e $\bm{x}_i\in{\cal X}_1$. Basicamente, a equação
 \justifying Desta forma, podemos reescrever a Equação 7 da seguinte forma:
 
 \begin{align}\nonumber
-	\bm{w}^T\bm{\mu}^\phi_1 &= \frac{1}{m_1}\sum_{i=1}^m\sum_{j=1}^{m_1}\alpha_i K(\bm{x}_i^T,\bm{x}_j)\\\nonumber
-	&= \sum_{i=1}^m\frac{1}{m_1}\sum_{j=1}^{m_1}\alpha_i K(\bm{x}_i^T,\bm{x}_j)\\
-	&= \sum_{i=1}^m\alpha_i\underbrace{\frac{1}{m_1}\sum_{j=1}^{m_1}K(\bm{x}_i^T,\bm{x}_j)}_{\bm{M}^1_i}\\\nonumber
+	\bm{w}^T\bm{\mu}^\phi_1 &= \frac{1}{m_1}\sum_{i=1}^m\sum_{j=1}^{m_1}\alpha_i K(\bm{x}_i,\bm{x}_j)\\\nonumber
+	&= \sum_{i=1}^m\frac{1}{m_1}\sum_{j=1}^{m_1}\alpha_i K(\bm{x}_i,\bm{x}_j)\\
+	&= \sum_{i=1}^m\alpha_i\underbrace{\frac{1}{m_1}\sum_{j=1}^{m_1}K(\bm{x}_i,\bm{x}_j)}_{\bm{M}^1_i}\\\nonumber
 	&= \sum_{i=1}^m\alpha_i\bm{M}^1_i = \bm{\alpha}\bm{M}^1,\nonumber
 \end{align}
-em que $\bm{\alpha}\in\mathbb{R}^n$.
+em que $\bm{\alpha}\in\mathbb{R}^m$.
 }
 
 \Sli{
 \justifying De modo análogo, podemos reescrever a Equação 8 da seguinte forma:
 
 \begin{align}\nonumber
-	\bm{w}^T\bm{\mu}^\phi_2 &= \frac{1}{m_2}\sum_{i=1}^m\sum_{j=1}^{m_2}\alpha_i K(\bm{x}_i^T,\bm{x}_j)\\\nonumber
-	&= \sum_{i=1}^m\frac{1}{m_2}\sum_{j=1}^{m_2}\alpha_i K(\bm{x}_i^T,\bm{x}_j)\\
-	&= \sum_{i=1}^m\alpha_i\underbrace{\frac{1}{m_2}\sum_{j=1}^{m_2}K(\bm{x}_i^T,\bm{x}_j)}_{\bm{M}^2_i}\\\nonumber
+	\bm{w}^T\bm{\mu}^\phi_2 &= \frac{1}{m_2}\sum_{i=1}^m\sum_{j=1}^{m_2}\alpha_i K(\bm{x}_i,\bm{x}_j)\\\nonumber
+	&= \sum_{i=1}^m\frac{1}{m_2}\sum_{j=1}^{m_2}\alpha_i K(\bm{x}_i,\bm{x}_j)\\
+	&= \sum_{i=1}^m\alpha_i\underbrace{\frac{1}{m_2}\sum_{j=1}^{m_2}K(\bm{x}_i,\bm{x}_j)}_{\bm{M}^2_i}\\\nonumber
 	&= \sum_{i=1}^m\alpha_i\bm{M}^2_i = \bm{\alpha}\bm{M}^2.\nonumber
 \end{align}
 A ideia de toda essa manipulação é para reescrevermos a Equação 1 (Critério de Fisher).
@@ -182,7 +182,7 @@ Desta fora, conseguimos reescrever o numerador da Equação 1 da seguinte forma:
 \begin{align}\nonumber
 	\bm{w}^T\bm{S}^\phi_B\bm{w} &= \bm{w}^T(\bm{\mu}_1^\phi-\bm{\mu}_2^\phi)(\bm{\mu}_1^\phi-\bm{\mu}_2^\phi)^T\bm{w}\\\nonumber
 	&= (\bm{w}^T\bm{\mu}_1^\phi-\bm{w}^T\bm{\mu}_2^\phi)({\bm{\mu}_1^\phi}^T\bm{w}-{\bm{\mu}_2^\phi}^T\bm{w})\\
-	&= (\bm{\alpha}^T\bm{k}^1-\bm{\alpha}^T\bm{k}^2)({\bm{M}^1}^T\bm{\alpha}-{\bm{M}^2}^T\bm{\alpha})\\\nonumber
+	&= (\bm{\alpha}^T\bm{M}^1-\bm{\alpha}^T\bm{M}^2)({\bm{M}^1}^T\bm{\alpha}-{\bm{M}^2}^T\bm{\alpha})\\\nonumber
 	&= \bm{\alpha}^T(\bm{M}^1-\bm{M}^2)(\bm{M}^1-\bm{M}^2)^T\bm{\alpha}\\
 	&= \bm{\alpha}^T\bm{M}\bm{\alpha}\nonumber,
 \end{align}
@@ -204,7 +204,7 @@ em que $\bm{M} = (\bm{M}^1-\bm{M}^2)(\bm{M}^1-\bm{M}^2)^T$.
 \begin{equation}
 	\bm{w}^T\bm{S}^\phi_A\bm{w} = \bm{\alpha}^T\bm{N}\bm{\alpha},
 \end{equation}
-em que $\bm{N} = \bm{N}_1+\bm{N}_2 = \underbrace{\bm{K}_1(\bm{I}_1-\bm{1}_{m_1})\bm{K}_1^T}_{\bm{N}_1}+\underbrace{\bm{K}_2(\bm{I}_2-\bm{1}_{m_2})\bm{K}_2^T}_{\bm{N}_2}$. Neste caso, temos que $\bm{K}_1\in\mathbb{R}^{m\times m_1}$ corresponde à matriz de \emph{kernel} da classe $\omega_1$, $\bm{I}_1\in\mathbb{R}^{m_1\times m_1}$ denota a matriz identidade correspondente à classe $\omega_1$ e $\bm{1}_{m_1}$ representa a matriz com entradas $1/m_1$ também da classe $\omega_1$. De maneira análoga, podemos definir $\bm{K}_2\in\mathbb{R}^{m\times m_2}$, $\bm{I}_2\in\mathbb{R}^{m_1\times m_2}$ como sendo as matrizes de \emph{kernel}, identidade e com entradas $1/m_2$ da classe $\omega_2$, respectivamente.
+em que $\bm{N} = \bm{N}_1+\bm{N}_2 = \underbrace{\bm{K}_1(\bm{I}_1-\bm{1}_{m_1})\bm{K}_1^T}_{\bm{N}_1}+\underbrace{\bm{K}_2(\bm{I}_2-\bm{1}_{m_2})\bm{K}_2^T}_{\bm{N}_2}$. Neste caso, temos que $\bm{K}_1\in\mathbb{R}^{m\times m_1}$ corresponde à matriz de \emph{kernel} da classe $\omega_1$, $\bm{I}_1\in\mathbb{R}^{m_1\times m_1}$ denota a matriz identidade correspondente à classe $\omega_1$ e $\bm{1}_{m_1}\in\mathbb{R}^{m_1\times m_1}$ representa a matriz com entradas $1/m_1$ também da classe $\omega_1$. De maneira análoga, podemos definir $\bm{K}_2\in\mathbb{R}^{m\times m_2}$, $\bm{I}_2\in\mathbb{R}^{m_2\times m_2}$ e $\bm{1}_{m_2}\in\mathbb{R}^{m_2\times m_2}$ como sendo as matrizes de \emph{kernel}, identidade e com entradas $1/m_2$ da classe $\omega_2$, respectivamente.
 }
 
 \Sli{
@@ -222,7 +222,7 @@ A solução da Equação 17 é dada por:
 \begin{equation}
 	\frac{\partial J(\bm{\alpha})}{\partial \bm{\alpha}} \implies (\bm{N}^{-1}\bm{M})\bm{\alpha} = \lambda\bm{\alpha}.
 \end{equation}
-Assim sendo, a solução é dada pelo autovetor $\bm{\alpha}$ associado ao maior autovalor da matriz $(\bm{N}^{-1}\bm{k}^\ast)$, que é baseada nas matrizes de \emph{kernel}.
+Assim sendo, a solução é dada pelo autovetor $\bm{\alpha}$ associado ao maior autovalor da matriz $(\bm{N}^{-1}\bm{M})$, que é baseada nas matrizes de \emph{kernel}.
 }
 
 \Sli{
