@@ -327,8 +327,61 @@ tal que $\bm{U}\in\mathbb{R}^{m\times m}$. Note que a Equação 15 nada mais é 
 }
 
 \Sli{
-\justifying Conseguimos, então, resolver o subproblema 1, ou seja, encontrar a matriz $\bm{B}$.
+\justifying Conseguimos, então, resolver o subproblema 1, ou seja, encontrar a matriz $\bm{B}$. Falta, agora, resolvermos o subproblema 2, ou seja, recuperar as coordenadas $\hat{\bm{x}}_i\in\mathbb{R}^k$ a partir da matriz $\bm{B}$, $\forall \bm{x}_i\in{\cal X}$.\newline
 
+\justifying Como $\bm{B}$ é a matriz dos produtos internos, podemos reescrevê-la da seguinte maneira:
+
+\begin{equation}
+	\bm{B} = \hat{\bm{X}}\hat{\bm{X}}^T,
+\end{equation}
+em que $\hat{\bm{X}}\in\mathbb{R}^{m\times k}$ é a matriz dos pontos projetados em $\mathbb{R}^k$. A matriz $\bm{B}$ possui propriedades (é simétrica, positiva semi-definida e possui rank $k$) que permitem a sua decomposição espectral, ou seja: 
+
+\begin{equation}
+	\bm{B} = \bm{V}\bm{\Lambda}\bm{V}^T,
+\end{equation}
+em que $\bm{\Lambda}\in\mathbb{R}^{m\times m}$ é a matriz diagonal dos autovalores e $\bm{V}\in\mathbb{R}^{m\times m}$ é a matriz dos autovetores. 
+}
+
+\Sli{
+\justifying Sem perda de generalidade, podemos considerar $\lambda_1\geq\lambda_2\geq\ldots\geq\lambda_m$. Considerando apenas os $k$ maiores autovalores, podemos reescrever a Equação 20 da seguinte forma:
+
+\begin{equation}
+	\bm{B} = \bm{V}^\prime\bm{\Lambda}^\prime{\bm{V}^\prime}^T,
+\end{equation}
+em que $\bm{\Lambda}^\prime\in\mathbb{R}^{k\times k}$ é a matriz diagonal dos autovalores e $\bm{V}^\prime\in\mathbb{R}^{m\times k}$ denota a matriz dos autovetores. Da Equação 19, temos que:
+
+\begin{equation}
+	\bm{B} = \hat{\bm{X}}\hat{\bm{X}}^T = \bm{V}^\prime\bm{\Lambda}^\prime{\bm{V}^\prime}^T = \underbrace{\bm{V}^\prime{\bm{\Lambda}^\prime}^{1/2}}_{\hat{\bm{X}}}\overbrace{{\bm{\Lambda}^\prime}^{1/2}{\bm{V}^\prime}^T}^{\hat{\bm{X}}^T},
+\end{equation}
+em que ${\bm{\Lambda}^\prime}^{1/2}$ equivale à aplicação da raiz quadrada em todos os elementos de $\bm{\Lambda}^\prime$.
+}
+
+\Sli{
+\justifying Desta forma, a matriz dos elementos projetados pode ser obtida da seguinte forma:
+
+\begin{equation}
+	\hat{\bm{X}} = \bm{V}^\prime{\bm{\Lambda}^\prime}^{1/2}.
+\end{equation}
+Vejamos, agora, o algoritmo MDS.
+
+\begin{enumerate}
+	\item Construir o grafo $k$-nn e aplicar o algoritmo de Dijkstra $m$ vezes mudando o nó fonte para calcular a matriz $\bm{D}$.
+	\item Faça $\bm{A} = \frac{1}{2}\bm{D}$.
+	\item Faça $\bm{H} = \bm{I}-\frac{1}{m}\bm{1}\bm{1}^T$.
+	\item Calcule $\bm{B} = \bm{H}\bm{A}\bm{H}$.
+	\item Encontrar os autovalores e autovetores de $\bm{B}$.
+	\item Tomar os $k$ autovetores associados aos $k$ maiores autovalores de $\bm{B}$ para montar $\bm{V}^\prime$ e $\bm{\Lambda}^\prime$.
+	\item Calcular $\hat{\bm{X}} = \bm{V}^\prime{\bm{\Lambda}^\prime}^{1/2}$.
+\end{enumerate}
+}
+
+\Sli{
+\justifying Vejamos algumas limitações do ISOMAP:
+
+\begin{itemize}
+	\item Não é supervisionado.
+	\item Em dados não convexos, ou seja, quanto temos "buracos" nas variedades, ISOMAP pode não funcionar adequadamente.
+\end{itemize}
 }
 
 \Sli{
