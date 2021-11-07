@@ -198,14 +198,138 @@ Assumimos essa hipótese pois, caso contrário, teremos infinitas soluções par
 \justifying A partir da matriz $\bm{D}$, podemos calcular a média de uma coluna $s$ da seguinte maneira:
 \vspace{-0.3cm}
 \begin{align}\nonumber
-	M_s &= \frac{1}{m}\sum_{i=1}^mD_{is} = \frac{1}{m}\sum_{i=1}^m\overbrace{(\bm{x}_i^T\bm{x}_i-2\bm{x}_i^T\bm{x}_s+\bm{x}_s^T\bm{x}_s)}^{D_{is}} = \\
-	&= \frac{1}{m}\left(\sum_{i=1}^m\bm{x}_i^T\bm{x}_i-2\sum_{i=1}^m\bm{x}_i^T\bm{x}_s+\sum_{i=1}^m\bm{x}_s^T\bm{x}_s\right)\\\nonumber
-	&= \frac{1}{m}\sum_{i=1}^m\bm{x}_i^T\bm{x}_i-\frac{2}{m}\sum_{i=1}^m\bm{x}_i^T\bm{x}_s+\frac{1}{m}\sum_{i=1}^m\bm{x}_s^T\bm{x}_s\\\nonumber
-	&= \frac{1}{m}\sum_{i=1}^m\bm{x}_i^T\bm{x}_i-2\bm{x}_s\cancelto{0\text{ Equação 3}}{\frac{1}{m}\sum_{i=1}^m\bm{x}_i}+\frac{1}{m}\sum_{i=1}^m\bm{x}_s^T\bm{x}_s\\\nonumber
-	&= \frac{1}{m}\sum_{i=1}^m\bm{x}_i^T\bm{x}_i+\frac{1}{m}\sum_{i=1}^m\bm{x}_s^T\bm{x}_s = \frac{1}{m}\sum_{i=1}^m\left(\bm{x}_i^T\bm{x}_i+\bm{x}_s^T\bm{x}_s\right).
+	M_s &= \frac{1}{m}\sum_{i=1}^mD_{is} = \frac{1}{m}\sum_{i=1}^m\overbrace{(\bm{x}_i^T\bm{x}_i-2\bm{x}_i^T\bm{x}_s+\bm{x}_s^T\bm{x}_s)}^{D_{is}} \\\nonumber
+	&= \frac{1}{m}\left(\sum_{i=1}^m\bm{x}_i^T\bm{x}_i-2\sum_{i=1}^m\bm{x}_i^T\bm{x}_s+\sum_{i=1}^m\bm{x}_s^T\bm{x}_s\right)\\
+	&= \frac{1}{m}\sum_{i=1}^m\bm{x}_i^T\bm{x}_i-\frac{2}{m}\sum_{i=1}^m\bm{x}_i^T\bm{x}_s+\frac{1}{m}\cancelto{\text{constante}}{\sum_{i=1}^m}\bm{x}_s^T\bm{x}_s\\\nonumber
+	&= \frac{1}{m}\sum_{i=1}^m\bm{x}_i^T\bm{x}_i-2\bm{x}_s\cancelto{0\text{ Equação 3}}{\frac{1}{m}\sum_{i=1}^m\bm{x}_i}+\frac{1}{m}m(\bm{x}_s^T\bm{x}_s)\\\nonumber
+	&= \frac{1}{m}\sum_{i=1}^m\bm{x}_i^T\bm{x}_i+\bm{x}_s^T\bm{x}_s.
 \end{align}
 }
 
+\Sli{
+\justifying Analogamente, podemos calcular a média da linha $r$ da matriz $\bm{D}$ da seguinte maneira:
+\vspace{-0.3cm}
+\begin{align}\nonumber
+	M_r &= \frac{1}{m}\sum_{j=1}^mD_{rj} = \frac{1}{m}\sum_{j=1}^m\overbrace{(\bm{x}_r^T\bm{x}_r-2\bm{x}_r^T\bm{x}_j+\bm{x}_j^T\bm{x}_j)}^{D_{rj}} \\\nonumber
+	&= \frac{1}{m}\left(\sum_{j=1}^m\bm{x}_r^T\bm{x}_r-2\sum_{j=1}^m\bm{x}_r^T\bm{x}_j+\sum_{j=1}^m\bm{x}_j^T\bm{x}_j\right)\\
+	&= \frac{1}{m}\cancelto{\text{constante}}{\sum_{j=1}^m}\bm{x}_r^T\bm{x}_r-\frac{2}{m}\sum_{j=1}^m\bm{x}_r^T\bm{x}_j+\frac{1}{m}\sum_{j=1}^m\bm{x}_j^T\bm{x}_j\\\nonumber
+	&= \frac{1}{m}m(\bm{x}_r^T\bm{x}_r)-2\bm{x}_r\cancelto{0\text{ Equação 3}}{\frac{1}{m}\sum_{i=1}^m\bm{x}_j}+\frac{1}{m}\sum_{j=1}^m\bm{x}_j^T\bm{x}_j = \bm{x}_r^T\bm{x}_r+\frac{1}{m}\sum_{j=1}^m\bm{x}_j^T\bm{x}_j.\nonumber
+\end{align}
+Finalmente, podemos calcular a média $\bar{M}$ dos elementos da matriz $\bm{D}$ da seguinte forma:
+}
+
+\Sli{
+\vspace{-0.7cm}
+\begin{align}\nonumber
+	\bar{M} &= \frac{1}{m^2}\sum_{i=1}^m\sum_{j=1}^mD_{ij} = \frac{1}{m^2}\sum_{i=1}^m\sum_{j=1}^m\left(\bm{x}_i^T\bm{x}_i-2\bm{x}_i^T\bm{x}_j+\bm{x}_j^T\bm{x}_j\right)\\\nonumber
+	&= \frac{1}{m^2}\sum_{i=1}^m\cancelto{m}{\sum_{j=1}^m}\bm{x}_i^T\bm{x}_i-\frac{2}{m^2}\sum_{i=1}^m\sum_{j=1}^m\bm{x}_i^T\bm{x}_j+\frac{1}{m^2}\cancelto{m}{\sum_{i=1}^m}\sum_{j=1}^m\bm{x}_j^T\bm{x}_j\\
+	&= \frac{1}{m^2}m\sum_{i=1}^m\bm{x}_i^T\bm{x}_i-\frac{2}{m^2}\sum_{i=1}^m\bm{x}_i^T\sum_{j=1}^m\bm{x}_j+\frac{1}{m^2}m\sum_{j=1}^m\bm{x}_j^T\bm{x}_j\\\nonumber
+	&= \frac{1}{m}\sum_{i=1}^m\bm{x}_i^T\bm{x}_i-\cancelto{0 \text{ Equação 3}}{\frac{1}{m}\sum_{i=1}^m\bm{x}_i^T}\frac{1}{m}\sum_{j=1}^m\bm{x}_j+\frac{1}{m}\sum_{j=1}^m\bm{x}_j^T\bm{x}_j\\
+	&= \underbrace{\frac{1}{m}\sum_{i=1}^m\bm{x}_i^T\bm{x}_i+\frac{1}{m}\sum_{j=1}^m\bm{x}_j^T\bm{x}_j}_{\text{termos iguais}} = \frac{2}{m}\sum_{i=1}^m\bm{x}_i^T\bm{x}_i.\nonumber
+\end{align}
+}
+
+\Sli{
+\justifying Podemos definir o elemento $B_{ij}$ da matriz de produtos internos $\bm{B}$ da seguinte forma por meio da Equação 4:
+
+\begin{equation}
+	B_{ij} = \bm{x}_i^T\bm{x}_j = -\frac{1}{2}\left(D_{ij}-\bm{x}_i^T\bm{x}_i-\bm{x}^T\bm{x}_j\right).
+\end{equation}
+
+\justifying Da Equação 6, podemos isolar o termo $-\bm{x}_r^T\bm{x}_r$. Tornando $r=i$, temos que:
+
+\begin{equation}
+	-\bm{x}_i^T\bm{x}_i = \frac{1}{m}\sum_{j=1}^m\bm{x}_j^T\bm{x}_j-\frac{1}{m}\sum_{j=1}^mD_{ij}.
+\end{equation}
+}
+
+\Sli{
+\justifying Da Equação 5, podemos isolar o termo $-\bm{x}_s^T\bm{x}_s$. Tornando $s=j$, temos que:
+
+\begin{equation}
+	-\bm{x}_j^T\bm{x}_j = \frac{1}{m}\sum_{i=1}^m\bm{x}_i^T\bm{x}_i-\frac{1}{m}\sum_{i=1}^mD_{ij}.
+\end{equation}
+Subtraindo-se as Equações 9 e 10, temos que:
+
+\begin{align}\nonumber
+	-\bm{x}_i^T\bm{x}_i-(-\bm{x}_j^T\bm{x}_j) &= \frac{1}{m}\sum_{j=1}^m\bm{x}_j^T\bm{x}_j-\frac{1}{m}\sum_{j=1}^mD_{ij}+\frac{1}{m}\sum_{i=1}^m\bm{x}_i^T\bm{x}_i-\frac{1}{m}\sum_{i=1}^mD_{ij}\\
+	&= -\frac{1}{m}\sum_{j=1}^mD_{ij}-\frac{1}{m}\sum_{i=1}^mD_{ij}+\frac{2}{m}\sum_{i=1}^m\bm{x}_i^T\bm{x}_i\\\nonumber
+\end{align}
+}
+
+\Sli{
+\justifying Da Equação 7, podemos escrever:
+
+\begin{equation}
+	\frac{2}{m}\sum_{i=1}^m\bm{x}_i^T\bm{x}_i = \frac{1}{m^2}\sum_{i=1}^m\sum_{j=1}^mD_{ij}.
+\end{equation}
+Lembrando que o nosso objetivo é reescrever os termos $b_{ij}$ da matriz de produtos internos $\bm{B}$ utilizando $D_{ij}$.
+}
+
+\Sli{
+
+\justifying Assim sendo, podemos reescrever a Equação 8:
+
+\begin{align}\nonumber
+	B_{ij} &= \bm{x}_i^T\bm{x}_j = -\frac{1}{2}\left(D_{ij}\overbrace{-\bm{x}_i^T\bm{x}_i-\bm{x}^T\bm{x}_j}^{\text{Equação 11}}\right)\\
+	&= -\frac{1}{2}\left(D_{ij}-\frac{1}{m}\sum_{j=1}^mD_{ij}-\frac{1}{m}\sum_{i=1}^mD_{ij}+\underbrace{\frac{2}{m}\sum_{i=1}^m\bm{x}_i^T\bm{x}_i}_{\text{Equação 12}}\right)\\\nonumber
+	&= -\frac{1}{2}\left(D_{ij}-\frac{1}{m}\sum_{j=1}^mD_{ij}-\frac{1}{m}\sum_{i=1}^mD_{ij}+\frac{1}{m^2}\sum_{i=1}^m\sum_{j=1}^mD_{ij}\right)\\\nonumber
+\end{align}
+
+}
+
+\Sli{
+\justifying Aplicando-se a operação distributiva na Equação 14, podemos criar a matriz $\bm{A}\in\mathbb{R}^{m\times m}$ e, fazendo $A_{ij} = -\frac{1}{2}D_{ij}$, temos as seguintes definições:
+
+\begin{itemize}
+	\item $\bar{A}_{i.} = \frac{1}{m}\sum_{j=1}^mA_{ij}$ (média na linha $i$)
+	\item $\bar{A}_{.j} = \frac{1}{m}\sum_{i=1}^mA_{ij}$ (média na coluna $j$)
+	\item $\bar{M} = \frac{1}{m^2}\sum_{i=1}^m\sum_{j=1}^mA_{ij}$ (média da matriz $\bm{A}$)
+\end{itemize}
+}
+
+\Sli{
+\justifying Desta forma, podemos reescrever a Equação 13 da seguinte forma:
+
+\begin{align}
+	B_{ij} &= -\frac{1}{2}\left(D_{ij}-\frac{1}{m}\sum_{j=1}^mD_{ij}-\frac{1}{m}\sum_{i=1}^mD_{ij}+\frac{1}{m^2}\sum_{i=1}^m\sum_{j=1}^mD_{ij}\right)\\
+	&= A_{ij}-\bar{A}_{i.}-\bar{A}_{.j}+\bar{M}.\nonumber
+\end{align}
+Podemos mostrar, ainda, que:
+
+\begin{equation}
+	\bm{B} = \bm{H}\bm{A}\bm{H},
+\end{equation}
+em que
+\begin{equation}
+	\bm{H} = \bm{I}-\frac{1}{m}\bm{1}\bm{1}^T,
+\end{equation} 
+tal que $\bm{I}\in\mathbb{R}^{m\times m}$ é a matriz identidade e $\bm{1}\in\mathbb{R}^m$ é um vetor com todos os elementos iguais à $1$.
+}
+
+\Sli{
+\justifying Temos, então, que:
+
+\begin{equation}
+	\bm{U} = \bm{1}\bm{1}^T=\begin{bmatrix}
+		1 & 1 & \ldots & 1\\
+		1 & 1 & \ldots & 1\\
+		\vdots & \vdots & \ddots & \vdots\\
+		1 & 1 & \ldots & 1\\
+	\end{bmatrix}
+\end{equation}
+tal que $\bm{U}\in\mathbb{R}^{m\times m}$. Note que a Equação 15 nada mais é do que a forma matricial da Equação 14, ou seja:
+
+\begin{align}\nonumber
+	\bm{B} &= \bm{H}\bm{A}\bm{H} = \left(\bm{I}-\frac{1}{m}\bm{U}\right)\bm{A}\left(\bm{I}-\frac{1}{m}\bm{U}\right) = \left(\bm{A}-\frac{1}{m}\bm{U}\bm{A}\right)\left(\bm{I}-\frac{1}{m}\bm{U}\right)\\
+	&= \bm{A}-\bm{A}\frac{1}{m}\bm{U}-\frac{1}{m}\bm{U}\bm{A}+\frac{1}{m^2}\bm{U}\bm{A}\bm{U}.
+\end{align}
+}
+
+\Sli{
+\justifying Conseguimos, então, resolver o subproblema 1, ou seja, encontrar a matriz $\bm{B}$.
+
+}
 
 \Sli{
 \justifying Um agradecimento especial ao \textbf{Prof. Alexandre Levada} do Centro de Ciências Exatas e de Tecnologia, Departamento de Computação, Universidade Federal de São Carlos, pelas notas de aula.
