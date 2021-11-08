@@ -134,6 +134,18 @@ Desta forma, podemos reescrever a expressão para o erro local de reconstrução
 \begin{equation}
 	E(\bm{w}) = \sum_j\sum_kw_jC_{jk}w_k = \bm{w}^T\bm{C}\bm{w}.
 \end{equation}
+Lembrando que o intuito principal da restrição $\sum_jw_j=1$ é para adicionar propriedades de \textbf{invariância à translação}, isto é, adicionando uma constante $\bm{c}\in\mathbb{R}^n$ ao vetor $\bm{x}_i$ e aos seus vizinhos, o erro de reconstrução não muda.
+}
+
+\Sli{
+\justifying Sejam, então, $\tilde{\bm{x}_i} = \bm{x}_i+\bm{c}$ e $\tilde{\bm{x}_j} = \bm{x}_j+\bm{c}$ as versões deslocadas das amostras $\bm{x}_i$ e $\bm{x}_j$, respectivamente. O novo erro de reconstrução local é dado por:
+
+\begin{align}\nonumber
+	\tilde{E}(\bm{w}) &= \norm{\tilde{\bm{x}_i}-\sum_jw_j\tilde{\bm{x}_j}}^2 = \norm{\bm{x}_i+\bm{c}-\sum_jw_j(\bm{x}_j+\bm{c})}^2\\
+	&= \norm{\bm{x}_i+\bm{c}-\sum_jw_j\bm{x}_j-\sum_jw_j\bm{c}}^2 = \norm{\bm{x}_i+\bm{c}-\sum_jw_j\bm{x}_j-\bm{c}\cancelto{1}{\sum_jw_j}}^2\\
+	&= \norm{\bm{x}_i+\bm{c}-\sum_jw_j\bm{x}_j-\bm{c}}^2 = \norm{\bm{x}_i-\sum_jw_j\bm{x}_j}^2 = E(\bm{w})\nonumber.
+\end{align}
+Assim, a translação não afeta o erro quando temos a restrição $\sum_jw_j=1$.
 }
 
 \Sli{
