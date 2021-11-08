@@ -95,16 +95,45 @@ em que ${\cal N}(\bm{x}_i)$ denota a vizinhança (\emph{patch}) da amostra $\bm{
 }
 
 \Sli{
-O algoritmo do LLE pode ser dividido em três passos principais:
+\justifying O algoritmo do LLE pode ser dividido em três passos principais:
 
 \begin{enumerate}
-	\item Para cada $\bm{x}_i\in{\cal X}$ encontrar os seus $k$-vizinhos mais próximos, $=1,2,\ldots,m$.
+	\item Para cada $\bm{x}_i\in{\cal X}$ encontrar os seus $k$-vizinhos mais próximos, $i=1,2,\ldots,m$.
 	\item Encontrar a matrix $\bm{W}$ que minimiza o erro de reconstrução para cada amostra $\bm{x}_i\in{\cal X}$:
 		\begin{equation}
-		J(\bm{W}) = \sum_{i=1}^m\norm{\bm{x}_i-\sum_jw_{ij}\bm{x}_j}^2,\ \forall \bm{x}_j\in{\cal N}(\bm{x}_i),
+		E(\bm{W}) = \sum_{i=1}^m\norm{\bm{x}_i-\sum_jw_{ij}\bm{x}_j}^2,\ \forall \bm{x}_j\in{\cal N}(\bm{x}_i),
 		\end{equation}
 		em que $w_{ij} = 0$ a menos que $\bm{x}_j\in{\cal N}(\bm{x}_i)$. Note que $\sum_jw_{ij}=1$.
+	\item Encontre o conjunto de coordenadas $\bm{Y}$ que minimiza o erro de reconstrução utilizando os pesos ótimos encontrados no passo anterior:
+		\begin{equation}
+		\Phi(\bm{Y}) = \sum_{i=1}^m\norm{\bm{y}_i-\sum_jw_{ij}\bm{y}_j}^2,\ \forall \bm{y}_j\in{\cal N}(\bm{y}_i),
+		\end{equation}
 \end{enumerate}
+tal que $\bm{y}\in\mathbb{R}^d$ e $\bm{Y}\bm{Y}^T=\bm{I}$.
+}
+
+\Sli{
+\justifying O primeiro passo corresponde à encontrar os $k$-vizinhos mais próximos de $\bm{x}_i$, $\forall \bm{x}_i\in{\cal X}$. Em geral, valores pequenos de $k$ tornam o grafo desconexo, enquanto que um $k>n$ exige uma \textbf{regularização} do problema.\newline
+
+\justifying Agora, vamos para o passo 2, ou seja, estimação dos pesos $\bm{W}$ utilizando os mínimos quadrados. Sem perda de generalidade, podemos expressar o erro de reconstrução local considerando apenas o ponto $\bm{x}_i\in{\cal X}$ como segue:
+
+\begin{align}\nonumber
+	E(\bm{w}) &= \norm{\bm{x}_i-\sum_jw_j\bm{x}_j}^2 = \norm{\cancelto{1\text{ (restrição)}}{\sum_jw_j}\bm{x}_i-\sum_jw_j\bm{x}_j}^2 = \norm{\sum_jw_j(\bm{x}_i-\bm{x}_j)}^2\\ 
+	&= \sum_j\sum_kw_jw_k(\bm{x}_i-\bm{x}_j)^T(\bm{x}_i-\bm{x}_k).
+\end{align}
+}
+
+\Sli{
+\justifying Vamos, agora, definir a matriz $\bm{C}\in\mathbb{R}^{n\times n}$:
+
+\begin{equation}
+	C_{jk} = (\bm{x}_i-\bm{x}_j)^T(\bm{x}_i-\bm{x}_k).
+\end{equation}
+Desta forma, podemos reescrever a expressão para o erro local de reconstrução (Equação 4) como segue:
+
+\begin{equation}
+	E(\bm{w}) = \sum_j\sum_kw_jC_{jk}w_k = \bm{w}^T\bm{C}\bm{w}.
+\end{equation}
 }
 
 \Sli{
