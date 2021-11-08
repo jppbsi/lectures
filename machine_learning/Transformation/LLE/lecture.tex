@@ -149,6 +149,111 @@ Assim, a translação não afeta o erro quando temos a restrição $\sum_jw_j=1$
 }
 
 \Sli{
+\justifying Note que a Equação 6 vale para apenas uma variável $\bm{x}_i\in{\cal X}$. Precisamos, então, generalizá-la para todo o conjunto de dados, pois assim teremos $m$ problemas de otimização com restrição de igualdade, ou seja:
+
+\begin{eqnarray}
+	\bm{w}_i^\ast = \argmin_{\bm{w}_i}\bm{w}_i^T\bm{C}_i\bm{w}_i,\\
+	\text{s.a. }\bm{1}^Tw_i = 1,\ i=1,2,\ldots,m.\nonumber
+\end{eqnarray}
+\justifying Como temos um problema de otimização com restrições, precisamos fazer uso da técnica dos multiplicadores de Lagrange. Desta forma, a Equação 8 pode ser reformulada da seguinte maneira:
+
+\begin{equation}
+	L(\bm{w}_i,\lambda) = \bm{w}_i^T\bm{C}_i\bm{w}_i-\lambda\left(\bm{1}^T\bm{w}_i-1\right).
+\end{equation}
+}
+
+\Sli{
+\justifying Para resolvermos o problema de otimização, basta calcular a derivada da Equação 9 em relação à $\bm{w}_i$ e igualar à $0$, ou seja:
+
+\begin{equation}
+	\frac{\partial L(\bm{w}_i,\lambda)}{\partial\bm{w}_i} = 2\bm{C}_i\bm{w}_i-\lambda\bm{1}^T = 0.
+\end{equation}
+Da equação acima, temos que:
+
+\begin{equation}
+	\bm{C}_i\bm{w}_i = \frac{\lambda}{2}\bm{1}.
+\end{equation}
+Caso a matriz $\bm{C}_i$ seja admita inversa, temos uma equação fechada para nosso problema de otimização:
+
+\begin{equation}
+	\bm{w}_i = \frac{\lambda}{2}\bm{C}^{-1}_i\bm{1}.
+\end{equation}
+}
+
+\Sli{
+\justifying Usualmente, descartamos o termo $\frac{\lambda}{2}$ da Equação 12, pois é uma constante (não depende de $i$). Assim sendo, podemos reescrever a Equação 12 da seguinte forma:
+
+\begin{equation}
+	\bm{C}_i\bm{w}_i = \bm{1},
+\end{equation}
+que é a formulação de um sistema linear. Desta forma, basta resolvermos este sistema utilizando alguma técnica qualquer e, após encontrar $\bm{w}_i$, realizamos a sua normalização, ou seja:
+
+\begin{equation}
+	w_{ij} = \frac{w_{ij}}{\sum_jw_{ij}}.
+\end{equation}
+Desta forma, garantimos que a restrição $\sum_j\bm{w}_i=1$ será satisfeita.
+}
+
+\Sli{
+\justifying Feito isso, resolvemos o subproblema 1 da técnica MDS para o \textbf{caso padrão}, ou seja, quando $k<m$. Quando temos a situação oposta, ou seja, $k>m$, precisamos \textbf{regularizar} o nosso problema, pois o mesmo fica \textbf{mal condicionado}, ou seja, existem mais variáveis desconhecidas ($k$) do que o número de equações para resolvê-las ($m$).\newline
+
+\justifying Uma técnica bastante comum é a regularização de Tikonov, ou seja, ao invés de minimizar diretamente a equação abaixo:
+
+\begin{equation}
+	E(\bm{w}) = \norm{\bm{x}_i-\sum_jw_j\bm{x}_j}^2,
+\end{equation}
+adicionamos um termo de regularização:
+
+\begin{equation}
+	E(\bm{w}) = \norm{\bm{x}_i-\sum_jw_j\bm{x}_j}^2+\alpha\sum_{j}w_j^2.
+\end{equation}
+}
+
+\Sli{
+\justifying Na equação anterior, temos que $\alpha$ controla o grau de regularização. A ideia é encontrar uma relação custo-benefício para o valor de $\alpha$, ou seja, quando $\alpha\rightarrow0$, temos que o problema torna-se o de mínimos quadrados. Quando $\alpha\rightarrow\infty$, o termo de regularização "pesa"\ bastante no processo de otimização, ou seja, queremos minimizar a norma Euclidiana do vetor $\bm{w}$ de tal forma a anular o termo de regularização. Tipicamente, utilizamos valores de $\alpha>0$, porém pequenos.\newline
+
+\justifying Neste caso, o problema de otimização passa a ser o seguinte:
+
+\begin{eqnarray}
+	\bm{w}_i^\ast = \argmin_{\bm{w}_i}\bm{w}_i^T\bm{C}_i\bm{w}_i+\alpha\bm{w}_i^T\bm{w}_i,\\
+	\text{s.a. }\bm{1}^Tw_i = 1,\ i=1,2,\ldots,m.\nonumber
+\end{eqnarray}
+}
+
+\Sli{
+\justifying A função Lagrangiana referente à Equação 17 é dada por:
+
+\begin{equation}
+	L(\bm{w}_i,\lambda) = \bm{w}_i^T\bm{C}_i\bm{w}_i+\alpha\bm{w}_i^T\bm{w}_i-\lambda\left(\bm{1}^T\bm{w}_i-1\right).
+\end{equation}
+Tomando a sua derivada com relação à $\bm{w}_i$ e igualando à $0$, temos que:
+
+\begin{equation}
+	\frac{\partial L(\bm{w}_i,\lambda)}{\partial\bm{w}_i} = 2\bm{C}_i\bm{w}_i+2\alpha\bm{w}_i=\lambda\bm{1}^T = 0.
+\end{equation}
+Podemos reescrever a equação acima da seguinte forma:
+
+\begin{equation}
+	(\bm{C}_i+\alpha\bm{I})\bm{w}_i = \frac{\lambda}{2}\bm{1}.
+\end{equation}
+}
+
+\Sli{
+\justifying Agora temos uma equação fechada para encontrar $\bm{w}_i$, ou seja: 
+
+\begin{equation}
+	\bm{w}_i = \frac{\lambda}{2}(\bm{C}_i+\alpha\bm{I})^{-1}\bm{I}.
+\end{equation}
+Podemos descartar, novamente, o termo $\frac{\lambda}{2}$, resultando no seguinte sistema linear:
+
+\begin{equation}
+	(\bm{C}_i+\alpha\bm{I})\bm{w}_i = \bm{1}.
+\end{equation}
+A diferença para a abordagem sem regularização é que estamos adicionando uma leve perturbação na diagonal principal da matriz $\bm{C}_i$ por conta do termo $\alpha\bm{I}$.
+
+}
+
+\Sli{
 \justifying Um agradecimento especial ao \textbf{Prof. Alexandre Levada} do Centro de Ciências Exatas e de Tecnologia, Departamento de Computação, Universidade Federal de São Carlos, pelas notas de aula.
 }
 
