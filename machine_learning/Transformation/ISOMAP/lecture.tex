@@ -224,7 +224,7 @@ Finalmente, podemos calcular a média $\bar{M}$ dos elementos da matriz $\bm{D}$
 	\bar{M} &= \frac{1}{m^2}\sum_{i=1}^m\sum_{j=1}^mD_{ij} = \frac{1}{m^2}\sum_{i=1}^m\sum_{j=1}^m\left(\bm{x}_i^T\bm{x}_i-2\bm{x}_i^T\bm{x}_j+\bm{x}_j^T\bm{x}_j\right)\\\nonumber
 	&= \frac{1}{m^2}\sum_{i=1}^m\cancelto{m}{\sum_{j=1}^m}\bm{x}_i^T\bm{x}_i-\frac{2}{m^2}\sum_{i=1}^m\sum_{j=1}^m\bm{x}_i^T\bm{x}_j+\frac{1}{m^2}\cancelto{m}{\sum_{i=1}^m}\sum_{j=1}^m\bm{x}_j^T\bm{x}_j\\
 	&= \frac{1}{m^2}m\sum_{i=1}^m\bm{x}_i^T\bm{x}_i-\frac{2}{m^2}\sum_{i=1}^m\bm{x}_i^T\sum_{j=1}^m\bm{x}_j+\frac{1}{m^2}m\sum_{j=1}^m\bm{x}_j^T\bm{x}_j\\\nonumber
-	&= \frac{1}{m}\sum_{i=1}^m\bm{x}_i^T\bm{x}_i-\cancelto{0 \text{ Equação 3}}{\frac{1}{m}\sum_{i=1}^m\bm{x}_i^T}\frac{1}{m}\sum_{j=1}^m\bm{x}_j+\frac{1}{m}\sum_{j=1}^m\bm{x}_j^T\bm{x}_j\\
+	&= \frac{1}{m}\sum_{i=1}^m\bm{x}_i^T\bm{x}_i-\cancelto{0 \text{ Equação 3}}{\frac{2}{m}\sum_{i=1}^m\bm{x}_i^T}\frac{1}{m}\sum_{j=1}^m\bm{x}_j+\frac{1}{m}\sum_{j=1}^m\bm{x}_j^T\bm{x}_j\\
 	&= \underbrace{\frac{1}{m}\sum_{i=1}^m\bm{x}_i^T\bm{x}_i+\frac{1}{m}\sum_{j=1}^m\bm{x}_j^T\bm{x}_j}_{\text{termos iguais}} = \frac{2}{m}\sum_{i=1}^m\bm{x}_i^T\bm{x}_i.\nonumber
 \end{align}
 }
@@ -279,7 +279,7 @@ Lembrando que o nosso objetivo é reescrever os termos $b_{ij}$ da matriz de pro
 }
 
 \Sli{
-\justifying Aplicando-se a operação distributiva na Equação 14, podemos criar a matriz $\bm{A}\in\mathbb{R}^{m\times m}$ e, fazendo $A_{ij} = -\frac{1}{2}D_{ij}$, temos as seguintes definições:
+\justifying Aplicando-se a operação distributiva na Equação 13, podemos criar a matriz $\bm{A}\in\mathbb{R}^{m\times m}$ e, fazendo $A_{ij} = -\frac{1}{2}D_{ij}$, temos as seguintes definições:
 
 \begin{itemize}
 	\item $\bar{A}_{i.} = \frac{1}{m}\sum_{j=1}^mA_{ij}$ (média na linha $i$)
