@@ -91,7 +91,7 @@
 \begin{equation}
 	\hat{\bm{x}}_i \approx \sum_{j}w_{ij}\bm{x}_j,\ \forall \bm{x}_j\in{\cal N}(\bm{x}_i),
 \end{equation}
-em que ${\cal N}(\bm{x}_i)$ denota a vizinhança (\emph{patch}) da amostra $\bm{x}_i$ e $w_{ij}$ o peso atribuído durante a combinação linear. O algoritmo do LLE requer, basicamente, o conjunto de dados representado por uma matriz $\bm{X}\in\mathbb{R}^{m\times n}$, o número desejado de dimensões $d<m$ e um valor $k>d+1$ para o tamanho da vizinhança.\newline
+em que ${\cal N}(\bm{x}_i)$ denota a vizinhança (\emph{patch}) da amostra $\bm{x}_i$ e $w_{ij}$ o peso atribuído durante a combinação linear. O algoritmo do LLE requer, basicamente, o conjunto de dados representado por uma matriz $\bm{X}\in\mathbb{R}^{m\times n}$, o número desejado de dimensões $d<m$ e um valor $k>d+1$ para o tamanho da vizinhança. Sem perda de generalidade, vamos assumir que $\bm{X}_i = \bm{x}_i$, ou seja, a $i$-ésima linha da matrix $\bm{X}$ corresponde à $i$-ésima amostra de ${\cal X}$.\newline
 
 \justifying O algoritmo do LLE pode ser dividido em três passos principais:
 }
@@ -101,15 +101,15 @@ em que ${\cal N}(\bm{x}_i)$ denota a vizinhança (\emph{patch}) da amostra $\bm{
 	\item Para cada $\bm{x}_i\in{\cal X}$ encontrar os seus $k$-vizinhos mais próximos, $i=1,2,\ldots,m$.
 	\item Encontrar a matrix $\bm{W}$ que minimiza o erro de reconstrução para cada amostra $\bm{x}_i\in{\cal X}$:
 		\begin{equation}
-		E(\bm{W}) = \sum_{i=1}^m\norm{\bm{x}_i-\sum_jw_{ij}\bm{x}_j}^2,\ \forall \bm{x}_j\in{\cal N}(\bm{x}_i),
+		E(\bm{W},\bm{X}) = \sum_{i=1}^m\norm{\bm{x}_i-\sum_jw_{ij}\bm{x}_j}^2,\ \forall \bm{x}_j\in{\cal N}(\bm{x}_i),
 		\end{equation}
 		em que $w_{ij} = 0$ a menos que $\bm{x}_j\in{\cal N}(\bm{x}_i)$. Note que $\sum_jw_{ij}=1$.
 	\item Encontre o conjunto de coordenadas $\hat{\bm{X}}$ que minimiza o erro de reconstrução utilizando os pesos ótimos encontrados no passo anterior:
 		\begin{equation}
-		\Phi(\hat{\bm{X}}) = \sum_{i=1}^m\norm{\hat{\bm{x}}_i-\sum_jw_{ij}\hat{\bm{x}}_j}^2,\ \forall \hat{\bm{x}}_j\in{\cal N}(\hat{\bm{x}}_i),
+		\Phi(\bm{W},\hat{\bm{X}}) = \sum_{i=1}^m\norm{\hat{\bm{x}}_i-\sum_jw_{ij}\hat{\bm{x}}_j}^2,\ \forall \hat{\bm{x}}_j\in{\cal N}(\hat{\bm{x}}_i),
 		\end{equation}
 \end{enumerate}
-tal que $\hat{\bm{x}}\in\mathbb{R}^d$ e $\hat{\bm{x}}\hat{\bm{X}}^T=\bm{I}$.
+tal que $\hat{\bm{x}}\in\mathbb{R}^d$ e $\hat{\bm{X}}\hat{\bm{X}}^T=\bm{I}$. Sem perda de generalidade, vamos assumir que $\hat{\bm{X}}_i = \hat{\bm{x}}_i$, ou seja, a $i$-ésima linha da matrix $\hat{\bm{X}}$ corresponde à $i$-ésima amostra de $\hat{{\cal X}}$.
 }
 
 \Sli{
@@ -118,7 +118,7 @@ tal que $\hat{\bm{x}}\in\mathbb{R}^d$ e $\hat{\bm{x}}\hat{\bm{X}}^T=\bm{I}$.
 \justifying Agora, vamos para o passo 2, ou seja, estimação dos pesos $\bm{W}$ utilizando os mínimos quadrados. Sem perda de generalidade, podemos expressar o erro de reconstrução local considerando apenas o ponto $\bm{x}_i\in{\cal X}$ como segue:
 
 \begin{align}\nonumber
-	E(\bm{w}) &= \norm{\bm{x}_i-\sum_jw_j\bm{x}_j}^2 = \norm{\cancelto{1\text{ (restrição)}}{\sum_jw_j}\bm{x}_i-\sum_jw_j\bm{x}_j}^2 = \norm{\sum_jw_j(\bm{x}_i-\bm{x}_j)}^2\\ 
+	E(\bm{w},\bm{x}_i) &= \norm{\bm{x}_i-\sum_jw_j\bm{x}_j}^2 = \norm{\cancelto{1\text{ (restrição)}}{\sum_jw_j}\bm{x}_i-\sum_jw_j\bm{x}_j}^2 = \norm{\sum_jw_j(\bm{x}_i-\bm{x}_j)}^2\\ 
 	&= \sum_j\sum_kw_jw_k(\bm{x}_i-\bm{x}_j)^T(\bm{x}_i-\bm{x}_k).
 \end{align}
 }
@@ -132,7 +132,7 @@ tal que $\hat{\bm{x}}\in\mathbb{R}^d$ e $\hat{\bm{x}}\hat{\bm{X}}^T=\bm{I}$.
 Desta forma, podemos reescrever a expressão para o erro local de reconstrução (Equação 4) como segue:
 
 \begin{equation}
-	E(\bm{w}) = \sum_j\sum_kw_jC_{jk}w_k = \bm{w}^T\bm{C}\bm{w}.
+	E(\bm{w},\bm{x}_i) = \sum_j\sum_kw_jC_{jk}w_k = \bm{w}^T\bm{C}\bm{w}.
 \end{equation}
 Lembrando que o intuito principal da restrição $\sum_jw_j=1$ é para adicionar propriedades de \textbf{invariância à translação}, isto é, adicionando uma constante $\bm{c}\in\mathbb{R}^n$ ao vetor $\bm{x}_i$ e aos seus vizinhos, o erro de reconstrução não muda.
 }
@@ -141,9 +141,9 @@ Lembrando que o intuito principal da restrição $\sum_jw_j=1$ é para adicionar
 \justifying Sejam, então, $\tilde{\bm{x}_i} = \bm{x}_i+\bm{c}$ e $\tilde{\bm{x}_j} = \bm{x}_j+\bm{c}$ as versões deslocadas das amostras $\bm{x}_i$ e $\bm{x}_j$, respectivamente. O novo erro de reconstrução local é dado por:
 
 \begin{align}\nonumber
-	\tilde{E}(\bm{w}) &= \norm{\tilde{\bm{x}_i}-\sum_jw_j\tilde{\bm{x}_j}}^2 = \norm{\bm{x}_i+\bm{c}-\sum_jw_j(\bm{x}_j+\bm{c})}^2\\
+	\tilde{E}(\bm{w},\bm{x}_i) &= \norm{\tilde{\bm{x}_i}-\sum_jw_j\tilde{\bm{x}_j}}^2 = \norm{\bm{x}_i+\bm{c}-\sum_jw_j(\bm{x}_j+\bm{c})}^2\\
 	&= \norm{\bm{x}_i+\bm{c}-\sum_jw_j\bm{x}_j-\sum_jw_j\bm{c}}^2 = \norm{\bm{x}_i+\bm{c}-\sum_jw_j\bm{x}_j-\bm{c}\cancelto{1}{\sum_jw_j}}^2\\
-	&= \norm{\bm{x}_i+\bm{c}-\sum_jw_j\bm{x}_j-\bm{c}}^2 = \norm{\bm{x}_i-\sum_jw_j\bm{x}_j}^2 = E(\bm{w})\nonumber.
+	&= \norm{\bm{x}_i+\bm{c}-\sum_jw_j\bm{x}_j-\bm{c}}^2 = \norm{\bm{x}_i-\sum_jw_j\bm{x}_j}^2 = E(\bm{w},\bm{x}_i)\nonumber.
 \end{align}
 Assim, a translação não afeta o erro quando temos a restrição $\sum_jw_j=1$.
 }
@@ -195,7 +195,7 @@ Desta forma, garantimos que a restrição $\sum_j\bm{w}_i=1$ será satisfeita.
 }
 
 \Sli{
-\justifying Feito isso, resolvemos o subproblema 1 da técnica MDS para o \textbf{caso padrão}, ou seja, quando $k<m$. Quando temos a situação oposta, ou seja, $k>m$, precisamos \textbf{regularizar} o nosso problema, pois o mesmo fica \textbf{mal condicionado}, ou seja, existem mais variáveis desconhecidas ($k$) do que o número de equações para resolvê-las ($m$).\newline
+\justifying Feito isso, resolvemos o subproblema 1 para o \textbf{caso padrão}, ou seja, quando $k<n$. Quando temos a situação oposta, ou seja, $k>n$, precisamos \textbf{regularizar} o nosso problema, pois o mesmo fica \textbf{mal condicionado}, ou seja, existem mais variáveis desconhecidas ($k$) do que o número de equações para resolvê-las ($n$).\newline
 
 \justifying Uma técnica bastante comum é a regularização de Tikonov, ou seja, ao invés de minimizar diretamente a equação abaixo:
 
@@ -279,7 +279,7 @@ A diferença para a abordagem sem regularização é que estamos adicionando uma
 \begin{equation}
 \begin{split}
 	\Phi(\hat{\bm{X}}) &= \sum_{i=1}^m\left[\hat{\bm{x}}_i^T\hat{\bm{x}}_i-\hat{\bm{x}}_i^T\sum_jw_{ij}\hat{\bm{x}}_j-\left(\sum_jw_{ij}\hat{\bm{x}}_j\right)^T\hat{\bm{x}}_i+\right.\\
-		&+ \left.\left(\sum_jw_{ij}\hat{\bm{x}}_j\right)^T\left(\sum_jw_{ij}\hat{\bm{x}}_j\right)\right]
+		&+ \left.\left(\sum_jw_{ij}\hat{\bm{x}}_j\right)^T\left(\sum_jw_{ij}\hat{\bm{x}}_j\right)\right].
 \end{split}
 \end{equation}
 }
