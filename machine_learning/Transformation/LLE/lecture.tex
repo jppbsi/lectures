@@ -288,10 +288,25 @@ A diferença para a abordagem sem regularização é que estamos adicionando uma
 \justifying Expandindo o somatório, temos que:
 
 \begin{equation}
-\begin{aligned}
-	\Phi(\hat{\bm{X}}) = {} & \sum_{i=1}
-\end{aligned}
+\begin{split}
+	\Phi(\hat{\bm{X}}) &= \sum_{i=1}^m\hat{\bm{x}}_i^T\hat{\bm{x}}_i-\sum_{i=1}^m\sum_jw_{ij}\hat{\bm{x}}_i^T\hat{\bm{x}}_j-\sum_{i=1}^m\sum_jw_{ji}\hat{\bm{x}}_j^T\hat{\bm{x}}_i+\\
+		&+ \sum_{i=1}^m\sum_j\sum_kw_{ji}\hat{\bm{x}}_j^Tw_{ik}\hat{\bm{x}}_k.
+\end{split}
 \end{equation}
+}
+
+\Sli{
+Podemos reescrever a equação acima utilizando traços (soma dos elementos das diagonais) de matrizes, ou seja:
+
+\begin{align}\nonumber
+	\Phi(\hat{\bm{X}}) &= \Tr(\hat{\bm{X}}^T\hat{\bm{X}})-\Tr(\hat{\bm{X}}^T\bm{W}\hat{\bm{X}})-\Tr(\hat{\bm{X}}^T\bm{W}^T\hat{\bm{X}})+\Tr(\hat{\bm{X}}^T\bm{W}^T\bm{W}\hat{\bm{X}})\\
+	&= \Tr(\hat{\bm{X}}^T\hat{\bm{X}})-\Tr(\hat{\bm{X}}^T(\bm{W}\hat{\bm{X}}))-\Tr((\bm{W}\hat{\bm{X}})^T\hat{\bm{X}})+\Tr((\bm{W}\hat{\bm{X}})^T(\bm{W}\hat{\bm{X}}))\\\nonumber
+	&= \Tr(\hat{\bm{X}}^T\hat{\bm{X}}-\hat{\bm{X}}^T(\bm{W}\hat{\bm{X}})-(\bm{W}\hat{\bm{X}})^T\hat{\bm{X}}+(\bm{W}\hat{\bm{X}})^T(\bm{W}\hat{\bm{X}}))\\\nonumber
+	&= \Tr(\hat{\bm{X}}^T(\hat{\bm{X}}-\bm{W}\hat{\bm{X}})-(\bm{W}\hat{\bm{X}})^T(\hat{\bm{X}}-\bm{W}\hat{\bm{X}}))\\\nonumber
+	&= \Tr((\hat{\bm{X}}-\bm{W}\hat{\bm{X}})^T(\hat{\bm{X}}-\bm{W}\hat{\bm{X}}))\\\nonumber
+	&= \Tr(((\bm{I}-\bm{W})\hat{\bm{X}})^T((\bm{I}-\bm{W})\hat{\bm{X}}))\\\nonumber
+	&= \Tr(\hat{\bm{X}}^T(\bm{I}-\bm{W}^T)(\bm{I}-\bm{W})\hat{\bm{X}})
+\end{align}
 }
 
 \Sli{
