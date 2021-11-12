@@ -99,9 +99,9 @@
 \justifying O algoritmo do ISOMAP pode ser resumidos em três passos:
 
 \begin{enumerate}
-	\item Induzir o grafo $k$-nn a partir do conjunto de dados ${\cal X} = \{(\bm{x}_1,y_1),(\bm{x}_2,y_2,\ldots,(\bm{x}_m,y_m)\}$, em que $\bm{x}_i\in\mathbb{R}^n$ e $y\in{\cal Y}$ tal que ${\cal Y}=\{\omega_1,\omega_2,\ldots,\omega_c\}$ e $k<n$.
+	\item Induzir o grafo $k$-nn a partir do conjunto de dados ${\cal X} = \{(\bm{x}_1,y_1),(\bm{x}_2,y_2),\ldots,(\bm{x}_m,y_m)\}$, em que $\bm{x}_i\in\mathbb{R}^n$ e $y\in{\cal Y}$ tal que ${\cal Y}=\{\omega_1,\omega_2,\ldots,\omega_c\}$ e $k<n$. Para amostras que não são vizinhas, utilizamos o valor $+\infty$ como distância entre elas.
 	\item Criar a matriz de distâncias ponto a ponto $\bm{D}\in\mathbb{R}^{m\times m}$ entre as amostras de ${\cal X}$. Desta forma, $D_{ij}$ representa o menor caminho entre as amostras $\bm{x}_i$ e $\bm{x}_j$.
-	\item Encontrar o conjunto de pontos $\hat{{\cal X}}$ no espaço $\mathbb{R}^k$ tal que as distâncias originais sejam "preservadas". Esta etapa é realizada pela técnica MDS (\emph{Multidimensional Scaling}).
+	\item Encontrar o conjunto de pontos $\hat{{\cal X}}$ no espaço $\mathbb{R}^p$ tal que as distâncias originais sejam "preservadas". Esta etapa é realizada pela técnica MDS (\emph{Multidimensional Scaling}).
 \end{enumerate}
 Trata-se, portanto, de uma abordagem \textbf{global}, pois utiliza todas as amostras para calcular as distâncias. A técnica é baseada em um teorema que diz que caminhos mínimos em grafos $k$-nn são boas aproximações para as distâncias geodésicas (distâncias que respeitam as variedades).
 }
@@ -334,7 +334,7 @@ tal que $\bm{U}\in\mathbb{R}^{m\times m}$. Note que a Equação 15 nada mais é 
 \begin{equation}
 	\bm{B} = \hat{\bm{X}}\hat{\bm{X}}^T,
 \end{equation}
-em que $\hat{\bm{X}}\in\mathbb{R}^{m\times k}$ é a matriz dos pontos projetados em $\mathbb{R}^k$. A matriz $\bm{B}$ possui certas propriedades, isto é, é simétrica, positiva semi-definida e possui rank $k$, o que significa que possui $k$ autovalores não negativos. A sua decomposição espectral é dada como segue: 
+em que $\hat{\bm{X}}\in\mathbb{R}^{m\times p}$ é a matriz dos pontos em $\mathbb{R}^p$. A matriz $\bm{B}$ possui certas propriedades, isto é, é simétrica, positiva semi-definida e possui rank $p$, o que significa que possui $p$ autovalores não negativos. A sua decomposição espectral é dada como segue: 
 
 \begin{equation}
 	\bm{B} = \bm{V}\bm{\Lambda}\bm{V}^T,
@@ -343,12 +343,12 @@ em que $\bm{\Lambda}\in\mathbb{R}^{m\times m}$ é a matriz diagonal dos autovalo
 }
 
 \Sli{
-\justifying Sem perda de generalidade, podemos considerar $\lambda_1\geq\lambda_2\geq\ldots\geq\lambda_m$. Considerando apenas os $k$ maiores autovalores, podemos reescrever a Equação 20 da seguinte forma:
+\justifying Sem perda de generalidade, podemos considerar $\lambda_1\geq\lambda_2\geq\ldots\geq\lambda_m$. Considerando apenas os $p$ maiores autovalores, podemos reescrever a Equação 20 da seguinte forma:
 
 \begin{equation}
 	\bm{B} = \bm{V}^\prime\bm{\Lambda}^\prime{\bm{V}^\prime}^T,
 \end{equation}
-em que $\bm{\Lambda}^\prime\in\mathbb{R}^{k\times k}$ é a matriz diagonal dos autovalores e $\bm{V}^\prime\in\mathbb{R}^{m\times k}$ denota a matriz dos autovetores. Da Equação 19, temos que:
+em que $\bm{\Lambda}^\prime\in\mathbb{R}^{p\times p}$ é a matriz diagonal dos autovalores e $\bm{V}^\prime\in\mathbb{R}^{m\times p}$ denota a matriz dos autovetores. Da Equação 19, temos que:
 
 \begin{equation}
 	\bm{B} = \hat{\bm{X}}\hat{\bm{X}}^T = \bm{V}^\prime\bm{\Lambda}^\prime{\bm{V}^\prime}^T = \underbrace{\bm{V}^\prime{\bm{\Lambda}^\prime}^{1/2}}_{\hat{\bm{X}}}\overbrace{{\bm{\Lambda}^\prime}^{1/2}{\bm{V}^\prime}^T}^{\hat{\bm{X}}^T},
@@ -370,7 +370,7 @@ Vejamos, agora, o algoritmo MDS.
 	\item Faça $\bm{H} = \bm{I}-\frac{1}{m}\bm{1}\bm{1}^T$.
 	\item Calcule $\bm{B} = \bm{H}\bm{A}\bm{H}$.
 	\item Encontrar os autovalores e autovetores de $\bm{B}$.
-	\item Tomar os $k$ autovetores associados aos $k$ maiores autovalores de $\bm{B}$ para montar $\bm{V}^\prime$ e $\bm{\Lambda}^\prime$.
+	\item Tomar os $p$ autovetores associados aos $p$ maiores autovalores de $\bm{B}$ para montar $\bm{V}^\prime$ e $\bm{\Lambda}^\prime$.
 	\item Calcular $\hat{\bm{X}} = \bm{V}^\prime{\bm{\Lambda}^\prime}^{1/2}$.
 \end{enumerate}
 }
