@@ -89,7 +89,7 @@
 \justifying Seja ${\cal X}=\{\bm{x}_1,\bm{x}_2,\ldots,\bm{x}_m\}$ o nosso conjunto de dados original tal que $\bm{x}_i\in\mathbb{R}^n$. Temos, então que a nova amostra projetada $\hat{\bm{x}}_i$ é obtida da seguinte forma:
 
 \begin{equation}
-	\hat{\bm{x}}_i \approx \sum_{j}w_{ij}\bm{x}_j,\ \forall \bm{x}_j\in{\cal N}(\bm{x}_i),
+	\hat{\bm{x}}_i \approx \sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\bm{x}_j,
 \end{equation}
 em que ${\cal N}(\bm{x}_i)$ denota a vizinhança (\emph{patch}) da amostra $\bm{x}_i$ e $w_{ij}$ o peso atribuído durante a combinação linear. O algoritmo do LLE requer, basicamente, o conjunto de dados representado por uma matriz $\bm{X}\in\mathbb{R}^{m\times n}$, o número desejado de dimensões $d<m$ e um valor $k>d+1$ para o tamanho da vizinhança. Sem perda de generalidade, vamos assumir que $\bm{X}_i = \bm{x}_i$, ou seja, a $i$-ésima linha da matrix $\bm{X}$ corresponde à $i$-ésima amostra de ${\cal X}$.\newline
 
@@ -99,14 +99,14 @@ em que ${\cal N}(\bm{x}_i)$ denota a vizinhança (\emph{patch}) da amostra $\bm{
 \Sli{
 \begin{enumerate}
 	\item Para cada $\bm{x}_i\in{\cal X}$ encontrar os seus $k$-vizinhos mais próximos, $i=1,2,\ldots,m$.
-	\item Encontrar a matrix $\bm{W}$ que minimiza o erro de reconstrução para cada amostra $\bm{x}_i\in{\cal X}$:
+	\item Encontrar a matriz $\bm{W}$ que minimiza o erro de reconstrução para cada amostra $\bm{x}_i\in{\cal X}$:
 		\begin{equation}
-		E(\bm{W},\bm{X}) = \sum_{i=1}^m\norm{\bm{x}_i-\sum_jw_{ij}\bm{x}_j}^2,\ \forall \bm{x}_j\in{\cal N}(\bm{x}_i),
+		E(\bm{W},\bm{X}) = \sum_{i=1}^m\norm{\bm{x}_i-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\bm{x}_j}^2,
 		\end{equation}
-		em que $w_{ij} = 0$ a menos que $\bm{x}_j\in{\cal N}(\bm{x}_i)$. Note que $\sum_jw_{ij}=1$.
+		em que $w_{ij} = 0$ a menos que $\bm{x}_j\in{\cal N}(\bm{x}_i)$. Note que $\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}=1$.
 	\item Encontre o conjunto de coordenadas $\hat{\bm{X}}$ que minimiza o erro de reconstrução utilizando os pesos ótimos encontrados no passo anterior:
 		\begin{equation}
-		\Phi(\bm{W},\hat{\bm{X}}) = \sum_{i=1}^m\norm{\hat{\bm{x}}_i-\sum_jw_{ij}\hat{\bm{x}}_j}^2,\ \forall \hat{\bm{x}}_j\in{\cal N}(\hat{\bm{x}}_i),
+		\Phi(\bm{W},\hat{\bm{X}}) = \sum_{i=1}^m\norm{\hat{\bm{x}}_i-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\hat{\bm{x}}_j}^2,
 		\end{equation}
 \end{enumerate}
 tal que $\hat{\bm{x}}\in\mathbb{R}^d$ e $\hat{\bm{X}}\hat{\bm{X}}^T=\bm{I}$. Sem perda de generalidade, vamos assumir que $\hat{\bm{X}}_i = \hat{\bm{x}}_i$, ou seja, a $i$-ésima linha da matrix $\hat{\bm{X}}$ corresponde à $i$-ésima amostra de $\hat{{\cal X}}$.
@@ -118,23 +118,23 @@ tal que $\hat{\bm{x}}\in\mathbb{R}^d$ e $\hat{\bm{X}}\hat{\bm{X}}^T=\bm{I}$. Sem
 \justifying Agora, vamos para o passo 2, ou seja, estimação dos pesos $\bm{W}$ utilizando os mínimos quadrados. Sem perda de generalidade, podemos expressar o erro de reconstrução local considerando apenas o ponto $\bm{x}_i\in{\cal X}$ como segue:
 
 \begin{align}\nonumber
-	E(\bm{w},\bm{x}_i) &= \norm{\bm{x}_i-\sum_jw_j\bm{x}_j}^2 = \norm{\cancelto{1\text{ (restrição)}}{\sum_jw_j}\bm{x}_i-\sum_jw_j\bm{x}_j}^2 = \norm{\sum_jw_j(\bm{x}_i-\bm{x}_j)}^2\\ 
-	&= \sum_j\sum_kw_jw_k(\bm{x}_i-\bm{x}_j)^T(\bm{x}_i-\bm{x}_k).
+	E(\bm{w},\bm{x}_i) &= \norm{\bm{x}_i-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j\bm{x}_j}^2 = \norm{\cancelto{1\text{ (restrição)}}{\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j}\bm{x}_i-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j\bm{x}_j}^2 \\
+	&= \norm{\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j(\bm{x}_i-\bm{x}_j)}^2 = \sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}\sum_{\bm{x}_k\in{\cal N}(\bm{x}_i)}w_jw_k(\bm{x}_i-\bm{x}_j)^T(\bm{x}_i-\bm{x}_k).
 \end{align}
 }
 
 \Sli{
-\justifying Vamos, agora, definir a matriz $\bm{C}\in\mathbb{R}^{n\times n}$:
+\justifying Vamos, agora, definir a matriz $\bm{C}^i\in\mathbb{R}^{n\times n}$:
 
 \begin{equation}
-	C_{jk} = (\bm{x}_i-\bm{x}_j)^T(\bm{x}_i-\bm{x}_k).
+	C^i_{jk} = (\bm{x}_i-\bm{x}_j)^T(\bm{x}_i-\bm{x}_k).
 \end{equation}
 Desta forma, podemos reescrever a expressão para o erro local de reconstrução (Equação 4) como segue:
 
 \begin{equation}
-	E(\bm{w},\bm{x}_i) = \sum_j\sum_kw_jC_{jk}w_k = \bm{w}^T\bm{C}\bm{w}.
+	E(\bm{w},\bm{x}_i) = \sum_j\sum_kw_jC^i_{jk}w_k = \bm{w}^T\bm{C}^i\bm{w}.
 \end{equation}
-Lembrando que o intuito principal da restrição $\sum_jw_j=1$ é para adicionar propriedades de \textbf{invariância à translação}, isto é, adicionando uma constante $\bm{c}\in\mathbb{R}^n$ ao vetor $\bm{x}_i$ e aos seus vizinhos, o erro de reconstrução não muda.
+Lembrando que o intuito principal da restrição $\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j=1$ é para adicionar propriedades de \textbf{invariância à translação}, isto é, adicionando uma constante $\bm{c}\in\mathbb{R}^n$ ao vetor $\bm{x}_i$ e aos seus vizinhos, o erro de reconstrução não muda.
 }
 
 \Sli{
@@ -145,7 +145,7 @@ Lembrando que o intuito principal da restrição $\sum_jw_j=1$ é para adicionar
 	&= \norm{\bm{x}_i+\bm{c}-\sum_jw_j\bm{x}_j-\sum_jw_j\bm{c}}^2 = \norm{\bm{x}_i+\bm{c}-\sum_jw_j\bm{x}_j-\bm{c}\cancelto{1}{\sum_jw_j}}^2\\
 	&= \norm{\bm{x}_i+\bm{c}-\sum_jw_j\bm{x}_j-\bm{c}}^2 = \norm{\bm{x}_i-\sum_jw_j\bm{x}_j}^2 = E(\bm{w},\bm{x}_i)\nonumber.
 \end{align}
-Assim, a translação não afeta o erro quando temos a restrição $\sum_jw_j=1$.
+Assim, a translação não afeta o erro quando temos a restrição $\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j=1$.
 }
 
 \Sli{
