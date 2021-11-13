@@ -124,15 +124,15 @@ tal que $\hat{\bm{x}}\in\mathbb{R}^d$ e $\hat{\bm{X}}\hat{\bm{X}}^T=\bm{I}$. Sem
 }
 
 \Sli{
-\justifying Vamos, agora, definir a matriz $\bm{C}^i\in\mathbb{R}^{n\times n}$:
+\justifying Vamos, agora, definir a matriz $\bm{C}\in\mathbb{R}^{n\times n}$:
 
 \begin{equation}
-	C^i_{jk} = (\bm{x}_i-\bm{x}_j)^T(\bm{x}_i-\bm{x}_k).
+	C_{jk} = (\bm{x}_i-\bm{x}_j)^T(\bm{x}_i-\bm{x}_k).
 \end{equation}
 Desta forma, podemos reescrever a expressão para o erro local de reconstrução (Equação 4) como segue:
 
 \begin{equation}
-	E(\bm{w},\bm{x}_i) = \sum_j\sum_kw_jC^i_{jk}w_k = \bm{w}^T\bm{C}^i\bm{w}.
+	E(\bm{w},\bm{x}_i) = \sum_j\sum_kw_jC_{jk}w_k = \bm{w}^T\bm{C}\bm{w}.
 \end{equation}
 Lembrando que o intuito principal da restrição $\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j=1$ é para adicionar propriedades de \textbf{invariância à translação}, isto é, adicionando uma constante $\bm{c}\in\mathbb{R}^n$ ao vetor $\bm{x}_i$ e aos seus vizinhos, o erro de reconstrução não muda.
 }
@@ -140,10 +140,16 @@ Lembrando que o intuito principal da restrição $\sum_{\bm{x}_j\in{\cal N}(\bm{
 \Sli{
 \justifying Sejam, então, $\tilde{\bm{x}_i} = \bm{x}_i+\bm{c}$ e $\tilde{\bm{x}_j} = \bm{x}_j+\bm{c}$ as versões deslocadas das amostras $\bm{x}_i$ e $\bm{x}_j$, respectivamente. O novo erro de reconstrução local é dado por:
 
+\begin{equation}
+	\tilde{E}(\bm{w},\bm{x}_i) = \norm{\tilde{\bm{x}_i}-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j\tilde{\bm{x}_j}}^2 = \norm{\bm{x}_i+\bm{c}-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j(\bm{x}_j+\bm{c})}^2.
+\end{equation}
+Podemos reescrever esta equação como segue:
+
 \begin{align}\nonumber
-	\tilde{E}(\bm{w},\bm{x}_i) &= \norm{\tilde{\bm{x}_i}-\sum_jw_j\tilde{\bm{x}_j}}^2 = \norm{\bm{x}_i+\bm{c}-\sum_jw_j(\bm{x}_j+\bm{c})}^2\\
-	&= \norm{\bm{x}_i+\bm{c}-\sum_jw_j\bm{x}_j-\sum_jw_j\bm{c}}^2 = \norm{\bm{x}_i+\bm{c}-\sum_jw_j\bm{x}_j-\bm{c}\cancelto{1}{\sum_jw_j}}^2\\
-	&= \norm{\bm{x}_i+\bm{c}-\sum_jw_j\bm{x}_j-\bm{c}}^2 = \norm{\bm{x}_i-\sum_jw_j\bm{x}_j}^2 = E(\bm{w},\bm{x}_i)\nonumber.
+	\tilde{E}(\bm{w},\bm{x}_i) &= \norm{\tilde{\bm{x}_i}-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j\tilde{\bm{x}_j}}^2 = \norm{\bm{x}_i+\bm{c}-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j(\bm{x}_j+\bm{c})}^2\\
+	&= \norm{\bm{x}_i+\bm{c}-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j\bm{x}_j-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j\bm{c}}^2\\\nonumber
+	&= \norm{\bm{x}_i+\bm{c}-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j\bm{x}_j-\bm{c}\cancelto{1}{\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j}}^2\\\nonumber
+	&= \norm{\bm{x}_i+\bm{c}-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j\bm{x}_j-\bm{c}}^2 = \norm{\bm{x}_i-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j\bm{x}_j}^2 = E(\bm{w},\bm{x}_i)\nonumber.
 \end{align}
 Assim, a translação não afeta o erro quando temos a restrição $\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j=1$.
 }
@@ -200,12 +206,12 @@ Desta forma, garantimos que a restrição $\sum_j\bm{w}_i=1$ será satisfeita.
 \justifying Uma técnica bastante comum é a regularização de Tikonov, ou seja, ao invés de minimizar diretamente a equação abaixo:
 
 \begin{equation}
-	E(\bm{w}) = \norm{\bm{x}_i-\sum_jw_j\bm{x}_j}^2,
+	E(\bm{w}) = \norm{\bm{x}_i-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j\bm{x}_j}^2,
 \end{equation}
 adicionamos um termo de regularização:
 
 \begin{equation}
-	E(\bm{w}) = \norm{\bm{x}_i-\sum_jw_j\bm{x}_j}^2+\alpha\sum_{j}w_j^2.
+	E(\bm{w}) = \norm{\bm{x}_i-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j\bm{x}_j}^2+\alpha\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j^2.
 \end{equation}
 }
 
@@ -268,8 +274,8 @@ A diferença para a abordagem sem regularização é que estamos adicionando uma
 \justifying Ao contrário do passo anterior, aqui não conseguimos separar o problema em $m$ subproblemas independentes. Da Equação 3, temos que:
 
 \begin{align}\nonumber
-		\Phi(\hat{\bm{X}}) &= \sum_{i=1}^m\norm{\hat{\bm{x}}_i-\sum_jw_{ij}\hat{\bm{x}}_j}^2\\
-		&= \sum_{i=1}^m\left[\left(\hat{\bm{x}}_i-\sum_jw_{ij}\hat{\bm{x}}_j\right)^T\left(\hat{\bm{x}}_i-\sum_jw_{ij}\hat{\bm{x}}_j\right)\right].
+		\Phi(\hat{\bm{X}}) &= \sum_{i=1}^m\norm{\hat{\bm{x}}_i-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\hat{\bm{x}}_j}^2\\
+		&= \sum_{i=1}^m\left[\left(\hat{\bm{x}}_i-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\hat{\bm{x}}_j\right)^T\left(\hat{\bm{x}}_i-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\hat{\bm{x}}_j\right)\right].
 \end{align}
 }
 
@@ -278,8 +284,8 @@ A diferença para a abordagem sem regularização é que estamos adicionando uma
 
 \begin{equation}
 \begin{split}
-	\Phi(\hat{\bm{X}}) &= \sum_{i=1}^m\left[\hat{\bm{x}}_i^T\hat{\bm{x}}_i-\hat{\bm{x}}_i^T\sum_jw_{ij}\hat{\bm{x}}_j-\left(\sum_jw_{ij}\hat{\bm{x}}_j\right)^T\hat{\bm{x}}_i+\right.\\
-		&+ \left.\left(\sum_jw_{ij}\hat{\bm{x}}_j\right)^T\left(\sum_jw_{ij}\hat{\bm{x}}_j\right)\right].
+	\Phi(\hat{\bm{X}}) &= \sum_{i=1}^m\left[\hat{\bm{x}}_i^T\hat{\bm{x}}_i-\hat{\bm{x}}_i^T\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\hat{\bm{x}}_j-\left(\sum_jw_{ij}\hat{\bm{x}}_j\right)^T\hat{\bm{x}}_i+\right.\\
+		&+ \left.\left(\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\hat{\bm{x}}_j\right)^T\left(\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\hat{\bm{x}}_j\right)\right].
 \end{split}
 \end{equation}
 }
@@ -289,8 +295,8 @@ A diferença para a abordagem sem regularização é que estamos adicionando uma
 
 \begin{equation}
 \begin{split}
-	\Phi(\hat{\bm{X}}) &= \sum_{i=1}^m\hat{\bm{x}}_i^T\hat{\bm{x}}_i-\sum_{i=1}^m\sum_jw_{ij}\hat{\bm{x}}_i^T\hat{\bm{x}}_j-\sum_{i=1}^m\sum_jw_{ji}\hat{\bm{x}}_j^T\hat{\bm{x}}_i+\\
-		&+ \sum_{i=1}^m\sum_j\sum_kw_{ji}\hat{\bm{x}}_j^Tw_{ik}\hat{\bm{x}}_k.
+	\Phi(\hat{\bm{X}}) &= \sum_{i=1}^m\hat{\bm{x}}_i^T\hat{\bm{x}}_i-\sum_{i=1}^m\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\hat{\bm{x}}_i^T\hat{\bm{x}}_j-\sum_{i=1}^m\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ji}\hat{\bm{x}}_j^T\hat{\bm{x}}_i+\\
+		&+ \sum_{i=1}^m\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}\sum_{\bm{x}_k\in{\cal N}(\bm{x}_i)}w_{ji}\hat{\bm{x}}_j^Tw_{ik}\hat{\bm{x}}_k.
 \end{split}
 \end{equation}
 }
