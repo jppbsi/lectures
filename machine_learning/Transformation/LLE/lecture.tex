@@ -311,8 +311,65 @@ Podemos reescrever a equação acima utilizando traços (soma dos elementos das 
 	&= \Tr(\hat{\bm{X}}^T(\hat{\bm{X}}-\bm{W}\hat{\bm{X}})-(\bm{W}\hat{\bm{X}})^T(\hat{\bm{X}}-\bm{W}\hat{\bm{X}}))\\\nonumber
 	&= \Tr((\hat{\bm{X}}-\bm{W}\hat{\bm{X}})^T(\hat{\bm{X}}-\bm{W}\hat{\bm{X}}))\\\nonumber
 	&= \Tr(((\bm{I}-\bm{W})\hat{\bm{X}})^T((\bm{I}-\bm{W})\hat{\bm{X}}))\\\nonumber
-	&= \Tr(\hat{\bm{X}}^T(\bm{I}-\bm{W}^T)(\bm{I}-\bm{W})\hat{\bm{X}})
+	&= \Tr(\hat{\bm{X}}^T(\bm{I}-\bm{W}^T)(\bm{I}-\bm{W})\hat{\bm{X}}).
 \end{align}
+}
+
+\Sli{
+\justifying Seja a matriz $M\in\mathbb{R}^{m\times m}$ tal que:
+
+\begin{equation}
+	\bm{M} = (\bm{I}-\bm{W})^T(\bm{I}-\bm{W}),
+\end{equation}
+em que $\bm{W}$ já encontramos anteriormente. Assim, temos o seguinte problema de otimização:
+
+\begin{eqnarray}
+	\hat{\bm{X}}^\ast = \argmin_{\hat{\bm{X}}}\Tr(\hat{\bm{X}}^T\bm{M}\hat{\bm{X}})\\\nonumber
+	\text{s.a. }\frac{1}{m}\hat{\bm{X}}^T\hat{\bm{X}} = 1.
+\end{eqnarray}
+\justifying Como temos um problema de otimização com restrição, precisamos fazer uso da técnica dos multiplicadores de Lagrange.
+}
+
+\Sli{
+\justifying O Lagrangiano da função é dado por:
+
+\begin{equation}
+	L(\hat{\bm{X}},\lambda) = \Tr(\hat{\bm{X}}^T\bm{M}\hat{\bm{X}})-\lambda\left(\frac{1}{m}\hat{\bm{X}}^T\hat{\bm{X}}-\bm{I}\right).
+\end{equation}
+Derivando o Lagrangiano e igualando à zero, temos que:
+
+\begin{equation}
+	2\bm{M}\hat{\bm{X}}-2\frac{\lambda}{m}\hat{\bm{X}} = 0 \implies \bm{M}\hat{\bm{X}} = \beta\hat{\bm{X}},
+\end{equation}
+\justifying em que $\beta = \frac{\lambda}{m}$. Notem que, novamente, temos uma equação que envolve \textbf{autovalores} e \textbf{autovetores}. Neste caso, $\hat{\bm{X}}$ são os autovetores da matriz $\bm{M}$. Como temos um problema de minimização (Equação 30), devemos escolher os $d$ autovetores associados aos $d$ menores autovalores. Entretanto, o menor autovalor é sempre $0$ neste problema, e devemos descartar o autovetor associado à ele.
+}
+
+\Sli{
+\justifying  O algoritmo do LLE possui três parâmetros: número de dimensões do espaço reduzido $d$, tamanho da vizinhança $k$ e parâmetro de regularização $\alpha$ (em alguns casos). LLE é bastante sensível à escolha desses parâmetros:
+
+\begin{itemize}
+	\item Caso o valor de $k$ seja muito pequeno, não estaremos mapeando informações globais, e caso $k$ seja muito grande a técnica perde sua característica não linear e tende a se comportar de maneira similar ao PCA.
+	\item Caso $\alpha$ seja escolhido de maneira inadequada, a decomposição espectral pode ser não funcionar corretamente (a ideia da regularização é tornar o processo possível em matrizes não inversíveis).
+	\item Caso o valor de $d$ seja muito pequeno, poderemos ter sobreposição de classes, e caso seja muito grande poderemos amplificar ruído.
+\end{itemize}
+}
+
+\Sli{
+Segue, abaixo, o algoritmo do LLE, cujas entradas são a matriz de dados $\bm{X}\in\mathbb{R}^{m\times n}$, o tamanho da vizinhança $k$ e o número de dimensões de saída $d$. Note que $\bm{x}_i$ representa a $i$-ésima linha de $\bm{X}$.
+
+\begin{algorithmic}
+\State \Call{LLE}{$\bm{X}, k, d$}
+	\State{Crie um grafo $k$-NN a partir de $\bm{X}$.}
+	\For{each $\bm{x}_i$ de $\bm{X}$}
+	\State{Calcule a matriz $\bm{C}_i(j,k) = (\bm{x}_i-\bm{x}_j)^T(\bm{x}_i-\bm{x}_k)$, tal que $\bm{C}_i\in\mathbb{R}^{k\times k}$.}
+	\State{Resolva o sistema linear $\bm{C}_i\bm{w}_i = \bm{1}$ para encontrar os pesos $\bm{w}_i\in\mathbb{R}^k$.}
+	\State{Normalize os pesos $\bm{w}_i$ para que $\sum_j\bm{w}_{ij} = 0$.}
+	\State{Construa a matriz $\bm{W}\in\mathbb{R}^{m\times m}$ cujas linhas são os pesos estimados $\bm{w}_i$.}
+	\State{Calcule $\bm{M} = (\bm{I}-\bm{W})^T(\bm{I}-\bm{W})$, em que $\bm{M}\in\mathbb{R}^{m\times m}$.}
+	\State{Calcule os autovetores e autovalores da matriz $\bm{M}$.}
+	\State{Selecione os $d$ autovetores não nulos associados aos $d$ menores autovalores para definir a matriz $\hat{\bm{X}}\in\mathbb{R}^{m\times d}$, em que cada coluna é um autovetor.}
+	\EndFor
+\end{algorithmic}
 }
 
 \Sli{
