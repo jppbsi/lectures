@@ -1,6 +1,6 @@
 %Fiquemos com Deus e Nossa Senhora!
 %Sao Jose de Cupertino rogai por nos!!
-%Honra teu pai e tua mÃ£e!
+%Honra teu pai e tua mãe!
 % ### Uses XeLaTeX ### %
 % ### Needs beamer-master ### %
 \documentclass[aspectratio=169]{beamer} %. Aspect Ratio 16:9
@@ -172,6 +172,42 @@ e
 \justifying Seja $\bm{\theta}=\{\bm{W},\bm{a},\bm{b}\}$ o conjunto de parâmetros a serem aprendidos durante o processo de reconstrução dos dados e $\bm{\theta}^\ast=\{\bm{W}^\ast,\bm{a}^\ast,\bm{b}^\ast\}$ aquele que minimiza algum critério a ser otimizado (por exemplo, o erro de reconstrução). Temos que a amostragem de Gibbs é muito custosa computacionalmente, muito embora ofereça uma aproximação quase que ideal dos dados de entrada.\newline
 
 \justifying A Divergência Contrastiva, do inglês \emph{Contrastive Learning} (CD), por sua vez, apresenta-se como uma alternativa mais viável. A ideia é utilizar os próprios dados como entrada e algumas poucas iterações para sua reconstrução.
+}
+
+\Sli{
+\justifying A seguir, mostraremos um exemplo do uso de uma RBM para reconstrução de imagens binárias. O critério de minimização foi o do erro médio quadrático, do inglês \emph{Mean Squared Error} (MSE), entre os pixels da imagem de entrada e da imagem reconstruída. A base de dados a ser adotada é a MNIST, que consiste em imagens de dígitos manuscritos.
+
+\begin{figure}[!ht]
+  \centerline{\begin{tabular}{cc}
+      	\includegraphics[width=3.1cm,height=3.1cm]{./figs/mosaic_MNdist_dataset.eps} &
+      	\includegraphics[width=3.1cm,height=3.1cm]{./figs/mosaicMNIST_weights.eps} \\
+      	(a) & (b)
+\end{tabular}}
+\caption{Exemplos de imagens base MNIST: (a) imagens originais e (b) imagens dos pesos da rede.}
+\label{f.datasets}
+\end{figure}
+}
+
+\Sli{
+Exemplo de uma RBM treinada apenas com dígitos `0'.
+\begin{figure}[!ht]
+  \centerline{\begin{tabular}{cccc}
+      	\includegraphics[width=1.1cm,height=1.1cm]{./figs/0_10.eps} & 
+      	\includegraphics[width=1.1cm,height=1.1cm]{./figs/reconstructed_0.eps} &
+      	\includegraphics[width=1.1cm,height=1.1cm]{./figs/1_1133.eps}&
+      	\includegraphics[width=1.1cm,height=1.1cm]{./figs/reconstructed_1.eps}\\
+      (a) & (b) & (c) & (d)
+\end{tabular}}
+\centerline{\begin{tabular}{cccc}
+      	\includegraphics[width=1.1cm,height=1.1cm]{./figs/weight_1.eps} & 
+      	\includegraphics[width=1.1cm,height=1.1cm]{./figs/weight_2.eps} &
+      	\includegraphics[width=1.1cm,height=1.1cm]{./figs/weight_3.eps}&
+      	\includegraphics[width=1.1cm,height=1.1cm]{./figs/weight_4.eps}\\
+      (e) & (f) & (g) & (h)
+\end{tabular}}
+\caption{(a) Dígito original `0'\ e (b) sua reconstrução, (c) dígito `1'\ e (d) sua reconstrução. Alguns pesos da RBM estão mostrados em (e)-(h).}
+\label{f.weights}
+\end{figure} 
 }
 
 \end{document}
