@@ -93,59 +93,141 @@
 }
 
 \Sli{
-\justifying RBMs, de maneira geral, são modelos probabilísticos compostos por duas camadas: visível $\bm{v}\in\{0,1\}^m$ (entrada) e escondida $\bm{h}\in\{0,1\}^n$. Enquanto que a camada visível é responsável pela leitura dos dados, a camada escondida mapeia sua distribuição por meio de unidades escondidas (binárias, inicialmente) $h_j$ e uma matriz de peso $\bm{W}\in\mathbb{R}^{m\times n}$ que conecta essas duas camadas.
+\justifying RBMs, de maneira geral, são modelos probabilísticos compostos por duas camadas: visível $\bm{v}\in\{0,1\}^m$ (entrada) e escondida $\bm{h}\in\{0,1\}^n$. Enquanto que a camada visível é responsável pela leitura dos dados, a camada escondida mapeia sua distribuição por meio de unidades escondidas (binárias, inicialmente) $h_j$ e uma matriz de peso $\bm{W}\in\mathbb{R}^{m\times n}$ que conecta essas duas camadas. Adicionalmente, temos as camadas de bias $\bm{a}\in\mathbb{R}^m$ e $\bm{b}\in\mathbb{R}^n$ conectadas às camadas visível e escondida, respectivamente.
 
 \begin{figure}[htb]
    \centering
-	\includegraphics[scale=0.67]{figs/rbm.eps}
-	\caption{Arquitetura padrão de uma RBM.}
+	\includegraphics[scale=0.47]{figs/rbm.eps}
 \end{figure}
 }
 
 \Sli{
-\justifying Seja ${\cal X} = \{\bm{x}_1,\bm{x}_2,\ldots,\bm{x}_m\}$ um conjunto de dados tal que $\bm{x}_i\in\mathbb{R}^m$. A ideia é aprender os pesos que permitem encontrar o conjunto reconstruído $\hat{{\cal X}} = \{\hat{\bm{x}}_1,\hat{\bm{x}}_2,\ldots,\hat{\bm{x}}_m\}$ a partir da camada escondida $\bm{h}$, em que $\hat{\bm{x}}_i\in\mathbb{R}^m$.
+A \textbf{energia} de uma RBM é dada por:
+\begin{equation}
+E(\textbf{v},\textbf{h})=-\sum_{i=1}^m\sum_{j=1}^nv_ih_jw_{ij}-\sum_{i=1}^ma_iv_i-\sum_{j=1}^nb_jh_j,
+\end{equation}
+em que a probabilidade de uma dada configuração $(\textbf{v},\textbf{h})$ é calculada como segue:
+\begin{equation}
+P(\textbf{v},\textbf{h})=\frac{e^{-E(\textbf{v},\textbf{h})}}{Z},
+\end{equation}
+onde $Z$ denota a chamada \textbf{constante de normalização/função de partição}, a qual pode ser calculada da seguinte forma:
+\begin{equation}
+Z=\sum_{\textbf{v},\textbf{h}}e^{-E(\textbf{v},\textbf{h})}.
+\end{equation}
+}
+
+\Sli{
+\justifying A probabilidade de uma amostra do conjunto de dados $\bm{v}$ (unidade visível) é definida como segue:
+\begin{equation}
+\label{e.probability}
+P(\textbf{v})=\sum_{\textbf{h}}P(\textbf{v},\textbf{h})=\frac{\sum_{\textbf{h}}e^{-E(\textbf{v},\textbf{h})}}{Z}.
+\end{equation}
+
+\justifying Seja ${\cal X}=\{\bm{x}_1,\bm{x}_2,\ldots,\bm{x}_z\}$ um conjunto de treinamento. A etapa de aprendizado de uma RBM, de maneira geral, objetiva diminuir a energia de cada amostra de treinamento $\bm{x}_i$ visando aumentar a sua probabilidade no conjunto.
 
 \begin{figure}[htb]
    \centering
-	\includegraphics[scale=0.77]{figs/gibbs.eps}
-	\caption{Divergência Contrastiva.}
+	\includegraphics[scale=0.33]{figs/training_step.eps}
 \end{figure}
 }
 
 \Sli{
+\justifying A verossimilhança do conjunto de dados considerando apenas uma amostra de treinamento $\bm{v}\leftarrow\bm{x}\in{\cal X}$ é calculada como segue:
+\begin{equation}
+\phi=\log P(\textbf{v})=\phi^+-\phi^-,
+\end{equation}
+em que
+\begin{equation}
+\phi^+=\log \sum_{\textbf{h}}e^{-E(\textbf{v},\textbf{h})}
+\end{equation}
+e
+\begin{equation}
+\phi^-=\log Z=\log \sum_{\textbf{v},\textbf{h}}e^{-E(\textbf{v},\textbf{h})}.
+\end{equation}
+Agora, a questão é: Como podemos treinar uma RBM?
+}
 
-\justifying As seguintes equações podem ser utilizadas para calcular as probabilidades:
+\Sli{
+
+\justifying Basicamente, a etapa de treinamento consiste em atualizar o conjunto de pesos $\bm{W}$ no sentido de maximizar o logaritmo da verossimilhança do conjunto de dados de treinamento até algum critério de convergência ter sido atingido. Usualmente, utilizamos o gradiente descendente estocástico para tal propósito:
 
 \begin{equation}
+\textbf{W}^{t+1}\leftarrow \textbf{W}^t+\eta\left(\frac{\partial \phi^+}{\partial \textbf{W}}-\frac{\partial \phi^-}{\partial \textbf{W}}\right),
+\end{equation}
+em que o \textbf{gradiente positivo} é dado por (fácil de ser calculado):
+\begin{equation}
+\label{e.positive_gradient}
+\frac{\partial \phi^+}{\partial \textbf{W}}=\textbf{v}^TP(\textbf{h}|\textbf{v}).
+\end{equation}
+}
+
+\Sli{
+\justifying O lado direito da Equação 9 pode ser calculado como segue:
+\begin{equation}
 \label{e.probh}
-P(h_j=1|\textbf{v})=\sigma\left(\sum_{i=1}^mw_{ij}v_i+b_j\right),
+P(\textbf{h}|\textbf{v})=\prod_{j=1}^nP(h_j=1|\textbf{v}),
+\end{equation}
+e
+\begin{equation}
+P(h_j=1|\textbf{v})=\sigma\left(\sum_{i=1}^mw_{ij}v_i+b_j\right).
+\end{equation}
+Neste caso, $\sigma(c)=1/(1+\exp(-c))$. 
+}
+
+\Sli{
+\justifying Entretanto, o grande problema consiste no \textbf{gradiente negativo}, o qual é dado por:
+\begin{equation}
+\frac{\partial \phi^-}{\partial \textbf{W}}= \textbf{v}^TP(\textbf{v}|\textbf{h}),
+\end{equation}
+em que $\textbf{v}$ denota a estimativa (model) dos dados de entrada $\textbf{v}$, e $P(\textbf{v}|\textbf{h})$ é dado por:
+\begin{equation}
+P(\textbf{v}|\textbf{h})=\prod_{i=1}^mP(v_i=1|\textbf{h}),
 \end{equation}
 e
 \begin{equation}
 \label{e.probv}
-P(v_i=1|\textbf{h})=\sigma\left(\sum_{j=1}^nw_{ij}h_j+a_i\right),
+P(v_i=1|\textbf{h})=\sigma\left(\sum_{j=1}^nw_{ij}h_j+a_i\right).
 \end{equation}
-em que $\sigma(z)=1/(1+\exp(-z))$, $\bm{a}\in\mathbb{R}^m$ and $\bm{b}\in\mathbb{R}^n$ denotam as unidades de bias das camadas visível e invisível, respectivamente, e $w_{ij}\in\mathbb{R}$ corresponde ao peso da conexão entre a unidade (neurônio) visível $i$ e invisível $j$.
+O problema é obter uma boa aproximação do modelos, ou seja, $\frac{\partial \phi^-}{\partial \textbf{W}}$, o qual requer um grande número de iterações.
 }
 
 \Sli{
-\justifying De maneira geral, o procedimento de aprendizado de uma RBM consiste em calcular $\textbf{W}$, $\textbf{a}$ e $\textbf{b}$ como segue:
-\begin{eqnarray}
-\label{e.updateW}
-\nonumber \textbf{W}^{t+1}&=&\textbf{W}^t+\eta(E[\textbf{h}\textbf{v}]^{data}-E[\textbf{h}\textbf{v}]^{model})\\
-        &=&\textbf{W}^t+\eta(P(\textbf{h}|\textbf{v})\textbf{v}^T-P(\tilde{\textbf{h}}|\tilde{\textbf{v}})\tilde{\textbf{v}}^T),
-\end{eqnarray}
-e
-\begin{equation}
-\label{e.updatea}
-\textbf{a}^{t+1} = \textbf{a}^t+\eta(\textbf{v}-\tilde{\textbf{v}}),
-\end{equation}
-e
-\begin{equation}
-\label{e.updateb}
-\textbf{b}^{t+1} = \textbf{b}^t+\eta(P(\textbf{h}|\textbf{v})-P(\tilde{\textbf{h}}|\tilde{\textbf{v}})),
-\end{equation}
-em que $\textbf{W}^t$, $\textbf{a}^t$ e $\textbf{b}^t$ denotam a matriz de pesos e as unidades de bias para as camadas visível e invisível no tempo $t$, respectivamente.
+\justifying Usualmente, podemos modelar a tarefa de estimar a probabilidade condicional por meio de uma Cadeia de Markov, do inglês \emph{Markov Chain Monte Carlo} (MCMC), a qual modela cada passo na direção da aproximação do dados reais como sendo uma cadeia de Markov.\newline
+
+\justifying Uma cadeia de Markov é, basicamente, um grafo direcionado e ponderado que obedece algumas propriedades (Teorema Ergódico):
+\begin{figure}[htb]
+   \centering
+	\includegraphics[scale=0.67]{figs/markov_chain.eps}
+\end{figure}
+}
+
+\Sli{
+\justifying Uma das abordagens mais famosas para amostragem em cadeias de Markov é a conhecida por \textbf{amostragem de Gibbs}, a qual aproxima a solução da verossimilhança quando $k\rightarrow \infty$, em que $k$ corresponde ao número de iterações.
+
+\begin{figure}[htb]
+   \centering
+	\includegraphics[scale=0.77]{figs/markov_gibbs.eps}
+\end{figure}
+}
+
+\Sli{
+\justifying Como podemos utilizar a amostragem de Gibbs para treinar RBMs? Suponha que tenhamos uma cadeia de Markov ${\cal C}=\{\textbf{v},\tilde{\textbf{v}}^1,\tilde{\textbf{v}}^2,\dots,\tilde{\textbf{v}}^k\}$ composta pelo dado de entrada (estado inicial) $\textbf{v}$ e sua reconstrução no tempo $t$ dada por $\tilde{\textbf{v}}^t$.
+
+\begin{figure}[htb]
+   \centering
+	\includegraphics[scale=0.73]{figs/gibbs.eps}
+\end{figure}
+Problema? Alto custo computacional dado que precisamos de $k\rightarrow \infty$ para uma boa aproximação do modelo.
+}
+
+\Sli{
+\justifying Hinton (2002)\footnote{Hinton, G. E. ``Training products of experts by minimizing contrastive divergence", \emph{Neural Computation}, 14(8), 1771-1800, 2002.} propuseram a Divergência Contrastiva, do inglês \emph{Contrasttive Divergence} (CD), a qual é uma alternativa mais eficiente à amostragem de Gibbs.
+
+\begin{figure}[htb]
+   \centering
+	\includegraphics[scale=0.57]{figs/cd.eps}
+\end{figure}
+Usualmente, $k=1$. Problema? Modelos estimados tendem a se tornar muito parecidos com as amostras de treinamento.
 }
 
 \Sli{
@@ -166,12 +248,6 @@ e
 \label{e.updateb2}
 \textbf{b}^{t+1}=\textbf{b}^t+\underbrace{\eta(P(\textbf{h}|\textbf{v})-P(\tilde{\textbf{h}}|\tilde{\textbf{v}}))+\alpha\Delta \textbf{b}^{t-1}}_{=\Delta\textbf{b}^t}.
 \end{equation}
-}
-
-\Sli{
-\justifying Seja $\bm{\theta}=\{\bm{W},\bm{a},\bm{b}\}$ o conjunto de parâmetros a serem aprendidos durante o processo de reconstrução dos dados e $\bm{\theta}^\ast=\{\bm{W}^\ast,\bm{a}^\ast,\bm{b}^\ast\}$ aquele que minimiza algum critério a ser otimizado (por exemplo, o erro de reconstrução). Temos que a amostragem de Gibbs é muito custosa computacionalmente, muito embora ofereça uma aproximação quase que ideal dos dados de entrada.\newline
-
-\justifying A Divergência Contrastiva, do inglês \emph{Contrastive Learning} (CD), por sua vez, apresenta-se como uma alternativa mais viável. A ideia é utilizar os próprios dados como entrada e algumas poucas iterações para sua reconstrução.
 }
 
 \Sli{
@@ -208,6 +284,19 @@ Exemplo de uma RBM treinada apenas com dígitos `0'.
 \caption{(a) Dígito original `0'\ e (b) sua reconstrução, (c) dígito `1'\ e (d) sua reconstrução. Alguns pesos da RBM estão mostrados em (e)-(h).}
 \label{f.weights}
 \end{figure} 
+}
+
+\Sli{
+\justifying Como podemos, então, utilizar RBMs para redução de dimensionalidade, aprendizado não supervisionado de características e ainda como pré-treinamento de redes neurais MLP?
+
+\begin{itemize}
+	\item Note que os valores presentes nas unidades escondidas $h_i\in\{0,1\}/$ ou ainda $P(h_i=1|\bm{v})$ podem ser utilizados como características e, quando $n<m$, temos uma redução do espaço original.
+	\item Suponha que você tenha um conjunto grande de dados de treinamento, mas que somente uma pequena parte dele é rotulada. Você pode usar todo o conjunto de treinamento para o aprendizado de uma RBM (\textbf{não supervisionado}) e, em seguida, adicionar uma camada de saída à RBM e utilizar as imagens rotuladas para treinar uma MLP. Note que os pesos já estarão inicialmente aprendidos por meio do algoritmo de treinamento da RBM.
+\end{itemize}
+}
+
+\SliT{Máquinas de Bolztmann Discriminativas}{
+\justifying Como funcionam as RBMs no contexto de classificação?
 }
 
 \end{document}
