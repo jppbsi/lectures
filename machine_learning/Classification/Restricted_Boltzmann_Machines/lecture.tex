@@ -296,7 +296,126 @@ Exemplo de uma RBM treinada apenas com dígitos `0'.
 }
 
 \SliT{Máquinas de Bolztmann Discriminativas}{
-\justifying Como funcionam as RBMs no contexto de classificação?
+\justifying Como funcionam as RBMs no contexto de classificação? Para este tipo de fim, uma alternativa proposta corresponde às Máquinas de Boltzmann Restritas Discriminativas, do inglês \emph{Discriminative Restricted Boltzmann Machines} (DRBMs).\newline
+
+\justifying De maneira geral, a ideia consiste em fazer uso do rótulo de cada amostra como entrada para a DRBM. A classificação é então realizada tentando ``reconstruir"\ o rótulo.
+}
+
+\Sli{
+\justifying Temos, agora, uma unidade visível denominada $\bm{y}\in\{0,1\}^k$ e uma matriz de pesos $\bm{U}\in\mathbb{R}^{k\times n}$ que conecta $\bm{y}$ à camada escondida $\bm{h}$.\newline
+
+\begin{figure}[!h]
+\centerline{\begin{tabular}{cc}
+      \includegraphics[width=4.1cm]{./figs/rbm2.eps} & 
+      \includegraphics[width=7.5cm]{./figs/drbm.eps} \\
+	(a) & (b)
+  \end{tabular}}
+  \caption{Arquitetura:~(a) RBM e~(b) DRBM.}
+\label{f.rbm}
+\end{figure}
+}
+
+\Sli{
+\justifying Em uma DRBM, a camada $\bm{y}$ também assume valores binários para codificar a classe (\emph{one-hot encoding}). A probabilidade de \textbf{configuração conjunta} $P(\textbf{y},\textbf{v},\textbf{h})$ pode ser expressa da seguinte forma:
+
+\begin{equation}
+\label{e.joint_probability}
+P(\textbf{y},\textbf{v},\textbf{h}) = \frac{e^{-E(\textbf{y},\textbf{v},\textbf{h})}}{\displaystyle\sum_{\textbf{y},\textbf{v},\textbf{h}}e^{-E(\textbf{y},\textbf{v},\textbf{h})}},
+\end{equation}
+em que a função de energia $E(\textbf{y},\textbf{v},\textbf{h})$ é dada por:
+
+\begin{equation}
+\label{e.energy}
+E(\textbf{y},\textbf{v},\textbf{h})= - \sum_{i=1}^m\sum_{j=1}^nw_{ij}v_ih_j-\sum_{i=1}^ma_iv_i-\sum_{j=1}^nb_jh_j-\sum_{z=1}^kc_zy_z-\sum_{z=1}^k\sum_{j=1}^nu_{zj}h_jy_z,
+\end{equation}
+em que $\bm{c}\in\mathbb{R}^z$ corresponde à camada de bias da unidade de rótulos $\bm{y}$.
+}
+
+\Sli{
+\justifying Assim sendo, a etapa de treinamento de uma RDBM objetiva encontrar o conjunto de parâmetros $\theta=(\textbf{W},\textbf{U},\textbf{a},\textbf{b},\textbf{c})$ que minimiza alguma critério de erro como, por exemplo, a MSE da unidade de rótulo reconstruída.\newline 
+
+O procedimento de aprendizado por CD para encontrar $\theta$ consiste em calcular $P(\textbf{h}|\textbf{y},\textbf{v})$, o qual pode ser realizado para cada unidade $h_j$, $j=1,2,\ldots,n$ como segue:
+
+\begin{equation}
+\label{e.probh_yv}
+P(h_j=1|\textbf{y},\textbf{v})=\phi\left(b_j+\sum_{z=1}^ku_{zj}y_z+\sum_{i=1}^mw_{ij}v_i\right),
+\end{equation}
+em que $\phi(\cdot)$ corresponde à função logística. 
+}
+
+\Sli{
+\justifying Em seguida, podemos calcular a probabilidade condicional de obter $\textbf{v}$ dada cada camada escondida $\textbf{h}$ para cada unidade visível:
+
+\begin{equation}
+\label{e.probv_h}
+P(v_i=1|\textbf{h})=\phi\left(a_i+\sum_{j=1}^nw_{ij}h_j\right),
+\end{equation}
+bem como a probabilidade de obter $\textbf{y}$ dada a unidade escondida $\textbf{h}$ para cada unidade da camada de rótulo, como segue:
+
+\begin{equation}
+\label{e.proby_h}
+P(y_z=1|\textbf{h})=\frac{\exp\left(c_z+\displaystyle\sum_{j=1}^nU_{zj}h_j\right)}{\displaystyle\sum_{l=1}^k\exp\left(c_l+\displaystyle\sum_{j=1}^nU_{lj}h_j\right)}.
+\end{equation}
+}
+
+\Sli{
+\justifying O passo final da técnica CD consiste em calcular a Equação 20 mais uma vez para obtermos uma versão atualizada da camada escondida $\textbf{h}$. 
+
+\begin{figure}[!h]
+\centerline{\begin{tabular}{cc}
+      \includegraphics[width=7.7cm]{./figs/cd1.eps} & 
+      \includegraphics[width=4.3cm]{./figs/cd2.eps} \\
+	(a) & (b)
+  \end{tabular}}
+  \caption{Aprendizado por CD:~(a) calcular as probabilidades condicionais para as unidades escondida (``vermelho"), rótulo (``azul") e visível (``preto"), e~(b) e calculando a probabilidade condicional da camada escondida mais uma vez.}
+\label{f.cd}
+\end{figure}
+}
+
+\Sli{
+\justifying De maneira geral, o algoritmo de treinamento da DRBM consiste em estimar cada parâmetro em $\theta$ até algum critério de convergência ter sido atingido. Assim sendo, as seguintes equações de atualização podem ser aplicada no instante de tempo $t+1$:
+
+\begin{equation}
+\label{e.updateW}
+ \textbf{W}^{t+1}=\textbf{W}^t+\underbrace{\eta(P(\textbf{h}|\textbf{y},\textbf{v})(\textbf{v})^T-P(\tilde{\textbf{h}}|\tilde{\textbf{y}},\tilde{\textbf{v}})(\tilde{\textbf{v}})^T)-\lambda\textbf{W}^t+\alpha\Delta\textbf{W}^{t-1}}_{=\Delta\textbf{W}^t},
+\end{equation}
+
+\begin{equation}
+\label{e.updateU}
+ \textbf{U}^{t+1}=\textbf{U}^t+\underbrace{\eta(P(\textbf{h}|\textbf{y},\textbf{v})(\textbf{y})^T-P(\tilde{\textbf{h}}|\tilde{\textbf{y}},\tilde{\textbf{v}})(\tilde{\textbf{y}})^T)-\lambda\textbf{U}^t+\alpha\Delta\textbf{U}^{t-1}}_{=\Delta\textbf{U}^t},
+\end{equation}
+
+\begin{equation}
+\label{e.updatea}
+\textbf{a}^{t+1}=\textbf{a}^t+\underbrace{\eta(\textbf{v}-\tilde{\textbf{v}})+\alpha\Delta \textbf{a}^{t-1}}_{=\Delta\textbf{a}^t},
+\end{equation}
+
+\begin{equation}
+\label{e.updateb}
+\textbf{b}^{t+1}=\textbf{b}^t+\underbrace{\eta(P(\textbf{h}|\textbf{y}\textbf{v})-P(\tilde{\textbf{h}}|\tilde{\textbf{y}},\tilde{\textbf{v}}))+\alpha\Delta \textbf{b}^{t-1}}_{=\Delta\textbf{b}^t},
+\end{equation}
+e
+
+\begin{equation}
+\label{e.updatec}
+\textbf{c}^{t+1}=\textbf{c}^t+\underbrace{\eta(\textbf{y}-\tilde{\textbf{y}})+\alpha\Delta \textbf{c}^{t-1}}_{=\Delta\textbf{c}^t}.
+\end{equation}
+
+A etapa de classificação de uma DRBM pode ser realizada associando à uma dada amostra de teste $\textbf{x}$ a classe $e$, $e=1,2,\ldots,k$, que maximiza a equação abaixo:
+
+\begin{equation}
+p(y_e|\textbf{x})=\frac{\exp{-F(\textbf{x},y_e)}}{\displaystyle\sum_{y^\ast\in\{1,2,\ldots,k\}}\exp{-F(\textbf{x},\textbf{y}^\ast)}},
+\end{equation}
+em que $F(\textbf{x},y_e)$ corresponde à conhecida ``energia livre", que pode ser calculada como segue:
+
+\begin{equation}
+F(\textbf{x},\textbf{y})=c_e+\sum_{j=1}^n\varphi\left(\sum_{i=1}^mw_{ij}+U_{yj}+b_j)\right),
+\end{equation}
+em que $\varphi(z)$ corresponde à função \emph{softplus}, isto é, $\varphi(z)=\log(1+\exp(z))$. É importante lembrar que a unidade de rótulo $\textbf{y}$ é um vetor binário em que somente a posição $e$ está ligada quando $\textbf{y}$ representa a classe $e$.
+}
+
+\SliT{Redes de Crença em Profundidade}{
+\justifying a
 }
 
 \end{document}
