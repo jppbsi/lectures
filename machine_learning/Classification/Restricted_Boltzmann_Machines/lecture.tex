@@ -415,7 +415,18 @@ em que $\varphi(z)$ corresponde à função \emph{softplus}, isto é, $\varphi(z
 }
 
 \SliT{Redes de Crença em Profundidade}{
-\justifying a
+\justifying As Redes de Crença em Profundidade, do inglês \emph{Deep Belief Networks} (DBNs), podem ser entendidas, de maneira geral, como sendo diversas RBMs empilhadas.
+
+\begin{center}
+\begin{minipage}{0.4\textwidth}
+	\includegraphics[scale=0.37]{figs/dbn.eps}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.52\textwidth}
+O seu treinamento é realizado de maneira \textbf{gulosa}, ou seja, cada RBM é treinada de maneira independente, em que a saída de um modelo alimenta a entrada do outro. Podem ser utilizadas para inicializar redes MLP com diversas camadas escondidas. Já nas Máquinas de Boltzmann em Profundidade, do inglês \emph{Deep Boltzmann Machines} (DBMs), as inferências de cada camada escondida levam em consideração as suas camadas acima e abaixo.
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+\end{center}
 }
 
 \end{document}
