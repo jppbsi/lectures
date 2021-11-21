@@ -86,12 +86,12 @@
 }
 
 \Sli{
-\justifying Seja ${\cal X}=\{\bm{x}_1,\bm{x}_2,\ldots,\bm{x}_m\}$ o nosso conjunto de dados original tal que $\bm{x}_i\in\mathbb{R}^n$. Temos, então que a nova amostra projetada $\hat{\bm{x}}_i$ é obtida da seguinte forma:
+\justifying Seja ${\cal X}=\{\bm{x}_1,\bm{x}_2,\ldots,\bm{x}_m\}$ o nosso conjunto de dados original tal que $\bm{x}_i\in\mathbb{R}^n$. Temos, então que a aproximação $\tilde{\bm{x}}_i$ da amostra $\bm{x}_i$ pode ser obtida da seguinte forma:
 
 \begin{equation}
-	\hat{\bm{x}}_i \approx \sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\bm{x}_j,
+	\tilde{\bm{x}}_i \approx \sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\bm{x}_j,
 \end{equation}
-em que ${\cal N}(\bm{x}_i)$ denota a vizinhança (\emph{patch}) da amostra $\bm{x}_i$ e $w_{ij}$ o peso atribuído durante a combinação linear. O algoritmo do LLE requer, basicamente, o conjunto de dados representado por uma matriz $\bm{X}\in\mathbb{R}^{m\times n}$, o número desejado de dimensões $d<m$ e um valor $k>d+1$ para o tamanho da vizinhança. Sem perda de generalidade, vamos assumir que $\bm{X}_i = \bm{x}_i$, ou seja, a $i$-ésima linha da matrix $\bm{X}$ corresponde à $i$-ésima amostra de ${\cal X}$.\newline
+em que ${\cal N}(\bm{x}_i)$ denota a vizinhança (\emph{patch}) da amostra $\bm{x}_i$ e $w_{ij}$ o peso atribuído durante a combinação linear. O algoritmo do LLE requer, basicamente, o conjunto de dados representado por uma matriz $\bm{X}\in\mathbb{R}^{m\times n}$, o número desejado de dimensões $d<n$ e um valor $k>d+1$ para o tamanho da vizinhança. Sem perda de generalidade, vamos assumir que $\bm{X}_i = \bm{x}_i$, ou seja, a $i$-ésima linha da matrix $\bm{X}$ corresponde à $i$-ésima amostra de ${\cal X}$.\newline
 
 \justifying O algoritmo do LLE pode ser dividido em três passos principais:
 }
@@ -118,13 +118,13 @@ tal que $\hat{\bm{x}}\in\mathbb{R}^d$ e $\hat{\bm{X}}\hat{\bm{X}}^T=\bm{I}$. Sem
 \justifying Agora, vamos para o passo 2, ou seja, estimação dos pesos $\bm{W}$ utilizando os mínimos quadrados. Sem perda de generalidade, podemos expressar o erro de reconstrução local considerando apenas o ponto $\bm{x}_i\in{\cal X}$ como segue:
 
 \begin{align}\nonumber
-	E(\bm{w},\bm{x}_i) &= \norm{\bm{x}_i-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j\bm{x}_j}^2 = \norm{\cancelto{1\text{ (restrição)}}{\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j}\bm{x}_i-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j\bm{x}_j}^2 \\
-	&= \norm{\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j(\bm{x}_i-\bm{x}_j)}^2 = \sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}\sum_{\bm{x}_k\in{\cal N}(\bm{x}_i)}w_jw_k(\bm{x}_i-\bm{x}_j)^T(\bm{x}_i-\bm{x}_k).
+	E(\bm{w}_i,\bm{x}_i) &= \norm{\bm{x}_i-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\bm{x}_j}^2 = \norm{\cancelto{1\text{ (restrição)}}{\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}}\bm{x}_i-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\bm{x}_j}^2 \\
+	&= \norm{\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}(\bm{x}_i-\bm{x}_j)}^2 = \sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}\sum_{\bm{x}_k\in{\cal N}(\bm{x}_i)}w_{ij}w_{ik}(\bm{x}_i-\bm{x}_j)^T(\bm{x}_i-\bm{x}_k).
 \end{align}
 }
 
 \Sli{
-\justifying Vamos, agora, definir a matriz $\bm{C}\in\mathbb{R}^{n\times n}$:
+\justifying Vamos, agora, definir a matriz $\bm{C}\in\mathbb{R}^{k\times k}$:
 
 \begin{equation}
 	C_{jk} = (\bm{x}_i-\bm{x}_j)^T(\bm{x}_i-\bm{x}_k).
@@ -132,26 +132,26 @@ tal que $\hat{\bm{x}}\in\mathbb{R}^d$ e $\hat{\bm{X}}\hat{\bm{X}}^T=\bm{I}$. Sem
 Desta forma, podemos reescrever a expressão para o erro local de reconstrução (Equação 4) como segue:
 
 \begin{equation}
-	E(\bm{w},\bm{x}_i) = \sum_j\sum_kw_jC_{jk}w_k = \bm{w}^T\bm{C}\bm{w}.
+	E(\bm{w}_i,\bm{x}_i) = \sum_j\sum_kw_{ij}C_{jk}w_{ik} = \bm{w}^T\bm{C}\bm{w}.
 \end{equation}
-Lembrando que o intuito principal da restrição $\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j=1$ é para adicionar propriedades de \textbf{invariância à translação}, isto é, adicionando uma constante $\bm{c}\in\mathbb{R}^n$ ao vetor $\bm{x}_i$ e aos seus vizinhos, o erro de reconstrução não muda.
+Lembrando que o intuito principal da restrição $\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}=1$ é para adicionar propriedades de \textbf{invariância à translação}, isto é, adicionando uma constante $\bm{c}\in\mathbb{R}^n$ ao vetor $\bm{x}_i$ e aos seus vizinhos, o erro de reconstrução não muda.
 }
 
 \Sli{
-\justifying Sejam, então, $\tilde{\bm{x}_i} = \bm{x}_i+\bm{c}$ e $\tilde{\bm{x}_j} = \bm{x}_j+\bm{c}$ as versões deslocadas das amostras $\bm{x}_i$ e $\bm{x}_j$, respectivamente. O novo erro de reconstrução local é dado por:
+\justifying Sejam, então, $\bm{x}^\prime_i = \bm{x}_i+\bm{c}$ e $\bm{x}^\prime_j = \bm{x}_j+\bm{c}$ as versões deslocadas das amostras $\bm{x}_i$ e $\bm{x}_j$, respectivamente. O novo erro de reconstrução local é dado por:
 
 \begin{equation}
-	\tilde{E}(\bm{w},\bm{x}_i) = \norm{\tilde{\bm{x}_i}-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j\tilde{\bm{x}_j}}^2 = \norm{\bm{x}_i+\bm{c}-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j(\bm{x}_j+\bm{c})}^2.
+	E^\prime(\bm{w}_i,\bm{x}_i) = \norm{\bm{x}^\prime_i-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\bm{x}_j^\prime}^2 = \norm{\bm{x}_i+\bm{c}-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}(\bm{x}_j+\bm{c})}^2.
 \end{equation}
 Podemos reescrever esta equação como segue:
 
 \begin{align}\nonumber
-	\tilde{E}(\bm{w},\bm{x}_i) &= \norm{\tilde{\bm{x}_i}-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j\tilde{\bm{x}_j}}^2 = \norm{\bm{x}_i+\bm{c}-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j(\bm{x}_j+\bm{c})}^2\\
-	&= \norm{\bm{x}_i+\bm{c}-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j\bm{x}_j-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j\bm{c}}^2\\\nonumber
-	&= \norm{\bm{x}_i+\bm{c}-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j\bm{x}_j-\bm{c}\cancelto{1}{\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j}}^2\\\nonumber
-	&= \norm{\bm{x}_i+\bm{c}-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j\bm{x}_j-\bm{c}}^2 = \norm{\bm{x}_i-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j\bm{x}_j}^2 = E(\bm{w},\bm{x}_i)\nonumber.
+	E^\prime(\bm{w}_i,\bm{x}_i) &= \norm{\bm{x}^\prime_i-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\bm{x}^\prime_j}^2 = \norm{\bm{x}_i+\bm{c}-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}(\bm{x}_j+\bm{c})}^2\\
+	&= \norm{\bm{x}_i+\bm{c}-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\bm{x}_j-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\bm{c}}^2\\\nonumber
+	&= \norm{\bm{x}_i+\bm{c}-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\bm{x}_j-\bm{c}\cancelto{1}{\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}}}^2\\\nonumber
+	&= \norm{\bm{x}_i+\bm{c}-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\bm{x}_j-\bm{c}}^2 = \norm{\bm{x}_i-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\bm{x}_j}^2 = E(\bm{w}_i,\bm{x}_i)\nonumber.
 \end{align}
-Assim, a translação não afeta o erro quando temos a restrição $\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j=1$.
+Assim, a translação não afeta o erro quando temos a restrição $\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}=1$.
 }
 
 \Sli{
@@ -159,7 +159,7 @@ Assim, a translação não afeta o erro quando temos a restrição $\sum_{\bm{x}
 
 \begin{eqnarray}
 	\bm{w}_i^\ast = \argmin_{\bm{w}_i}\bm{w}_i^T\bm{C}_i\bm{w}_i,\\
-	\text{s.a. }\bm{1}^Tw_i = 1,\ i=1,2,\ldots,m.\nonumber
+	\text{s.a. }\bm{1}^T\bm{w}_i = 1,\ i=1,2,\ldots,m.\nonumber
 \end{eqnarray}
 \justifying Como temos um problema de otimização com restrições, precisamos fazer uso da técnica dos multiplicadores de Lagrange. Desta forma, a Equação 8 pode ser reformulada da seguinte maneira:
 
@@ -197,7 +197,7 @@ que é a formulação de um sistema linear. Desta forma, basta resolvermos este 
 \begin{equation}
 	w_{ij} = \frac{w_{ij}}{\sum_jw_{ij}}.
 \end{equation}
-Desta forma, garantimos que a restrição $\sum_j\bm{w}_i=1$ será satisfeita.
+Desta forma, garantimos que a restrição $\sum_j\bm{w}_{ij}=1$ será satisfeita.
 }
 
 \Sli{
@@ -206,12 +206,12 @@ Desta forma, garantimos que a restrição $\sum_j\bm{w}_i=1$ será satisfeita.
 \justifying Uma técnica bastante comum é a regularização de Tikonov, ou seja, ao invés de minimizar diretamente a equação abaixo:
 
 \begin{equation}
-	E(\bm{w}) = \norm{\bm{x}_i-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j\bm{x}_j}^2,
+	E(\bm{w}_i,\bm{x}_i) = \norm{\bm{x}_i-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\bm{x}_j}^2,
 \end{equation}
 adicionamos um termo de regularização:
 
 \begin{equation}
-	E(\bm{w}) = \norm{\bm{x}_i-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j\bm{x}_j}^2+\alpha\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_j^2.
+	E(\bm{w}_i,\bm{x}_i) = \norm{\bm{x}_i-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\bm{x}_j}^2+\alpha\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}^2.
 \end{equation}
 }
 
@@ -222,7 +222,7 @@ adicionamos um termo de regularização:
 
 \begin{eqnarray}
 	\bm{w}_i^\ast = \argmin_{\bm{w}_i}\bm{w}_i^T\bm{C}_i\bm{w}_i+\alpha\bm{w}_i^T\bm{w}_i,\\
-	\text{s.a. }\bm{1}^Tw_i = 1,\ i=1,2,\ldots,m.\nonumber
+	\text{s.a. }\bm{1}^T\bm{w}_i = 1,\ i=1,2,\ldots,m.\nonumber
 \end{eqnarray}
 }
 
@@ -274,7 +274,7 @@ A diferença para a abordagem sem regularização é que estamos adicionando uma
 \justifying Ao contrário do passo anterior, aqui não conseguimos separar o problema em $m$ subproblemas independentes. Da Equação 3, temos que:
 
 \begin{align}\nonumber
-		\Phi(\hat{\bm{X}}) &= \sum_{i=1}^m\norm{\hat{\bm{x}}_i-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\hat{\bm{x}}_j}^2\\
+		\Phi(\bm{W},\hat{\bm{X}}) &= \sum_{i=1}^m\norm{\hat{\bm{x}}_i-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\hat{\bm{x}}_j}^2\\
 		&= \sum_{i=1}^m\left[\left(\hat{\bm{x}}_i-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\hat{\bm{x}}_j\right)^T\left(\hat{\bm{x}}_i-\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\hat{\bm{x}}_j\right)\right].
 \end{align}
 }
@@ -284,7 +284,7 @@ A diferença para a abordagem sem regularização é que estamos adicionando uma
 
 \begin{equation}
 \begin{split}
-	\Phi(\hat{\bm{X}}) &= \sum_{i=1}^m\left[\hat{\bm{x}}_i^T\hat{\bm{x}}_i-\hat{\bm{x}}_i^T\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\hat{\bm{x}}_j-\left(\sum_jw_{ij}\hat{\bm{x}}_j\right)^T\hat{\bm{x}}_i+\right.\\
+	\Phi(\bm{W},\hat{\bm{X}}) &= \sum_{i=1}^m\left[\hat{\bm{x}}_i^T\hat{\bm{x}}_i-\hat{\bm{x}}_i^T\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\hat{\bm{x}}_j-\left(\sum_jw_{ij}\hat{\bm{x}}_j\right)^T\hat{\bm{x}}_i+\right.\\
 		&+ \left.\left(\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\hat{\bm{x}}_j\right)^T\left(\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\hat{\bm{x}}_j\right)\right].
 \end{split}
 \end{equation}
@@ -295,17 +295,17 @@ A diferença para a abordagem sem regularização é que estamos adicionando uma
 
 \begin{equation}
 \begin{split}
-	\Phi(\hat{\bm{X}}) &= \sum_{i=1}^m\hat{\bm{x}}_i^T\hat{\bm{x}}_i-\sum_{i=1}^m\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\hat{\bm{x}}_i^T\hat{\bm{x}}_j-\sum_{i=1}^m\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ji}\hat{\bm{x}}_j^T\hat{\bm{x}}_i+\\
+	\Phi(\bm{W},\hat{\bm{X}}) &= \sum_{i=1}^m\hat{\bm{x}}_i^T\hat{\bm{x}}_i-\sum_{i=1}^m\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ij}\hat{\bm{x}}_i^T\hat{\bm{x}}_j-\sum_{i=1}^m\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}w_{ji}\hat{\bm{x}}_j^T\hat{\bm{x}}_i+\\
 		&+ \sum_{i=1}^m\sum_{\bm{x}_j\in{\cal N}(\bm{x}_i)}\sum_{\bm{x}_k\in{\cal N}(\bm{x}_i)}w_{ji}\hat{\bm{x}}_j^Tw_{ik}\hat{\bm{x}}_k.
 \end{split}
 \end{equation}
+
+Podemos reescrever a equação acima utilizando traços (soma dos elementos das diagonais) de matrizes, ou seja:
 }
 
 \Sli{
-Podemos reescrever a equação acima utilizando traços (soma dos elementos das diagonais) de matrizes, ou seja:
-
 \begin{align}\nonumber
-	\Phi(\hat{\bm{X}}) &= \Tr(\hat{\bm{X}}^T\hat{\bm{X}})-\Tr(\hat{\bm{X}}^T\bm{W}\hat{\bm{X}})-\Tr(\hat{\bm{X}}^T\bm{W}^T\hat{\bm{X}})+\Tr(\hat{\bm{X}}^T\bm{W}^T\bm{W}\hat{\bm{X}})\\
+	\Phi(\bm{W},\hat{\bm{X}}) &= \Tr(\hat{\bm{X}}^T\hat{\bm{X}})-\Tr(\hat{\bm{X}}^T\bm{W}\hat{\bm{X}})-\Tr(\hat{\bm{X}}^T\bm{W}^T\hat{\bm{X}})+\Tr(\hat{\bm{X}}^T\bm{W}^T\bm{W}\hat{\bm{X}})\\
 	&= \Tr(\hat{\bm{X}}^T\hat{\bm{X}})-\Tr(\hat{\bm{X}}^T(\bm{W}\hat{\bm{X}}))-\Tr((\bm{W}\hat{\bm{X}})^T\hat{\bm{X}})+\Tr((\bm{W}\hat{\bm{X}})^T(\bm{W}\hat{\bm{X}}))\\\nonumber
 	&= \Tr(\hat{\bm{X}}^T\hat{\bm{X}}-\hat{\bm{X}}^T(\bm{W}\hat{\bm{X}})-(\bm{W}\hat{\bm{X}})^T\hat{\bm{X}}+(\bm{W}\hat{\bm{X}})^T(\bm{W}\hat{\bm{X}}))\\\nonumber
 	&= \Tr(\hat{\bm{X}}^T(\hat{\bm{X}}-\bm{W}\hat{\bm{X}})-(\bm{W}\hat{\bm{X}})^T(\hat{\bm{X}}-\bm{W}\hat{\bm{X}}))\\\nonumber
@@ -319,7 +319,7 @@ Podemos reescrever a equação acima utilizando traços (soma dos elementos das 
 \justifying Seja a matriz $M\in\mathbb{R}^{m\times m}$ tal que:
 
 \begin{equation}
-	\bm{M} = (\bm{I}-\bm{W})^T(\bm{I}-\bm{W}),
+	\bm{M} = (\bm{I}-\bm{W})(\bm{I}-\bm{W})^T,
 \end{equation}
 em que $\bm{W}$ já encontramos anteriormente. Assim, temos o seguinte problema de otimização:
 
@@ -363,12 +363,12 @@ Segue, abaixo, o algoritmo do LLE, cujas entradas são a matriz de dados $\bm{X}
 	\For{each $\bm{x}_i$ de $\bm{X}$}
 	\State{Calcule a matriz $\bm{C}_i(j,k) = (\bm{x}_i-\bm{x}_j)^T(\bm{x}_i-\bm{x}_k)$, tal que $\bm{C}_i\in\mathbb{R}^{k\times k}$.}
 	\State{Resolva o sistema linear $\bm{C}_i\bm{w}_i = \bm{1}$ para encontrar os pesos $\bm{w}_i\in\mathbb{R}^k$.}
-	\State{Normalize os pesos $\bm{w}_i$ para que $\sum_j\bm{w}_{ij} = 0$.}
-	\State{Construa a matriz $\bm{W}\in\mathbb{R}^{m\times m}$ cujas linhas são os pesos estimados $\bm{w}_i$.}
+	\State{Normalize os pesos $\bm{w}_i$ para que $\sum_j\bm{w}_{ij} = 1$.}
+	\EndFor
+	\State{Construa a matriz $\bm{W}\in\mathbb{R}^{m\times k}$ cujas linhas são os pesos estimados $\bm{w}_i$.}
 	\State{Calcule $\bm{M} = (\bm{I}-\bm{W})^T(\bm{I}-\bm{W})$, em que $\bm{M}\in\mathbb{R}^{m\times m}$.}
 	\State{Calcule os autovetores e autovalores da matriz $\bm{M}$.}
-	\State{Selecione os $d$ autovetores não nulos associados aos $d$ menores autovalores para definir a matriz $\hat{\bm{X}}\in\mathbb{R}^{m\times d}$, em que cada coluna é um autovetor.}
-	\EndFor
+	\State{Selecione os $d$ autovetores não nulos associados aos $d$ menores autovalores para definir a matriz $\hat{\bm{X}}\in\mathbb{R}^{m\times d}$, em que cada linha é um autovetor.}
 \end{algorithmic}
 }
 
