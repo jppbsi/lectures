@@ -90,4 +90,60 @@
 \end{itemize}
 }
 
+\Sli{
+\justifying \emph{Graph Neural Networks} (GNNs) podem ser entendidas como uma transformação otimizável em todos os atributos do grafo (nós, arestas e o grafo propriamente dito) que \textbf{preserva as suas simetrias} (invariâncias à permutações). De maneira geral, podemos usar diferentes informações para cada nível de atuação de uma GNN:
+
+\begin{itemize}
+	\item Grafo: número de nós, caminho mais longo, valor calculado na MST (\emph{Minimum Spanning Tree}), etc.
+	\item Vértice: número de vizinhos, peso do nó, etc.
+	\item Arestas: peso da aresta, etc.
+\end{itemize}
+}
+
+\Sli{
+\justifying Usualmente, uma GNN emprega uma rede MLP (\emph{Multilayer Perceptron}) em cada componente do grafo, dando origem ao que chamamos de \textbf{camada GNN}.
+
+\begin{center}
+\includegraphics[scale=0.2]{./figs/GNN_Fig1.png}
+\end{center}
+
+\justifying Assim, temos que $f(\cdot)$ é a função (MLP) que recebe como entrada uma entidade (grafo, vértice ou aresta) e retorna algum tipo de processamento sobre ele. Note, portanto, que uma GNN não atualiza a conectividade do grafo, representada pela sua lista de adjacências.
+}
+
+\Sli{
+\justifying Dado que temos uma GNN, como podemos utilizá-la para fazer predições? Vamos considerar um caso de \textbf{classificação binária}. Caso a tarefa seja a de realizar predições nos nós e eles já possuem alguma informação (\emph{node embedding}), basta aplicarmos um classificador em cada um deles para obter a predição.
+
+\begin{center}
+\includegraphics[scale=0.2]{./figs/GNN_Fig2.png}
+\end{center}
+
+\justifying No entanto, podemos enfrentar situações mais complicadas como, por exemplo, ter informações nas arestas mas ainda querer realizar predições nos nós. Assim, precisamos de uma maneira para coletar informações das arestas e passá-las aos nós para fins de predição.
+}
+
+\Sli{
+\justifying Podemos realizar tal etapa por meio de uma operação de \emph{pooling}. Podemos realizar isto em duas etapas:
+
+\begin{itemize}
+	\item Para cada entidade (aresta) que iremos aplicar o \emph{pooling}, podemos criar uma matriz concatenando suas informações (embeddings). Ex: para um nó com duas arestas adjacentes, suas respectivas informações serão agrupadas.
+	\item Agregar as informações (usualmente uma operação de soma é aplicada à todas elas).
+\end{itemize}
+Podemos representar a operação de pooling pela letra $\rho$ e denotar que estamos juntando (passando) informações de arestas para os nós da seguinte maneira: $\rho_{{\cal E}_N\rightarrow {\cal V}_N}$, em que $N$ representa a camada em questão que a operação está sendo realizada.
+}
+
+\Sli{
+\justifying  Assim sendo, caso tenhamos apenas informações sobre arestas e queiramos realizar predições nos nós, podemos utilizar \emph{pooling} para passar (rotear) informações para serem utilizadas posteriormente.
+
+\begin{center}
+\includegraphics[scale=0.2]{./figs/GNN_Fig3.png}
+\end{center}
+}
+
+\Sli{
+\justifying Por outro lado, caso tenhamos apenas informações sobre os nós e queiramos realizar predições nas arestas, podemos realizar algo semelhante.
+
+\begin{center}
+\includegraphics[scale=0.2]{./figs/GNN_Fig4.png}
+\end{center}
+}
+
 \end{document}
