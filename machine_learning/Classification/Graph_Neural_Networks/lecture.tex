@@ -168,7 +168,15 @@ Podemos representar a operação de pooling pela letra $\rho$ e denotar que esta
 
 \Sli{
 Colocar figura\newline
-\justifying Essencialmente, roteamento de mensagens e convolução são operações que \textbf{agregam} e \textb{processam} informações de uma certa vizinhança para atualizar o valor de um determinado elemento. Em GNNs, cada elemento é um vértice; já em uma CNN cada elemento é um \emph{pixel}.
+\justifying Essencialmente, roteamento de mensagens e convolução são operações que \textbf{agregam} e \textbf{processam} informações de uma certa vizinhança para atualizar o valor de um determinado elemento. Em GNNs, cada elemento é um vértice; já em uma CNN cada elemento é um \emph{pixel}.\newline
+}
+
+\Sli{
+\justifying Empilhando essas camadas GNN de roteamento de mensagens é uma maneira de fazer com que os nós recebam informações do grafo como um todo. Podemos, então, atualizar nossa arquitetura GNN da seguinte forma: FIGURA AQUI.
+}
+
+\SliT{Aprendendo Representações de Arestas}{
+\justifying Nossa base de dados nem sempre irá conter todo o tipo de informação (nós, arestas e contexto global do grafo). Já mostramos como fazer uso de uma operação de \emph{pooling} para rotear mensagens de arestas para nós (ou vice-versa), mas somente na última camada antes da predição final. No entanto, podemos fazer o mesmo entre camadas internas de uma GNN.
 }
 
 \end{document}
