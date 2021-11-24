@@ -1,5 +1,6 @@
 %Fiquemos com Deus e Nossa Senhora!
 %Sao Jose de Cupertino rogai por nos!!
+%Honra teu Pai e tua Mãe!
 % ### Uses XeLaTeX ### %
 % ### Needs beamer-master ### %
 \documentclass[aspectratio=169]{beamer} %. Aspect Ratio 16:9
@@ -144,6 +145,30 @@ Podemos representar a operação de pooling pela letra $\rho$ e denotar que esta
 \begin{center}
 \includegraphics[scale=0.2]{./figs/GNN_Fig4.png}
 \end{center}
+}
+
+\Sli{
+\justifying Ainda, caso tenhamos informações sobre os nós/arestas e queiramos inferir algo a respeito do grafo como um todo, podemos adotar algo similar, ou seja, rotear informações dos nós/arestas e tomar a decisão. Isso seria equivalente à operação de \emph{global average pooling} de uma CNN.
+
+}
+
+\Sli{
+\justifying Mostramos, então, como usar uma GNN para realizar predições simples em um problema de classificação binário roteando (passando) informações entre \textbf{diferentes partes do grafo}. Caso tenhamos informações adicionais acerca das entidades do grafo, basta apenas que definamos uma maneira de rotear essas informações.
+}
+
+\SliT{Roteando Mensagens}{
+\justifying Podemos realizar predições mais sofisticadas por meio de operações de \emph{pooling} em camadas GNN de tal forma a levar em consideração informações de conectividade do grafo. A ideia é fazer uso da chamada \textbf{roteamento de mensagens}, em que enós/arestas vizinhas trocam informações e, assim, influenciam a atualização dos seus respectivos \emph{embeddings}. Roteamento de mensagens, de maneira geral, funciona da seguinte maneira:
+
+\begin{enumerate}
+	\item Para cada nó do grafo, junte todas as informações ou mensagens dos nós vizinhos.
+	\item Realize uma agregação dessas informações utilizando alguma \textbf{função de agregação}.
+	\item Para todas as mensagens que passaram por alguma operação de agregação, encaminhe-as para alguma \textbf{função de atualização} (ex: rede neural).
+\end{enumerate}
+}
+
+\Sli{
+Colocar figura\newline
+\justifying Essencialmente, roteamento de mensagens e convolução são operações que \textbf{agregam} e \textb{processam} informações de uma certa vizinhança para atualizar o valor de um determinado elemento. Em GNNs, cada elemento é um vértice; já em uma CNN cada elemento é um \emph{pixel}.
 }
 
 \end{document}
