@@ -122,7 +122,7 @@
 \begin{minipage}{0.6\textwidth}
 \includegraphics[scale=0.4]{./figs/CNN_Fig4.png}\end{minipage}%%% to prevent a space
 \begin{minipage}{0.39\textwidth}
-Como calcular o tamanho da saída? Suponha que as dimensões do dado de entrada e da máscara sejam, respectivamente, $m\times m$ e $n\times n$. O dado de saída terá a dimensão de $m-\lceil n/2\rceil\times m-\lceil n/2\rceil$.
+Como calcular o tamanho da saída? Suponha que as dimensões do dado de entrada e da máscara sejam, respectivamente, $m\times m$ e $n\times n$. O dado de saída terá a dimensão de $m-\lfloor 2n/2\rfloor\times m-2\lfloor n/2\rfloor$.
 \null
 \par\xdef\tpd{\the\prevdepth}
 \end{minipage}
