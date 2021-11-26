@@ -150,6 +150,9 @@ Podemos representar a operação de pooling pela letra $\rho$ e denotar que esta
 \Sli{
 \justifying Ainda, caso tenhamos informações sobre os nós/arestas e queiramos inferir algo a respeito do grafo como um todo, podemos adotar algo similar, ou seja, rotear informações dos nós/arestas e tomar a decisão. Isso seria equivalente à operação de \emph{global average pooling} de uma CNN.
 
+\begin{center}
+\includegraphics[scale=0.2]{./figs/GNN_Fig5.png}
+\end{center}
 }
 
 \Sli{
@@ -167,18 +170,31 @@ Podemos representar a operação de pooling pela letra $\rho$ e denotar que esta
 }
 
 \Sli{
-Colocar figura\newline
-\justifying Essencialmente, roteamento de mensagens e convolução são operações que \textbf{agregam} e \textbf{processam} informações de uma certa vizinhança para atualizar o valor de um determinado elemento. Em GNNs, cada elemento é um vértice; já em uma CNN cada elemento é um \emph{pixel}.\newline
-}
+\begin{center}
+\includegraphics[scale=0.2]{./figs/GNN_Fig6.png}
+\end{center}
 
-\Sli{
-\justifying Empilhando essas camadas GNN de roteamento de mensagens é uma maneira de fazer com que os nós recebam informações do grafo como um todo. Podemos, então, atualizar nossa arquitetura GNN da seguinte forma: FIGURA AQUI.
+\justifying Essencialmente, roteamento de mensagens e convolução são operações que \textbf{agregam} e \textbf{processam} informações de uma certa vizinhança para atualizar o valor de um determinado elemento. Em GNNs, cada elemento é um vértice; já em uma CNN cada elemento é um \emph{pixel}. Empilhando essas camadas GNN de roteamento de mensagens é uma maneira de fazer com que os nós recebam informações do grafo como um todo.
 }
 
 \SliT{Aprendendo Representações de Arestas}{
 \justifying Nossa base de dados nem sempre irá conter todo o tipo de informação (nós, arestas e contexto global do grafo). Já mostramos como fazer uso de uma operação de \emph{pooling} para rotear mensagens de arestas para nós (ou vice-versa), mas somente na última camada antes da predição final. No entanto, podemos fazer o mesmo entre camadas internas de uma GNN.\newline
 
 \justifying No entanto, representações de nós e arestas não possuem, necessariamente, o mesmo tipo e tamanho. Assim, ainda não está claro como combinar esses tipos de informação. Uma alternativa seria aprender um \textbf{mapeamento linear} do espaço dos nós para o espaço de arestas e vice-versa, ou ainda \textbf{concatená-los}.
+}
+\Sli{
+\begin{center}
+\includegraphics[scale=0.2]{./figs/GNN_Fig7.png}
+\end{center}
+}
+
+\SliT{Conclusões}{
+\justifying GNNs são modelos poderosos em duas principais situações:
+
+\begin{itemize}
+	\item Dados estão, naturalmente, representados em uma estrutura de grafo.
+	\item Dados podem ser representados em uma estrutura de grafo com interferência mínima em sua estrutura.
+\end{itemize}
 }
 
 \end{document}
