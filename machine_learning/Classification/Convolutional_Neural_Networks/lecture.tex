@@ -1,5 +1,6 @@
 %Fiquemos com Deus e Nossa Senhora!
 %Sao Jose de Cupertino rogai por nos!!
+%Honra teu Pai e tua Mãe!
 % ### Uses XeLaTeX ### %
 % ### Needs beamer-master ### %
 \documentclass[aspectratio=169]{beamer} %. Aspect Ratio 16:9
@@ -117,7 +118,7 @@
 }
 
 \Sli{
-\justifying A posição central da matriz de entrada $9\times9$ é substituída pelo valor obtido pela sua convolução com a máscara $5\times 5$ e o valor armazenado na matriz de saída $5\times 5$ (mapa de características). O procedimento é repetido até que toda a matriz de entrada tenha sido avaliada. Note que um trecho da matriz é descartado, por isso que a saída possui dimensões menores (podemos contornar isso com o \emph{zero padding} ou espelhamento da máscara).
+\justifying A posição central da matriz de entrada $9\times9$ é substituída pelo valor obtido pela sua convolução com a máscara $5\times 5$ e o valor armazenado na matriz de saída $5\times 5$ (mapa de características). O procedimento é repetido até que toda a matriz de entrada tenha sido avaliada. Note que um trecho da matriz é descartado, por isso que a saída possui dimensões menores (podemos contornar isso com o \emph{zero padding} ou espelhamento da imagem).
 
 \begin{minipage}{0.6\textwidth}
 \includegraphics[scale=0.4]{./figs/CNN_Fig4.png}\end{minipage}%%% to prevent a space
@@ -191,6 +192,7 @@ Resumindo, temos que tomar decisões sobre os seguintes itens acerca de uma cama
 	\item Tipo do \emph{padding}.
 	\item Tamanho do \emph{kernel}.
 	\item Valor de \emph{stride}.
+	\item Quantidade de filtros.
 \end{enumerate}
 }
 
@@ -311,7 +313,7 @@ A sua formulação é dada como segue:
 	\item Convolução Deformável (\emph{Deformable Convolution}) 
 \end{itemize}
 
-\justifying Usualmente, elas produzem o mesmo resultado no final, mas conseguem melhorar a eficiência do modelo em relação às convoluções tradicionais.
+\justifying Usualmente, as duas primeiras produzem o mesmo resultado no final, mas conseguem melhorar a eficiência do modelo em relação às convoluções tradicionais.
 }
 
 \Sli{
@@ -417,7 +419,7 @@ Nossa entrada $32\times32\times3$ passará por uma convolução com uma máscara
 
 \SliT{Treinamento}{
 
-\justifying O processo de treinamento de uma rede neural profunda consiste em encontrar os valores dos parâmetros que minimizam uma função de custo. Quais são esses parâmetros? \textbf{Os pesos das máscaras de convolução e das conexões das camadas fully connected.} No que o tamanho das máscaras, quantidade de filtros e valores de \emph{stride} são denominados de \textbf{hiperparâmetros} e, portando, não são aprendidos.
+\justifying O processo de treinamento de uma rede neural profunda consiste em encontrar os valores dos parâmetros que minimizam uma função de custo. Quais são esses parâmetros? \textbf{Os pesos das máscaras de convolução e das conexões das camadas fully connected.} Note que o tamanho das máscaras, quantidade de filtros e valores de \emph{stride} são denominados de \textbf{hiperparâmetros} e, portando, não são aprendidos.
 
 \justifying No que diz respeito ao treinamento, precisamos escolher dois itens: (i) função de custo e (ii) técnica otimizadora. Usualmente, adota-se a \textbf{entropia cruzada} para a função de custo e a técnica \emph{Adam} para a etapa de otimização.
 } 
