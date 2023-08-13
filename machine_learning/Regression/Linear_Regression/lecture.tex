@@ -1,5 +1,6 @@
 %Fiquemos com Deus e Nossa Senhora!
 %Sao Jose de Cupertino rogai por nos!!
+%Honra teu pai e tua mae!
 % ### Uses XeLaTeX ### %
 % ### Needs beamer-master ### %
 \documentclass[aspectratio=169]{beamer} %. Aspect Ratio 16:9
@@ -98,7 +99,7 @@
 % ###############################################################################
 % SLIDE NO TITLE
 \Sli{
-\justify \underline{Definição do problema:} seja um conjunto de dados ${\cal X}= \{(x_1,y_1),(x_2,y_2),\ldots,(x_z,y_z)\}$ tal que $x_i\in\mathbb{R}$ corresponde ao dado de entrada e $y_i\in\mathbb{R}$ denota o seu respectivo valor de saída. Temos, ainda, que ${\cal X}$ pode ser \textbf{particionado} da seguinte forma: ${\cal X} = {\cal X}^1\cup {\cal X}^2$, em que ${\cal X}^1$ e ${\cal X}^2$ denotam os conjuntos de dados de \textbf{treinamento} e \textbf{teste}, respectivamente. Nosso objetivo é, dado o conjunto de treinamento, aprender uma função $h:\mathbb{R}\rightarrow\mathbb{R}$ que consiga estimar o valor de uma casa dado o seu tamanho.
+\justify \underline{Definição do problema:} seja um conjunto de dados ${\cal X}= \{(x_1,y_1),(x_2,y_2),\ldots,(x_z,y_z)\}$ tal que $z$ denota a quantidade de elementos, $x_i\in\mathbb{R}$ corresponde ao dado de entrada e $y_i\in\mathbb{R}$ denota o seu respectivo valor de saída. Temos, ainda, que ${\cal X}$ pode ser \textbf{particionado} da seguinte forma: ${\cal X} = {\cal X}^1\cup {\cal X}^2$, em que ${\cal X}^1$ e ${\cal X}^2$ denotam os conjuntos de dados de \textbf{treinamento} e \textbf{teste}, respectivamente. Nosso objetivo é, dado o conjunto de treinamento, aprender uma função $h:\mathbb{R}\rightarrow\mathbb{R}$ que consiga estimar o valor de uma casa dado o seu tamanho.
 
 \begin{center}
 \includegraphics[scale=0.1]{./figs/Regressao_Linear_Fig3.png}
@@ -133,7 +134,7 @@ em que $m$ denota o tamanho do conjunto de treinamento. Essa formulação corres
 }
 
 \Sli{
-A Equação 2 é usualmente chamada de \textbf{função de custo} ou \textbf{função de perda}, também conhecida por \textbf{erro médio quadrático}. Podemos simplificar a notação escrevendo a Equação 2 da seguinte forma:
+A Equação 2 é usualmente chamada de \textbf{função de custo} ou \textbf{função de perda}. Podemos simplificar a notação escrevendo a Equação 2 da seguinte forma:
 
 \begin{equation}
 \label{e.min_linear_regression_simplified}
@@ -185,9 +186,10 @@ Vamos ilustrar algumas situações para entendermos o comportamento de ambas fun
 \scriptsize
 \begin{equation}\nonumber
 \begin{split}
-J(w_1) &= \frac{1}{2m}\sum_{i=1}^3(h_{\boldsymbol{w}}(x_i)-y_i)^2\\
-&= \frac{1}{2m}\sum_{i=1}^3(w_1x_i-y_i)^2\\
-&= \frac{1}{2m}\sum_{i=1}^3(x_i-y_i)^2\\
+J(w_1) &= \frac{1}{2m}\sum_{i=1}^m(h_{\boldsymbol{w}}(x_i)-y_i)^2\\
+&= \frac{1}{2m}\sum_{i=1}^m(w_1x_i-y_i)^2\\
+&= \frac{1}{2m}\sum_{i=1}^m(x_i-y_i)^2\\
+&= \frac{1}{2.3}\sum_{i=1}^3(x_i-y_i)^2\\
 &= \frac{1}{2.3}[(1-1)^2+(2-2)^2+(3-3)^2]\\
 &= 0
 \end{split}
