@@ -391,10 +391,10 @@ Quais são bons critérios de parada? Podemos utilizar um número fixo de itera�
 \secx{Regressão Linear Multivariada}\newline
 \justify Suponha, agora, que tenhamos mais variáveis para representar o problema, visto que utilizar apenas o tamanho da casa não é suficiente para estimarmos o seu valor (número de quartos, capacidade da garagem, piscina, etc).\newline
 
-\justify Neste caso, assuma que $n$ corresponde ao número dessas variáveis, ou seja, temos agora que $\boldsymbol{x}_i\in\mathbb{R}^n$. Assim sendo, nossa função hipótese possui a seguinte formulação:
+\justify Neste caso, assuma que $n$ corresponda ao número dessas variáveis, ou seja, temos agora que $\boldsymbol{x}_i\in\mathbb{R}^n$. Assim sendo, nossa função hipótese possui a seguinte formulação:
 
 \begin{align}
-	h_{\boldsymbol{w}}(\boldsymbol{x})&=w_0+w_1x^1+w_2x^2+\ldots w_nx^n\\
+	h_{\boldsymbol{w}}(\boldsymbol{x})&=w_0+w_1x^1+w_2x^2+\ldots w_nx^n\\n
 	&=w_0+\sum_{j=1}^nw_jx^j.
 \end{align}
 } 
@@ -435,7 +435,7 @@ Como podemos melhorar a convergência durante o aprendizado? Algumas opções:
 }
 
 \SliT{Regularização}{
-Com o intuito de evitar com que nossos modelos tornem-se muito ``especializados", podemos fazer uso de técnicas de \textbf{regularização}. Vamos visualizar algumas as três situações que podem ocorrer quando estamos trabalhando com regressão de dados.
+Com o intuito de evitar com que nossos modelos tornem-se muito ``especializados", podemos fazer uso de técnicas de \textbf{regularização}. Vamos visualizar as três situações que podem ocorrer quando estamos trabalhando com regressão de dados.
 
 \begin{tabular}{ccc}
 	\includegraphics[scale=0.157]{./figs/Regressao_Linear_Fig25.png} &
@@ -470,10 +470,11 @@ Vamos observar dois exemplos. A tendência é que polinômios com graus maiores 
 \Sli{
 Desta forma, temos uma nova função de custo por erro médio quadrático, que agora adiciona um termo de regularização à Equação 4:
 
-\begin{equation}
+\begin{align}
 \label{e.Regularized_cost_function}
-J(\boldsymbol{w}) = \frac{1}{2m}\left[\sum_{i=1}^m(h_w(x_i)-y_i)^2+\lambda\sum_{j=1}^nw^2_j\right],
-\end{equation}
+J(\boldsymbol{w}) &= \frac{1}{2m}\left[\sum_{i=1}^m(h_w(x_i)-y_i)^2+\lambda\sum_{j=1}^nw^2_j\right]\nonumber\\
+&= \frac{1}{2m}\sum_{i=1}^m(h_w(x_i)-y_i)^2-\frac{\lambda}{2m}\sum_{j=1}^nw^2_j,
+\end{align}
 em que $\lambda$ corresponde ao parâmetro de regularização, o qual controla a relação custo-benefício entre não regularização e sobretreinamento. \textbf{Lembrando que a regularização não se aplica à $w_0$}.
 }
 
