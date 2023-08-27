@@ -389,24 +389,24 @@ Quais são bons critérios de parada? Podemos utilizar um número fixo de itera�
 
 \Sli{
 \secx{Regressão Linear Multivariada}\newline
-\justify Suponha, agora, que tenhamos mais variáveis para representar o problema, visto que utilizar apenas o tamanho da casa não é suficiente para estimarmos o seu valor (número de quartos, capacidade da garagem, piscina, etc).\newline
+\justify Suponha, agora, que tenhamos mais variáveis para representar o problema, visto que utilizar apenas o tamanho da casa pode não ser suficiente para estimarmos o seu valor (número de quartos, capacidade da garagem, piscina, etc).\newline
 
 \justify Neste caso, assuma que $n$ corresponda ao número dessas variáveis, ou seja, temos agora que $\boldsymbol{x}_i\in\mathbb{R}^n$. Assim sendo, nossa função hipótese possui a seguinte formulação:
 
 \begin{align}
-	h_{\boldsymbol{w}}(\boldsymbol{x})&=w_0+w_1x^1+w_2x^2+\ldots w_nx^n\\n
+	h_{\boldsymbol{w}}(\boldsymbol{x})&=w_0+w_1x^1+w_2x^2+\ldots w_nx^n\nonumber\\
 	&=w_0+\sum_{j=1}^nw_jx^j.
 \end{align}
 } 
 
 \Sli{
-Para fins de simplicidade, vamos assumir que $x^0=1$, ou seja, $\boldsymbol{x}=[x^0\ x^1\ x^2\ \ldots\ x^n]\in\mathbb{R}^{n+1}$. Assim sendo, a Equação 11 pode ser escrita da seguinte forma:
+Para fins de simplicidade, vamos assumir que $x^0=1$, ou seja, $\boldsymbol{x}=[x^0\ x^1\ x^2\ \ldots\ x^n]\in\mathbb{R}^{n+1}$. Assim sendo, a Equação 10 pode ser escrita da seguinte forma:
 
 \begin{align}
-	h_{\boldsymbol{w}}(\boldsymbol{x}) &= w_0x^0+\sum_{j=1}^nw_jx^j\\
+	h_{\boldsymbol{w}}(\boldsymbol{x}) &= w_0x^0+\sum_{j=1}^nw_jx^j\nonumber\\
 	&= \boldsymbol{w}^T\boldsymbol{x}.
 \end{align}
-A equação acima é, na verdade, a equação do hiperplano, ou seja, uma reta multimensional. Desta forma, a regressão linear multivariada generaliza a regressão linear univariada para um número maior de dimensões.
+A equação acima é, na verdade, a equação do hiperplano, ou seja, uma reta multimensional. Desta forma, a regressão linear multivariada \textbf{generaliza} a regressão linear univariada para um número maior de dimensões.
 }
 
 \Sli{
@@ -414,7 +414,7 @@ Nosso problema agora passa a ter os seguintes itens:
 
 \begin{itemize}
 	\item Função hipótese: $h_{\boldsymbol{w}}(\boldsymbol{x})=\boldsymbol{w}^T\boldsymbol{x}$.
-	\item Função de custo: $J(\boldsymbol{w})=\frac{1}{2m}\sum_{i=1}^m(h_{\boldsymbol{w}}(\boldsymbol{x}_i)-y_1)^2$.
+	\item Função de custo: $J(\boldsymbol{w})=\frac{1}{2m}\sum_{i=1}^m(h_{\boldsymbol{w}}(\boldsymbol{x}_i)-y_i)^2$.
 	\item Derivada parcial: $\frac{\partial J(\boldsymbol{w})}{\partial w_j}= \frac{1}{m}\sum_{i=1}^m[(h_{\boldsymbol{w}}(x_i)-y_i)x_i^j]$.
 \end{itemize}
 O algoritmo do gradiente descendente é o mesmo do apresentado para a regressão linear univariada.
@@ -428,7 +428,7 @@ Como podemos melhorar a convergência durante o aprendizado? Algumas opções:
 	\item Gradiente descendente estocástico:
 	\begin{itemize}
 		\item Bom para grandes conjuntos de dados.
-		\item Converge mais rápido do que o gradiente descendente (pode não avaliar todo o espaço de busca).
+		\item Pode convergir mais rápido do que o gradiente descendente (pode não avaliar todo o espaço de busca).
 		\item Parecido com o gradiente descendente \emph{online}, porém é aplicado sobre amostragens aleatórias do conjunto de treinamento.
 	\end{itemize}
 \end{itemize}
@@ -461,21 +461,21 @@ Vamos observar dois exemplos. A tendência é que polinômios com graus maiores 
 \justify Como podemos minimizar o efeito dos pesos associados aos graus maiores? Uma solução para penalizá-los seria multiplicá-los por valores altos. Vamos modificar a Equação 2, que corresponde ao erro médio quadrático:
 
 \begin{equation}
-	\boldsymbol{w}^\ast = \argmin_{\boldsymbol{w}}\left\{\frac{1}{2m}\sum_{i=1}^m(h_w(x_i)-y_i)^2+\overbrace{500w_3}^{w_3\approx 0}+\underbrace{500w_4}_{w_4\approx 0}\right\}.
+	\boldsymbol{w}^\ast = \argmin_{\boldsymbol{w}}\left\{\frac{1}{2m}\sum_{i=1}^m(h_w(x_i)-y_i)^2+\overbrace{500w_3}^{w_3\approx 0}+\underbrace{800w_4}_{w_4\approx 0}\right\}.
 \end{equation}
 
 \justify Como o objetivo é minimizar a função de custo, a tendência é que o gradiente descendente atribua valores muito pequenos para $w_3$ e $w_4$ no intuito de diminuir a sua influência no valor final. Assim, a regularização visa, de maneira geral, atribuir valores pequenos para os elementos em $\boldsymbol{w}$ de tal forma a termos funções ``mais simples".
 }
 
 \Sli{
-Desta forma, temos uma nova função de custo por erro médio quadrático, que agora adiciona um termo de regularização à Equação 4:
+Desta forma, temos uma nova função de custo por erro médio quadrático, que agora adiciona um \textbf{termo de regularização} à Equação 4:
 
 \begin{align}
 \label{e.Regularized_cost_function}
 J(\boldsymbol{w}) &= \frac{1}{2m}\left[\sum_{i=1}^m(h_w(x_i)-y_i)^2+\lambda\sum_{j=1}^nw^2_j\right]\nonumber\\
-&= \frac{1}{2m}\sum_{i=1}^m(h_w(x_i)-y_i)^2-\frac{\lambda}{2m}\sum_{j=1}^nw^2_j,
+&= \frac{1}{2m}\sum_{i=1}^m(h_w(x_i)-y_i)^2+\frac{\lambda}{2m}\sum_{j=1}^nw^2_j,
 \end{align}
-em que $\lambda$ corresponde ao parâmetro de regularização, o qual controla a relação custo-benefício entre não regularização e sobretreinamento. \textbf{Lembrando que a regularização não se aplica à $w_0$}.
+em que $\lambda$ corresponde ao parâmetro de regularização, o qual controla a relação \textbf{custo-benefício} entre não regularização e sobretreinamento. Lembrando que a regularização não se aplica à $w_0$.
 }
 
 \Sli{
@@ -499,7 +499,7 @@ As derivadas parciais para $\frac{\partial J(\boldsymbol{w})}{\partial w_j}$ dad
 \end{equation}
 e
 \begin{equation}
-	\frac{\partial J(\boldsymbol{w})}{\partial w_j} = \frac{1}{m}\sum_{i=1}^m[(h_{\boldsymbol{w}}(x_i)-y_i)x_i^j]+\frac{\lambda}{m}w_j.
+	\frac{\partial J(\boldsymbol{w})}{\partial w_j} = \frac{1}{m}\sum_{i=1}^m[(h_{\boldsymbol{w}}(x_i)-y_i)x_i^j]+\frac{\lambda}{m}w_j,\ \forall j\in\{1,2,\ldots,n\}.
 \end{equation}
 Note que a derivada parcial com relação à $w_0$ não sofre alterações. O algoritmo do gradiente descendente é o mesmo do que a versão da regressão linear sem a regularização.
 }
