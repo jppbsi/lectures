@@ -126,7 +126,7 @@
 }
 
 \Sli{
-\justify A pergunta principal é: \textbf{como escolher ${\cal F}\subset{\cal F}_{all}$ e $f^\ast\in{\cal F}$?} A TAE nos ajuda a responder à essa questão propondo as SVMs, que é uma classe de funções (classificadores) ótimas no que diz respeito ao \textbf{compromisso} entre os erros de aproximação e estimação.
+\justify A pergunta principal é: \textbf{como escolher ${\cal F}\subset{\cal F}_{all}$ e $f^\ast\in{\cal F}$?} A TAE nos ajuda a responder à essa questão propondo as SVMs, ou seja, uma classe de funções (classificadores) ótimas no que diz respeito ao \textbf{compromisso} entre os erros de aproximação e estimação.
 
 \justify \underline{Objetivo}: encontrar um hiperplano que maximize a \textbf{margem} de segurança e cometa poucos \textbf{erros marginais}, isto é, minimize o risco. O que são erros marginais?
 
@@ -180,7 +180,7 @@ e
 Podemos unificar as equações anteriores da seguinte forma:
 
 \begin{equation}
-	y_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)-1\geq 0,
+	y_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)-1\geq 0,\ \forall i=1,2,\ldots,m,
 \end{equation}
 que é conhecida pela \textbf{restrição do problema}. 
 
@@ -208,7 +208,7 @@ Como podemos calcular a distância $d(H_1,h_2)$ entre os hiperplanos?
 }
 
 \Sli{
-Desta forma, para \textbf{maximizar} a margem de separação, devemos \textbf{minimizar} $\norm{\boldsymbol{w}}$. Assim sendo, temos o seguinte problema de otimização:
+Desta forma, para \textbf{maximizar} a margem de separação, devemos \textbf{minimizar} $\norm{\boldsymbol{w}}$, o qual foi substituído por $\frac{1}{2}\norm{\boldsymbol{w}}^2$ para fins de conveniência matemática\footnote{Ao realizarmos esta substituição, removemos o cálculo da raiz em $\norm{\boldsymbol{w}}^2$. Já a constante $\frac{1}{2}$ foi adicionada para fins de simplificação matemática.}. Assim sendo, temos o seguinte problema de otimização:
 
 \begin{equation}
 	\boldsymbol{w}^\ast,\theta^\ast = \argmin_{\boldsymbol{w},\theta}\frac{1}{2}\norm{\boldsymbol{w}}^2,
