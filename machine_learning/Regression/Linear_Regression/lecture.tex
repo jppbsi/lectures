@@ -376,7 +376,7 @@ Desta forma, o algoritmo do gradiente descendente pode ser sumarizado da seguint
 	\item Retorne ao Passo 2.
 	\item Fim do algoritmo.
 \end{enumerate}
-Note que $w_0$ e $w_1$ precisam ser atualizados sumultaneamente!
+Note que $w_0$ e $w_1$ precisam ser atualizados simultaneamente!
 }
 
 \Sli{
@@ -414,8 +414,8 @@ Nosso problema agora passa a ter os seguintes itens:
 
 \begin{itemize}
 	\item Função hipótese: $h_{\boldsymbol{w}}(\boldsymbol{x})=\boldsymbol{w}^T\boldsymbol{x}$.
-	\item Função de custo: $J(\boldsymbol{w})=\frac{1}{2m}\sum_{i=1}^m(h_{\boldsymbol{w}}(\boldsymbol{x}_i)-y_1)^2$.
-	\item Derivada parcial: $\frac{\partial J(\boldsymbol{w})}{\partial w_j}= \frac{1}{m}\sum_{i=1}^m[(h_{\boldsymbol{w}}(x_i)-y_i)x_i^j]$.
+	\item Função de custo: $J(\boldsymbol{w})=\frac{1}{2m}\sum_{i=1}^m(h_{\boldsymbol{w}}(\boldsymbol{x}_i)-y_i)^2$.
+	\item Derivada parcial: $\frac{\partial J(\boldsymbol{w})}{\partial w_j}= \frac{1}{m}\sum_{i=1}^m[(h_{\boldsymbol{w}}(\boldsymbol{x}_i)-y_i)x_i^j]$.
 \end{itemize}
 O algoritmo do gradiente descendente é o mesmo do apresentado para a regressão linear univariada.
 }
@@ -515,7 +515,7 @@ Desta forma, o algoritmo do gradiente descendente para Regressão Linear Multiva
 	\item Retorne ao Passo 2.
 	\item Fim do algoritmo.
 \end{enumerate}
-Note que $w_0$ e $w_1$ precisam ser atualizados sumultaneamente!
+Note que $w_j$, $\forall j=\{1,2,\ldots,n\}$, precisa ser atualizados simultaneamente!
 }
 
 \end{document}
