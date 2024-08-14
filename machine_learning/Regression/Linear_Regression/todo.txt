@@ -1,0 +1,2 @@
+- Apresentar equacao fechada e fizer que o problema e calcular a inversa.
+- Apresentar diferentes tipos de regressao (Lasso, L1, L2, etc).

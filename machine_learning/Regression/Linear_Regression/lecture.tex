@@ -367,7 +367,7 @@ e
 Desta forma, o algoritmo do gradiente descendente pode ser sumarizado da seguinte forma:
 
 \begin{enumerate}
-	\item Atribua valores aleatórios para $\boldsymbol{w} = [w_0\ w_1]$.
+	\item Atribua valores aleatórios para $\boldsymbol{w} = [w_0\ w_1]$ e escolha $\alpha$.
 	\item Avalie a função de custo $J(\boldsymbol{w})$.
 	\item  Caso o \textbf{critério de parada tenha sido atingido}, vá para o passo 7.
 	\item $w_0^{(t+1)} = w_0^{(t)}-\alpha\frac{1}{m}\sum_{i=1}^m(h_{\boldsymbol{w}}(x_i)-y_i)$.
@@ -500,6 +500,21 @@ e
 	\frac{\partial J(\boldsymbol{w})}{\partial w_j} = \frac{1}{m}\sum_{i=1}^m[(h_{\boldsymbol{w}}(x_i)-y_i)x_i^j]+\frac{\lambda}{m}w_j.
 \end{equation}
 Note que a derivada parcial com relação à $w_0$ não sofre alterações. O algoritmo do gradiente descendente é o mesmo do que a versão da regressão linear sem a regularização.
+}
+
+\Sli{
+Desta forma, o algoritmo do gradiente descendente para Regressão Linear Multivariada com Regularização pode ser sumarizado da seguinte forma:
+
+\begin{enumerate}
+	\item Atribua valores aleatórios para $\boldsymbol{w} = [w_0\ w_1]$, escolha $\alpha$ e $\lambda$.
+	\item Avalie a função de custo $J(\boldsymbol{w})$.
+	\item  Caso o \textbf{critério de parada tenha sido atingido}, vá para o passo 7.
+	\item $w_0^{(t+1)} = w_0^{(t)}-\alpha\frac{1}{m}\sum_{i=1}^m(h_{\boldsymbol{w}}(\boldsymbol{x}_i)-y_i)$.
+	\item $w_j^{(t+1)} = w_j^{(t)}-\alpha\left(\frac{1}{m}\sum_{i=1}^m[(h_{\boldsymbol{w}}(\boldsymbol{x}_i)-y_i)x_i^j]+\frac{\lambda}{m}w^j\right)$, $\forall j\in\{1,2,\ldots,n\}$.
+	\item Retorne ao Passo 2.
+	\item Fim do algoritmo.
+\end{enumerate}
+Note que $w_0$ e $w_1$ precisam ser atualizados sumultaneamente!
 }
 
 \end{document}
