@@ -1,5 +1,6 @@
 %Fiquemos com Deus e Nossa Senhora!
 %Sao Jose de Cupertino rogai por nos!!
+%Honra teu pai e tua mae!
 % ### Uses XeLaTeX ### %
 % ### Needs beamer-master ### %
 \documentclass[aspectratio=169]{beamer} %. Aspect Ratio 16:9
@@ -86,7 +87,7 @@
 }
 
 \Sli{
-\justify \underline{Definição do problema:} seja um conjunto de dados ${\cal X}= \{(\boldsymbol{x}_1,y_1),(\boldsymbol{x}_2,y_2),\ldots,(\boldsymbol{x}_z,y_z)\}$ tal que $\boldsymbol{x}_i\in\mathbb{R}^{n+1}$ corresponde ao dado de entrada e $y_i\in[0,1]$ denota o seu respectivo valor de saída. Temos, ainda, que ${\cal X}$ pode ser \textbf{particionado} da seguinte forma: ${\cal X} = {\cal X}^1\cup {\cal X}^2$, em que ${\cal X}^1$ e ${\cal X}^2$ denotam os conjuntos de dados de \textbf{treinamento} e \textbf{teste}, respectivamente. Nosso objetivo é, dado o conjunto de treinamento, aprender uma função $h:\mathbb{R}^{n+1}\rightarrow[0,1]$ que consiga estimar a probabilidade de uma amostra pertencer à uma dada classe. Por que usar uma função logística (sigmoide)?
+\justify \underline{Definição do problema:} seja um conjunto de dados ${\cal X}= \{(\boldsymbol{x}_1,y_1),(\boldsymbol{x}_2,y_2),\ldots,(\boldsymbol{x}_z,y_z)\}$ tal que $\boldsymbol{x}_i\in\mathbb{R}^{n+1}$ corresponde ao dado de entrada e $y_i\in\{0,1\}$ denota o seu respectivo valor de saída. Temos, ainda, que ${\cal X}$ pode ser \textbf{particionado} da seguinte forma: ${\cal X} = {\cal X}^1\cup {\cal X}^2$, em que ${\cal X}^1$ e ${\cal X}^2$ denotam os conjuntos de dados de \textbf{treinamento} e \textbf{teste}, respectivamente. Nosso objetivo é, dado o conjunto de treinamento, aprender uma função $h:\mathbb{R}^{n+1}\rightarrow\{0,1\}$ que consiga estimar qual a classe de uma determinada amostra por meio de \textbf{probabilidades}. Por que usar uma função logística (sigmoide)?
 }
 
 \Sli{
@@ -102,7 +103,7 @@ tal que $g(a)\in[0,1]$.
 }
 
 \Sli{
-Como funciona o Regressor Logístico? Dado que queremos obter uma saída $h_{\boldsymbol{w}}(\boldsymbol{x})\in[0,1]$, basta modificarmos nossa entrada na Equação 1 como segue:
+Como funciona o Regressor Logístico? Dado que queremos obter uma saída $h_{\boldsymbol{w}}(\boldsymbol{x})\in\{0,1\}$, basta modificarmos nossa entrada na Equação 1 como segue:
 
 \begin{align}\nonumber
 	h_{\boldsymbol{w}}(\boldsymbol{x}) &= g(\boldsymbol{w}^T\boldsymbol{x})\\
@@ -121,7 +122,7 @@ Na prática, queremos que $h_{\boldsymbol{w}}(\boldsymbol{x})\geq 0.5$ quando $\
 }	
 
 \Sli{
-\justify Suponha que tenhamos a seguinte situação, em que $h_{\boldsymbol{w}}(\boldsymbol{x})=g(\boldsymbol{w}^T\boldsymbol{x})$ e $\boldsymbol{w} = [-3\ 1\ 1]$. Queremos atribuir $y=1$ se $\boldsymbol{w}^T\boldsymbol{x}> 0$, ou seja, se $-3+x^1+x^2>0\Rightarrow x^1+x^2>3$. De maneira análoga, queremos atribuir $y=0$ se $\boldsymbol{w}^T\boldsymbol{x}< 0$, ou seja, se $-3+x^1+x^2<0\Rightarrow x^1+x^2<3$.
+\justify Suponha que tenhamos a seguinte situação, em que $h_{\boldsymbol{w}}(\boldsymbol{x})=g(\boldsymbol{w}^T\boldsymbol{x})$ e $\boldsymbol{w} = [-3\ 1\ 1]$. Queremos atribuir $y=1$ se $\boldsymbol{w}^T\boldsymbol{x}\geq 0$, ou seja, se $-3+x^1+x^2\geq0\Rightarrow x^1+x^2\geq3$. De maneira análoga, queremos atribuir $y=0$ se $\boldsymbol{w}^T\boldsymbol{x}< 0$, ou seja, se $-3+x^1+x^2<0\Rightarrow x^1+x^2<3$.
 
 \begin{center}
 \begin{minipage}{0.37\textwidth}
@@ -134,7 +135,7 @@ Na prática, queremos que $h_{\boldsymbol{w}}(\boldsymbol{x})\geq 0.5$ quando $\
 }	
 
 \Sli{
-\justify Suponha agora outra situação, em que $h_{\boldsymbol{w}}(\boldsymbol{x})=g(w_0+w_1x^1+w_2x^2+w_3(x^1)^2+w_4(x^2)^2)$ e $\boldsymbol{w} = [-1\ 0\ 0\ 1\ 1]$. Queremos atribuir $y=1$ se $-1+(x^1)^2+(x^2)^2>0\Rightarrow (x^1)^2+(x^2)^2>1$. De maneira análoga, queremos atribuir $y=0$ se $1+(x^1)^2+(x^2)^2<0\Rightarrow (x^1)^2+(x^2)^2<1$.
+\justify Suponha agora outra situação, em que $h_{\boldsymbol{w}}(\boldsymbol{x})=g(w_0+w_1x^1+w_2x^2+w_3(x^1)^2+w_4(x^2)^2)$ e $\boldsymbol{w} = [-1\ 0\ 0\ 1\ 1]$. Queremos atribuir $y=1$ se $-1+(x^1)^2+(x^2)^2\geq0\Rightarrow (x^1)^2+(x^2)^2\geq1$. De maneira análoga, queremos atribuir $y=0$ se $1+(x^1)^2+(x^2)^2<0\Rightarrow (x^1)^2+(x^2)^2<1$.
 \vspace{-0.5cm}
 \begin{center}
 \begin{minipage}{0.37\textwidth}
@@ -227,7 +228,7 @@ Basta, agora, aprendermos o conjunto de parâmetros $\boldsymbol{w}$ de maneira 
 \begin{equation}
 	\frac{\partial J(\boldsymbol{w})}{\partial w_j} = \frac{1}{m}\sum_{i=1}^m[(h_{\boldsymbol{w}}(\boldsymbol{x}_i)-y_i)x_i^j].
 \end{equation}
-Muito embora a formulação acima seja idêntica à Regressão Linear, devemos lembrar que a função hipótese $(h_{\boldsymbol{w}}(\boldsymbol{x})$ é diferente.
+Muito embora a formulação acima seja idêntica à Regressão Linear, devemos lembrar que a função hipótese é diferente.
 }
 
 \Sli{
@@ -237,7 +238,7 @@ Desta forma, o algoritmo do gradiente descendente pode ser sumarizado da seguint
 	\item Atribua valores aleatórios para $\boldsymbol{w}$.
 	\item Avalie a função de custo $J(\boldsymbol{w})$.
 	\item  Caso o \textbf{critério de parada tenha sido atingido}, vá para o passo 6.
-	\item $w_j^{(t+1)} = w_j^{(t)}-\alpha\frac{1}{m}\sum_{i=1}^m[(h_{\boldsymbol{w}}(x_i)-y_i)^2x_i^j]$.
+	\item $w_j^{(t+1)} = w_j^{(t)}-\alpha\frac{1}{m}\sum_{i=1}^m[(h_{\boldsymbol{w}}(x_i)-y_i)x_i^j]$.
 	\item Retorne ao Passo 2.
 	\item Fim do algoritmo.
 \end{enumerate}
@@ -248,7 +249,7 @@ Note que os pesos em $\boldsymbol{w}$ precisam ser atualizados simultaneamente!
 \Sli{
 \justify No entanto, note que o Regressor Logístico é, naturalmente, um \textbf{classificador binário}, isto é, $y_i\in\{0,1\}$, $\forall i=1,2,\ldots,z$. Desta forma, como podemos atuar em problemas que possuem \textbf{múltiplas classes}? 
 
-\justify Agora, nossos rótulos podem ser representados da seguinte forma: $y_i\in\{0,1,\ldots,c-1\}$, em que $c$ corresponde ao número de classes. Suponha a seguinte situação em que $c=3$.
+\justify Agora, nossos rótulos podem ser representados da seguinte forma: $y_i\in\{1,2,\ldots,c\}$, em que $c$ corresponde ao número de classes. Suponha a seguinte situação em que $c=3$.
 
 \begin{center}
 \includegraphics[scale=0.11]{./figs/Regressao_Logistica_Fig9.png}\hspace{1cm}
@@ -269,7 +270,7 @@ $h^1_{\boldsymbol{w}}(\boldsymbol{x})$ & $h^2_{\boldsymbol{w}}(\boldsymbol{x})$ 
 }
 
 \Sli{
-Basta, então, treinarmos cada classificador $h^i_{\boldsymbol{w}}(\boldsymbol{x})$, $\forall i = 0,1,\ldots,c-1$ em ${\cal X}^1$. Dada uma amostra $\boldsymbol{x}\in{\cal X}^2$, seu rótulo $y$ será aquele que obedece à seguinte regra de decisão:
+Basta, então, treinarmos cada classificador $h^i_{\boldsymbol{w}}(\boldsymbol{x})$, $\forall i = 1,2,\ldots,c$ em ${\cal X}^1$. Dada uma amostra $\boldsymbol{x}\in{\cal X}^2$, seu rótulo $y$ será aquele que obedece à seguinte regra de decisão:
 
 \begin{equation}
 	y = \argmax_{i}\{h^i_{\boldsymbol{w}}(\boldsymbol{x})\}.
@@ -304,7 +305,20 @@ e
 \begin{equation}
 	\frac{\partial J(\boldsymbol{w})}{\partial w_j} = \frac{1}{m}\sum_{i=1}^m[(h_{\boldsymbol{w}}(x_i)-y_i)x_i^j]+\frac{\lambda}{m}w_j.
 \end{equation}
-O algoritmo do gradiente descendente permanece o mesmo.
+}
+
+\Sli{
+Desta forma, o algoritmo do gradiente descendente para o Regressão Logística com regularização pode ser sumarizado da seguinte forma:
+
+\begin{enumerate}
+	\item Atribua valores aleatórios para $\boldsymbol{w}$.
+	\item Avalie a função de custo $J(\boldsymbol{w})$.
+	\item  Caso o \textbf{critério de parada tenha sido atingido}, vá para o passo 6.
+	\item $w_j^{(t+1)} = w_j^{(t)}-\alpha\frac{1}{m}\sum_{i=1}^m[(h_{\boldsymbol{w}}(x_i)-y_i)x_i^j]+\frac{\lambda}{m}w_j$.
+	\item Retorne ao Passo 2.
+	\item Fim do algoritmo.
+\end{enumerate}
+Note que os pesos em $\boldsymbol{w}$ precisam ser atualizados simultaneamente!
 }
 
 \end{document}
