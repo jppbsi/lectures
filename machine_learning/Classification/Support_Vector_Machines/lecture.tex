@@ -1,5 +1,6 @@
 %Fiquemos com Deus e Nossa Senhora!
 %Sao Jose de Cupertino rogai por nos!!
+%Honra teu pai e tua mae!
 % ### Uses XeLaTeX ### %
 % ### Needs beamer-master ### %
 \documentclass[aspectratio=169]{beamer} %. Aspect Ratio 16:9
@@ -92,7 +93,7 @@
 \Sli{
 \justifying Qual seria a situação ideal? Um \textbf{compromisso} entre as duas situações, ou seja, uma relação custo-benefício entre supertreinamento e subtreinamento. 
 
-\justifying \underline{Definição do problema}: dado um espaço de funções ${\cal F}$, como escolher uma função $\hat{f}\in{\cal F}$ de tal forma que o erro no treinamento seja baixo e a capacidade de generalização seja alta? A TAE nos fornece condições para atingir este objetivo sem assumir uma formulação específica para a distribuição dos dados (abordagem não paramétrica).
+\justifying \underline{Definição do problema}: dado um espaço de funções ${\cal F}$, como escolher uma função $f^\ast\in{\cal F}$ de tal forma que o erro no treinamento seja baixo e a capacidade de generalização seja alta? A TAE nos fornece condições para atingir este objetivo sem assumir uma formulação específica para a distribuição dos dados (abordagem não paramétrica).
 
 \justifying \underline{Objetivo}: Encontrar o melhor classificador $f^\ast\in{\cal F}$ para um conjunto de treinamento fixo com tamanho $m$ de tal forma que se aproxime, ao máximo, do classificador de menor risco, ou seja, $f_{bayes}$.
 }
@@ -158,7 +159,7 @@
 }
 
 \Sli{
-\justify \underline{Definição do problema:} dado um conjunto de treinamento rotulado, isto é, classificação supervisionada, ${\cal X}^1=\{(\boldsymbol{x}_1,y_1),(\boldsymbol{x}_2,y_2),\ldots,(\boldsymbol{x}_m,y_m)\}$, as amostras mais próximas do hiperplano canônico $H$ devem satisfazer as seguintes condições:
+\justify \underline{Definição do problema:} dado um conjunto de treinamento rotulado, isto é, classificação supervisionada, ${\cal X}^1=\{(\boldsymbol{x}_1,y_1),(\boldsymbol{x}_2,y_2),\ldots,(\boldsymbol{x}_m,y_m)\}$, tal que $\boldsymbol{x}_i\in\mathbb{R}^n$ e $\boldsymbol{y}_i\in\{-1,+1\}$, as amostras mais próximas do hiperplano canônico $H$ devem satisfazer as seguintes condições:
 
 \begin{itemize}
 	\item $H_1:\boldsymbol{w}^T\boldsymbol{x}_i+\theta=1\implies \boldsymbol{w}^T\boldsymbol{x}_i+(\theta-1)=0$
@@ -208,7 +209,7 @@ Como podemos calcular a distância $d(H_1,h_2)$ entre os hiperplanos?
 }
 
 \Sli{
-Desta forma, para \textbf{maximizar} a margem de separação, devemos \textbf{minimizar} $\norm{\boldsymbol{w}}$, o qual foi substituído por $\frac{1}{2}\norm{\boldsymbol{w}}^2$ para fins de conveniência matemática\footnote{Ao realizarmos esta substituição, removemos o cálculo da raiz em $\norm{\boldsymbol{w}}^2$. Já a constante $\frac{1}{2}$ foi adicionada para fins de simplificação matemática.}. Assim sendo, temos o seguinte problema de otimização:
+Desta forma, para \textbf{maximizar} a margem de separação $\frac{2}{\norm{\boldsymbol{w}}}$, devemos \textbf{minimizar} $\frac{\norm{\boldsymbol{w}}}{2}$, o qual foi substituído por $\frac{1}{2}\norm{\boldsymbol{w}}^2$ para fins de conveniência matemática\footnote{Ao realizarmos esta substituição, removemos o cálculo da raiz em $\norm{\boldsymbol{w}}^2$.}. Assim sendo, temos o seguinte problema de otimização:
 
 \begin{equation}
 	\boldsymbol{w}^\ast,\theta^\ast = \argmin_{\boldsymbol{w},\theta}\frac{1}{2}\norm{\boldsymbol{w}}^2,
@@ -265,9 +266,9 @@ A derivada parcial com relação ao bias, ou seja, parâmetro $\theta$ é dada c
 Já a derivada parcial com relação ao vetor $\boldsymbol{w}$ é dada por:
 \begin{align}\nonumber
 	\frac{\partial L(\boldsymbol{w}, \theta, \boldsymbol{\alpha})}{\partial \boldsymbol{w}} &= \frac{1}{2}\norm{\boldsymbol{w}}^2-\sum_{i=1}^m\alpha_i[y_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)-1]= 0\\\nonumber
-	&= \boldsymbol{w}-\sum_{i=1}^m[\alpha_iy_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)-\alpha_i] = 0\\
-	&= \boldsymbol{w}-\sum_{i=1}^m\alpha_iy_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)+\sum_{i=1}^m\alpha_i = 0\\\nonumber
-	&= \boldsymbol{w}-\sum_{i=1}^m[\alpha_iy_i\boldsymbol{w}^T\boldsymbol{x}_i+\cancelto{0}{\alpha_iy_i\theta}]+\cancelto{0}{\sum_{i=1}^m\alpha_i} = 0\\
+	&= \frac{1}{2}\norm{\boldsymbol{w}}^2-\sum_{i=1}^m[\alpha_iy_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)-\alpha_i] = 0\\
+	&= \frac{1}{2}\norm{\boldsymbol{w}}^2-\sum_{i=1}^m\alpha_iy_i(\boldsymbol{w}^T\boldsymbol{x}_i+\theta)+\sum_{i=1}^m\alpha_i = 0\\\nonumber
+	&= \frac{1}{\cancel{2}}\norm{\boldsymbol{w}}^{\cancel{2}}-\sum_{i=1}^m[\alpha_iy_i\cancelto{1}{\boldsymbol{w}^T}\boldsymbol{x}_i+\cancelto{0}{\alpha_iy_i\theta}]+\cancelto{0}{\sum_{i=1}^m\alpha_i} = 0\\
 	&= \boldsymbol{w}-\sum_{i=1}^m\alpha_iy_i\boldsymbol{x}_i\implies \boldsymbol{w}=\sum_{i=1}^m\alpha_iy_i\boldsymbol{x}_i.\nonumber
 \end{align}
 }
