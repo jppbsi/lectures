@@ -87,7 +87,7 @@
 \begin{equation}
 	p(\boldsymbol{x}_i|\boldsymbol{\theta}) = \sum_{k=1}^Kw_kp(\boldsymbol{x}_i|\theta_k),
 \end{equation}
-em que $\boldsymbol{\theta}=\{\theta_1,\theta_2,\ldots,\theta_K\}$, $\theta_k = (w_k,\boldsymbol{\mu}_k,\boldsymbol{\Sigma}_k)$ corresponde aos parâmetros relativos à Gaussiana $k$ e $\sum_{k=1}^kw_k=1$.
+em que $\boldsymbol{\theta}=\{(w_1,\theta_1),(w_2,\theta_2),\ldots,(w_K,\theta_K)\}$, $\theta_k = (\boldsymbol{\mu}_k,\boldsymbol{\Sigma}_k)$ corresponde aos parâmetros relativos à Gaussiana $k$ e $\sum_{k=1}^Kw_k=1$.
 }
 
 \Sli{
@@ -105,7 +105,7 @@ em que $m_k$ corresponde ao número de amostras que pertencem à Gaussiana $k$ t
 
 \SliT{Treinamento}{
 
-\justifying Como não temos os rótulos, devemos utilizar alguma informação adicional para estimar $\boldsymbol{\theta} = \{\theta_1,\theta_2,\ldots,\theta_k\}$. Para tal tarefa, podemos empregar o conhecido algoritmo E-M (\emph{Expectation-Maximization}), o qual segue a mesma ideia da abordagem de máxima verossimilhança.\newline
+\justifying Como não temos os rótulos, devemos utilizar alguma informação adicional para estimar $\boldsymbol{\theta} = \{\theta_1,\theta_2,\ldots,\theta_K\}$. Para tal tarefa, podemos empregar o conhecido algoritmo E-M (\emph{Expectation-Maximization}), o qual segue a mesma ideia da abordagem de máxima verossimilhança.\newline
 
 \justifying A falta do rótulo dos dados caracteriza um \textbf{problema estatístico incompleto}, fazendo com que utilizemos as chamadas \textbf{variáveis latentes}, isto é, variáveis que \textbf{não são observadas}. Note que no caso do classificador Bayesiano temos o conjunto de rótulos, ou seja, observamos essas variáveis.
 }
