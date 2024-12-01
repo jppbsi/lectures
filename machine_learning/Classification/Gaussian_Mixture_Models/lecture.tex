@@ -96,7 +96,7 @@ As componentes $p(\boldsymbol{x}_i|\theta_k)$ são densidades Gaussianas multiva
 \begin{equation}
 	p(\boldsymbol{x}_i|\theta_k) = \frac{1}{(2\pi)^{m_k/2}|\Sigma_k|^{1/2}}\exp\left\{-\frac{1}{2}(\boldsymbol{x}_i-\boldsymbol{\mu}_k)^T\boldsymbol{\Sigma}_k^{-1}(\boldsymbol{x}_i-\boldsymbol{\mu}_k)\right\},
 \end{equation}
-em que $m_k$ corresponde ao número de amostras que pertencem à Gaussiana $k$ tal que $m=m_1+m_2+\ldots+m_K$. No caso, os pesos $w_k$ representam a probabilidade que uma amostra $\boldsymbol{x}_i\in{\cal X}$ selecionada aleatoriamente tenha sigo gerada pela componente $k$. Vejamos o exemplo de uma mistura 1D com $k=3$.
+em que $m_k$ corresponde ao número de amostras que pertencem à Gaussiana $k$ tal que $m=m_1+m_2+\ldots+m_K$. No caso, os pesos $w_k$ representam a probabilidade que uma amostra $\boldsymbol{x}_i\in{\cal X}$ selecionada aleatoriamente tenha sigo gerada pela componente $k$. Vejamos o exemplo de uma mistura 1D com $K=3$.
 
 \begin{center}
 	\includegraphics[scale=0.18]{./figs/GMM_Fig1.png}
@@ -111,7 +111,7 @@ em que $m_k$ corresponde ao número de amostras que pertencem à Gaussiana $k$ t
 }
 
 \Sli{
-\justifying Seja ${\cal Z}=\{z_1,z_2,\ldots,z_m\}$ um conjunto de variáveis latentes tal que $z_i\in\mathbb{R}$ e que cada uma delas está relacionada com uma amostra do conjunto de treinamento ${\cal X}$. Dado o conjunto de parâmetros $\boldsymbol{\theta}$, temos que a função de verossimilhança é dada por:
+\justifying Seja ${\cal Z}=\{z_1,z_2,\ldots,z_m\}$ um conjunto de variáveis latentes tal que $z_i\in\mathbb{N}$ e que cada uma delas está relacionada com uma amostra do conjunto de treinamento ${\cal X}$. Dado o conjunto de parâmetros $\boldsymbol{\theta}$, temos que a função de verossimilhança é dada por:
 
 \begin{equation}
 	L(\boldsymbol{\theta}|{\cal X},{\cal Z}) = p({\cal X},{\cal Z}|\boldsymbol{\theta}),
@@ -162,7 +162,7 @@ Basicamente, os passos do E-M são os seguintes:
 	\end{itemize}
 	\item Avaliamos a função do logaritmo da verossimilhança. Caso ela tenha estabilizado entre as iterações, podemos assumir que o método convergiu e interrompemos o processo treinamento.
 \end{enumerate}
-No entanto, uma maneira melhor de inicializar $\mu_k$ e $\Sigma_k$ é via algoritmo do $k$-Médias, em que $k=1,2,\ldots,K$. Já os pesos $w_k$ podem ser inicializados como $w_k = \frac{m_k}{|{\cal X}|}$, em que $m_k$ corresponde ao número de amostras do agrupamento $k$.
+No entanto, uma maneira melhor de inicializar $\mu_k$ e $\Sigma_k$ é via algoritmo do $k$-Médias, em que $k=1,2,\ldots,K$. Já os pesos $w_k$ podem ser inicializados como $w_k = \frac{m_k}{m}$, em que $m_k$ corresponde ao número de amostras do agrupamento $k$.
 }
 
 \Sli{
@@ -191,7 +191,7 @@ Vamos às equações de atualização:
 \end{equation}
 
 \begin{equation}
-	\boldsymbol{\Sigma}_k^{(t+1)} =\frac{1}{m_k}\sum_{i=1}^{m_k}T^{(t)}_{ki}(\boldsymbol{x}_i-\boldsymbol{\mu}_k)^T(\boldsymbol{x}_i-\boldsymbol{\mu}_k),
+	\boldsymbol{\Sigma}_k^{(t+1)} =\frac{1}{m_k}\sum_{i=1}^{m_k}\gamma^{(t)}_{ki}(\boldsymbol{x}_i-\boldsymbol{\mu}_k)^T(\boldsymbol{x}_i-\boldsymbol{\mu}_k),
 \end{equation}
 e
 \begin{equation}
