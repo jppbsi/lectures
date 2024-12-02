@@ -1,5 +1,6 @@
 %Fiquemos com Deus e Nossa Senhora!
 %Sao Jose de Cupertino rogai por nos!!
+%Honra teu pai e tua mae!
 % ### Uses XeLaTeX ### %
 % ### Needs beamer-master ### %
 \documentclass[aspectratio=169]{beamer} %. Aspect Ratio 16:9
@@ -9,6 +10,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{ragged2e,gensymb}
+\usepackage{amsmath,mathtools}
 
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
@@ -110,7 +112,7 @@ $p(\boldsymbol{x}|\omega_2)\sim{\cal N}(\mu_2,\sigma^2_2)$
 
 \Sli{
 \begin{itemize}
-\item $p(\omega_i|\boldsymbol{x})$: \textbf{probabilidade a posteriori} da classe $\omega_i$, isto é, a probabilidade de decidirmos pela classe $\omega_i$ dada que observamos a amostra $\boldsymbol{x}$.
+\item $p(\omega_i|\boldsymbol{x})$: \textbf{probabilidade a posteriori} da classe $\omega_i$, isto é, a probabilidade de decidirmos pela classe $\omega_i$ dado que observamos a amostra $\boldsymbol{x}$.
 \end{itemize}
 
 Dados esses três componentes, temos que a regra de Bayes é formulada como segue:
@@ -129,7 +131,7 @@ A fórmula acima faz com que $p(\omega_i|\boldsymbol{x})\in[0,1]$.
 \SliT{Classificador Bayesiano sob Hipótese Gaussiana}{
 \secx{Caso Unidimensional}
 
-\justifying Neste caso, temos que nossa amostra $x\in\mathbb{R}$, ou seja, temos apenas uma única característica. Como em nosso exemplo anterior de classificar um jogador como sendo de basquete ou futebol, assuma que $x$ seja dado pela altura dos indivíduos.\newline
+\justifying Neste caso, temos que nossa amostra $x\in\mathbb{R}$, ou seja, temos apenas uma única característica. Como em nosso exemplo anterior de classificar um jogador como sendo de basquete ou futebol, assuma que $x$ seja o valor dado pela altura dos indivíduos.\newline
 
 \justifying No caso unidimensional, temos que a probabilidade condicional da classe $\omega_i$ é dada por:
 
@@ -139,7 +141,7 @@ A fórmula acima faz com que $p(\omega_i|\boldsymbol{x})\in[0,1]$.
 }
 
 \Sli{
-\justifying A equação de uma função de densidade probabilidade Gaussiana possui dois parâmetros, isto é, a média $\mu_i$ e a variância $\sigma^2_i$, $\forall i=1,2,\ldots,c$. Assim sendo, a etapa de treinamento do classificador Bayesiano consiste em estimar esses parâmetros a partir dos dados de treinamento. Dado um problema com $c$ classes, o objetivo é aprender esses parâmetros para cada Gaussiana, isto é, uma para cada classe. Denotamos por $\boldsymbol{\theta}=\{\theta_1,\theta_2,\ldots,\theta_c\}$ esse conjunto de parâmetros a ser aprendido, em que $\theta_i = (\mu_i,\sigma^2_i)$.\newline
+\justifying A equação de uma função de densidade de probabilidade Gaussiana possui dois parâmetros, isto é, a média $\mu_i$ e a variância $\sigma^2_i$, $\forall i=1,2,\ldots,c$. Assim sendo, a etapa de treinamento do classificador Bayesiano consiste em estimar esses parâmetros a partir dos dados de treinamento. Dado um problema com $c$ classes, o objetivo é aprender esses parâmetros para cada Gaussiana, isto é, uma para cada classe. Denotamos por $\boldsymbol{\theta}=\{\theta_1,\theta_2,\ldots,\theta_c\}$ esse conjunto de parâmetros a ser aprendido, em que $\theta_i = (\mu_i,\sigma^2_i)$.\newline
 
 \justifying Um dos métodos mais conhecidos para aprendizado do conjunto de parâmetros $\boldsymbol{\theta}$ é o da máxima verossimilhança, ou seja, queremos maximizar a verossimilhança sobre o conjunto de dados de treinamento. Seja ${\cal X}^1_i\subset{\cal X}^1$ o subconjunto dos dados de treinamento que contém apenas amostras da classe $\omega_i$, $\forall i=1,2,\ldots,c$. Desta forma, o método da máxima verossimilhança consiste em encontrar $\theta_i$ que satisfaz a seguinte formulação:
 
@@ -149,7 +151,7 @@ A fórmula acima faz com que $p(\omega_i|\boldsymbol{x})\in[0,1]$.
 }
 
 \Sli{
-\justifying Temos que $p({\cal X}^1_i;\theta_i)$ corresponde à \textbf{densidade conjunta} das amostras da classe $\omega_i$ em função dos parâmetros:
+\justifying Temos que $p({\cal X}^1_i|\theta_i)$ corresponde à \textbf{densidade conjunta} das amostras da classe $\omega_i$ em função dos parâmetros:
 
 \begin{equation}
 	p({\cal X}^1_i|\theta_i) = \prod_{x_j\in{\cal X}^1_i}p(x_j|\theta_i),
@@ -163,12 +165,39 @@ em que $p(x_j|\theta_i)=\frac{1}{\sqrt{2\pi\sigma^2_i}}\exp\left\{\frac{(x_j-\mu
 \begin{equation}
 	\log p({\cal X}^1_i|\theta_i)=\sum_{x_j\in{\cal X}^1_i}\log p(x_j|\theta_i).
 \end{equation}
-A equação acima, após algumas derivações matemáticas, resulta em:
+A equação acima pode ser manipulada da seguinte forma:
+}
 
-\begin{equation}
-	\log p({\cal X}^1_i|\theta_i)=-\frac{m_i^\prime}{2}\log2\pi-\frac{m_i^\prime}{2}\log\sigma^2_i-\frac{1}{2\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2,
-\end{equation}
-em que $m_i^\prime = |{\cal X}^1_i|$.
+\Sli{
+\begin{align}
+	\sum_{x_j\in{\cal X}^1_i}\log p(x_j|\theta_i)&=\sum_{x_j\in{\cal X}^1_i}\log\left[\frac{1}{\sqrt{2\pi\sigma^2_i}}\exp\left\{\frac{(x_j-\mu_i)^2}{2\sigma^2_i}\right\}\right]\\\nonumber
+	&=\sum_{x_j\in{\cal X}^1_i}\left[\log\frac{1}{\sqrt{2\pi\sigma^2_i}}+\log\left(\exp\left\{\frac{(x_j-\mu_i)^2}{2\sigma^2_i}\right\}\right)\right]\\\nonumber
+	&= \cancelto{m_i}\sum_{x_j\in{\cal X}^1_i}\log\frac{1}{\sqrt{2\pi\sigma^2_i}}+\sum_{x_j\in{\cal X}^1_i}\log\left(\exp\left\{\frac{(x_j-\mu_i)^2}{2\sigma^2_i}\right\}\right),\nonumber
+\end{align}
+onde $m_i=\left|{\cal X}_i^1\right|$ e $m = \sum_{z=1}^cm_z$.
+}
+
+\Sli{
+Continuando ...
+\vspace{-.23cm}
+\begin{align}\nonumber
+	\sum_{x_j\in{\cal X}^1_i}\log p(x_j|\theta_i)&=m_i\log\frac{1}{\sqrt{2\pi\sigma^2_i}}+\sum_{x_j\in{\cal X}^1_i}\frac{(x_j-\mu_i)^2}{2\sigma^2_i}\\\nonumber
+	&=m_i\left[\cancelto{0}\log(1)-\log(\sqrt{2\pi\sigma^2_i})\right]+\sum_{x_j\in{\cal X}^1_i}\frac{(x_j-\mu_i)^2}{2\sigma^2_i}\\\nonumber
+	&=-m_i\log(\sqrt{2\pi\sigma^2_i})+\sum_{x_j\in{\cal X}^1_i}\frac{(x_j-\mu_i)^2}{2\sigma^2_i}\\\nonumber
+	&=m_i\log(\sqrt{2\pi\sigma^2_i})^{1/2}+\sum_{x_j\in{\cal X}^1_i}\frac{(x_j-\mu_i)^2}{2\sigma^2_i}\\\nonumber
+	&=-\frac{1}{2}\log(2\pi\sigma^2_i)+\sum_{x_j\in{\cal X}^1_i}\frac{(x_j-\mu_i)^2}{2\sigma^2_i}.
+\end{align}
+}
+
+\Sli{
+Continuando ...
+
+\begin{align}\nonumber
+	\sum_{x_j\in{\cal X}^1_i}\log p(x_j|\theta_i)&=-\frac{1}{2}\log(2\pi\sigma^2_i)+\sum_{x_j\in{\cal X}^1_i}\frac{(x_j-\mu_i)^2}{2\sigma^2_i}\\\nonumber
+	&=-\frac{1}{2}m_i\left[\log(2\pi)+\log(\sigma^2_i)\right]+\sum_{x_j\in{\cal X}^1_i}\frac{(x_j-\mu_i)^2}{2\sigma^2_i}\\\nonumber
+	&=\underbrace{\frac{-m_i}{2}\log(2\pi)-\frac{-m_i}{2}\log(\sigma^2_i)-\frac{1}{2\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2.}_{\text{função que queremos derivar!}}
+\end{align}
+
 }
 
 \Sli{
@@ -177,9 +206,9 @@ em que $m_i^\prime = |{\cal X}^1_i|$.
 \begin{equation}
 \hat{\mu}_i,\hat{\sigma}_i = \argmax_{\mu_i\sigma_i^2}\{\log p({\cal X}^1_i|\theta_i)\}.
 \end{equation}
-Note que essa formulação precisa ser realizada para todas as classes, ou seja, $i=1,2,\ldots,c$.\newline
+Note que esse cálculo precisa ser realizado para todas as classes, ou seja, $i=1,2,\ldots,c$.\newline
 
-\justifying Para resolvermos o problema acima, basta calcular a derivada de $\log p({\cal X}^1_i;\theta_i)$ em relação à cada um dos seus parâmetros e igualar à zero, ou seja:
+\justifying Para resolvermos o problema acima, basta calcular a derivada de $\log p({\cal X}^1_i|\theta_i)$ com relação a cada um dos seus parâmetros e igualar a zero, ou seja:
 
 \begin{equation}\nonumber
 	\frac{\partial \log p({\cal X}^1_i|\theta_i)}{\partial\mu_i}\text{\ \ e\ \ }\frac{\partial \log p({\cal X}^1_i|\theta_i)}{\partial\sigma_i^2}.
@@ -187,10 +216,10 @@ Note que essa formulação precisa ser realizada para todas as classes, ou seja,
 }
 
 \Sli{
-Vamos calcular a derivada da função em relação ao parâmetro $\mu_i$, ou seja:
+Vamos calcular a derivada da função com relação ao parâmetro $\mu_i$, ou seja:
 
 \begin{align}\nonumber
-	\frac{\partial \log p({\cal X}^1_i|\theta_i)}{\partial\mu_i} & = -\cancelto{0}{\frac{m_i^\prime}{2}\log2\pi}-\cancelto{0}{\frac{m_i^\prime}{2}\log\sigma^2_i}-\frac{1}{2\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2 \\
+	\frac{\partial \log p({\cal X}^1_i|\theta_i)}{\partial\mu_i} & = -\cancelto{0}{\frac{m_i}{2}\log2\pi}-\cancelto{0}{\frac{m_i}{2}\log\sigma^2_i}-\frac{1}{2\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2 \\
 		&= -\frac{1}{\xcancel{2}\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^{\xcancel{2}} = -\frac{1}{\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i) = 0\\\nonumber
 		&= \implies \frac{1}{\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i) = 0.
 \end{align}
@@ -200,19 +229,19 @@ Vamos calcular a derivada da função em relação ao parâmetro $\mu_i$, ou sej
 Dividindo ambos termos da Equação 9 por $1/\sigma^2_i$, temos que:
 
 \begin{align}\nonumber
-	\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i) &= 0\implies\sum_{x_j\in{\cal X}^1_i}x_j-\sum_{x_j\in{\cal X}^1_i}\mu_i = \sum_{x_j\in{\cal X}^1_i}x_j-m_i^\prime\mu_i = 0\\
-	&\implies-m_i^\prime\mu_i = -\sum_{x_j\in{\cal X}^1_i}x_j\implies m_i^\prime\mu_i=\sum_{x_j\in{\cal X}^1_i}x_j\\
-	&\implies\mu_i = \frac{1}{m_i^\prime}\sum_{x_j\in{\cal X}^1_i}x_j\nonumber,
+	\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i) &= 0\implies\sum_{x_j\in{\cal X}^1_i}x_j-\sum_{x_j\in{\cal X}^1_i}\mu_i = \sum_{x_j\in{\cal X}^1_i}x_j-m_i\mu_i = 0\\
+	&\implies-m_i\mu_i = -\sum_{x_j\in{\cal X}^1_i}x_j\implies m_i\mu_i=\sum_{x_j\in{\cal X}^1_i}x_j\\
+	&\implies\mu_i = \frac{1}{m_i}\sum_{x_j\in{\cal X}^1_i}x_j\nonumber,
 \end{align}
 que é, basicamente, a equação da média amostral como conhecemos, ou seja, o melhor estimador possível!
 }
 
 \Sli{
-Vamos calcular a derivada da função em relação ao parâmetro $\sigma^2_i$, ou seja:
+Vamos calcular a derivada da função com relação ao parâmetro $\sigma^2_i$, ou seja:
 
 \begin{align}\nonumber
-	\frac{\partial \log p({\cal X}^1_i|\theta_i)}{\partial\sigma^2_i} & = \cancelto{0}{-\frac{m_i^\prime}{2}\log2\pi}-\cancelto{\frac{\partial\log a}{\partial a} = 1/a}{\frac{m_i^\prime}{2}\log\sigma^2_i}-\frac{1}{2\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2 \\
-		&= -\frac{m^\prime_i}{2\sigma^2_i}\cancelto{\frac{\partial -1/a}{\partial a} = 1/a^2}{-\frac{1}{2\sigma^2_i}}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2=-\frac{m^\prime_i}{2\sigma^2_i}+\frac{1}{2\sigma^4_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2 = 0.\\\nonumber
+	\frac{\partial \log p({\cal X}^1_i|\theta_i)}{\partial\sigma^2_i} & = \cancelto{0}{-\frac{m_i}{2}\log2\pi}-\cancelto{\frac{\partial\log a}{\partial a} = 1/a}{\frac{m_i}{2}\log\sigma^2_i}-\frac{1}{2\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2 \\
+		&= -\frac{m_i}{2\sigma^2_i}\cancelto{\frac{\partial -1/a}{\partial a} = 1/a^2}{-\frac{1}{2\sigma^2_i}}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2=-\frac{m_i}{2\sigma^2_i}+\frac{1}{2\sigma^4_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2 = 0.\\\nonumber
 \end{align}
 }
 
@@ -220,8 +249,8 @@ Vamos calcular a derivada da função em relação ao parâmetro $\sigma^2_i$, o
 Multiplicando ambos termos da Equação 11 por $2\sigma^2_i$, temos que:
 
 \begin{align}\nonumber
-	-m^\prime_i+\frac{1}{\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2 &= 0\implies \frac{1}{\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2 = m^\prime_i\\
-	&\implies\sigma^2_i = \frac{1}{m^\prime_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2,
+	-m_i+\frac{1}{\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2 &= 0\implies \frac{1}{\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2 = m_i\\
+	&\implies\sigma^2_i = \frac{1}{m_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2,
 \end{align}
 que também denota a equação conhecida da variância das amostras da classe $\omega_i$.
 }
@@ -248,7 +277,7 @@ Simplificando um pouco mais a Equação 14, temos que:
 \begin{align}\nonumber
 	d_i(x) &= \log p(x|\omega_i)+ \log p(\omega_i)\\\nonumber
 	&= \log\left[\frac{1}{\sqrt{2\pi\sigma^2_i}}\exp\left\{-\frac{1}{2\sigma^2_i}(x-\mu_i)^2\right\}\right]+\log p(\omega_i)\\\nonumber
-	&= \log\left[\frac{1}{\sqrt{2\pi\sigma^2_i}}\right]+\log\left[\exp\left\{-\frac{1}{2\sigma^2_i}(x-\mu_i)^2\right\}\right]+\log p(\omega_i)\\
+	&= \log\frac{1}{\sqrt{2\pi\sigma^2_i}}+\log\left[\exp\left\{-\frac{1}{2\sigma^2_i}(x-\mu_i)^2\right\}\right]+\log p(\omega_i)\\
 	&= \log(2\pi\sigma^2_i)^{-1/2}-\frac{1}{2\sigma^2_i}(x-\mu_i)^2+\log p(\omega_i)\\\nonumber
 	&= -\frac{1}{2}\log(2\pi\sigma^2_i)-\frac{1}{2\sigma^2_i}(x-\mu_i)^2+\log p(\omega_i)\\\nonumber
 	&= -\frac{1}{2}\left[\log(2\pi)+\log(\sigma_i^2)\right]-\frac{1}{2\sigma^2_i}(x-\mu_i)^2+\log p(\omega_i).\\\nonumber
@@ -276,7 +305,7 @@ A equação acima é a função de decisão final do classificador Bayesiano.
 \justifying Agora, suponha que cada amostra de nosso conjunto de dados possua mais atributos, isto é, $\boldsymbol{x}\in\mathbb{R}^n$, $n>1$. A ideia do classificador Bayesiano é a mesma, ou seja, vamos maximizar o logaritmo da máxima verossimilhança para obter as formulações dos parâmetros de nossa função de densidade de probabilidade Gaussiana. No caso de uma Gaussiana multidimensional, a sua formulação é dada por:
 
 \begin{equation}
-	p(\boldsymbol{x}_j|\theta_i) = \frac{1}{(2\pi)^{m^\prime_i/2}|\Sigma_i|^{1/2}}\exp\left\{-\frac{1}{2}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\right\},
+	p(\boldsymbol{x}_j|\theta_i) = \frac{1}{(2\pi)^{n/2}|\Sigma_i|^{1/2}}\exp\left\{-\frac{1}{2}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\right\},
 \end{equation}
 em que $\theta_i=(\boldsymbol{\mu}_i,\boldsymbol{\Sigma}_i)$ denota o conjunto de parâmetros da Gaussiana da classe $\omega_i$, em que $\boldsymbol{\mu}_i\in\mathbb{R}^n$ corresponde ao seu vetor de médias e $\boldsymbol{\Sigma}_i\in\mathbb{R}^{n\times n}$ denota a sua matriz de covariância. 
 }
@@ -316,16 +345,48 @@ Temos, ainda, que:
 
 \begin{align}\nonumber
 	\log p({\cal X}^1_i|\theta_i) &= \sum_{\boldsymbol{x}_j\in{\cal X}^1_i}\log p(\boldsymbol{x}_j|\theta_i)\\
-	&= \sum_{\boldsymbol{x}_j\in{\cal X}^1_i}\log\left[\frac{1}{(2\pi)^{m^\prime_i/2}}\exp\left\{-\frac{1}{2}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\right\}\right]\\
-	&= \underbrace{-\frac{nm^\prime_i}{2}\log(2\pi)-\frac{m^\prime_i}{2}\log(\boldsymbol{|\Sigma}_i^{-1}|)-\frac{1}{2}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)}_{\text{função que queremos derivar!}}\nonumber
+	&= \sum_{\boldsymbol{x}_j\in{\cal X}^1_i}\log\left[\frac{1}{(2\pi)^{n/2}\left|\boldsymbol{\Sigma}_i\right|^{1/2}}\exp\left\{-\frac{1}{2}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\right\}\right]\\\nonumber
+	&= \sum_{\boldsymbol{x}_j\in{\cal X}^1_i}\left[\log\frac{1}{(2\pi)^{n/2}\left|\boldsymbol{\Sigma}_i\right|^{1/2}}+\log\left(\exp\left\{-\frac{1}{2}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\right\}\right)\right]\\\nonumber
+	&= \sum_{\boldsymbol{x}_j\in{\cal X}^1_i}\log\frac{1}{(2\pi)^{n/2}\left|\boldsymbol{\Sigma}_i\right|^{1/2}}+\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}\left\{-\frac{1}{2}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\right\}.
 \end{align}
 }
 
 \Sli{
-\justifying Para resolvermos, então, a Equação 18, temos que calcular a sua derivada em relação aos parâmetros e igualar à zero, de maneira similar a que fizemos no caso unidimensional. Começando pela variável $\boldsymbol{\mu_i}$, temos que:
+Continuando ...
+\vspace{-.758cm}
+\begin{align}\nonumber
+	\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}\log p(\boldsymbol{x}_j|\theta_i) &= \cancelto{m_i}{\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}}\log\frac{1}{(2\pi)^{n/2}\left|\boldsymbol{\Sigma}_i\right|^{1/2}}+\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}-\frac{1}{2}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\\\nonumber
+	&= m_i\log\frac{1}{(2\pi)^{n/2}\left|\boldsymbol{\Sigma}_i\right|^{1/2}}+\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}-\frac{1}{2}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\\\nonumber
+	&= m_i\left[\cancelto{0}{\log(1)}-\log\left((2\pi)^{n/2}\left|\boldsymbol{\Sigma}_i\right|^{1/2}\right)\right]+\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}-\frac{1}{2}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\\\nonumber
+	&= -m_i\log\left((2\pi)^{n/2}\left|\boldsymbol{\Sigma}_i\right|^{1/2}\right)+\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}-\frac{1}{2}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\\\nonumber
+	&= \!\begin{multlined}[t][10.5cm]-m_i\left[\log\left((2\pi)^{n/2}\left|\boldsymbol{\Sigma}_i\right|^{1/2}\right)+\log(\left|\Sigma\right|^{1/2})\right]+\\\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}-\frac{1}{2}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\end{multlined}.\\\nonumber
+\end{align}
+}
+
+\Sli{
+Continuando ...
+\vspace{-.2cm}
+\begin{align}\nonumber
+	\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}\log p(\boldsymbol{x}_j|\theta_i) &= \!\begin{multlined}[t][10.5cm]-m_i\left[\log\left((2\pi)^{n/2}\left|\Sigma\right|^{1/2}\right)+\log(\left|\boldsymbol{\Sigma}_i\right|^{1/2})\right]+\\\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}-\frac{1}{2}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\end{multlined}\\\nonumber
+	&= \!\begin{multlined}[t][10.5cm]-m_i\left[\log((2\pi)^{n/2})+\log(\left|\boldsymbol{\Sigma}_i\right|^{1/2})\right]+\\\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}-\frac{1}{2}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\end{multlined}\\\nonumber
+	&= -\!\begin{multlined}[t][10.5cm]m_i\log((2\pi)^{n/2})-m_i\log(\left|\boldsymbol{\Sigma}_i\right|^{1/2})+\\\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}-\frac{1}{2}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i).\end{multlined}\\\nonumber
+\end{align}
+}
+
+\Sli{
+Continuando ...
+
+\begin{align}\nonumber
+	\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}\log p(\boldsymbol{x}_j|\theta_i) &= -\!\begin{multlined}[t][10.5cm]m_i\log((2\pi)^{n/2})-m_i\log(\left|\boldsymbol{\Sigma}_i\right|^{1/2})+\\\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}-\frac{1}{2}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\end{multlined}\\\nonumber
+	&= \underbrace{-\frac{nm_i}{2}\log(2\pi)-\frac{m_i}{2}\log(\left|\boldsymbol{\Sigma}_i\right|)-\frac{1}{2}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i).}_{\text{função que queremos derivar!}}
+\end{align}
+}
+
+\Sli{
+\justifying Para resolvermos, então, a Equação 21, temos que calcular a sua derivada com relação aos parâmetros e igualar à zero, de maneira similar a que fizemos no caso unidimensional. Começando pela variável $\boldsymbol{\mu_i}$, temos que:
 
 \begin{align}
-	\frac{\partial \log p({\cal X}^1_i|\theta_i)}{\partial \boldsymbol{\mu_i}} &= \cancelto{0}{-\frac{nm^\prime_i}{2}\log(2\pi)}-\cancelto{0}{\frac{m^\prime_i}{2}\log(|\boldsymbol{\Sigma}_i^{-1}|)}-\frac{1}{2}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\\
+	\frac{\partial \log p({\cal X}^1_i|\theta_i)}{\partial \boldsymbol{\mu_i}} &= \cancelto{0}{-\frac{nm_i}{2}\log(2\pi)}-\cancelto{0}{\frac{m_i}{2}\log(|\boldsymbol{\Sigma}_i|)}-\frac{1}{2}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\\
 	&= -\frac{1}{2}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i) = 0.\nonumber
 \end{align}
 
@@ -346,23 +407,29 @@ Distribuindo o somatório, temos que:
 Desta forma, temos que:
 
 \begin{equation}
-	\hat{\boldsymbol{\mu}_i} = \frac{1}{m^\prime_i}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}\boldsymbol{x}_j,
+	\hat{\boldsymbol{\mu}_i} = \frac{1}{m_i}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}\boldsymbol{x}_j,
 \end{equation}
 que também corresponde à media dos elementos da classe $\omega_i$.
 }
 
 \Sli{
-Precisamos, agora, calcular a derivada da Equação 21 em relação ao parâmetro $\boldsymbol{\Sigma_i}^{-1}$:
+Precisamos, agora, calcular a derivada da Equação 21 com relação a $\left|\boldsymbol{\Sigma_i}\right|$ para depois calcular a derivada com relação a $\boldsymbol{\Sigma_i}^{-1}$:
 
 \begin{align}
-	\frac{\partial \log p({\cal X}^1_i|\theta_i)}{\partial \boldsymbol{\boldsymbol{|\Sigma_i}^{-1}|}} &= \cancelto{0}{-\frac{nm^\prime_i}{2}\log(2\pi)}-\frac{m^\prime_i}{2}\cancelto{\frac{\partial \log(a)}{\partial a}=1/a}{\log(\boldsymbol{|\Sigma}_i^{-1}|)}-\frac{1}{2}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\\
-	&= \frac{m^\prime_i\boldsymbol{\Sigma}_i}{2}-\frac{1}{2}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T(\boldsymbol{x}_j-\boldsymbol{\mu}_i) = 0.\nonumber
+	\frac{\partial \log p({\cal X}^1_i|\theta_i)}{\partial \boldsymbol{\boldsymbol{|\Sigma_i}|}} &= \cancelto{0}{-\frac{nm_i}{2}\log(2\pi)}-\frac{m_i}{2}\cancelto{\frac{\partial \log(\left|A\right|)}{\partial A}=(A^{-1})^T}{\log(\boldsymbol{|\Sigma}_i|)}-\frac{1}{2}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)\\
+	& =-\frac{m_i}{2}\boldsymbol{\Sigma}_i^{-1}-\frac{1}{2}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T\boldsymbol{\Sigma}_i^{-1}(\boldsymbol{x}_j-\boldsymbol{\mu}_i) = 0.\nonumber
 \end{align}
+
+Agora, calculando a derivada da equação acima com relação a $\boldsymbol{\Sigma_i}^{-1}$:
+
+}
+
+\Sli{
 
 Isolando $\boldsymbol{\Sigma}_i$, temos que:
 
 \begin{equation}
-	\boldsymbol{\Sigma}_i = \frac{1}{m^\prime_i}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T(\boldsymbol{x}_j-\boldsymbol{\mu}_i),
+	\boldsymbol{\Sigma}_i = \frac{1}{m_i}\sum_{\boldsymbol{x}_j\in{\cal X}^1_i}(\boldsymbol{x}_j-\boldsymbol{\mu}_i)^T(\boldsymbol{x}_j-\boldsymbol{\mu}_i),
 \end{equation}
 que é a expressão conhecida da matriz de covariância.
 }
