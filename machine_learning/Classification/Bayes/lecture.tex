@@ -184,8 +184,8 @@ Continuando ...
 	\sum_{x_j\in{\cal X}^1_i}\log p(x_j|\theta_i)&=m_i\log\frac{1}{\sqrt{2\pi\sigma^2_i}}+\sum_{x_j\in{\cal X}^1_i}\frac{(x_j-\mu_i)^2}{2\sigma^2_i}\\\nonumber
 	&=m_i\left[\cancelto{0}\log(1)-\log(\sqrt{2\pi\sigma^2_i})\right]+\sum_{x_j\in{\cal X}^1_i}\frac{(x_j-\mu_i)^2}{2\sigma^2_i}\\\nonumber
 	&=-m_i\log(\sqrt{2\pi\sigma^2_i})+\sum_{x_j\in{\cal X}^1_i}\frac{(x_j-\mu_i)^2}{2\sigma^2_i}\\\nonumber
-	&=m_i\log(\sqrt{2\pi\sigma^2_i})^{1/2}+\sum_{x_j\in{\cal X}^1_i}\frac{(x_j-\mu_i)^2}{2\sigma^2_i}\\\nonumber
-	&=-\frac{1}{2}\log(2\pi\sigma^2_i)+\sum_{x_j\in{\cal X}^1_i}\frac{(x_j-\mu_i)^2}{2\sigma^2_i}.
+	&=-m_i\log(2\pi\sigma^2_i)^{1/2}+\sum_{x_j\in{\cal X}^1_i}\frac{(x_j-\mu_i)^2}{2\sigma^2_i}\\\nonumber
+	&=-m_i\frac{1}{2}\log(2\pi\sigma^2_i)+\sum_{x_j\in{\cal X}^1_i}\frac{(x_j-\mu_i)^2}{2\sigma^2_i}.
 \end{align}
 }
 
@@ -193,7 +193,7 @@ Continuando ...
 Continuando ...
 
 \begin{align}\nonumber
-	\sum_{x_j\in{\cal X}^1_i}\log p(x_j|\theta_i)&=-\frac{1}{2}\log(2\pi\sigma^2_i)+\sum_{x_j\in{\cal X}^1_i}\frac{(x_j-\mu_i)^2}{2\sigma^2_i}\\\nonumber
+	\sum_{x_j\in{\cal X}^1_i}\log p(x_j|\theta_i)&=-m_i\frac{1}{2}\log(2\pi\sigma^2_i)+\sum_{x_j\in{\cal X}^1_i}\frac{(x_j-\mu_i)^2}{2\sigma^2_i}\\\nonumber
 	&=-\frac{1}{2}m_i\left[\log(2\pi)+\log(\sigma^2_i)\right]+\sum_{x_j\in{\cal X}^1_i}\frac{(x_j-\mu_i)^2}{2\sigma^2_i}\\\nonumber
 	&=\underbrace{\frac{-m_i}{2}\log(2\pi)-\frac{-m_i}{2}\log(\sigma^2_i)-\frac{1}{2\sigma^2_i}\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i)^2.}_{\text{função que queremos derivar!}}
 \end{align}
@@ -230,7 +230,7 @@ Dividindo ambos termos da Equação 9 por $1/\sigma^2_i$, temos que:
 
 \begin{align}\nonumber
 	\sum_{x_j\in{\cal X}^1_i}(x_j-\mu_i) &= 0\implies\sum_{x_j\in{\cal X}^1_i}x_j-\sum_{x_j\in{\cal X}^1_i}\mu_i = \sum_{x_j\in{\cal X}^1_i}x_j-m_i\mu_i = 0\\
-	&\implies-m_i\mu_i = -\sum_{x_j\in{\cal X}^1_i}x_j\implies m_i\mu_i=\sum_{x_j\in{\cal X}^1_i}x_j\\
+	&\implies-m_i\mu_i = -\sum_{x_j\in{\cal X}^1_i}x_j\overset{\textcolor{red}{(-1)}}{\implies} m_i\mu_i=\sum_{x_j\in{\cal X}^1_i}x_j\\
 	&\implies\mu_i = \frac{1}{m_i}\sum_{x_j\in{\cal X}^1_i}x_j\nonumber,
 \end{align}
 que é, basicamente, a equação da média amostral como conhecemos, ou seja, o melhor estimador possível!
