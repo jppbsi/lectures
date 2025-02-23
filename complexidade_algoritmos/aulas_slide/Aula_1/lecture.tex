@@ -9,11 +9,16 @@
 \usepackage[portuguese]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{ragged2e,bm}
+\usepackage{ragged2e,bm,oubraces,tikz}
 
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
 
+\newcommand*\mycirc[1]{%
+  \begin{tikzpicture}
+    \node[draw,circle,inner sep=2pt] {#1};
+  \end{tikzpicture}}
+  
 % DATA FOR FOOTER
 \date{2025}
 \title{- Análise de Algoritmos}
@@ -154,6 +159,128 @@ No entanto, podemos generalizar a Equação 1 da seguinte forma:
 \begin{equation*}
 1 <\log(n)<\sqrt{n}<\overbrace{n<n\log(n)<n^2<n^3<\ldots<2^n<2.5^n<3^n<\ldots<n^n}^{\in O(n)}.
 \end{equation*}
+}
+
+\Sli{
+\justify Agora vamos para a definição de limite inferior. \justify Qual a definição de $\Omega(n)?$
+
+\setbeamercolor{BoxColour}{fg=black,bg=gray!30}
+\begin{beamercolorbox}[sep=1em,wd=13.4cm]{BoxColour}
+   Uma função $f(n)\in \Omega(g(n))$ sse $\exists c,n_o\in\mathbb{R}^+$ tal que $f(n)\geq cg(n)$, $\forall n\geq n_0$.
+\end{beamercolorbox}\medskip
+
+\justify \underline{Exemplo:} sejam as funções $f(n)=2n+3$ e $g(n)=n$. Assumindo que $c=1$ e $n_0=1$, temos que $f(n)\geq 10g(n)\implies2n+3\geq n$, $n\geq 1$. Assim sendo, temos que $f(n)\in \Omega(g(n))$, ou seja, que $2n+3\in O(n)$. \textbf{Note que também existem diversos valores para $c$ que satisfazem a relação $\bm{f(n)\in \Omega(g(n))}$}.
+
+}
+
+\Sli{
+\justify Vamos para um segundo exemplo. Continuemos assumindo que $f(n)=2n+3$, mas agora temos que $g(n)=\log(n)$. Pergunta: $f(n)\in \Omega(g(n))$?
+
+\justify Novamente, basta encontrarmos valores para $c$ e $n_0$ que satisfaçam a nossa definição de $\Omega(n)$. Um exemplo seria $c=1$ e $n_0=1$. Assim, teremos que $f(n)\geq g(n)\implies2n+3\geq\log(n)$, $n \geq 1$. Novamente, temos que $f(n)\in \Omega(g(n)$, ou seja, que $2n+3\in \Omega(\log(n))$. 
+
+\begin{equation*}
+\overbrace{1<\log(n)<\sqrt{n}<n}^{\in \Omega(n)}<n\log(n)<n^2<n^3<\ldots<2^n<2.5^n<3^n<\ldots<n^n.
+\end{equation*}
+
+}
+
+\Sli{
+\justify Agora vamos para a definição de limite médio. \justify Qual a definição de $\Theta(n)?$
+
+\setbeamercolor{BoxColour}{fg=black,bg=gray!30}
+\begin{beamercolorbox}[sep=1em,wd=14.4cm]{BoxColour}
+   Uma função $f(n)\in \Theta(g(n))$ sse $\exists c_1,c_2,n_o\in\mathbb{R}^+$ tal que $c_1g(n)\leq f(n)\leq c_2g(n)$, $\forall n\geq n_0$.
+\end{beamercolorbox}\medskip
+
+\justify \underline{Exemplo:} sejam as funções $f(n)=2n+3$ e $g(n)=n$. Assumindo que $c_1=1$, $c_2=10$ e $n_0=1$, temos que $g(n)\leq f(n)\leq 10g(n)\implies n\leq2n+3\leq 10n$, $n\geq 1$. Assim sendo, temos que $f(n)\in \Theta(g(n))$, ou seja, que $2n+3\in \Theta(n)$. \textbf{Note que também existem diversos valores para $c_1$ e $c_2$ que satisfazem a relação $\bm{f(n)\in \Theta(g(n))}$}.
+}
+
+\Sli{
+Desta forma, temos que:
+
+\begin{equation*}
+1<\log(n)<\sqrt{n}<\overbrace{n}^{\in \Theta(n)}<n\log(n)<n^2<n^3<\ldots<2^n<2.5^n<3^n<\ldots<n^n.
+\end{equation*}
+
+\justify Podemos, então, resumir o que aprendemos da seguinte forma: para uma função $f(n)=n$, temos que:
+
+\setbeamercolor{BoxColour}{fg=black,bg=gray!30}
+\begin{beamercolorbox}[sep=.1em,wd=14.4cm]
+{BoxColour}
+\begin{equation*}
+\overunderbraces{&\br{2}{f(n) \in O(n)}&}%
+{1<\log(n)<\sqrt{n}<&n&<n<\log(n)<n^2<n^3<\ldots<2^n<2.5^n<3^n<\ldots<n^n}
+{\br{2}{f(n)\in\Omega(n)}&&}
+\end{equation*}
+\end{beamercolorbox}\medskip
+Note que $n\in\Theta(n)$.
+}
+
+\SliT{Propriedades de Notações Assintóticas}{
+
+\justify Propriedades gerais:
+
+\begin{itemize}
+	\item Se $f(n)\in O(g(n))$, então $af(n)\in O(g(n))$, $a\in\mathbb{R}$.\newline
+	\underline{Exemplo:} seja $f(n)=2n^2+5\in O(n^2)$. Suponha $a=7$, então temos que $7f(n)=7(2n^2+5)=14n^2+35\in O(n)$.
+	\item Se $f(n)\in \Omega(g(n))$, então $af(n)\in \Omega(g(n))$, $a\in\mathbb{R}$.\newline
+	\underline{Exemplo:} seja $f(n)=2n^2+5\in \Omega(n^2)$. Suponha $a=7$, então temos que $7f(n)=7(2n^2+5)=14n^2+35\in \Omega(n)$.
+\end{itemize}
+A mesma propriedade também é válida para o simbolismo $\Theta(n)$.
+}
+
+\Sli{
+\justify Propriedade \textbf{reflexiva}:
+
+\begin{itemize}
+	\item Dada $f(n)$, então $f(n)\in O(f(n))$.
+	\item Dada $f(n)$, então $f(n)\in \Omega(f(n))$.
+\end{itemize}
+
+\justify Propriedade \textbf{transitiva}:
+\begin{itemize}
+	\item Se $f(n)\in O(g(n))$ e $g(n)\in O(h(n))$, então $f(n)\in O(h(n))$.\newline
+	\underline{Exemplo:} sejam $f(n)=n$, $g(n)=n^2$ e $h(n)=n^3$. Temos que $n\in O(n^2)$ e $n^2\in O(n^3)$. É verdade, também, que $n\in O(n^3)$.
+\end{itemize}
+Esta propriedade também vale para os casos de $\Omega(n)$ e $\Theta(n)$.
+}
+
+\Sli{
+\justify Propriedade \textbf{simétrica}:
+
+\begin{itemize}
+	\item Se $f(n)\in \Theta(g(n))$, então $g(n)\in \Theta(f(n))$. \textbf{Note que esta propriedade vale somente para a notação $\bm{\Theta}$}.\newline
+	\underline{Exemplo:} sejam $f(n)=n^2$ e $g(n)=n^2$. Temos que $f(n)\in \Theta(n^2)$ e $g(n)\in\Theta(n^2)$. 
+\end{itemize}
+
+\justify Propriedade \textbf{simétrica transposta}:
+
+\begin{itemize}
+	\item Se $f(n)\in O(g(n))$, então $g(n)\in \Omega(f(n))$.\newline
+	\underline{Exemplo:} sejam $f(n)=n$ e $g(n)=n^2$. Temos que $n\in O(n^2)$ e $n^2\in\Omega(n)$.
+	\item Se $f(n)\in \Omega(g(n))$, então $g(n)\in O(f(n))$.\newline
+	\underline{Exemplo:} sejam $f(n)=n^2$ e $g(n)=n$. Temos que $n^2\in \Omega(n)$ e $n\in O(n^2)$.
+\end{itemize}
+Caso $f(n)\in O(g(n))$ e $f(n)\in \Omega(g(n))$, então $f(n)\in \Theta(g(n))$.
+}
+
+\Sli{
+\justify Caso $f(n)\in O(g(n))$ e $d(n)\in O(e(n))$, então $f(n)+d(n)\in O(\max(g(n),e(n)))$.\newline
+	\underline{Exemplo:} sejam $f(n)=n\in O(n)$ e $g(n)=n^2\in O(n^2)$. Temos que $f(n)+g(n)=n+n^2$. Neste caso, temos que $n+n^2\in O(n^2)$.\newline
+	
+\centerline{
+\setbeamercolor{BoxColour}{fg=black,bg=gray!30}
+\begin{beamercolorbox}[sep=1em,wd=12.4cm]
+{BoxColour}
+Usualmente, a complexidade final é dada pelo polinômio de maior grau.
+\end{beamercolorbox}\medskip
+}
+
+\justify Caso $f(n)\in O(g(n))$ e $d(n)\in O(e(n))$, então $f(n)*d(n)\in O(g(n)*e(n)))$.\newline
+	\underline{Exemplo:} sejam $f(n)=n\in O(n)$ e $g(n)=n^2\in O(n^2)$. Temos que $f(n)*g(n)=n*n^2=n^3$. Neste caso, temos que $n^2\in O(n^3)$.
+}
+
+\SliT{Comparando Funções}{
 }
 
 \end{document}
