@@ -9,7 +9,7 @@
 \usepackage[portuguese]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{ragged2e}
+\usepackage{ragged2e,bm}
 
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
@@ -66,7 +66,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ###############################################################################
 % FIRST SLIDE
-\SliTit{Aula 1}{Análise de Algoritmos}{}{João Paulo Papa (UNESP/Bauru)}
+\SliTit{Aula 1 - Crescimento de Funções}{Análise de Algoritmos}{}{João Paulo Papa (UNESP/Bauru)}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ###############################################################################
 % SLIDE SUB-TITLE
@@ -106,10 +106,10 @@
 
 \begin{itemize}
 	\item $O$: descreve o limite \textbf{estritamente superior} de uma função (conhecido como \emph{Big O}).
-	\item $\Theta$: descreve o limite \textbf{exato} de uma função.
+	\item $\Theta$: descreve o limite \textbf{médio} de uma função.
 	\item $o$: descreve o limite \textbf{superior} de uma função.
-	\item $w$: descreve o limite \textbf{estritamente inferior} de uma função.
-	\item $\Omega$: descreve o limite \textbf{inferior} de uma função.
+	\item $w$: descreve o limite \textbf{inferior} de uma função.
+	\item $\Omega$: descreve o limite \textbf{estritamente inferior} de uma função.
 \end{itemize}
 }
 
@@ -117,13 +117,43 @@
 
 \justify Vejamos o gráfico a seguir. Ele representa a seguinte relação quando $n\rightarrow\infty$:
 
-\begin{equation*}
-1 <\log(n)<n<n\log(n)<n^2<2.5^n
+\begin{equation}
+1 <\log(n)<n<n\log(n)<n^2<2.5^n.
 \end{equation}
 
 \begin{center}
 \includegraphics[scale=0.47]{./src/funcoes.pdf}\hspace{1cm}
 \end{center}
+}
+
+\Sli{
+No entanto, podemos generalizar a Equação 1 da seguinte forma:
+
+\begin{equation}
+\label{e.crescimento_assintotico_generalizado}
+1 <\log(n)<\sqrt{n}<n<n\log(n)<n^2<n^3<\ldots<2^n<2.5^n<3^n<\ldots<n^n.
+\end{equation}
+
+\justify Qual a definição de $O(n)?$ 
+
+\setbeamercolor{BoxColour}{fg=black,bg=gray!30}
+\begin{beamercolorbox}[sep=1em,wd=13.4cm]{BoxColour}
+   Uma função $f(n)\in O(g(n))$ sse $\exists c,n_o\in\mathbb{R}^+$ tal que $f(n)\leq cg(n)$, $\forall n\geq n_0$.
+\end{beamercolorbox}\medskip
+
+\justify \underline{Exemplo:} sejam as funções $f(n)=2n+3$ e $g(n)=n$. Assumindo que $c=10$ e $n_0=1$, temos que $f(n)\leq 10g(n)\implies2n+3\leq 10n$, $n\geq 1$. Assim sendo, temos que $f(n)\in O(g(n)$, ou seja, que $2n+3\in O(n)$. \textbf{Na prática, existem diversos valores para $c$ que satisfazem a relação $\bm{f(n)\in O(g(n))}$}.
+}
+
+\Sli{
+\justify Vamos para um segundo exemplo. Continuemos assumindo que $f(n)=2n+3$, mas agora temos que $g(n)=n^2$. Pergunta: $f(n)\in O(g(n))$?
+
+\justify Novamente, basta encontrarmos valores para $c$ e $n_0$ que satisfaçam a nossa definição anterior. Um exemplo seria $c=5$ e $n_0= 1$. Neste caso, teremos que $f(n)\leq 5g(n)\implies2n+3\leq5n^2$, $n \geq 1$. Novamente, temos que $f(n)\in O(g(n)$, ou seja, que $2n+3\in O(n^2)$. 
+
+\justify Podemos continuar com outros exemplos e veremos que $2n+3\in O(n^3)$, e assim por diante. Assim, podemos estabelecer uma definição para \textbf{informal} para a notação $O$.
+
+\begin{equation*}
+1 <\log(n)<\sqrt{n}<\overbrace{n<n\log(n)<n^2<n^3<\ldots<2^n<2.5^n<3^n<\ldots<n^n}^{\in O(n)}.
+\end{equation*}
 }
 
 \end{document}
