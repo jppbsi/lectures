@@ -10,7 +10,6 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{ragged2e,bm,oubraces,tikz}
-
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
 
@@ -276,11 +275,54 @@ Usualmente, a complexidade final é dada pelo polinômio de maior grau.
 \end{beamercolorbox}\medskip
 }
 
-\justify Caso $f(n)\in O(g(n))$ e $d(n)\in O(e(n))$, então $f(n)*d(n)\in O(g(n)*e(n)))$.\newline
-	\underline{Exemplo:} sejam $f(n)=n\in O(n)$ e $g(n)=n^2\in O(n^2)$. Temos que $f(n)*g(n)=n*n^2=n^3$. Neste caso, temos que $n^2\in O(n^3)$.
+\justify Caso $f(n)\in O(g(n))$ e $d(n)\in O(e(n))$, então $f(n)d(n)\in O(g(n)e(n)))$.\newline
+	\underline{Exemplo:} sejam $f(n)=n\in O(n)$ e $g(n)=n^2\in O(n^2)$. Temos que $f(n)g(n)=nn^2=n^3$. Neste caso, temos que $n^2\in O(n^3)$.
 }
 
 \SliT{Comparando Funções}{
+
+\justify Dadas duas funções $f(n)$ e $g(n)$, como podemos compará-las, ou seja, quem cresce/decresce mais rapidamente?
+
+\justify \underline{Exemplo:} sejam $f(n)=n^2$ e $g(n)=n^3$. Podemos \textbf{amostrar} alguns valores das funções e ver como eles se comportam. No caso abaixo, alguns poucos valores de $n$ são suficientes para dizer que $n^2<n^3$ para $n\rightarrow\infty$.
+
+\begin{table}
+\begin{tabular}{lcc}
+  & \bm{$n^2$} & \bm{$n^3$}\\
+$n=1$ & 1 & 1\\
+$n=2$ & 4 & 8\\
+$n=3$ & 9 &	27\\
+\end{tabular}
+\end{table}
+}
+
+\Sli{
+
+\justify Uma outra abordagem para comparar funções corresponde à aplicação da \textbf{função} $\log$ em ambos lados, ou seja, $\log(n^2)$ e $\log(n^3)$. Temos que $\log(n^2)=2\log(n)$ e $\log(n^3)=3\log(n)$. Definitivamente, $2\log(n)<3\log(n)$. 
+
+\justify Vejamos um outro exemplo de comparação de funções um pouco mais complexas, com as regras de logaritmos ao lado.
+
+\begin{minipage}{0.697\textwidth}
+\begin{table}
+\begin{tabular}{lcc}
+& $n^2\log(n)$ & $n(\log(n))^{10}$\\
+ $\log\Rightarrow$ & $\log(n^2\log(n))$ & $\log(n(\log(n))^{10})$\\
+ & $\log(n^2)+\log(\log(n))$ & $\log(n)+\log(\log(n))^{10}$\\
+ & $\underbrace{2\log(n)}_{\text{maior termo}}+\log(\log(n))$ & $\underbrace{\log(n)}_{\text{maior termo}}+10\log(\log(n))$\\
+\end{tabular}
+\end{table}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.37\textwidth}
+\begin{color}{blue}
+$\log(ab) = \log(a)+\log(b)$\newline
+$\log(a/b) = \log(a)-\log(b)$\newline
+$\log(a^b) = b\log(a)$\newline
+$a^{\log_c(b)} = b^{\log_c(a)}$\newline
+$a^b=n\implies b=\log_a(n)$
+\end{color}
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+Comparando apenas os maiores termos, temos que $n^2\log(n)>n(\log(n))^{10}$.
 }
 
 \end{document}
