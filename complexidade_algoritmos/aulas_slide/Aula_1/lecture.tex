@@ -313,16 +313,93 @@ $n=3$ & 9 &	27\\
 \end{minipage}%%% to prevent a space
 \begin{minipage}{0.37\textwidth}
 \begin{color}{blue}
-$\log(ab) = \log(a)+\log(b)$\newline
-$\log(a/b) = \log(a)-\log(b)$\newline
-$\log(a^b) = b\log(a)$\newline
-$a^{\log_c(b)} = b^{\log_c(a)}$\newline
-$a^b=n\implies b=\log_a(n)$
+\begin{color}{black}1.\end{color} $\log(ab) = \log(a)+\log(b)$\newline
+\begin{color}{black}2.\end{color} $\log(a/b) = \log(a)-\log(b)$\newline
+\begin{color}{black}3.\end{color} $\log(a^b) = b\log(a)$\newline
+\begin{color}{black}4.\end{color} $a^{\log_c(b)} = b^{\log_c(a)}$\newline
+\begin{color}{black}5.\end{color} $a^b=n\implies b=\log_a(n)$
 \end{color}
 \null
 \par\xdef\tpd{\the\prevdepth}
 \end{minipage}
 Comparando apenas os maiores termos, temos que $n^2\log(n)>n(\log(n))^{10}$.
+}
+
+\Sli{
+
+\justify Vejamos um outro exemplo. Agora temos que $f(n)=3n^{\sqrt{n}}$ e $g(n)=2^{\sqrt{n}\log(n)}$. Aqui, não iremos aplicar o $\log$, apenas as fórmulas de propriedade dos logaritmos.
+
+\begin{minipage}{0.697\textwidth}
+\begin{table}
+\begin{tabular}{lcc}
+& $3n^{\sqrt{n}}$ & $2^{\sqrt{n}\log(n)}$\\
+ Regra 3 $\Rightarrow$ & $3n^{\sqrt{n}}$ & $2^{\log(n)^{\sqrt{n}}}$\\
+ Regra 4 $\Rightarrow$& $3n^{\sqrt{n}}$ & $(n^{\sqrt{n}})^{\cancelto{1}{\log_2(2)}}$\\
+ & $3n^{\sqrt{n}}$ & $n^{\sqrt{n}}$\\
+\end{tabular}
+\end{table}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.37\textwidth}
+\begin{color}{blue}
+\begin{color}{black}1.\end{color} $\log(ab) = \log(a)+\log(b)$\newline
+\begin{color}{black}2.\end{color} $\log(a/b) = \log(a)-\log(b)$\newline
+\begin{color}{black}3.\end{color} $\log(a^b) = b\log(a)$\newline
+\begin{color}{black}4.\end{color} $a^{\log_c(b)} = b^{\log_c(a)}$\newline
+\begin{color}{black}5.\end{color} $a^b=n\implies b=\log_a(n)$
+\end{color}
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+Como temos um fator multiplicador de $3$, podemos concluir que $3n^{\sqrt{n}}>n^{\sqrt{n}}$ (em termos de \textbf{quantidade}). Note que as funções são iguais \textbf{assintoticamente}.
+}
+
+\Sli{
+\justify Vejamos um outro exemplo. Suponha as seguintes funções:
+
+\begin{table}
+\begin{tabular}{cc}
+\begin{equation*}
+	f(n) = \begin{cases}
+                n^3 \text{ se $n<100$} \\
+				n^2\text{ se $n\geq100$}
+			\end{cases}
+\end{equation*} &
+\begin{equation*}
+	g(n) = \begin{cases}
+                n^2 \text{ se $n<10.000$} \\
+				n^3\text{ se $n\geq10.000$}
+			\end{cases}
+\end{equation*}
+\end{tabular}	
+\end{table}
+
+\begin{center}
+\includegraphics[scale=0.57]{./figs/rule.pdf}
+\end{center}
+Desta forma, podemos concluir que $g(n)>f(n)$ quando $n\rightarrow\infty$.
+}
+
+\Sli{
+
+\justify Verdadeiro ou falso?
+
+\begin{enumerate}
+	\item $(n+k)^m\in \Theta(n^m)$?
+	\item $2^{n+1}\in O(2^n)$?
+	\item $2^{2n}\in O(2^{2n})$?
+	\item $\sqrt{\log(n)}\in O(\log(\log(n)))$?
+	\item $n^{\log(n)}\in O(2^n)$?
+\end{enumerate}
+}
+
+\SliT{Considerações finais}{
+
+\begin{itemize}
+	\item Crescimento assintótico de funções estuda o comportamento delas em função do tempo e do tamanho da entrada $n$.
+	\item Notações mais importantes: $\Theta$ e $O$.
+	\item Funções podem ser assintoticamente similares mas com quantidades diferentes. 
+	\item Em funções polinomiais, a complexidade final é dada pelo polinômio de maior grau.
+\end{itemize}
 }
 
 \end{document}
