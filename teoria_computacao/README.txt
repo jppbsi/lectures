@@ -1,1 +1,1 @@
-Aula 1 - Introdução, sintaxe e semântica.
+Aula 1 - Introdução, sintaxe, semântica e definições básicas.

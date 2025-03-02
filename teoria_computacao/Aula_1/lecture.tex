@@ -106,7 +106,7 @@
 	\item Linguagens de programação.
 	\item Circuitos digitais.
 	\item Expressões matemáticas.
-	\item Linguagem Natural.
+	\item Linguagem natural.
 \end{itemize}
 }
 
@@ -224,7 +224,7 @@
 					\begin{itemize}
 					\item Prefixos: $\epsilon, b, ba, bal, bala$.
 					\item Sufixos: $\epsilon, a, la, ala, bala$.
-					\item Prefixos: $al, ala, la, \ldots$ (note que todo sufixo e prefixo é uma subpalavra).
+					\item Subpalavra: $al, ala, la, \ldots$ (note que todo sufixo e prefixo é uma subpalavra).
 					\item O que seria uma palavra em linguagens de programação? Pode ser uma linha de código ou o programa inteiro.
 					\end{itemize}			
 		\end{itemize}
@@ -263,7 +263,7 @@
 em que:\newline
 $V$: conjunto de símbolos \textbf{variáveis}.\newline
 $T$: conjunto de símbolos \textbf{terminais}.\newline
-$P$: conjunto de \textbf{regras de produção}\newline
+$P$: conjunto de \textbf{regras de produção}.\newline
 $S$: conjunto de variáveis \textbf{iniciais} da gramática.
 }
 
@@ -273,7 +273,7 @@ $S$: conjunto de variáveis \textbf{iniciais} da gramática.
 \justifying Temos que $G=(V,T,P,S)$ pode ser definida da seguinte forma:\newline\newline
 $V=\{A,B\}$\newline
 $T=\{a,b\}$\newline
-$P=\{A\rightarrow bBla,B\rightarrow a|b\}$\newline
+$P=\{A\rightarrow bBla,B\rightarrow a|o\}$\newline
 $S=\{S\}$\newline\newline\newline
 \justifying As palavras são geradas por meio de \textbf{derivações}. Temos que $L(G)$ corresponde à linguagem $L$ \textbf{gerada} pela gramática $G$. Também dizemos que duas gramáticas $G_1$ e $G_2$ são \textbf{iguais} ou \textbf{equivalentes} se elas geram a \textbf{mesma} linguagem, ou seja, $L(G_1)=L(G_2)$.
 }
@@ -285,6 +285,7 @@ $S=\{S\}$\newline\newline\newline
 	\item Letras maiúsculas: símbolos variáveis.
 	\item Letras minúsculas: símbolos terminais.
 	\item $w$: uma palavra qualquer.
+	\item $\Sigma$: um alfabeto qualquer.
 	\item $G$: uma gramática qualquer.
 	\item $L$: uma linguagem qualquer.
 \end{itemize}
