@@ -145,7 +145,7 @@ No entanto, podemos generalizar a Equação 1 da seguinte forma:
    Uma função $f(n)\in O(g(n))$ sse $\exists c,n_o\in\mathbb{R}^+$ tal que $f(n)\leq cg(n)$, $\forall n\geq n_0$.
 \end{beamercolorbox}\medskip
 
-\justify \underline{Exemplo:} sejam as funções $f(n)=2n+3$ e $g(n)=n$. Assumindo que $c=10$ e $n_0=1$, temos que $f(n)\leq 10g(n)\implies2n+3\leq 10n$, $n\geq 1$. Assim sendo, temos que $f(n)\in O(g(n)$, ou seja, que $2n+3\in O(n)$. \textbf{Na prática, existem diversos valores para $c$ que satisfazem a relação $\bm{f(n)\in O(g(n))}$}.
+\justify \underline{Exemplo:} sejam as funções $f(n)=2n+3$ e $g(n)=n$. Assumindo que $c=10$ e $n_0=1$, temos que $f(n)\leq 10g(n)\implies2n+3\leq 10n$, $n\geq 1$. Assim sendo, temos que $f(n)\in O(g(n))$, ou seja, que $2n+3\in O(n)$. \textbf{Na prática, existem diversos valores para $c$ que satisfazem a relação $\bm{f(n)\in O(g(n))}$}.
 }
 
 \Sli{
@@ -168,7 +168,7 @@ No entanto, podemos generalizar a Equação 1 da seguinte forma:
    Uma função $f(n)\in \Omega(g(n))$ sse $\exists c,n_o\in\mathbb{R}^+$ tal que $f(n)\geq cg(n)$, $\forall n\geq n_0$.
 \end{beamercolorbox}\medskip
 
-\justify \underline{Exemplo:} sejam as funções $f(n)=2n+3$ e $g(n)=n$. Assumindo que $c=1$ e $n_0=1$, temos que $f(n)\geq 10g(n)\implies2n+3\geq n$, $n\geq 1$. Assim sendo, temos que $f(n)\in \Omega(g(n))$, ou seja, que $2n+3\in O(n)$. \textbf{Note que também existem diversos valores para $c$ que satisfazem a relação $\bm{f(n)\in \Omega(g(n))}$}.
+\justify \underline{Exemplo:} sejam as funções $f(n)=2n+3$ e $g(n)=n$. Assumindo que $c=1$ e $n_0=1$, temos que $f(n)\geq g(n)\implies2n+3\geq n$, $n\geq 1$. Assim sendo, temos que $f(n)\in \Omega(g(n))$, ou seja, que $2n+3\in O(n)$. \textbf{Note que também existem diversos valores para $c$ que satisfazem a relação $\bm{f(n)\in \Omega(g(n))}$}.
 
 }
 
@@ -221,7 +221,7 @@ Note que $n\in\Theta(n)$.
 
 \begin{itemize}
 	\item Se $f(n)\in O(g(n))$, então $af(n)\in O(g(n))$, $a\in\mathbb{R}$.\newline
-	\underline{Exemplo:} seja $f(n)=2n^2+5\in O(n^2)$. Suponha $a=7$, então temos que $7f(n)=7(2n^2+5)=14n^2+35\in O(n)$.
+	\underline{Exemplo:} seja $f(n)=2n^2+5\in O(n^2)$. Suponha $a=7$, então temos que $7f(n)=7(2n^2+5)=14n^2+35\in O(n^2)$.
 	\item Se $f(n)\in \Omega(g(n))$, então $af(n)\in \Omega(g(n))$, $a\in\mathbb{R}$.\newline
 	\underline{Exemplo:} seja $f(n)=2n^2+5\in \Omega(n^2)$. Suponha $a=7$, então temos que $7f(n)=7(2n^2+5)=14n^2+35\in \Omega(n)$.
 \end{itemize}
@@ -265,7 +265,7 @@ Caso $f(n)\in O(g(n))$ e $f(n)\in \Omega(g(n))$, então $f(n)\in \Theta(g(n))$.
 
 \Sli{
 \justify Caso $f(n)\in O(g(n))$ e $d(n)\in O(e(n))$, então $f(n)+d(n)\in O(\max(g(n),e(n)))$.\newline
-	\underline{Exemplo:} sejam $f(n)=n\in O(n)$ e $g(n)=n^2\in O(n^2)$. Temos que $f(n)+g(n)=n+n^2$. Neste caso, temos que $n+n^2\in O(n^2)$.\newline
+	\underline{Exemplo:} sejam $f(n)=n\in O(n)$ e $g(n)=n^2\in O(n^2)$. Temos que $f(n)+d(n)=n+n^2$. Neste caso, temos que $n+n^2\in O(n^2)$.\newline
 	
 \centerline{
 \setbeamercolor{BoxColour}{fg=black,bg=gray!30}
@@ -276,7 +276,7 @@ Usualmente, a complexidade final é dada pelo polinômio de maior grau.
 }
 
 \justify Caso $f(n)\in O(g(n))$ e $d(n)\in O(e(n))$, então $f(n)d(n)\in O(g(n)e(n)))$.\newline
-	\underline{Exemplo:} sejam $f(n)=n\in O(n)$ e $g(n)=n^2\in O(n^2)$. Temos que $f(n)g(n)=nn^2=n^3$. Neste caso, temos que $n^2\in O(n^3)$.
+	\underline{Exemplo:} sejam $f(n)=n\in O(n)$ e $g(n)=n^2\in O(n^2)$. Temos que $f(n)d(n)=nn^2=n^3$. Neste caso, temos que $n^2\in O(n^3)$.
 }
 
 \SliT{Comparando Funções}{
@@ -306,8 +306,8 @@ $n=3$ & 9 &	27\\
 \begin{tabular}{lcc}
 & $n^2\log(n)$ & $n(\log(n))^{10}$\\
  $\log\Rightarrow$ & $\log(n^2\log(n))$ & $\log(n(\log(n))^{10})$\\
- & $\log(n^2)+\log(\log(n))$ & $\log(n)+\log(\log(n))^{10}$\\
- & $\underbrace{2\log(n)}_{\text{maior termo}}+\log(\log(n))$ & $\underbrace{\log(n)}_{\text{maior termo}}+10\log(\log(n))$\\
+ Regra 1 $\Rightarrow$& $\log(n^2)+\log(\log(n))$ & $\log(n)+\log(\log(n))^{10}$\\
+ Regra 3 $\Rightarrow$ & $\underbrace{2\log(n)}_{\text{maior termo}}+\log(\log(n))$ & $\underbrace{\log(n)}_{\text{maior termo}}+10\log(\log(n))$\\
 \end{tabular}
 \end{table}
 \end{minipage}%%% to prevent a space
