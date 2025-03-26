@@ -219,7 +219,7 @@ Suponha que tenhamos um vetor $A$ com $n=55$ posições. Além disso, temos decl
 	\emph{\ \ \ for(i=0; i < n; i++)\ }\textcolor{blue}{$\Theta(n+1)$}\\
 	\emph{\ \ \ \ \ for(j=0; j < n; j++)\ }\textcolor{orange}{$\Theta(n+1)$}\\
 	
-	\emph{\ \ \ \ \ \ \ C[i] = A[i]+B[i];\ \textcolor{green}{$\Theta(n^2)$}}\\
+	\emph{\ \ \ \ \ \ \ C[i,j] = A[i,j]+B[i,j];\ \textcolor{green}{$\Theta(n^2)$}}\\
 	\emph{\ \ \ return C;\ }\textcolor{red}{$\Theta(1)$}
 \end{tabbing}
 \}
@@ -247,7 +247,7 @@ Em nosso algoritmo, o comando \emph{for} mais externo executa \textcolor{blue}{$
 	\emph{\ \ \ for(i=0; i < n; i++)\ }\\
 	\emph{\ \ \ \ \ for(j=0; j < n; j++)\ }\\
 	
-	\emph{\ \ \ \ \ \ \ C[i] = A[i]+B[i];}\\
+	\emph{\ \ \ \ \ \ \ C[i,j] = A[i,j]+B[i,j];}\\
 	\emph{\ \ \ return C;\ }
 \end{tabbing}
 \}
@@ -300,7 +300,7 @@ Em nosso algoritmo, o comando \emph{for} mais externo executa \textcolor{blue}{$
 	\emph{\ \ \ for(i=0; i < n; i++)\ }\\
 	\emph{\ \ \ \ \ for(j=0; j < i; j++)\ }\\
 	
-	\emph{\ \ \ \ \ \ \ C[i] = A[i]+B[i];}\\
+	\emph{\ \ \ \ \ \ \ C[i,j] = A[i,j]+B[i,j];}\\
 	\emph{\ \ \ return C;\ }
 \end{tabbing}
 \}\\\ \\
@@ -476,7 +476,7 @@ Neste caso, temos que a complexidade do primeiro laço é dada por $\Theta(\log 
 
 \begin{itemize}
 	\item \emph{\ \ \ for(i=0; i < n; i = i++)\ }: \textcolor{red}{$O(n)$}
-	\item \emph{\ \ \ for(i=0; i < n; i = i+2)\ }: \textcolor{red}{$\frac{n}{2}O(n)\in O(n)$}
+	\item \emph{\ \ \ for(i=0; i < n; i = i+2)\ }: \textcolor{red}{$\frac{1}{2}O(n)\in O(n)$}
 	\item \emph{\ \ \ for(i=n; i > 1; i--)\ }\textcolor{red}{$O(n)$}
 	\item \emph{\ \ \ for(i=1; i < n; i = i*2)\ }\textcolor{red}{$O(\log_2n)$}
 	\item \emph{\ \ \ for(i=1; i < n; i = i*3)\ }\textcolor{red}{$O(\log_3n)$}
