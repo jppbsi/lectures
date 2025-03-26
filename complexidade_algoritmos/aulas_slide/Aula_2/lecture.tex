@@ -1,0 +1,489 @@
+%Fiquemos com Deus e Nossa Senhora!
+%Sao Jose de Cupertino rogai por nos!!
+%Honra teu pai e tua mae!
+% ### Uses XeLaTeX ### %
+% ### Needs beamer-master ### %
+\documentclass[aspectratio=169]{beamer} %. Aspect Ratio 16:9
+
+\usetheme{AI2} % beamerthemeSprace.sty
+\usepackage[portuguese]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{ragged2e,bm,oubraces,tikz,verbatim}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\newcommand*\mycirc[1]{%
+  \begin{tikzpicture}
+    \node[draw,circle,inner sep=2pt] {#1};
+  \end{tikzpicture}}
+  
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;} 
+  
+% DATA FOR FOOTER
+\date{2025}
+\title{- Análise de Algoritmos}
+\author{João Paulo Papa}
+\institute{Análise de Algoritmos}
+
+\begin{document}
+% ####################################
+% FIRST SLIDE 						:: \SliTit{This is the Title of the Talk}{A. B. Name}{Sprace}
+% SUB-TITLE SLIDE 					:: \SliSubTit{<title>}{<explanation}
+% SUB-SUB-TITLE SLIDE				:: \SliSubSubTit{<title>}{<explanation}
+% SLIDE WITH TITLE 					:: \SliT{Title}{Content}
+% SLIDE NO TITLE 						:: \Sli{Content} 
+% SLIDE DOUBLE COLUMN WITH TITLE 	:: \SliDT{Title}{First Column}{Second Column}
+% SLIDE DOUBLE COLUMN NO TITLE 		:: \SliD{First Column}{Second Column}
+% SLIDE ADVANCED WITH TITLE 			:: \SliAdvT{Title}{Content}
+% SLIDE ADVANCED NO TITLE 			:: \SliAdv{Content}
+% SLIDE ADVANCED DOUBLE WITH TITLE 	:: \SliAdvDT{Title}{First Column}{Second Column}
+% SLIDE ADVANCED DOUBLE NO TITLE 	:: \SliAdvD{First Column}{Second Column}
+% SLIDE BLACK						:: \Black{ <Content> }
+% SLIDE WHITE						:: \White{ <Content> }
+% ITEMIZATION 						:: \begin{itemize}  \iOn{First} \iTw {Second} \iTh{Third} \end{itemize}
+% COMMENT TEXT				 		:: \note{<comment>}
+% SECTION 							:: \secx{Section} | \secxx{Sub-Section}
+% BOLD SPRACE COLOR				:: \bfs{<text>}
+% TABLE OF CONTENT					:: \tocitem{<title>}{<content>}
+% LEFT ALIGN EQUATION				:: \begin{flalign*}  & <equation> &   \end{flalign*}
+% CENTER ALIGN EQUATION	S			:: \begin{gather*} <equations>  \end{gather*}
+% SLASH								:: \slashed{<>}
+% BAR								:: \barr{<letter>} instead of \bar{<letter>}
+% THEREFORE						:: use \portanto (larger and bold}
+% 2 or 3 MATH SYMBOLS				:: \overset{<up>}{<down>} &  \underset{<below>}{\overset{<above>}{<middle>}}  
+% INSERT TEXT IN FORMULA			:: \ins{<text>}
+% EXERCISE							:: \exe{<exercise #>}{<exercise text>}
+% SUGGESTED READING BOX			:: \sug{<references>}
+% CITATION							:: \cittex{<citation>}
+% CITATION DOUBLE COLUMN 			:: \cittexD{<citation>}
+% TEXT POSITION						:: \texpos{<Xcm>}{<Ycm>}{<text>} origin = center of slide : x right | y down
+% REFERENCE AT BOTTOM  S/D SLIDE		:: \refbotS{<reference>} \refbotD{<reference>}
+% HIDDEN SLIDE						:: \hid
+% COLOR BOX 						:: \blu{blue} + \red{rec} + \yel{yellow} + \gre{green} + \bege{beige}
+% FRAME 							:: \fra{sprace} \frab{blue} \frar{red} + \fray{yellow} + \frag{green}		
+% FIGURE 							:: \img{X}{Y}{<scale>}{Figure.png} 
+% FIGURE							:: \includegraphics[scale=<scale>]{Figures/.png}
+% FIGURE DOUBLE SLIDE NO TITLE		::  \img{-4}{0.5}{<scale>}{Figure.png} % Image 1st half
+%									::  \img{4}{0.5}{<scale>}{Figure.png} % Image 2nd half
+% FIGURE DOUBLE SLIDE WITH TITLE		::  \img{-4}{0}{<scale>}{Figure.png} % Image 1st half
+%									::  \img{4}{0}{<scale>}{Figure.png} % Image 2nd half
+% INCLUDING SWF (Flash)				:: \usepackage{media9} and \includemedia >> USE ACROBAT <<
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ###############################################################################
+% FIRST SLIDE
+\SliTit{Aula 2 - Como Analisar Algoritmos}{Análise de Algoritmos}{}{João Paulo Papa (UNESP/Bauru)}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ###############################################################################
+% SLIDE SUB-TITLE
+%\SliSubTit{Sub-Title}{Description}{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ###############################################################################
+%\SliSubSubTit{Sub-Sub-Title}{Description}
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\SliT{Introdução}{
+\justifying Nesta aula iremos abordar os seguintes assuntos:
+
+\begin{itemize}
+	\item Características de um algoritmo.
+	\item Como escrever e analisar um algoritmo.
+\end{itemize}
+}
+
+\SliT{Características de um Algoritmo}{
+\justify Um algoritmo deve possuir as seguintes características:
+
+\begin{enumerate}
+	\item Entrada: $0$ ou mais.
+	\item Saída: pelo menos $1$ saída.
+	\item Definição (\emph{definiteness}): ser predito com grande confiabilidade (sem ``passos mágicos").
+	\item Finitude (\emph{Finiteness}): algoritmo deve \textbf{parar} em algum momento.
+	\item Eficácia: prover uma \textbf{solução} que resolva o problema.
+\end{enumerate}
+
+}
+
+\SliT{Como Escrever e Analisar um Algoritmo}{
+\justify Tomemos como exemplo o algoritmo abaixo:\newline
+
+\begin{minipage}{0.497\textwidth}
+\emph{Algoritmo Swap(a,b)\{}
+\begin{tabbing}
+	\emph{\ \ \ temp = a;}\\
+	\emph{\ \ \ a = b;}\\
+	\emph{\ \ \ b = temp;}
+\end{tabbing}
+\}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.37\textwidth}
+O que levar em consideração?
+\begin{enumerate}
+	\item Tempo
+	\item Espaço
+	\item Consumo de banda
+	\item Consumo de energia
+	\item \# registradores CPU
+\end{enumerate}
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+\justify Suponha que cada linha de nosso algoritmo tome uma (1) unidade de tempo (\textbf{não vamos considerar a chamada da função e os comandos \{ e \})}.\newline
+
+\begin{minipage}{0.497\textwidth}
+\emph{Algoritmo Swap(a,b)\{}
+\begin{tabbing}
+	\emph{\ \ \ temp = a;\ }\checkmark\\ 
+	\emph{\ \ \ a = b;\ }\checkmark\\
+	\emph{\ \ \ b = temp;\ }\checkmark
+\end{tabbing}
+\}
+
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.37\textwidth}
+Podemos observar que nosso programa requer $3$ unidades de tempo, ou seja, $f(n)=3$. Temos que a complexidade de \textbf{tempo} nosso algoritmo é \textbf{constante}. 
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}\newline
+
+\justify Na prática, é o processo é um pouco mais \textbf{detalhado}. Por exemplo, suponha a seguinte sentença: $x=a*2+b*3$. Aqui temos $2$ multiplicações, $1$ adição e $1$ atribuição, ou seja, $4$ operações que iriam consumir $4$ unidades de tempo, ou seja, $f(n)=4$. No entanto, ao analisar a complexidade de algoritmos para $n\rightarrow\infty$, consideramos toda a sentença demandando apenas $1$ unidade de tempo.
+}
+
+\Sli{
+\justify E com relação à complexidade de \textbf{espaço}? Dado que nosso algoritmo possui três variáveis, a complexidade de espaço é dada por $s(n)=3$. 
+
+\justify Quanto temos uma complexidade \textbf{constante}, seja para tempo ou espaço, representamos ela como $\Theta(1)$. Isto significa que essa complexidade é muito pequena em relação à complexidade \textbf{geral} do algoritmo e, portanto, não tem influência sobre ela.
+}
+
+\Sli{
+\justify Uma das técnicas mais utilizadas para calcular a complexidade de um algoritmo é o \textbf{Método de Contagem por Frequência}. Vejamos um exemplo abaixo:\newline
+
+\begin{minipage}{0.437\textwidth}
+\vspace{-1cm}
+\emph{Algoritmo Soma(A,n)\{}
+\begin{tabbing}
+	\emph{\ \ \ s = 0;\ }\textcolor{red}{$\Theta(1)$}\\ 
+	\emph{\ \ \ for(i=0; i < n; i++)\ }\textcolor{blue}{$\Theta(n+1)$}\\
+	\emph{\ \ \ \ \ \ \ s = s+A[i];\ \textcolor{green}{$\Theta(n)$}}\\
+	\emph{\ \ \ return s;\ }\textcolor{red}{$\Theta(1)$}
+\end{tabbing}
+\}
+
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.51\textwidth}
+Em nosso algoritmo, o comando \emph{for} executa \textcolor{blue}{$\Theta(n+1)$} comparações e operação de soma é executada \textcolor{green}{$\Theta(n)$} vezes. Assim, a complexidade final é dada por:
+
+\begin{align*}
+	f(n) & = \textcolor{blue}{(n+1)} + \textcolor{green}{n} + \textcolor{red}{1} + \textcolor{red}{1}\\
+	& = 2n+3\in \boxed{O(n)}.
+\end{align*}
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+\justify E com relação à complexidade de espaço?\newline
+
+\begin{minipage}{0.437\textwidth}
+\vspace{1cm}
+\emph{Algoritmo Soma(A,n)\{}
+\begin{tabbing}
+	\emph{\ \ \ s = 0;\ }\\ 
+	\emph{\ \ \ for(i=0; i < n; i++)\ }\\
+	\emph{\ \ \ \ \ \ \ s = s+A[i];\ }\\
+	\emph{\ \ \ return s;\ }
+\end{tabbing}
+\}
+
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.51\textwidth}
+Suponha que tenhamos um vetor $A$ com $n=55$ posições. Além disso, temos declaradas as variáveis $s$, $i$ e $n$. Desta forma, nossa complexidade de espaço é dada por $s(n)=n+1+1+1=n+3\in \boxed{O(n)}$.
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+\justify Vejamos um outro exemplo que calcula a soma de duas matrizes $A,B\in \mathbb{R}^{n\times n}$:\newline
+
+\begin{minipage}{0.477\textwidth}
+\vspace{-2.67cm}
+\emph{Algoritmo Soma\_Matriz(A,B,n)\{}
+\begin{tabbing}
+	\emph{\ \ \ for(i=0; i < n; i++)\ }\textcolor{blue}{$\Theta(n+1)$}\\
+	\emph{\ \ \ \ \ for(j=0; j < n; j++)\ }\textcolor{orange}{$\Theta(n+1)$}\\
+	
+	\emph{\ \ \ \ \ \ \ C[i] = A[i]+B[i];\ \textcolor{green}{$\Theta(n^2)$}}\\
+	\emph{\ \ \ return C;\ }\textcolor{red}{$\Theta(1)$}
+\end{tabbing}
+\}
+
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.51\textwidth}
+Em nosso algoritmo, o comando \emph{for} mais externo executa \textcolor{blue}{$\Theta(n+1)$} comparações. Para cada execução deste, o comando \emph{for} mais interno executa \textcolor{orange}{$\Theta(n+1)$} comparações. A operação de soma é executada \textcolor{green}{$\Theta(n^2)$} vezes. A complexidade final é dada por:
+
+\begin{align*}
+	f(n) & = \textcolor{blue}{(n+1)}\textcolor{orange}{(n+1)} + \textcolor{green}{n^2} + \textcolor{red}{1}\\
+	& = n^2 + 2n + 1 + n^2+1\\
+	&= 2n^2+2n+1\in \boxed{O(n^2)}.
+\end{align*}
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+\justify E com relação à complexidade de espaço?\newline
+
+\begin{minipage}{0.437\textwidth}
+\emph{Algoritmo Soma\_Matriz(A,B,n)\{}
+\begin{tabbing}
+	\emph{\ \ \ for(i=0; i < n; i++)\ }\\
+	\emph{\ \ \ \ \ for(j=0; j < n; j++)\ }\\
+	
+	\emph{\ \ \ \ \ \ \ C[i] = A[i]+B[i];}\\
+	\emph{\ \ \ return C;\ }
+\end{tabbing}
+\}
+
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.51\textwidth}
+\vspace{-1.47cm}
+Temos três matrizes $A,B,C \in \mathbb{R}^{n\times n}$ e as variáveis $n$, $i$ e $j$. Desta forma, nossa complexidade de espaço é dada por $s(n)=3n^2+1+1+1=3n^2+3\in \boxed{O(n^2)}$.
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+\justify Vejamos um exemplo que calcula a multiplicação de duas matrizes $A,B\in \mathbb{R}^{n\times n}$:\newline
+
+\begin{minipage}{0.477\textwidth}
+\vspace{-1.9cm}
+\emph{Algoritmo Multiplica\_Matriz(A,B,n)\{}
+\begin{tabbing}
+	\emph{\ \ \ for(i=0; i < n; i++)\ }\textcolor{blue}{$\Theta(n+1)$}\\
+	\emph{\ \ \ \ \ for(j=0; j < n; j++)\ }\textcolor{orange}{$\Theta(n+1)$}\\
+	\emph{\ \ \ \ \ \ \ C[i,j] = 0;\ \textcolor{green}{$\Theta(n^2)$}}\\
+	\emph{\ \ \ \ \ \ \ for(k=0; k < n; k++)\ }\textcolor{purple}{$\Theta(n^2)\Theta(n+1)$}\\
+	\emph{\ \ \ \ \ \ \ \ \ C[i,j] = C[i,j]+A[i,k]*B[k,j];\ \textcolor{green}{$\Theta(n^3)$}}\\
+	\emph{\ \ \ return C;\ }\textcolor{red}{$\Theta(1)$}
+\end{tabbing}
+\}
+
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.51\textwidth}
+Em nosso algoritmo, o comando \emph{for} mais externo executa \textcolor{blue}{$\Theta(n+1)$} comparações. Para cada execução deste, um segundo comando \emph{for} executa \textcolor{orange}{$\Theta(n+1)$} comparações. O comando de atribuição $C[i,j] = 0$ executa \textcolor{green}{$\Theta(n^2)$} vezes, e o  \emph{for} mais interno executa \textcolor{purple}{$\Theta(n^2)\Theta(n+1)$} vezes. Finalmente, o comando de multiplicação executa \textcolor{green}{$\Theta(n^3)$} vezes. A complexidade final é dada por:
+\vspace{-.3cm}
+\begin{align*}
+	f(n) & = \textcolor{blue}{(n+1)}\textcolor{orange}{(n+1)} + \textcolor{green}{n^2} + \textcolor{purple}{n^2(n+1)} + \textcolor{green}{n^3} + \textcolor{red}{1}\\
+	& = n^2 + 2n + 1 + n^2+2n^3+n^2+1\\
+	&= 2n^3 + 3n^2+2n+1\in \boxed{O(n^3)}
+\end{align*}
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+\justify Vejamos um outro exemplo:\newline
+
+\begin{minipage}{0.437\textwidth}
+\emph{Algoritmo Soma\_Matriz\_2(A,B,n)\{}
+\begin{tabbing}
+	\emph{\ \ \ for(i=0; i < n; i++)\ }\\
+	\emph{\ \ \ \ \ for(j=0; j < i; j++)\ }\\
+	
+	\emph{\ \ \ \ \ \ \ C[i] = A[i]+B[i];}\\
+	\emph{\ \ \ return C;\ }
+\end{tabbing}
+\}\\\ \\
+Assim, temos que:
+\vspace{-.1cm}
+\begin{align*}
+	f(n)&=1+2+\ldots+n\\
+	&=\frac{n(n+1)}{2}\in \boxed{O(n^2)}
+\end{align*}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.51\textwidth}
+\vspace{-1.47cm}
+Este é um exemplo um pouco mais complexo que requer uma análise mais \textbf{cuidadosa}. Vamos analisar alguns valores de $n$ e verificar quantas vezes o \emph{for} mais interno executa:
+
+\begin{table}
+\begin{tabular}{c|c}
+$n$ & \# vezes\\\hline
+0 & 0\\
+1 & 1\\
+2 & 2\\
+$\vdots$ & $\vdots$\\
+$n$ & $n$\\
+\end{tabular}
+\end{table}
+
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+\justify Vejamos um outro exemplo:\newline
+
+\begin{minipage}{0.437\textwidth}
+\emph{Algoritmo Soma\_p(A,B,n)\{}
+\begin{tabbing}
+	\emph{\ \ \ p=0\ }\\
+	\emph{\ \ \ \ \ for(i=1; p $\leq$ n; i++)\ }\\
+	\emph{\ \ \ \ \ \ \ p = p + i;}\\
+	\emph{\ \ \ return p;\ }
+\end{tabbing}
+\}\\\ \\
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.51\textwidth}
+\vspace{-1.01cm}
+Analisando os valores de $n$ e $p$ temos que:
+
+\begin{table}
+\begin{tabular}{c|c}
+$n$ & $p$\\\hline
+1 & 0+1\\
+2 & 0+1+2\\
+3 & 0+1+2+3\\
+$\vdots$ & $\vdots$\\
+$k$ & $0+1+2+\ldots+k$\\
+\end{tabular}
+\end{table}
+
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+\justify A única certeza que temos é que o algoritmo vai parar quando $p>n$.
+
+\justify Temos que $p=0+1+2+\ldots+k=\frac{k(k+1)}{2}>n$. Como $\frac{k(k+1)}{2}\in O(k^2)$, temos que:
+
+\begin{equation*}
+k^2 > n \implies k > \sqrt{n} \in \boxed{O(\sqrt{n})}.	
+\end{equation*}
+}
+
+\Sli{
+\justify Vejamos um outro exemplo:\newline
+
+\begin{minipage}{0.437\textwidth}
+\emph{Algoritmo Mul\_p(A,B,n)\{}
+\begin{tabbing}
+	\emph{\ \ \ p=1\ }\\
+	\emph{\ \ \ for(i=1; i < n; i = i*2)\ }\\
+	\emph{\ \ \ \ \ \ \ p = p * i;}\\
+	\emph{\ \ \ return p;\ }
+\end{tabbing}
+\}\\\
+\justify O laço vai parar quando $i\geq n$. No entanto, $i=n$ é suficiente para o laço parar. Assim, temos que $i=n=2^k\implies k=\log_2n\in \boxed{O(\log_2n)}$.
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.51\textwidth}
+\vspace{-0.1cm}
+Analisando os valores de $i$ temos que:
+
+\begin{table}
+\begin{tabular}{c|c}
+$n$ & \# vezes\\\hline
+$2^0=1$ & 0\\
+$2^1=2$ & 1\\
+$2^2=4$ & 2\\
+$2^3=8$ & 3\\
+$\vdots$ & $\vdots$\\
+$2^k$ & $k$\\
+\end{tabular}
+\end{table}
+
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+\justify Vejamos um outro exemplo:\newline
+
+\begin{minipage}{0.437\textwidth}
+\emph{Algoritmo Mul\_p\_2(A,B,n)\{}
+\begin{tabbing}
+	\emph{\ \ \ p=1\ }\\
+	\emph{\ \ \ for(i=n; i $\geq$ 1; i = i/2)\ }\\
+	\emph{\ \ \ \ \ \ \ p = p * i;}\\
+	\emph{\ \ \ return p;\ }
+\end{tabbing}
+\}\\\
+\justify O laço vai parar quando $i<n$, ou seja, quando $i<2^{k-1}$. Assumindo que $i=n=2^{k-1}\implies n=\frac{2^k}{2}\implies2n=2^k\implies k=\log_2 2n\in \boxed{O(\log_2n)}$.
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.51\textwidth}
+\vspace{-0.3cm}
+Analisando os valores de $i$ temos que:
+
+\begin{table}
+\begin{tabular}{c|c}
+$n$ & \# vezes\\\hline
+$2^{1-1}\impliedby$1 & 1\\
+$2^{2-1}\impliedby$2 & 2\\
+$2^{4-1}\impliedby$8 & 4\\
+$2^{5-1}\impliedby$16 & 5\\
+$\vdots$ & $\vdots$\\
+$2^{k-1}$ & $k$\\
+\end{tabular}
+\end{table}
+
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+\justify Vejamos um outro exemplo:\newline
+
+\begin{minipage}{0.437\textwidth}
+\emph{Algoritmo Exemplo(A,B,n)\{}
+\begin{tabbing}
+	\emph{\ \ \ p=0\ }\\
+	\emph{\ \ \ for(i=1; i < n; i = i*2)\ }\\
+	\emph{\ \ \ \ \ \ \ p = p + 1; }\textcolor{red}{$\Theta(\log n)$}\\
+	\emph{\ \ \ for(j=1; j < p; j = j*2)\ }\\
+	\emph{\ \ \ \ \ \ \ x = x + 1; }\textcolor{red}{$\Theta(\log p)$}
+\end{tabbing}
+\}\\\
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.51\textwidth}
+\vspace{-0.3cm}
+Neste caso, temos que a complexidade do primeiro laço é dada por $\Theta(\log n))$ e a do segundo por $\Theta(\log p)$. No entanto, temos que $p=\log n$ (\textbf{valor de $p$ é igual ao número de vezes que o primeiro laço executa)}. Assim, a complexidade final é dada por:
+
+\begin{align*}
+	f(n) &= \log n + \log p\\
+	&=\log n + \log (\log n)\in \boxed{O(\log n)}
+\end{align*}
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+\justify Podemos, então derivar complexidades para laços de acordo com o incremento do contador:
+
+\begin{itemize}
+	\item \emph{\ \ \ for(i=0; i < n; i = i++)\ }: \textcolor{red}{$O(n)$}
+	\item \emph{\ \ \ for(i=0; i < n; i = i+2)\ }: \textcolor{red}{$\frac{n}{2}O(n)\in O(n)$}
+	\item \emph{\ \ \ for(i=n; i > 1; i--)\ }\textcolor{red}{$O(n)$}
+	\item \emph{\ \ \ for(i=1; i < n; i = i*2)\ }\textcolor{red}{$O(\log_2n)$}
+	\item \emph{\ \ \ for(i=1; i < n; i = i*3)\ }\textcolor{red}{$O(\log_3n)$}
+	\item \emph{\ \ \ for(i=n; i > 1; i = i/2)\ }\textcolor{red}{$O(\log_2n)$}
+	
+\end{itemize}
+}
+
+
+\end{document}
