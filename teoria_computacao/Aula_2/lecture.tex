@@ -74,7 +74,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ###############################################################################
 % FIRST SLIDE
-\SliTit{Aula 2 - Introdução, Sintaxe e Semântica}{Teoria da Computação e Linguagens Formais}{}{João Paulo Papa (UNESP/Bauru)}
+\SliTit{Aula 2 - Linguagens Regulares}{Teoria da Computação e Linguagens Formais}{}{João Paulo Papa (UNESP/Bauru)}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ###############################################################################
 % SLIDE SUB-TITLE
@@ -86,37 +86,160 @@
 
 
 
-\SliT{Introdução}{
+\SliT{Agenda}{
 \justifying Nesta aula iremos abordar os seguintes assuntos:
 
 \begin{itemize}
-	\item Objetivo da disciplina.
-	\item Sintaxe.
-	\item Semântica.
-	\item Definições básicas.
+	\item Hierarquia de Chomsky.
+	\item Linguagens Regulares.
+	\item Sistemas de Estados Finitos.
+	\item Autômatos Finitos.
 \end{itemize}
 }
 
 \Sli{
-\justifying O que são linguagens formais? Conjunto de \textbf{regras} utilizadas para regulamentar uma determinada linguagem. Seu estudo começou na década de 50.
+\justifying Noam Chomsky é um cientista norte-americano que classificou as gramáticas em quatro tipos.
 
-\justifying Alguns exemplos:
+\begin{center}
+	\includegraphics[scale=0.43]{figs/hierarquia_chomsky.pdf}
+\end{center}
+
+}
+
+\Sli{
+\justifying Cada gramática possui sua \textbf{abstração computacional} para representá-la. Vamos começar pelo tipo 3, ou seja, pelas \textbf{Gramáticas Regulares} (GR), que são as mais simples.\newline
+
+\justifying Uma gramática $G=(V,T,P,S)$ é dita ser regular quando ela obedece às seguintes regras:
 
 \begin{itemize}
-	\item Linguagens de programação.
-	\item Circuitos digitais.
-	\item Expressões matemáticas.
-	\item Linguagem natural.
+	\item Ela é uma \textbf{Gramática Linear à Direita} (GLD) \underline{ou} uma \textbf{Gramática Linear à Esquerda} (GLE).
+	\item Uma gramática é GLD quando suas regras de produção $P$ obedecem às seguintes propriedades:\[A\rightarrow aB|a\text{\ \ ou\ \ }A\rightarrow a,\]
+	em que $A,B\in V$ e $a\in T$.
+	\item Uma gramática é GLE quando suas regras de produção $P$ obedecem às seguintes propriedades:\[A\rightarrow Ba|a\text{\ \ ou\ \ }A\rightarrow a,\]
+	em que $A,B\in V$ e $a\in T$.
+
+\end{itemize}
+}
+
+\SliT{Linguagens Regulares}{
+\justifying Uma linguagem $L$ é regular (LR), ou seja, do tipo 3, se existe, pelo menos, um \textbf{autômato finito determinístico} que a reconhece.\newline
+
+\justifying Estudaremos três tipos de formalismos com relação às Linguagens Regulares:
+
+\begin{itemize}
+	\item Autômato Finito.
+	\item Expressão Regular.
+	\item Gramática Regular.
 \end{itemize}
 }
 
 \Sli{
-\justifying O estudo de linguagens formais é bastante importante no projeto de compiladores.\newline
+\justifying \textbf{Autômato Finito:} é um formalismo \textbf{operacional} ou reconhecedor. Na prática, caracteriza-se como um sistema de estados finitos (similar à um grafo).\newline
 
-%\begin{center}
-%	\includegraphics[scale=0.57]{figs/compilador.pdf}
-%\end{center}
+\justifying \textbf{Expressão Regular:} é um formalismo \textbf{denotacional} ou gerador.\newline
 
+\justifying \textbf{Gramática Regular:} é um formalismo \textbf{axiomático} ou gerador. Possui, também, restrições na forma de regras de produção.
+}
+
+\Sli{
+\justifying Algumas características das Linguagens Regulares:
+
+\begin{itemize}
+	\item Classe de linguagens mais simples (hierarquia de Chomsky).
+	\item Utilizada, principalmente, na análise \textbf{léxica}.
+	\item Seu formalismo de reconhecimento (autômato) é, geralmente, fácil de implementar e possui pouca complexidade.
+	\item Qualquer autômato finito é igualmente \textbf{eficiente} e \textbf{ótimo} (caso não possua estados \textbf{redundantes}).
+\end{itemize}
+}
+
+\SliT{Sistema de Estados Finitos}{
+\justifying Um Sistema de Estados Finitos possui as seguintes características:
+
+\begin{itemize}
+	\item Modelo matemático de sistema com \textbf{entradas} e \textbf{saídas} discretas.
+	\item Composto por \textbf{entrada} e \textbf{estados}.
+	\item \textbf{Não} tem memória.
+	\item Número \textbf{finito} de estados.
+	\item A máquina só pode estar em um \textbf{único} estado de cada vez.
+\end{itemize}
+}
+
+\SliT{Autômato Finito}{
+\justifying Um Autômato Finito (AF) é um sistema de estados finitos e podem ser divididos, de maneira geral, em três tipos:
+
+\begin{itemize}
+	\item \textbf{Autômato Finito Determinístico (AFD):} a partir de um determinado estado e de um símbolo lido, pode assumir um \textbf{único} estado.
+	\item \textbf{Autômato Finito Não Determinístico (AFN):} a partir de um determinado estado e de um símbolo lido, pode assumir um \textbf{conjunto} de estados.
+	\item \textbf{Autômato Finito Não Determinístico com Movimentos Vazios (AFN$_\epsilon$):} a partir de um determinado estado e \textbf{sem ler} um símbolo, pode assumir um \textbf{conjunto} de estados.
+\end{itemize}
+}
+
+\Sli{
+\justifying Um Autômato Finito é composto pelos seguintes itens:
+
+\begin{minipage}{0.617\textwidth}
+\begin{itemize}
+	\item Fita:
+	\begin{itemize}
+	\item É o dispositivo de entrada.
+	\item Possui (armazena) a informação a ser processada.
+	\item Não é possível gravar dados.
+	\end{itemize}	
+	\item Unidade de controle:
+	\begin{itemize}
+	\item Reflete o estado corrente da máquina.
+	\item Possui uma unidade de leitura (cabeça da fita).
+	\item Acessa uma célula da fita de cada vez.
+	\item Movimenta-se exclusivamente para a direita.
+	\end{itemize}
+	\item Função programa ou transicão:
+	\begin{itemize}
+	\item Comanda as leituras.
+	\item Define o estado da máquina.
+	\end{itemize}
+\end{itemize}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.37\textwidth}
+\begin{center}
+	\includegraphics[scale=0.43]{figs/fita.pdf}
+\end{center}
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+\justifying Como funcionam as funções de transição?\newline 
+
+\begin{minipage}{0.537\textwidth}
+\vspace{-1.7cm}
+\justifying Suponha a seguinte função: $\delta(p,a)=\{q\}$. \newline Ela nos diz que, se estivermos no estado $p$\\e lermos (consumirmos) o caractere $a$, então\\vamos para o estado $q$.
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.37\textwidth}
+\begin{center}
+	\includegraphics[scale=0.57]{figs/automato_simples.pdf}
+\end{center}
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+\justifying Formalmente, um AFD é definido pela 5-upla ordenada abaixo:
+
+\begin{equation*}
+	M=(\Sigma,Q,\delta,q_0,F),
+\end{equation*}
+em que:\newline\newline
+$\Sigma$: alfabeto de entrada\newline
+$Q$: conjunto de estados\newline
+$\delta$: função de transição da forma $\delta: Q\times \Sigma\rightarrow Q$\newline
+$q_0$: estado inicial tal que $q_o\in Q$\newline
+$F$: estado final tal que $F\subseteq Q$
+}
+
+\Sli{
+\justifying \underline{Exemplo:} construa um AFD $M$ que reconheça a seguinte linguagem $L=\{aa\}$.
 }
 
 
