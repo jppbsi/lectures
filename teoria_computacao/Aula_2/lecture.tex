@@ -240,7 +240,62 @@ $F$: estado final tal que $F\subseteq Q$
 
 \Sli{
 \justifying \underline{Exemplo:} construa um AFD $M$ que reconheça a seguinte linguagem $L=\{aa\}$.
+
+\justifying Seja $M=(\Sigma,Q,\delta,q_0,F)$ um AFD que reconhece $L$. Temos que $M$ pode ser definido da seguinte maneira:\newline\newline
+$\Sigma = \{a\}$\ \ \ \ $Q=\{q_0,q_1,q_2\}$\newline
+$q_0=\{q_0\}$\ \ \ \ $F=\{q_2\}$\newline
+
+\begin{minipage}{0.337\textwidth}
+\begin{table}
+\begin{tabular}{c|c|}
+& $a$ \\\hline
+$q_0$ & $q_1$\\
+$q_1$ & $q_2$\\
+\end{tabular}		
+\end{table}
+
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.37\textwidth}
+\begin{center}
+	\includegraphics[scale=0.57]{figs/aula_2_ex_1.pdf}
+\end{center}
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
 }
 
+\Sli{
+\justifying \underline{Exemplo:} construa um AFD $M$ que reconheça uma linguagem $L$ que contenha $aa$ como subpalavra.
 
+\justifying Seja $M=(\Sigma,Q,\delta,q_0,F)$ um AFD que reconhece $L$. Temos que $M$ pode ser definido da seguinte maneira:\newline\newline
+\vspace{-1cm}
+\begin{minipage}{0.377\textwidth}
+$\Sigma = \{a,b\}$\ \ \ \ $Q=\{q_0,q_1,q_2\}$\newline
+$q_0=\{q_0\}$\ \ \ \ $F=\{q_2\}$\newline
+
+\begin{table}
+\scalebox{0.7}{
+\begin{tabular}{c|c|c|}
+& $a$ & $b$\\\hline
+$q_0$ & $q_1$ & $q_1$\\
+$q_1$ & $q_2$ & $q_0$\\
+$q_2$ & $q_2$ & $q_2$\\
+\end{tabular}}		
+\end{table}
+
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.57\textwidth}
+\begin{center}
+	\includegraphics[scale=0.43]{figs/aula_2_ex_2.pdf}
+\end{center}
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+\justifying Não existem regras para a construção de autômatos. Devemos usar nossa experiência e também com base na ``tentativa e erro".\newline\newline
+
+\justifying Um autômato $M$ aceita uma linguagem $L$ quando, dada uma palavra $w\in L$, $M$ pára em um \textbf{estado final} e lê a \textbf{sequência toda}.
+}
 \end{document}
