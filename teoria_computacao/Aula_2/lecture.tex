@@ -11,6 +11,9 @@
 \usepackage[T1]{fontenc}
 \usepackage{ragged2e,bm,oubraces,tikz}
 \usepackage{algorithmic}
+\usepackage{tikz}
+
+\usetikzlibrary{automata, positioning, arrows}
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
 
@@ -255,10 +258,20 @@ $q_1$ & $q_2$\\
 \end{table}
 
 \end{minipage}%%% to prevent a space
-\begin{minipage}{0.37\textwidth}
+\begin{minipage}{0.57\textwidth}
 \begin{center}
-	\includegraphics[scale=0.57]{figs/aula_2_ex_1.pdf}
+\begin{tikzpicture}
+\node[state, initial, initial text=] (q_0) {$q_0$};
+\node[state, right = of q_0] (q_1) {$q_1$};
+\node[state, accepting, right = of q_1] (q_2) {$q_2$};
+
+\path[-stealth, thick]
+	(q_0) edge[above] node {a} (q_1)
+	(q_1) edge[above] node {a} (q_2);
+
+\end{tikzpicture}
 \end{center}
+
 \null
 \par\xdef\tpd{\the\prevdepth}
 \end{minipage}
@@ -286,9 +299,20 @@ $q_2$ & $q_2$ & $q_2$\\
 \end{minipage}%%% to prevent a space
 \begin{minipage}{0.57\textwidth}
 \begin{center}
-	\includegraphics[scale=0.43]{figs/aula_2_ex_2.pdf}
-\end{center}
-\null
+\begin{tikzpicture}
+\node[state, initial, initial text=] (q_0) {$q_0$};
+\node[state, right = of q_0] (q_1) {$q_1$};
+\node[state, accepting, right = of q_1] (q_2) {$q_2$};
+
+\path[-stealth, thick]
+	(q_0) edge[loop above] node {b} (q_0)
+	(q_0) edge[bend left, above] node {a} (q_1)
+	(q_1) edge[bend left, below] node {b} (q_0)
+	(q_1) edge[above] node {a} (q_2)
+	(q_2) edge[loop above] node {a,b} (q_2);
+	
+\end{tikzpicture}
+\end{center}\null
 \par\xdef\tpd{\the\prevdepth}
 \end{minipage}
 }
