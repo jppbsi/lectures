@@ -411,7 +411,23 @@ $Q$: conjunto de estados\newline
 $\delta$: função de transição da forma $\delta: Q\times \Sigma\rightarrow 2^Q$\newline
 $q_0$: estado inicial tal que $q_o\in Q$\newline
 $F$: estado ou conjunto de estados finais tal que $F\subseteq Q$\newline\newline
-A \textbf{diferença principal} entre um AFD e um AFN reside na função de transição $\delta$. A partir de um símbolo lido, podemos agora assumir um \textbf{conjunto} de estados.
+A \textbf{diferença principal} entre um AFD e um AFN reside na função de transição $\delta$. A partir de um símbolo lido, podemos agora assumir um \textbf{conjunto} de estados. Normalmente, é mais \textbf{fácil} construir um AFN do que um AFD.
+}
+
+\Sli{
+\justifying Como funcionam as funções de transição?\newline 
+
+\begin{minipage}{0.537\textwidth}
+\vspace{-1.97cm}
+\justifying Suponha a seguinte função: $\delta(p,a)=\{q_1,q_2\}$. \newline Ela nos diz que, se estivermos no estado $p$\\e lermos (consumirmos) o caractere $a$, então\\podemos ir para o estado $q_1$ ou $q_2$.
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.37\textwidth}
+\begin{center}
+	\includegraphics[scale=0.477]{figs/automato_afn.pdf}
+\end{center}
+\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
 }
 
 \end{document}
