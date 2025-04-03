@@ -96,7 +96,8 @@
 	\item Hierarquia de Chomsky.
 	\item Linguagens Regulares.
 	\item Sistemas de Estados Finitos.
-	\item Autômatos Finitos.
+	\item Autômato Finito Determinístico.
+	\item \item Autômato Finito Não Determinístico.
 \end{itemize}
 }
 
@@ -322,4 +323,95 @@ $q_2$ & $q_2$ & $q_2$\\
 
 \justifying Um autômato $M$ aceita uma linguagem $L$ quando, dada uma palavra $w\in L$, $M$ pára em um \textbf{estado final} e lê a \textbf{sequência toda}.
 }
+
+\Sli{
+\justifying \underline{Exemplo:} construa um AFD $M$ que reconheça uma linguagem $L$ de tal forma que $L=\{w\in\{a,b\}^\ast|\ w\ \text{tem tamanho 3}\}$.
+
+\justifying Seja $M=(\Sigma,Q,\delta,q_0,F)$ um AFD que reconhece $L$. Temos que $M$ pode ser definido da seguinte maneira:\newline\newline
+
+\begin{minipage}{0.337\textwidth}
+$\Sigma = \{a,b\}$\ \ \ \ $Q=\{q_0,q_1,q_2,q_3\}$\newline
+$q_0=\{q_0\}$\ \ \ \ $F=\{q_3\}$\newline
+
+\begin{table}
+\scalebox{0.7}{
+\begin{tabular}{c|c|c|}
+& $a$ & $b$\\\hline
+$q_0$ & $q_1$ & $q_1$\\
+$q_1$ & $q_2$ & $q_2$\\
+$q_2$ & $q_3$ & $q_3$\\
+\end{tabular}}		
+\end{table}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.57\textwidth}
+\begin{center}
+\begin{tikzpicture}
+\node[state, initial, initial text=] (q_0) {$q_0$};
+\node[state, right = of q_0] (q_1) {$q_1$};
+\node[state, right = of q_1] (q_2) {$q_2$};
+\node[state, accepting, right = of q_2] (q_3) {$q_3$};
+
+\path[-stealth, thick]
+	(q_0) edge[bend left, above] node {a,b} (q_1)
+	(q_1) edge[bend left, above] node {a,b} (q_2)
+	(q_2) edge[bend left, above] node {a,b} (q_3);
+	
+\end{tikzpicture}
+\end{center}\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+\justifying \underline{Exemplo:} construa um AFD $M$ que reconheça uma linguagem $L$ de tal forma que $L=\{w\in\{a,b\}^\ast|\ w\ \text{tem como prefixo $aa$}\}$.
+
+\justifying Seja $M=(\Sigma,Q,\delta,q_0,F)$ um AFD que reconhece $L$. Temos que $M$ pode ser definido da seguinte maneira:\newline\newline
+
+\begin{minipage}{0.337\textwidth}
+$\Sigma = \{a,b\}$\ \ \ \ $Q=\{q_0,q_1,q_2\}$\newline
+$q_0=\{q_0\}$\ \ \ \ $F=\{q_2\}$\newline
+
+\begin{table}
+\scalebox{0.7}{
+\begin{tabular}{c|c|c|}
+& $a$ & $b$\\\hline
+$q_0$ & $q_1$ & -\\
+$q_1$ & $q_2$ & -\\
+$q_2$ & $q_2$ & $q_2$\\
+\end{tabular}}		
+\end{table}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.57\textwidth}
+\begin{center}
+\begin{tikzpicture}
+\node[state, initial, initial text=] (q_0) {$q_0$};
+\node[state, right = of q_0] (q_1) {$q_1$};
+\node[state, accepting, right = of q_1] (q_2) {$q_2$};
+
+\path[-stealth, thick]
+	(q_0) edge[above] node {a} (q_1)
+	(q_1) edge[above] node {a} (q_2)
+	(q_2) edge[loop above] node {a,b} (q_2);
+	
+\end{tikzpicture}
+\end{center}\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+\justifying Formalmente, um AFN é definido pela 5-upla ordenada abaixo:
+
+\begin{equation*}
+	M=(\Sigma,Q,\delta,q_0,F),
+\end{equation*}
+em que:\newline\newline
+$\Sigma$: alfabeto de entrada\newline
+$Q$: conjunto de estados\newline
+$\delta$: função de transição da forma $\delta: Q\times \Sigma\rightarrow 2^Q$\newline
+$q_0$: estado inicial tal que $q_o\in Q$\newline
+$F$: estado ou conjunto de estados finais tal que $F\subseteq Q$\newline\newline
+A \textbf{diferença principal} entre um AFD e um AFN reside na função de transição $\delta$. A partir de um símbolo lido, podemos agora assumir um \textbf{conjunto} de estados.
+}
+
 \end{document}
