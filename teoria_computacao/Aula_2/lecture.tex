@@ -28,8 +28,8 @@
 
 % DATA FOR FOOTER
 \date{2025}
-\title{- Teoria da Computação e Linguagens Formais}
-\author{João Paulo Papa}
+\title{- Teoria da Computa\c{c}\~ao e Linguagens Formais}
+\author{Jo\~ao Paulo Papa}
 
 \begin{document}
 % ####################################
@@ -77,7 +77,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ###############################################################################
 % FIRST SLIDE
-\SliTit{Aula 2 - Linguagens Regulares}{Teoria da Computação e Linguagens Formais}{}{João Paulo Papa (UNESP/Bauru)}
+\SliTit{Aula 2 - Linguagens Regulares}{Teoria da Computa\c{c}\~ao e Linguagens Formais}{}{Jo\~ao Paulo Papa (UNESP/Bauru)}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ###############################################################################
 % SLIDE SUB-TITLE
@@ -96,13 +96,13 @@
 	\item Hierarquia de Chomsky.
 	\item Linguagens Regulares.
 	\item Sistemas de Estados Finitos.
-	\item Autômato Finito Determinístico.
-	\item \item Autômato Finito Não Determinístico.
+	\item Aut\^omato Finito Determin\'istico.
+	\item Aut\^omato Finito N\~ao Determin\'istico.
 \end{itemize}
 }
 
 \Sli{
-\justifying Noam Chomsky é um cientista norte-americano que classificou as gramáticas em quatro tipos.
+\justifying Noam Chomsky \'e um cientista norte-americano que classificou as gram\'aticas em quatro tipos.
 
 \begin{center}
 	\includegraphics[scale=0.43]{figs/hierarquia_chomsky.pdf}
@@ -111,95 +111,95 @@
 }
 
 \Sli{
-\justifying Cada gramática possui sua \textbf{abstração computacional} para representá-la. Vamos começar pelo tipo 3, ou seja, pelas \textbf{Gramáticas Regulares} (GR), que são as mais simples.\newline
+\justifying Cada gram\'atica possui sua \textbf{abstra\c{c}\~ao computacional} para represent\'a-la. Vamos come\c{c}ar pelo tipo 3, ou seja, pelas \textbf{Gram\'aticas Regulares} (GR), que s\~ao as mais simples.\newline
 
-\justifying Uma gramática $G=(V,T,P,S)$ é dita ser regular quando ela obedece às seguintes regras:
+\justifying Uma gram\'atica $G=(V,T,P,S)$ \'e dita ser regular quando ela obedece \`as seguintes regras:
 
 \begin{itemize}
-	\item Ela é uma \textbf{Gramática Linear à Direita} (GLD) \underline{ou} uma \textbf{Gramática Linear à Esquerda} (GLE).
-	\item Uma gramática é GLD quando suas regras de produção $P$ obedecem às seguintes propriedades:\[A\rightarrow aB|a\text{\ \ ou\ \ }A\rightarrow a,\]
+	\item Ela \'e uma \textbf{Gram\'atica Linear \`a  Direita} (GLD) \underline{ou} uma \textbf{Gram\'atica Linear \`a  Esquerda} (GLE).
+	\item Uma gram\'atica \'e GLD quando suas regras de produ\c{c}\~ao $P$ obedecem \`as seguintes propriedades:\[A\rightarrow aB|a\text{\ \ ou\ \ }A\rightarrow a,\]
 	em que $A,B\in V$ e $a\in T$.
-	\item Uma gramática é GLE quando suas regras de produção $P$ obedecem às seguintes propriedades:\[A\rightarrow Ba|a\text{\ \ ou\ \ }A\rightarrow a,\]
+	\item Uma gram\'atica \'e GLE quando suas regras de produ\c{c}\~ao $P$ obedecem \`as seguintes propriedades:\[A\rightarrow Ba|a\text{\ \ ou\ \ }A\rightarrow a,\]
 	em que $A,B\in V$ e $a\in T$.
 
 \end{itemize}
 }
 
 \SliT{Linguagens Regulares}{
-\justifying Uma linguagem $L$ é regular (LR), ou seja, do tipo 3, se existe, pelo menos, um \textbf{autômato finito determinístico} que a reconhece.\newline
+\justifying Uma linguagem $L$ \'e regular (LR), ou seja, do tipo 3, se existe, pelo menos, um \textbf{aut\^omato finito determin\'istico} que a reconhece.\newline
 
-\justifying Estudaremos três tipos de formalismos com relação às Linguagens Regulares:
+\justifying Estudaremos tr\^es tipos de formalismos com rela\c{c}\~ao \`as Linguagens Regulares:
 
 \begin{itemize}
-	\item Autômato Finito.
-	\item Expressão Regular.
-	\item Gramática Regular.
+	\item Aut\^omato Finito.
+	\item Express\~ao Regular.
+	\item Gram\'atica Regular.
 \end{itemize}
 }
 
 \Sli{
-\justifying \textbf{Autômato Finito:} é um formalismo \textbf{operacional} ou reconhecedor. Na prática, caracteriza-se como um sistema de estados finitos (similar à um grafo).\newline
+\justifying \textbf{Aut\^omato Finito:} \'e um formalismo \textbf{operacional} ou reconhecedor. Na pr\'atica, caracteriza-se como um sistema de estados finitos (similar \`a um grafo).\newline
 
-\justifying \textbf{Expressão Regular:} é um formalismo \textbf{denotacional} ou gerador.\newline
+\justifying \textbf{Express\~ao Regular:} \'e um formalismo \textbf{denotacional} ou gerador.\newline
 
-\justifying \textbf{Gramática Regular:} é um formalismo \textbf{axiomático} ou gerador. Possui, também, restrições na forma de regras de produção.
+\justifying \textbf{Gram\'atica Regular:} \'e um formalismo \textbf{axiom\'atico} ou gerador. Possui, tamb\'em, restri\c{c}\~oes na forma de regras de produ\c{c}\~ao.
 }
 
 \Sli{
-\justifying Algumas características das Linguagens Regulares:
+\justifying Algumas caracter\'isticas das Linguagens Regulares:
 
 \begin{itemize}
 	\item Classe de linguagens mais simples (hierarquia de Chomsky).
-	\item Utilizada, principalmente, na análise \textbf{léxica}.
-	\item Seu formalismo de reconhecimento (autômato) é, geralmente, fácil de implementar e possui pouca complexidade.
-	\item Qualquer autômato finito é igualmente \textbf{eficiente} e \textbf{ótimo} (caso não possua estados \textbf{redundantes}).
+	\item Utilizada, principalmente, na an\'alise \textbf{l\'exica}.
+	\item Seu formalismo de reconhecimento (aut\^omato) \'e, geralmente, f\'acil de implementar e possui pouca complexidade.
+	\item Qualquer aut\^omato finito \'e igualmente \textbf{eficiente} e \textbf{\'otimo} (caso n\~ao possua estados \textbf{redundantes}).
 \end{itemize}
 }
 
 \SliT{Sistema de Estados Finitos}{
-\justifying Um Sistema de Estados Finitos possui as seguintes características:
+\justifying Um Sistema de Estados Finitos possui as seguintes caracter\'isticas:
 
 \begin{itemize}
-	\item Modelo matemático de sistema com \textbf{entradas} e \textbf{saídas} discretas.
+	\item Modelo matem\'atico de sistema com \textbf{entradas} e \textbf{sa\'idas} discretas.
 	\item Composto por \textbf{entrada} e \textbf{estados}.
-	\item \textbf{Não} tem memória.
-	\item Número \textbf{finito} de estados.
-	\item A máquina só pode estar em um \textbf{único} estado de cada vez.
+	\item \textbf{N\~ao} tem mem\'oria.
+	\item N\'umero \textbf{finito} de estados.
+	\item A m\'aquina s\'o pode estar em um \textbf{\'unico} estado de cada vez.
 \end{itemize}
 }
 
-\SliT{Autômato Finito}{
-\justifying Um Autômato Finito (AF) é um sistema de estados finitos e podem ser divididos, de maneira geral, em três tipos:
+\SliT{Aut\^omato Finito}{
+\justifying Um Aut\^omato Finito (AF) \'e um sistema de estados finitos e podem ser divididos, de maneira geral, em tr\^es tipos:
 
 \begin{itemize}
-	\item \textbf{Autômato Finito Determinístico (AFD):} a partir de um determinado estado e de um símbolo lido, pode assumir um \textbf{único} estado.
-	\item \textbf{Autômato Finito Não Determinístico (AFN):} a partir de um determinado estado e de um símbolo lido, pode assumir um \textbf{conjunto} de estados.
-	\item \textbf{Autômato Finito Não Determinístico com Movimentos Vazios (AFN$_\epsilon$):} a partir de um determinado estado e \textbf{sem ler} um símbolo, pode assumir um \textbf{conjunto} de estados.
+	\item \textbf{Aut\^omato Finito Determin\'istico (AFD):} a partir de um determinado estado e de um s\'imbolo lido, pode assumir um \textbf{\'unico} estado.
+	\item \textbf{Aut\^omato Finito N\~ao Determin\'istico (AFN):} a partir de um determinado estado e de um s\'imbolo lido, pode assumir um \textbf{conjunto} de estados.
+	\item \textbf{Aut\^omato Finito N\~ao Determin\'istico com Movimentos Vazios (AFN$_\epsilon$):} a partir de um determinado estado e \textbf{sem ler} um s\'imbolo, pode assumir um \textbf{conjunto} de estados.
 \end{itemize}
 }
 
 \Sli{
-\justifying Um Autômato Finito é composto pelos seguintes itens:
+\justifying Um Aut\^omato Finito \'e composto pelos seguintes itens:
 
 \begin{minipage}{0.617\textwidth}
 \begin{itemize}
 	\item Fita:
 	\begin{itemize}
-	\item É o dispositivo de entrada.
-	\item Possui (armazena) a informação a ser processada.
-	\item Não é possível gravar dados.
+	\item \'E o dispositivo de entrada.
+	\item Possui (armazena) a informa\c{c}\~ao a ser processada.
+	\item N\~ao \'e poss\'ivel gravar dados.
 	\end{itemize}	
 	\item Unidade de controle:
 	\begin{itemize}
-	\item Reflete o estado corrente da máquina.
-	\item Possui uma unidade de leitura (cabeça da fita).
-	\item Acessa uma célula da fita de cada vez.
+	\item Reflete o estado corrente da m\'aquina.
+	\item Possui uma unidade de leitura (cabe\c{c}a da fita).
+	\item Acessa uma c\'elula da fita de cada vez.
 	\item Movimenta-se exclusivamente para a direita.
 	\end{itemize}
-	\item Função programa ou transicão:
+	\item Fun\c{c}\~ao programa ou transic\~ao:
 	\begin{itemize}
 	\item Comanda as leituras.
-	\item Define o estado da máquina.
+	\item Define o estado da m\'aquina.
 	\end{itemize}
 \end{itemize}
 \end{minipage}%%% to prevent a space
@@ -213,11 +213,11 @@
 }
 
 \Sli{
-\justifying Como funcionam as funções de transição?\newline 
+\justifying Como funcionam as fun\c{c}\~oes de transi\c{c}\~ao?\newline 
 
 \begin{minipage}{0.537\textwidth}
 \vspace{-1.7cm}
-\justifying Suponha a seguinte função: $\delta(p,a)=\{q\}$. \newline Ela nos diz que, se estivermos no estado $p$\\e lermos (consumirmos) o caractere $a$, então\\vamos para o estado $q$.
+\justifying Suponha a seguinte fun\c{c}\~ao: $\delta(p,a)=\{q\}$. \newline Ela nos diz que, se estivermos no estado $p$\\e lermos (consumirmos) o caractere $a$, ent\~ao\\vamos para o estado $q$.
 \end{minipage}%%% to prevent a space
 \begin{minipage}{0.37\textwidth}
 \begin{center}
@@ -229,7 +229,7 @@
 }
 
 \Sli{
-\justifying Formalmente, um AFD é definido pela 5-upla ordenada abaixo:
+\justifying Formalmente, um AFD \'e definido pela 5-upla ordenada abaixo:
 
 \begin{equation*}
 	M=(\Sigma,Q,\delta,q_0,F),
@@ -237,13 +237,13 @@
 em que:\newline\newline
 $\Sigma$: alfabeto de entrada\newline
 $Q$: conjunto de estados\newline
-$\delta$: função de transição da forma $\delta: Q\times \Sigma\rightarrow Q$\newline
+$\delta$: fun\c{c}\~ao de transi\c{c}\~ao da forma $\delta: Q\times \Sigma\rightarrow Q$\newline
 $q_0$: estado inicial tal que $q_o\in Q$\newline
 $F$: estado ou conjunto de estados finais tal que $F\subseteq Q$
 }
 
 \Sli{
-\justifying \underline{Exemplo:} construa um AFD $M$ que reconheça a seguinte linguagem $L=\{aa\}$.
+\justifying \underline{Exemplo:} construa um AFD $M$ que reconhe\c{c}a a seguinte linguagem $L=\{aa\}$.
 
 \justifying Seja $M=(\Sigma,Q,\delta,q_0,F)$ um AFD que reconhece $L$. Temos que $M$ pode ser definido da seguinte maneira:\newline\newline
 $\Sigma = \{a\}$\ \ \ \ $Q=\{q_0,q_1,q_2\}$\newline
@@ -279,7 +279,7 @@ $q_1$ & $q_2$\\
 }
 
 \Sli{
-\justifying \underline{Exemplo:} construa um AFD $M$ que reconheça uma linguagem $L$ que contenha $aa$ como subpalavra.
+\justifying \underline{Exemplo:} construa um AFD $M$ que reconhe\c{c}a uma linguagem $L$ que contenha $aa$ como subpalavra.
 
 \justifying Seja $M=(\Sigma,Q,\delta,q_0,F)$ um AFD que reconhece $L$. Temos que $M$ pode ser definido da seguinte maneira:\newline\newline
 \vspace{-1cm}
@@ -319,13 +319,13 @@ $q_2$ & $q_2$ & $q_2$\\
 }
 
 \Sli{
-\justifying Não existem regras para a construção de autômatos. Devemos usar nossa experiência e também com base na ``tentativa e erro".\newline\newline
+\justifying N\~ao existem regras para a constru\c{c}\~ao de aut\^omatos. Devemos usar nossa experi\^encia e tamb\'em com base na ``tentativa e erro".\newline\newline
 
-\justifying Um autômato $M$ aceita uma linguagem $L$ quando, dada uma palavra $w\in L$, $M$ pára em um \textbf{estado final} e lê a \textbf{sequência toda}.
+\justifying Um aut\^omato $M$ aceita uma linguagem $L$ quando, dada uma palavra $w\in L$, $M$ p\'ara em um \textbf{estado final} e l\^e a \textbf{sequ\^encia toda}.
 }
 
 \Sli{
-\justifying \underline{Exemplo:} construa um AFD $M$ que reconheça uma linguagem $L$ de tal forma que $L=\{w\in\{a,b\}^\ast|\ w\ \text{tem tamanho 3}\}$.
+\justifying \underline{Exemplo:} construa um AFD $M$ que reconhe\c{c}a uma linguagem $L$ de tal forma que $L=\{w\in\{a,b\}|\ w\ \text{tem tamanho 3}\}$.
 
 \justifying Seja $M=(\Sigma,Q,\delta,q_0,F)$ um AFD que reconhece $L$. Temos que $M$ pode ser definido da seguinte maneira:\newline\newline
 
@@ -363,7 +363,7 @@ $q_2$ & $q_3$ & $q_3$\\
 }
 
 \Sli{
-\justifying \underline{Exemplo:} construa um AFD $M$ que reconheça uma linguagem $L$ de tal forma que $L=\{w\in\{a,b\}^\ast|\ w\ \text{tem como prefixo $aa$}\}$.
+\justifying \underline{Exemplo:} construa um AFD $M$ que reconhe\c{c}a uma linguagem $L$ de tal forma que $L=\{w\in\{a,b\}^\ast|\ w\ \text{tem como prefixo $aa$}\}$.
 
 \justifying Seja $M=(\Sigma,Q,\delta,q_0,F)$ um AFD que reconhece $L$. Temos que $M$ pode ser definido da seguinte maneira:\newline\newline
 
@@ -400,7 +400,7 @@ $q_2$ & $q_2$ & $q_2$\\
 }
 
 \Sli{
-\justifying Formalmente, um AFN é definido pela 5-upla ordenada abaixo:
+\justifying Formalmente, um AFN \'e definido pela 5-upla ordenada abaixo:
 
 \begin{equation*}
 	M=(\Sigma,Q,\delta,q_0,F),
@@ -408,18 +408,18 @@ $q_2$ & $q_2$ & $q_2$\\
 em que:\newline\newline
 $\Sigma$: alfabeto de entrada\newline
 $Q$: conjunto de estados\newline
-$\delta$: função de transição da forma $\delta: Q\times \Sigma\rightarrow 2^Q$\newline
+$\delta$: fun\c{c}\~ao de transi\c{c}\~ao da forma $\delta: Q\times \Sigma\rightarrow 2^Q$\newline
 $q_0$: estado inicial tal que $q_o\in Q$\newline
 $F$: estado ou conjunto de estados finais tal que $F\subseteq Q$\newline\newline
-A \textbf{diferença principal} entre um AFD e um AFN reside na função de transição $\delta$. A partir de um símbolo lido, podemos agora assumir um \textbf{conjunto} de estados. Normalmente, é mais \textbf{fácil} construir um AFN do que um AFD.
+A \textbf{diferen\c{c}a principal} entre um AFD e um AFN reside na fun\c{c}\~ao de transi\c{c}\~ao $\delta$. A partir de um s\'imbolo lido, podemos agora assumir um \textbf{conjunto} de estados. Normalmente, \'e mais \textbf{f\'acil} construir um AFN do que um AFD.
 }
 
 \Sli{
-\justifying Como funcionam as funções de transição?\newline 
+\justifying Como funcionam as fun\c{c}\~oes de transi\c{c}\~ao?\newline 
 
 \begin{minipage}{0.537\textwidth}
 \vspace{-1.97cm}
-\justifying Suponha a seguinte função: $\delta(p,a)=\{q_1,q_2\}$. \newline Ela nos diz que, se estivermos no estado $p$\\e lermos (consumirmos) o caractere $a$, então\\podemos ir para o estado $q_1$ ou $q_2$.
+\justifying Suponha a seguinte fun\c{c}\~ao: $\delta(p,a)=\{q_1,q_2\}$. \newline Ela nos diz que, se estivermos no estado $p$\\e lermos (consumirmos) o caractere $a$, ent\~ao\\podemos ir para o estado $q_1$ ou $q_2$.
 \end{minipage}%%% to prevent a space
 \begin{minipage}{0.37\textwidth}
 \begin{center}
@@ -430,4 +430,123 @@ A \textbf{diferença principal} entre um AFD e um AFN reside na função de tran
 \end{minipage}
 }
 
+\Sli{
+\justifying \underline{Exemplo:} construa um AFN $M$ que reconhe\c{c}a uma linguagem $L$ sob o alfabeto $\Sigma=\{a,b\}$ de tal forma que $L=\{w|\ w\ \text{possui $aa$ ou $bb$ como subpalavra.}\}$.
+
+\justifying Seja $M=(\Sigma,Q,\delta,q_0,F)$ um AFN que reconhece $L$. Temos que $M$ pode ser definido da seguinte maneira:\newline\newline
+\begin{minipage}{0.337\textwidth}
+\vspace{-1cm}
+$\Sigma = \{a,b\}$\ \ \ \ $Q=\{q_0,q_1,q_2,q_3\}$\newline
+$q_0=\{q_0\}$\ \ \ \ $F=\{q_3\}$\newline
+
+\begin{table}
+\scalebox{0.7}{
+\begin{tabular}{c|c|c|}
+& $a$ & $b$\\\hline
+$q_0$ & $\{q_0,q_1\}$ & $\{q_0,q_2\}$\\
+$q_1$ & $q_3$ & -\\
+$q_2$ & - & $q_3$\\
+$q_3$ & $q_3$ & $q_3$\\
+\end{tabular}}		
+\end{table}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.57\textwidth}
+\begin{center}
+\begin{tikzpicture}
+\node[state, initial, initial text=] (q_0) {$q_0$};
+\node[state, above right = of q_0] (q_1) {$q_1$};
+\node[state, below right = of q_0] (q_2) {$q_2$};
+\node[state, accepting, below right = of q_1] (q_3) {$q_3$};
+
+\path[-stealth, thick]
+	(q_0) edge[loop above] node {a,b} (q_0)
+	(q_0) edge[above] node {a} (q_1)
+	(q_0) edge[below] node {b} (q_2)
+	(q_1) edge [above=.7] node {a} (q_3)
+	(q_2) edge [below=.3] node {b} (q_3)
+	(q_3) edge[loop above] node {a,b} (q_3);
+	
+\end{tikzpicture}
+\end{center}\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+\justifying \underline{Exemplo:} construa um AFN $M$ que reconhe\c{c}a uma linguagem $L$ sob o alfabeto $\Sigma=\{a,b\}$ de tal forma que $L=\{a^nb^ma|n>0\text{ e }m\geq0\}$.
+
+\justifying Seja $M=(\Sigma,Q,\delta,q_0,F)$ um AFN que reconhece $L$. Temos que $M$ pode ser definido da seguinte maneira:\newline\newline
+\begin{minipage}{0.337\textwidth}
+
+$\Sigma = \{a,b\}$\ \ \ \ $Q=\{q_0,q_1,q_2\}$\newline
+$q_0=\{q_0\}$\ \ \ \ $F=\{q_2\}$\newline
+
+\begin{table}
+\scalebox{0.7}{
+\begin{tabular}{c|c|c|}
+& $a$ & $b$\\\hline
+$q_0$ & $\{q_0,q_1\}$ & - \\
+$q_1$ & $q_2$ & $q_1$\\
+$q_2$ & - & -\\
+\end{tabular}}		
+\end{table}
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.57\textwidth}
+\begin{center}
+\begin{tikzpicture}
+\node[state, initial, initial text=] (q_0) {$q_0$};
+\node[state, right = of q_0] (q_1) {$q_1$};
+\node[state, accepting, right = of q_1] (q_2) {$q_2$};
+
+
+\path[-stealth, thick]
+	(q_0) edge[loop above] node {a} (q_0)
+	(q_0) edge[above] node {a} (q_1)
+	(q_1) edge[loop above] node {b} (q_1)
+	(q_1) edge[above] node {a} (q_2);
+	
+\end{tikzpicture}
+\end{center}\null
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
+
+\Sli{
+\justifying É conhecido que todo AFN possui o seu AFD \textbf{equivalente}. A pergunta é: dado um AFN, como construir o seu AFD equivalente? Seja uma linguagem regular $L$ e o AFN $M=(\Sigma,Q,\delta,q_0,F)$ que a reconhece. Temos que o AFD equivalente $M^\prime=(\Sigma,Q^\prime,\delta^\prime,q_0^\prime,F^\prime)$ é dado como segue:
+
+\begin{itemize}
+	\item $Q^\prime$ é definido como sendo o conjunto com todas as combinações de estados em $Q$ sem repetições.
+	\item $q_0^\prime = \langle q_0\rangle$.
+	\item $F^\prime = \{\langle \ldots q_i\ldots\rangle| \forall q_i\in F\}$.
+	\item $\delta^\prime=(\langle q_iq_{i+1}\ldots q_j)\rangle,a)=\langle\delta(q_i,a)\cup\delta(q_{i+1},a)\cup\ldots \cup\delta(q_j,a)\rangle$.
+\end{itemize}
+}
+
+\Sli{
+\justifying \underline{Exemplo:} Seja $M=(\Sigma,Q,\delta,q_0,F)$ um AFN que reconhece $L=\{a^nb^ma|n>0\text{ e }m\geq0\}$. Temos que $M$ pode ser definido da seguinte maneira:\newline\newline
+\begin{minipage}{0.337\textwidth}
+
+$\Sigma = \{a,b\}$\ \ \ \ $Q=\{q_0,q_1,q_2\}$\newline
+$q_0=\{q_0\}$\ \ \ \ $F=\{q_2\}$\newline
+
+\begin{center}
+\begin{tikzpicture}
+\node[state, initial, initial text=] (q_0) {$q_0$};
+\node[state, right = of q_0] (q_1) {$q_1$};
+\node[state, accepting, right = of q_1] (q_2) {$q_2$};
+
+
+\path[-stealth, thick]
+	(q_0) edge[loop above] node {a} (q_0)
+	(q_0) edge[above] node {a} (q_1)
+	(q_1) edge[loop above] node {b} (q_1)
+	(q_1) edge[above] node {a} (q_2);
+	
+\end{tikzpicture}
+\end{center}\null
+\end{minipage}%%% to prevent a space
+\begin{minipage}{0.57\textwidth}
+\par\xdef\tpd{\the\prevdepth}
+\end{minipage}
+}
 \end{document}
